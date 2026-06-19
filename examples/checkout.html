@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nyx · Checkout example</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../nyx.css" />
+<style>
+  .ck{max-width:1080px;margin-inline:auto;padding-inline:var(--nyx-s5);padding-block:var(--nyx-s6)}
+  .ck-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:var(--nyx-s5);align-items:start}
+  .ck-aside{position:sticky;top:84px}
+  .ck-sec{margin-bottom:var(--nyx-s5)}
+  @media(max-width:860px){.ck-grid{grid-template-columns:1fr}.ck-aside{position:static}.hide-sm{display:none}}
+</style>
+</head>
+<body class="nyx nyx-reset">
+
+<nav class="nyx-navbar">
+  <a href="../index.html" class="nyx-flex nyx-items-center nyx-gap-2" style="font-family:var(--nyx-font-display);font-weight:800"><span style="width:26px;height:26px;border-radius:7px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));display:grid;place-items:center;color:#fff">N</span> Nyx Store</a>
+  <div class="nyx-flex nyx-items-center nyx-gap-3">
+    <span class="nyx-notification-dot" data-count="3" class="hide-sm">🛒</span>
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="Toggle theme">◐</button>
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleDir()" aria-label="Toggle direction">⇄</button>
+  </div>
+</nav>
+
+<div class="ck">
+  <nav class="nyx-breadcrumb" style="margin-bottom:var(--nyx-s4)"><a href="#">Cart</a><span class="nyx-sep">/</span><span aria-current="page">Checkout</span></nav>
+  <h1 class="nyx-h1" style="margin-bottom:var(--nyx-s5)">Checkout</h1>
+
+  <div class="ck-grid">
+    <div>
+      <!-- items -->
+      <div class="nyx-card ck-sec">
+        <h3 class="nyx-h4" style="margin-bottom:var(--nyx-s3)">Your bag</h3>
+        <div class="nyx-cart-item"><span class="nyx-cart-thumb">🎧</span><div class="nyx-cart-meta"><div style="font-weight:600;font-size:var(--nyx-fs-sm)">Wireless Headphones</div><span class="nyx-caption">Matte Black</span></div><div class="nyx-stepper"><button data-nyx-step="-1" aria-label="decrease">−</button><input value="1" aria-label="qty"><button data-nyx-step="1" aria-label="increase">+</button></div><span class="nyx-price"><span class="amt">399</span><span class="cur">ر.س</span></span></div>
+        <div class="nyx-cart-item"><span class="nyx-cart-thumb">⌚</span><div class="nyx-cart-meta"><div style="font-weight:600;font-size:var(--nyx-fs-sm)">Smart Watch</div><span class="nyx-caption">42mm · Graphite</span></div><div class="nyx-stepper"><button data-nyx-step="-1" aria-label="decrease">−</button><input value="2" aria-label="qty"><button data-nyx-step="1" aria-label="increase">+</button></div><span class="nyx-price"><span class="amt">1,198</span><span class="cur">ر.س</span></span></div>
+      </div>
+
+      <!-- address -->
+      <div class="ck-sec">
+        <h3 class="nyx-h4" style="margin-bottom:var(--nyx-s3)">Shipping address</h3>
+        <div class="nyx-address"><span class="nyx-address-icon">📍</span><div><div class="nyx-flex nyx-items-center nyx-gap-2" style="margin-bottom:4px"><strong>Home</strong> <span class="nyx-badge nyx-badge-success">Default</span></div><div class="nyx-muted">King Fahd Rd, Al Olaya<br>Riyadh 12211, Saudi Arabia</div></div></div>
+      </div>
+
+      <!-- payment -->
+      <div class="ck-sec">
+        <h3 class="nyx-h4" style="margin-bottom:var(--nyx-s3)">Payment method</h3>
+        <div class="nyx-pay" style="max-width:480px">
+          <label class="nyx-pay-opt"><input type="radio" name="pay" checked><span class="nyx-pay-icon">💳</span> Card ending 4242<span class="nyx-pay-check">✓</span></label>
+          <label class="nyx-pay-opt"><input type="radio" name="pay"><span class="nyx-pay-icon"></span> Apple Pay<span class="nyx-pay-check">✓</span></label>
+          <label class="nyx-pay-opt"><input type="radio" name="pay"><span class="nyx-pay-icon">💵</span> Cash on delivery<span class="nyx-pay-check">✓</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- summary -->
+    <div class="ck-aside">
+      <div class="nyx-order">
+        <h3 class="nyx-h4" style="margin-bottom:var(--nyx-s3)">Order summary</h3>
+        <div class="nyx-coupon" style="margin-bottom:var(--nyx-s4)"><input class="nyx-input" placeholder="Promo code" aria-label="promo code"><button class="nyx-btn nyx-btn-secondary" onclick="Nyx.toast('Coupon applied ✓','success')">Apply</button></div>
+        <div class="nyx-order-row"><span>Subtotal</span><span>1,597 ر.س</span></div>
+        <div class="nyx-order-row"><span>VAT (15%)</span><span>239.55 ر.س</span></div>
+        <div class="nyx-order-row"><span>Shipping</span><span>Free</span></div>
+        <div class="nyx-order-row total"><span>Total</span><span>1,836.55 ر.س</span></div>
+        <button class="nyx-btn nyx-btn-primary nyx-btn-block nyx-btn-lg" style="margin-top:var(--nyx-s4)" onclick="Nyx.toast('Order placed 🎉','success')">Place order</button>
+        <p class="nyx-caption" style="text-align:center;margin-top:var(--nyx-s3)">🔒 Secure checkout · 30-day returns</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../nyx.js"></script>
+</body>
+</html>

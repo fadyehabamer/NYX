@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nyx · Dashboard example</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../nyx.css" />
+<style>
+  .db{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 57px)}
+  .db-side{border-inline-end:1px solid var(--nyx-border);padding:var(--nyx-s4);background:var(--nyx-surface)}
+  .db-main{padding:var(--nyx-s5);max-width:1100px}
+  .db-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--nyx-s4)}
+  .db-cols{display:grid;grid-template-columns:1.7fr 1fr;gap:var(--nyx-s4);margin-top:var(--nyx-s4);align-items:start}
+  .trend{font-size:var(--nyx-fs-xs);font-weight:600}
+  .trend.up{color:var(--nyx-accent-2)}.trend.down{color:var(--nyx-danger)}
+  @media(max-width:920px){.db{grid-template-columns:1fr}.db-side{display:none}.db-kpis{grid-template-columns:repeat(2,1fr)}.db-cols{grid-template-columns:1fr}}
+</style>
+</head>
+<body class="nyx nyx-reset">
+
+<nav class="nyx-navbar">
+  <div class="nyx-flex nyx-items-center nyx-gap-3">
+    <a href="../index.html" class="nyx-flex nyx-items-center nyx-gap-2" style="font-family:var(--nyx-font-display);font-weight:800"><span style="width:26px;height:26px;border-radius:7px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));display:grid;place-items:center;color:#fff">N</span> Console</a>
+  </div>
+  <div class="nyx-search hide-sm" role="button" tabindex="0" data-nyx-toggle="command"><span class="nyx-search-icon">⌕</span><input placeholder="Search…" aria-label="search" readonly tabindex="-1"><span class="nyx-command">⌘K</span></div>
+  <div class="nyx-flex nyx-items-center nyx-gap-3">
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="Toggle theme">◐</button>
+    <span class="nyx-notification-dot" data-count="5">🔔</span>
+    <span class="nyx-avatar" style="width:32px;height:32px;font-size:12px">FA</span>
+  </div>
+</nav>
+
+<div class="db">
+  <aside class="db-side">
+    <nav class="nyx-sidebar">
+      <a class="active" href="#">▦ Overview</a>
+      <a href="#">🧾 Orders</a>
+      <a href="#">👥 Customers</a>
+      <a href="#">📦 Products</a>
+      <a href="#">📈 Analytics</a>
+      <a href="#">⚙ Settings</a>
+    </nav>
+  </aside>
+
+  <main class="db-main">
+    <div class="nyx-flex nyx-items-center nyx-justify-between" style="margin-bottom:var(--nyx-s5)">
+      <div><h1 class="nyx-h2">Overview</h1><p class="nyx-caption">Last 30 days</p></div>
+      <button class="nyx-btn nyx-btn-primary nyx-btn-sm" data-nyx-toggle="modal" data-nyx-target="#newOrder">+ New order</button>
+    </div>
+
+    <div class="db-kpis">
+      <div class="nyx-card-stat"><span class="nyx-stat-label">Revenue</span><span class="nyx-stat-num">$48.2k</span><div class="nyx-flex nyx-items-center nyx-justify-between"><span class="trend up">▲ 12.4%</span><span class="nyx-sparkline"><span style="height:40%"></span><span style="height:55%"></span><span style="height:45%"></span><span style="height:70%"></span><span style="height:60%"></span><span style="height:85%"></span></span></div></div>
+      <div class="nyx-card-stat"><span class="nyx-stat-label">Orders</span><span class="nyx-stat-num">1,284</span><div class="nyx-flex nyx-items-center nyx-justify-between"><span class="trend up">▲ 8.1%</span><span class="nyx-sparkline"><span style="height:50%"></span><span style="height:40%"></span><span style="height:65%"></span><span style="height:55%"></span><span style="height:75%"></span><span style="height:80%"></span></span></div></div>
+      <div class="nyx-card-stat"><span class="nyx-stat-label">Customers</span><span class="nyx-stat-num">932</span><div class="nyx-flex nyx-items-center nyx-justify-between"><span class="trend up">▲ 3.9%</span><span class="nyx-sparkline"><span style="height:60%"></span><span style="height:50%"></span><span style="height:55%"></span><span style="height:62%"></span><span style="height:58%"></span><span style="height:70%"></span></span></div></div>
+      <div class="nyx-card-stat"><span class="nyx-stat-label">Refunds</span><span class="nyx-stat-num">2.1%</span><div class="nyx-flex nyx-items-center nyx-justify-between"><span class="trend down">▼ 0.6%</span><span class="nyx-sparkline"><span style="height:70%"></span><span style="height:60%"></span><span style="height:55%"></span><span style="height:45%"></span><span style="height:40%"></span><span style="height:35%"></span></span></div></div>
+    </div>
+
+    <div class="db-cols">
+      <div class="nyx-card" style="padding:0;overflow:hidden">
+        <div class="nyx-flex nyx-items-center nyx-justify-between" style="padding:var(--nyx-s4)"><h3 class="nyx-h4">Recent orders</h3><a class="nyx-btn nyx-btn-ghost nyx-btn-sm" href="#">View all →</a></div>
+        <table class="nyx-table nyx-table-sortable" style="border:0;border-radius:0">
+          <thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>Total</th></tr></thead>
+          <tbody>
+            <tr><td>#10482</td><td>Lina H.</td><td><span class="nyx-badge nyx-badge-success">Paid</span></td><td>1,836 ر.س</td></tr>
+            <tr><td>#10481</td><td>Omar K.</td><td><span class="nyx-badge nyx-badge-warning">Pending</span></td><td>399 ر.س</td></tr>
+            <tr><td>#10480</td><td>Sara M.</td><td><span class="nyx-badge nyx-badge-success">Paid</span></td><td>2,540 ر.س</td></tr>
+            <tr><td>#10479</td><td>Yousef A.</td><td><span class="nyx-badge nyx-badge-danger">Refunded</span></td><td>120 ر.س</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="nyx-card">
+        <h3 class="nyx-h4" style="margin-bottom:var(--nyx-s4)">Activity</h3>
+        <div class="nyx-timeline">
+          <div class="nyx-tl-item"><div class="nyx-tl-dot"></div><div class="nyx-tl-date">2 min ago</div><div>New order <strong>#10482</strong> · 1,836 ر.س</div></div>
+          <div class="nyx-tl-item"><div class="nyx-tl-dot"></div><div class="nyx-tl-date">26 min ago</div><div>Payout of <strong>$2,400</strong> initiated</div></div>
+          <div class="nyx-tl-item"><div class="nyx-tl-dot"></div><div class="nyx-tl-date">1 hr ago</div><div>New customer <strong>Sara M.</strong> signed up</div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- new order modal -->
+<div class="nyx-modal" id="newOrder" role="dialog" aria-modal="true" aria-labelledby="noTitle">
+  <div class="nyx-modal-box">
+    <div class="nyx-flex nyx-items-center nyx-justify-between" style="margin-bottom:var(--nyx-s4)"><h3 class="nyx-h3" id="noTitle">New order</h3><button class="nyx-btn nyx-btn-icon nyx-btn-ghost" data-nyx-dismiss aria-label="Close">✕</button></div>
+    <label class="nyx-label">Customer</label>
+    <div class="nyx-combobox" style="margin-bottom:var(--nyx-s4)"><input class="nyx-input" placeholder="Search customer…" aria-label="customer"><div class="nyx-combobox-menu"><div class="nyx-combobox-opt">Lina H.</div><div class="nyx-combobox-opt">Omar K.</div><div class="nyx-combobox-opt">Sara M.</div><div class="nyx-combobox-opt">Yousef A.</div><div class="nyx-combobox-empty">No matches</div></div></div>
+    <label class="nyx-label">Amount</label>
+    <div class="nyx-input-group" style="margin-bottom:var(--nyx-s5)"><span class="nyx-addon">ر.س</span><input class="nyx-input" type="number" placeholder="0.00" aria-label="amount"></div>
+    <div class="nyx-flex nyx-justify-between nyx-gap-3"><button class="nyx-btn nyx-btn-ghost" data-nyx-dismiss>Cancel</button><button class="nyx-btn nyx-btn-primary" onclick="Nyx.toast('Order created ✓','success');Nyx.closeAll()">Create</button></div>
+  </div>
+</div>
+
+<!-- command palette -->
+<div class="nyx-command-palette" id="cp" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="nyx-cp-box"><div class="nyx-cp-input"><span class="nyx-search-icon">⌕</span><input placeholder="Jump to…" aria-label="command"><span class="nyx-command">esc</span></div>
+    <div class="nyx-cp-list"><a class="nyx-cp-item" href="#">▦ Overview</a><a class="nyx-cp-item" href="#">🧾 Orders</a><a class="nyx-cp-item" href="#">👥 Customers</a><a class="nyx-cp-item" href="#">⚙ Settings</a></div>
+  </div>
+</div>
+
+<script src="../nyx.js"></script>
+</body>
+</html>

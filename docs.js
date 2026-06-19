@@ -193,6 +193,38 @@
       ],
       classes: [['dir="rtl"', 'Mirrors layout via CSS logical properties + an RTL layer.'], ['Nyx.toggleDir()', 'Flip direction at runtime; persisted.']]
     },
+    {
+      id: 'frameworks', group: 'Getting Started', title: 'React · Vue · Angular', added: 'v1.6',
+      summary: 'Nyx is framework-agnostic — it is just a stylesheet plus a tiny runtime. Import the CSS once, use the classes in your markup, and call Nyx.init() after components mount so declarative data-nyx-* behaviors wire up on freshly-rendered DOM. For imperative calls (toasts, modals) call the global Nyx.',
+      sections: [
+        { title: 'React', lang: 'jsx', code: "// main.jsx — import the stylesheet once\nimport 'nyx-ui/nyx.css';\nimport 'nyx-ui/nyx.js';   // attaches window.Nyx\n\nfunction Page() {\n  useEffect(() => { window.Nyx.init(); }, []);   // wire data-nyx-* after mount\n  return (\n    <div className=\"nyx-card\">\n      <button className=\"nyx-btn nyx-btn-primary\"\n        onClick={() => window.Nyx.toast('Saved ✓', 'success')}>Save</button>\n    </div>\n  );\n}" },
+        { title: 'Vue', lang: 'js', code: "// main.js\nimport 'nyx-ui/nyx.css';\nimport 'nyx-ui/nyx.js';\n\n// in a component\nimport { onMounted } from 'vue';\nonMounted(() => Nyx.init());\n\n// template:  <button class=\"nyx-btn nyx-btn-primary\" @click=\"Nyx.toast('Hi')\">Go</button>" },
+        { title: 'Angular', lang: 'ts', code: "// angular.json → styles: [\"node_modules/nyx-ui/nyx.css\"]\n// add nyx.js to scripts, or import it in main.ts\ndeclare const Nyx: any;\n\n@Component({ /* … */ })\nexport class CardComponent implements AfterViewInit {\n  ngAfterViewInit() { Nyx.init(); }   // re-wire after the view renders\n  save() { Nyx.toast('Saved ✓', 'success'); }\n}" },
+        { title: 'Notes', text: 'Nyx.init(root) is idempotent and accepts a container, so re-run it (or scope it) whenever you inject markup — after a route change, a list render, or a modal mount. For SSR (Next/Nuxt), guard the runtime: it touches window/document, so import nyx.js in a client-only effect (useEffect / onMounted / afterNextRender). The CSS is safe to import on the server.' }
+      ],
+      classes: [
+        ['import \"nyx-ui/nyx.css\"', 'Load the stylesheet once at the app root.'],
+        ['Nyx.init(root?)', 'Wire data-nyx-* after mount/render. Idempotent; scope with a root.'],
+        ['window.Nyx.*', 'Imperative API (toast, openModal, progress…) from anywhere.'],
+        ['SSR', 'Import nyx.js in a client-only effect; CSS is server-safe.']
+      ]
+    },
+    {
+      id: 'examples', group: 'Examples', title: 'Templates', added: 'v1.6',
+      summary: 'Full pages built entirely with Nyx — copy them as starting points. Each is a single self-contained HTML file in examples/ that links nyx.css + nyx.js.',
+      sections: [
+        {
+          title: 'Open a template', nocode: true, demo:
+            '<div class="lp-comp" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">' +
+            '<a href="examples/dashboard.html" target="_blank" rel="noopener"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">▦ Dashboard</h3><p class="nyx-caption">Sidebar, KPI cards with sparklines, sortable table, activity timeline, ⌘K palette.</p></div></a>' +
+            '<a href="examples/checkout.html" target="_blank" rel="noopener"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">🛒 Checkout</h3><p class="nyx-caption">Cart with steppers, address, payment cards, coupon and a sticky order summary (VAT).</p></div></a>' +
+            '<a href="examples/pricing.html" target="_blank" rel="noopener"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">💳 Pricing</h3><p class="nyx-caption">Monthly/yearly toggle, three plans (featured), feature lists and an FAQ accordion.</p></div></a>' +
+            '<a href="examples/auth.html" target="_blank" rel="noopener"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">🔐 Auth</h3><p class="nyx-caption">Split-screen sign-in / sign-up with tabs, social buttons and an aurora brand panel.</p></div></a>' +
+            '</div>'
+        }
+      ],
+      classes: [['examples/*.html', 'Self-contained template pages — copy and adapt.']]
+    },
 
     /* ===== LAYOUT ===== */
     {
@@ -1092,7 +1124,7 @@
   PAGES.forEach(function (p) { byId[p.id] = p; });
 
   /* group display order (mirrors Bootstrap's docs taxonomy) */
-  var GROUP_ORDER = ['Getting Started', 'Customize', 'Layout', 'Content', 'Forms', 'Components', 'Helpers', 'Utilities', 'Signature', 'Motion', 'Regional', 'Commerce'];
+  var GROUP_ORDER = ['Getting Started', 'Examples', 'Customize', 'Layout', 'Content', 'Forms', 'Components', 'Helpers', 'Utilities', 'Signature', 'Motion', 'Regional', 'Commerce'];
   function groupRank(g) { var i = GROUP_ORDER.indexOf(g); return i < 0 ? 99 : i; }
 
   /* ---------- i18n (optional; Arabic etc. provided via window.NYX_I18N) ---------- */

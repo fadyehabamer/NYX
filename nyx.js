@@ -1,5 +1,5 @@
 /*!
- * Nyx — runtime · v1.5.0 · MIT License
+ * Nyx — runtime · v1.6.0 · MIT License
  * Zero dependencies. UMD: window.Nyx (or CommonJS export).
  *
  * Declarative API (no JS to write):
@@ -146,7 +146,12 @@
     var group = btn.closest('[data-nyx-tabs]'); if (!group) return;
     var key = btn.getAttribute('data-nyx-tab');
     var scope = group.parentElement || doc;
-    $$('[data-nyx-tab]', group).forEach(function (b) { b.classList.toggle('active', b === btn); });
+    $$('[data-nyx-tab]', group).forEach(function (b) {
+      var on = b === btn;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.setAttribute('tabindex', on ? '0' : '-1');
+    });
     $$('[data-nyx-panel]', scope).forEach(function (p) {
       p.classList.toggle('active', p.getAttribute('data-nyx-panel') === key);
     });
@@ -245,7 +250,9 @@
       if (kind === 'dropdown') {
         e.preventDefault();
         var dd = toggle.closest('.nyx-dropdown'), willOpen = dd && !dd.classList.contains('open');
-        closeDropdowns(); if (dd) dd.classList.toggle('open', willOpen); return;
+        closeDropdowns(); if (dd) dd.classList.toggle('open', willOpen);
+        if (willOpen) { var fi = dd.querySelector('.nyx-dropdown-item'); if (fi) setTimeout(function () { fi.focus(); }, 20); }
+        return;
       }
     }
     if (e.target.closest('[data-nyx-dismiss]')) { e.preventDefault(); closeAll(); return; }
@@ -411,6 +418,9 @@
       m._nyxMs = true;
       var control = m.querySelector('.nyx-multiselect-control'), input = control.querySelector('input');
       var menu = m.querySelector('.nyx-multiselect-menu');
+      var opts = $$('.nyx-multiselect-opt', m);
+      if (menu) menu.setAttribute('role', 'listbox'); if (menu) menu.setAttribute('aria-multiselectable', 'true');
+      opts.forEach(function (o) { o.setAttribute('role', 'option'); o.setAttribute('aria-selected', 'false'); });
       function valOf(o) { return o.getAttribute('data-value') || o.textContent.trim(); }
       function addChip(val, label) {
         if (control.querySelector('[data-val="' + val + '"]')) return;
@@ -419,20 +429,27 @@
         chip.innerHTML = label + ' <span class="nyx-chip-x" role="button" aria-label="remove">×</span>';
         control.insertBefore(chip, input);
       }
+      function removeVal(v) {
+        opts.forEach(function (o) { if (valOf(o) === v) { o.classList.remove('selected'); o.setAttribute('aria-selected', 'false'); } });
+        var ch = control.querySelector('[data-val="' + v + '"]'); if (ch) ch.remove();
+      }
+      function toggle(o) {
+        var on = o.classList.toggle('selected'); o.setAttribute('aria-selected', on ? 'true' : 'false');
+        if (on) addChip(valOf(o), o.textContent.trim()); else removeVal(valOf(o));
+      }
       control.addEventListener('click', function (e) {
         var x = e.target.closest('.nyx-chip-x');
-        if (x) {
-          var chip = x.closest('.nyx-chip'), v = chip.getAttribute('data-val');
-          $$('.nyx-multiselect-opt', m).forEach(function (o) { if (valOf(o) === v) o.classList.remove('selected'); });
-          chip.remove(); return;
-        }
+        if (x) { removeVal(x.closest('.nyx-chip').getAttribute('data-val')); return; }
         m.classList.add('open'); if (input) input.focus();
       });
       if (menu) menu.addEventListener('mousedown', function (e) {
-        var o = e.target.closest('.nyx-multiselect-opt'); if (!o) return; e.preventDefault();
-        var on = o.classList.toggle('selected');
-        if (on) addChip(valOf(o), o.textContent.trim());
-        else { var ex = control.querySelector('[data-val="' + valOf(o) + '"]'); if (ex) ex.remove(); }
+        var o = e.target.closest('.nyx-multiselect-opt'); if (!o) return; e.preventDefault(); toggle(o);
+      });
+      if (input) input.addEventListener('keydown', function (e) {
+        if (e.key === 'Backspace' && !input.value) {
+          var chips = $$('.nyx-chip', control); if (chips.length) removeVal(chips[chips.length - 1].getAttribute('data-val'));
+        } else if (e.key === 'Escape') { m.classList.remove('open'); }
+        else if (e.key === 'ArrowDown') { e.preventDefault(); m.classList.add('open'); var f = menu && menu.querySelector('.nyx-multiselect-opt'); if (f) f.scrollIntoView({ block: 'nearest' }); }
       });
     });
   }
@@ -526,6 +543,22 @@
     });
   }
 
+  /* ---------- tabs ARIA (roles + roving tabindex) ---------- */
+  function initTabs(root) {
+    $$('[data-nyx-tabs]', root).filter(function (g) { return !g._nyxTabs; }).forEach(function (g) {
+      g._nyxTabs = true; g.setAttribute('role', 'tablist');
+      var tabs = $$('[data-nyx-tab]', g), scope = g.parentElement || doc;
+      tabs.forEach(function (t) {
+        t.setAttribute('role', 'tab');
+        var on = t.classList.contains('active');
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.setAttribute('tabindex', on ? '0' : '-1');
+        var key = t.getAttribute('data-nyx-tab'), panel = $('[data-nyx-panel="' + key + '"]', scope);
+        if (panel) { panel.setAttribute('role', 'tabpanel'); panel.setAttribute('tabindex', '0'); }
+      });
+    });
+  }
+
   /* ---------- hierarchy: collapsible tree + Miller columns ---------- */
   function initHierarchy(root) {
     $$('.nyx-hierarchy li', root).forEach(function (li) {
@@ -579,6 +612,7 @@
     initCountdown(root);
     initZakat(root);
     initQibla(root);
+    initTabs(root);
     syncBackTop();
   }
   window.addEventListener('scroll', syncBackTop, { passive: true });
@@ -592,12 +626,13 @@
     menu.style.left = Math.min(e.clientX, vw - menu.offsetWidth - 8) + 'px';
     menu.style.top = Math.min(e.clientY, vh - menu.offsetHeight - 8) + 'px';
     menu.classList.add('open');
+    var fi = menu.querySelector('.nyx-dropdown-item'); if (fi) setTimeout(function () { fi.focus(); }, 20);
   });
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', function () { init(); });
   else init();
 
   return {
-    version: '1.5.0',
+    version: '1.6.0',
     init: init, toast: toast,
     openModal: openModal, openDrawer: openDrawer, close: close, closeAll: closeAll,
     togglePopover: togglePopover, openCommandPalette: openCommandPalette, closeCommandPalette: closeCommandPalette,

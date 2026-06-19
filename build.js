@@ -14,7 +14,7 @@ var fs = require('fs');
 var path = require('path');
 var zlib = require('zlib');
 
-var VERSION = '1.5.0';
+var VERSION = '1.6.0';
 var SRC = path.join(__dirname, 'nyx.css');
 var JSSRC = path.join(__dirname, 'nyx.js');
 var OUT = path.join(__dirname, 'components');

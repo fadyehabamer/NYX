@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nyx · Auth example</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../nyx.css" />
+<style>
+  .au{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
+  .au-brand{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:var(--nyx-s8);border-inline-end:1px solid var(--nyx-border)}
+  .au-form{display:flex;align-items:center;justify-content:center;padding:var(--nyx-s6)}
+  .au-card{width:min(400px,100%)}
+  .au-social{display:grid;grid-template-columns:1fr 1fr;gap:var(--nyx-s3)}
+  @media(max-width:820px){.au{grid-template-columns:1fr}.au-brand{display:none}}
+</style>
+</head>
+<body class="nyx nyx-reset">
+
+<div class="au">
+  <aside class="au-brand nyx-aurora">
+    <a href="../index.html" class="nyx-flex nyx-items-center nyx-gap-2" style="font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-lg)"><span style="width:30px;height:30px;border-radius:8px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));display:grid;place-items:center;color:#fff">N</span> Nyx</a>
+    <h1 class="nyx-bigtype nyx-bigtype-sm" style="margin-top:var(--nyx-s6)">Build in the <span class="nyx-gradient-text animated">dark.</span></h1>
+    <p class="nyx-lead nyx-muted" style="max-width:380px;margin-top:var(--nyx-s4)">The dark-mode-native design system — full RTL, Arabic fonts, zero dependencies.</p>
+    <div class="nyx-flex nyx-gap-3 nyx-items-center" style="margin-top:var(--nyx-s6)">
+      <span class="nyx-avatar" style="width:32px;height:32px;font-size:12px">A</span><span class="nyx-avatar" style="width:32px;height:32px;font-size:12px">B</span><span class="nyx-avatar" style="width:32px;height:32px;font-size:12px">C</span>
+      <span class="nyx-caption">Joined by 12,000+ developers</span>
+    </div>
+  </aside>
+
+  <main class="au-form">
+    <div class="au-card">
+      <div class="nyx-flex nyx-justify-between nyx-items-center" style="margin-bottom:var(--nyx-s5)">
+        <h2 class="nyx-h2" id="authTitle">Welcome back</h2>
+        <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="Toggle theme">◐</button>
+      </div>
+
+      <div class="nyx-tabs" data-nyx-tabs style="margin-bottom:var(--nyx-s5)">
+        <button class="nyx-tab active" data-nyx-tab="in" onclick="document.getElementById('authTitle').textContent='Welcome back'">Sign in</button>
+        <button class="nyx-tab" data-nyx-tab="up" onclick="document.getElementById('authTitle').textContent='Create account'">Sign up</button>
+      </div>
+
+      <div class="au-social" style="margin-bottom:var(--nyx-s4)">
+        <button class="nyx-btn nyx-btn-glass">Google</button>
+        <button class="nyx-btn nyx-btn-glass"> Apple</button>
+      </div>
+      <div class="nyx-divider">or</div>
+
+      <!-- sign in -->
+      <div class="nyx-tab-panel active" data-nyx-panel="in">
+        <form onsubmit="Nyx.toast('Signed in ✓','success');return false">
+          <div class="nyx-stack">
+            <div><label class="nyx-label">Email</label><input class="nyx-input" type="email" placeholder="you@company.com" required aria-label="email"></div>
+            <div><label class="nyx-label">Password</label><input class="nyx-input" type="password" placeholder="••••••••" required aria-label="password"></div>
+            <div class="nyx-flex nyx-items-center nyx-justify-between">
+              <label class="nyx-checkbox"><input type="checkbox" checked><span class="nyx-box"></span> Remember me</label>
+              <a href="#" class="nyx-text-accent" style="font-size:var(--nyx-fs-sm)">Forgot?</a>
+            </div>
+            <button class="nyx-btn nyx-btn-primary nyx-btn-block nyx-btn-lg" type="submit">Sign in</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- sign up -->
+      <div class="nyx-tab-panel" data-nyx-panel="up">
+        <form onsubmit="Nyx.toast('Account created 🎉','success');return false">
+          <div class="nyx-stack">
+            <div><label class="nyx-label">Full name</label><input class="nyx-input" placeholder="Jane Doe" required aria-label="name"></div>
+            <div><label class="nyx-label">Email</label><input class="nyx-input" type="email" placeholder="you@company.com" required aria-label="email"></div>
+            <div><label class="nyx-label">Password</label><input class="nyx-input" type="password" placeholder="8+ characters" required aria-label="password"></div>
+            <label class="nyx-checkbox"><input type="checkbox" required><span class="nyx-box"></span> I agree to the Terms</label>
+            <button class="nyx-btn nyx-btn-primary nyx-btn-block nyx-btn-lg" type="submit">Create account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="../nyx.js"></script>
+</body>
+</html>
