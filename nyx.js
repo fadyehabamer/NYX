@@ -3,17 +3,20 @@
  * Zero dependencies. UMD: window.Nyx (or CommonJS export).
  *
  * Declarative API (no JS to write):
- *   data-nyx-toggle="modal|drawer|popover|command|dropdown|collapse"  (+ data-nyx-target)
+ *   data-nyx-toggle="modal|drawer|sheet|popover|command|dropdown|collapse"  (+ data-nyx-target)
  *   data-nyx-dismiss                                  closes its overlay
  *   data-nyx-tabs / data-nyx-tab / data-nyx-panel     tabs & pills
  *   data-nyx-accordion                                accordion (single-open) wrapper
- *   data-nyx-spy                                      scrollspy nav
+ *   data-nyx-spy · data-nyx-reveal · data-nyx-numerals="arab"
  *   data-nyx-carousel  +  data-nyx-slide="prev|next" / data-nyx-slide-to="i"
+ *   data-nyx-datepicker · data-nyx-contextmenu="#id" · data-nyx-countdown="HH:MM"
+ *   data-nyx-prayers · data-nyx-qibla="deg" · class="nyx-combobox|nyx-multiselect|nyx-hierarchy"
  *   class="nyx-table-sortable"                        click headers to sort
  *
  * Imperative API:
  *   Nyx.toast · openModal · openDrawer · close · closeAll · togglePopover
- *   Nyx.openCommandPalette · setTheme · toggleTheme · setDir · toggleDir · setAccent · init
+ *   Nyx.openCommandPalette · setTheme · toggleTheme · setDir · toggleDir · setAccent
+ *   Nyx.toArabicNumerals · Nyx.progress.{start,set,done} · init
  * ========================================================== */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory();
@@ -58,28 +61,34 @@
   }
   function lockScroll(on) { doc.body.style.overflow = on ? 'hidden' : ''; }
 
-  /* ---------- overlays: modal + drawer ---------- */
+  /* ---------- focus management (trap + restore) ---------- */
+  var _lastFocus = null;
+  var FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  function focusables(c) { return $$(FOCUSABLE, c).filter(function (e) { return e.offsetWidth > 0 || e.offsetHeight > 0 || e === doc.activeElement; }); }
+  function currentOverlay() { return $('.nyx-modal.open') || $('.nyx-sheet.open') || $('.nyx-drawer.open') || $('.nyx-command-palette.open'); }
+  function releaseFocus() { var l = _lastFocus; _lastFocus = null; if (l && l.focus) setTimeout(function () { try { l.focus(); } catch (e) {} }, 0); }
+
+  /* ---------- overlays: modal + drawer + sheet ---------- */
   function openModal(target) {
     var m = el(target); if (!m) return;
+    if (!_lastFocus) _lastFocus = doc.activeElement;
     backdrop().classList.add('open');
     m.classList.add('open');
     lockScroll(true);
-    var f = m.querySelector('input,button,[tabindex]'); if (f) setTimeout(function () { f.focus(); }, 60);
+    var f = focusables(m); if (f.length) setTimeout(function () { f[0].focus(); }, 60);
   }
   var openDrawer = openModal;
 
   function close(target) {
     var t = el(target); if (t) t.classList.remove('open');
-    if (!$('.nyx-modal.open') && !$('.nyx-drawer.open') && !$('.nyx-sheet.open')) {
-      if (_backdrop) _backdrop.classList.remove('open');
-      lockScroll(false);
-    }
+    if (!currentOverlay()) { if (_backdrop) _backdrop.classList.remove('open'); lockScroll(false); releaseFocus(); }
   }
   function closeAll() {
     $$('.nyx-modal.open, .nyx-drawer.open, .nyx-sheet.open').forEach(function (n) { n.classList.remove('open'); });
     if (_backdrop) _backdrop.classList.remove('open');
     closeCommandPalette();
     lockScroll(false);
+    if (!currentOverlay()) releaseFocus();
   }
 
   /* ---------- popover ---------- */
@@ -100,12 +109,13 @@
   function paletteEl() { return $('.nyx-command-palette'); }
   function openCommandPalette() {
     var cp = paletteEl(); if (!cp) return;
+    if (!_lastFocus) _lastFocus = doc.activeElement;
     cp.classList.add('open'); lockScroll(true);
     var inp = cp.querySelector('input'); if (inp) setTimeout(function () { inp.focus(); }, 60);
   }
   function closeCommandPalette() {
     var cp = paletteEl(); if (cp) cp.classList.remove('open');
-    if (!$('.nyx-modal.open') && !$('.nyx-drawer.open')) lockScroll(false);
+    if (!currentOverlay()) { lockScroll(false); releaseFocus(); }
   }
 
   /* ---------- toast ---------- */
@@ -275,12 +285,45 @@
     if (!e.target.closest('.nyx-context-menu')) $$('.nyx-context-menu.open').forEach(function (o) { o.classList.remove('open'); });
   });
 
-  /* ---------- keyboard: ⌘K palette, Esc closes ---------- */
+  /* ---------- keyboard: ⌘K palette, Tab trap, arrows, Esc ---------- */
   doc.addEventListener('keydown', function (e) {
     if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
       if (paletteEl()) { e.preventDefault(); openCommandPalette(); }
     }
-    if (e.key === 'Escape') { closeAll(); closeDropdowns(); $$('.nyx-popover.open').forEach(function (o) { o.classList.remove('open'); }); }
+    /* focus trap inside an open overlay */
+    if (e.key === 'Tab') {
+      var ov = currentOverlay();
+      if (ov) {
+        var f = focusables(ov); if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && doc.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && doc.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }
+    /* roving arrows for tabs / nav-pills */
+    var tabEl = e.target.closest('[data-nyx-tab]');
+    if (tabEl && (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'Home' || e.key === 'End')) {
+      var grp = tabEl.closest('[data-nyx-tabs]'); if (grp) {
+        e.preventDefault();
+        var tabs = $$('[data-nyx-tab]', grp), i = tabs.indexOf(tabEl), n = tabs.length;
+        var to = e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : e.key === 'ArrowRight' ? (i + 1) % n : (i - 1 + n) % n;
+        tabs[to].focus(); activateTab(tabs[to]);
+      }
+    }
+    /* arrow nav inside an open dropdown / context menu */
+    var menu = $('.nyx-dropdown.open') || $('.nyx-context-menu.open');
+    if (menu && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+      var items = $$('.nyx-dropdown-item', menu); if (items.length) {
+        e.preventDefault();
+        var ci = items.indexOf(doc.activeElement);
+        var ni = e.key === 'ArrowDown' ? (ci + 1) % items.length : (ci - 1 + items.length) % items.length;
+        items[ni < 0 ? 0 : ni].focus();
+      }
+    }
+    if (e.key === 'Escape') {
+      closeAll(); closeDropdowns();
+      $$('.nyx-popover.open, .nyx-combobox.open, .nyx-multiselect.open, .nyx-datepicker.open, .nyx-fab.open, .nyx-context-menu.open').forEach(function (o) { o.classList.remove('open'); });
+    }
   });
 
   /* ---------- OTP auto-advance + tag-input add ---------- */
