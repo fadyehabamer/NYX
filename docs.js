@@ -291,6 +291,38 @@
       ]
     },
     {
+      id: 'combobox', group: 'Forms', title: 'Combobox', added: 'v1.5',
+      summary: 'An autocomplete input that filters a list as you type — type to narrow, click to choose, closes on outside click.',
+      sections: [
+        { title: 'Filter as you type', demo: '<div class="nyx-combobox" style="max-width:320px"><input class="nyx-input" placeholder="Search a country…" aria-label="country"><div class="nyx-combobox-menu"><div class="nyx-combobox-opt">Saudi Arabia</div><div class="nyx-combobox-opt">United Arab Emirates</div><div class="nyx-combobox-opt">Egypt</div><div class="nyx-combobox-opt">Qatar</div><div class="nyx-combobox-opt">Kuwait</div><div class="nyx-combobox-opt">Bahrain</div><div class="nyx-combobox-opt">Oman</div><div class="nyx-combobox-empty">No matches</div></div></div>' }
+      ],
+      classes: [['nyx-combobox', 'Wrapper (an input + .nyx-combobox-menu).'], ['nyx-combobox-opt', 'An option, filtered live by the typed text.'], ['nyx-combobox-empty', 'Shown when nothing matches.']]
+    },
+    {
+      id: 'multi-select', group: 'Forms', title: 'Multi-select', added: 'v1.5',
+      summary: 'Pick several values as removable chips. Click the control to open, tick options, remove a chip with its ×.',
+      sections: [
+        { title: 'Tokens', demo: '<div class="nyx-multiselect" style="max-width:360px"><div class="nyx-multiselect-control"><input placeholder="Add teams…" aria-label="teams"></div><div class="nyx-multiselect-menu"><div class="nyx-multiselect-opt">Design</div><div class="nyx-multiselect-opt">Engineering</div><div class="nyx-multiselect-opt">Marketing</div><div class="nyx-multiselect-opt">Sales</div><div class="nyx-multiselect-opt">Support</div></div></div>' }
+      ],
+      classes: [['nyx-multiselect', 'Wrapper.'], ['nyx-multiselect-control', 'The chips + input box.'], ['nyx-multiselect-opt', 'A checkable option (toggles a chip).']]
+    },
+    {
+      id: 'date-picker', group: 'Forms', title: 'Date picker', added: 'v1.5',
+      summary: 'An input with a calendar popover — navigate months with ‹ ›, click a day to fill the field (YYYY-MM-DD). The runtime builds and wires the calendar.',
+      sections: [
+        { title: 'Pick a date', demo: '<div class="nyx-datepicker" data-nyx-datepicker><input class="nyx-input" placeholder="YYYY-MM-DD" aria-label="date" readonly style="min-width:210px"></div>' }
+      ],
+      classes: [['data-nyx-datepicker', 'Wrapper; runtime renders the calendar + handles selection.'], ['nyx-datepicker-pop', 'Popover holding the calendar (auto-created if absent).']]
+    },
+    {
+      id: 'phone', group: 'Forms', title: 'Phone input', added: 'v1.5',
+      summary: 'A dial-code select fused with a number field — preloaded here with Gulf / MENA codes.',
+      sections: [
+        { title: 'Dial code + number', demo: '<div class="nyx-phone" style="max-width:300px"><select aria-label="country code"><option>+966</option><option>+971</option><option>+20</option><option>+965</option><option>+974</option><option>+973</option><option>+968</option></select><input type="tel" placeholder="5X XXX XXXX" aria-label="phone"></div>' }
+      ],
+      classes: [['nyx-phone', 'Flex wrapper; focus-within glows the whole control.'], ['nyx-phone select', 'The dial-code addon.']]
+    },
+    {
       id: 'input-group', group: 'Forms', title: 'Input group',
       summary: 'Fuse an input with a prefix addon or a suffix button into a single focus-ringed control.',
       sections: [
@@ -636,6 +668,46 @@
       ]
     },
     {
+      id: 'bottom-sheet', group: 'Components', title: 'Bottom sheet', added: 'v1.5',
+      summary: 'A panel that slides up from the bottom — the mobile-native alternative to a modal. Opens with data-nyx-toggle="sheet"; closes on backdrop, Esc, or data-nyx-dismiss.',
+      sections: [
+        { title: 'Open it', demo: '<button class="nyx-btn nyx-btn-primary" data-nyx-toggle="sheet" data-nyx-target="#docSheet">Open bottom sheet</button>' }
+      ],
+      classes: [['nyx-sheet', 'The sheet panel (add a .nyx-sheet-grip handle).'], ['data-nyx-toggle="sheet"', 'Opens the targeted sheet (+ data-nyx-target).']]
+    },
+    {
+      id: 'fab', group: 'Components', title: 'FAB + speed dial', added: 'v1.5',
+      summary: 'A floating action button that fans out a set of labelled actions on tap. Position it fixed in your app; here it is anchored inside the demo box.',
+      sections: [
+        { title: 'Tap to expand', demo: '<div style="position:relative;height:200px;border:1px dashed var(--nyx-border);border-radius:var(--nyx-radius-lg)"><div class="nyx-fab" style="position:absolute"><div class="nyx-fab-actions"><span class="nyx-fab-action"><span class="nyx-fab-label">Share</span><button class="nyx-fab-mini" aria-label="Share">↗</button></span><span class="nyx-fab-action"><span class="nyx-fab-label">Edit</span><button class="nyx-fab-mini" aria-label="Edit">✎</button></span><span class="nyx-fab-action"><span class="nyx-fab-label">New</span><button class="nyx-fab-mini" aria-label="New">＋</button></span></div><button class="nyx-fab-btn" aria-label="Actions">＋</button></div></div>' }
+      ],
+      classes: [['nyx-fab', 'Container (fixed by default).'], ['nyx-fab-btn', 'The main button; rotates when open.'], ['nyx-fab-actions / nyx-fab-action', 'Speed-dial list / one labelled action.']]
+    },
+    {
+      id: 'back-to-top', group: 'Components', title: 'Back to top', added: 'v1.5',
+      summary: 'A button that appears after you scroll down and smooth-scrolls back to the top. Drop one anywhere; the runtime shows/hides it on scroll. (Shown inline here.)',
+      sections: [
+        { title: 'Button', demo: '<button class="nyx-to-top show" style="position:relative;inset:auto" aria-label="Back to top">↑</button>' }
+      ],
+      classes: [['nyx-to-top', 'Fixed button; runtime toggles .show past 320px scroll and scrolls to top on click.']]
+    },
+    {
+      id: 'top-progress', group: 'Components', title: 'Top progress bar', added: 'v1.5',
+      summary: 'A thin page-load progress bar pinned to the top — NProgress-style. Drive it imperatively for route changes, fetches or uploads.',
+      sections: [
+        { title: 'Simulate a load', demo: '<button class="nyx-btn nyx-btn-secondary" onclick="Nyx.progress.start();setTimeout(function(){Nyx.progress.done()},1300)">Run progress</button>', lang: 'js', code: "Nyx.progress.start();   // trickles toward the top\n// …after your fetch / route change\nNyx.progress.done();    // fills to 100% and fades" }
+      ],
+      classes: [['Nyx.progress.start()', 'Show the bar and trickle forward.'], ['Nyx.progress.set(n)', 'Set the width to n%.'], ['Nyx.progress.done()', 'Complete and fade out.']]
+    },
+    {
+      id: 'context-menu', group: 'Components', title: 'Context menu', added: 'v1.5',
+      summary: 'A right-click menu positioned at the cursor. Add data-nyx-contextmenu="#id" to any element; closes on outside click or Esc.',
+      sections: [
+        { title: 'Right-click the card', demo: '<div data-nyx-contextmenu="#docCtx" class="nyx-card" style="text-align:center;padding:28px;cursor:context-menu">Right-click anywhere here</div><div class="nyx-context-menu" id="docCtx"><button class="nyx-dropdown-item">✎ Rename</button><button class="nyx-dropdown-item">⧉ Duplicate</button><div class="nyx-dropdown-divider"></div><button class="nyx-dropdown-item">🗑 Delete</button></div>' }
+      ],
+      classes: [['data-nyx-contextmenu="#id"', 'On any element: right-click opens that menu at the cursor.'], ['nyx-context-menu', 'The menu (reuses .nyx-dropdown-item rows).']]
+    },
+    {
       id: 'vertical-tabs', group: 'Components', title: 'Vertical tabs', added: 'v1.2',
       summary: 'The tabs component laid out vertically — the same data-nyx-tabs wiring.',
       sections: [{ title: 'Side tabs', demo: '<div class="nyx-tabs-vertical"><div class="nyx-tabs" data-nyx-tabs><button class="nyx-tab active" data-nyx-tab="vt1">Profile</button><button class="nyx-tab" data-nyx-tab="vt2">Account</button><button class="nyx-tab" data-nyx-tab="vt3">Billing</button></div><div style="flex:1"><div class="nyx-tab-panel active" data-nyx-panel="vt1">Profile settings.</div><div class="nyx-tab-panel" data-nyx-panel="vt2">Account settings.</div><div class="nyx-tab-panel" data-nyx-panel="vt3">Billing settings.</div></div></div>' }],
@@ -939,6 +1011,80 @@
         { title: 'Arabic-Indic numerals (JS)', text: 'Add data-nyx-numerals="arab" to convert 0-9 to ٠-٩ on init, or call Nyx.toArabicNumerals(value) yourself.', demo: '<div class="nyx-flex nyx-gap-5 nyx-wrap nyx-items-center"><span>Order <strong data-nyx-numerals="arab">#10482</strong></span><span class="nyx-badge nyx-badge-success" data-nyx-numerals="arab">2025</span></div>', lang: 'js', code: "Nyx.toArabicNumerals('2025');  // => '٢٠٢٥'" }
       ],
       classes: [['nyx-bilingual', 'Arabic (.ar) over Latin (.en).'], ['nyx-bilingual inline', 'One-line layout.'], ['data-nyx-numerals="arab"', 'Convert Western digits to Arabic-Indic on init.'], ['Nyx.toArabicNumerals(v)', 'Helper that returns the converted string.']]
+    },
+    {
+      id: 'countdown', group: 'Regional', title: 'Countdown', added: 'v1.5',
+      summary: 'A live HH:MM:SS countdown — perfect for Iftar / Suhoor during Ramadan, or a flash sale. Add data-nyx-countdown="HH:MM" (today, or tomorrow if past) and the runtime ticks it.',
+      sections: [
+        { title: 'Until Iftar', demo: '<div class="nyx-countdown" data-nyx-countdown="18:42"><div class="unit"><b>00</b><span>hrs</span></div><span class="sep">:</span><div class="unit"><b>00</b><span>min</span></div><span class="sep">:</span><div class="unit"><b>00</b><span>sec</span></div></div>' }
+      ],
+      classes: [['nyx-countdown[data-nyx-countdown]', 'Live countdown to a HH:MM target.'], ['.unit > b / span', 'The number / its label (hrs · min · sec).']]
+    },
+    {
+      id: 'zakat', group: 'Regional', title: 'Zakat calculator', added: 'v1.5',
+      summary: 'A live 2.5% calculator (override with data-rate). Type an amount of eligible wealth and the due figure updates instantly.',
+      sections: [
+        { title: 'Calculate', demo: '<div class="nyx-zakat"><div><label class="nyx-label">Eligible wealth</label><div class="nyx-input-group"><span class="nyx-addon">ر.س</span><input class="nyx-input nyx-zakat-amount" type="number" value="100000" aria-label="wealth"></div></div><div class="nyx-zakat-out"><span class="nyx-muted">Zakat due (2.5%)</span><b><span class="nyx-zakat-result">0</span> ر.س</b></div></div>' }
+      ],
+      classes: [['nyx-zakat', 'Wrapper (data-rate sets the %; default 2.5).'], ['nyx-zakat-amount', 'The amount input (runtime listens).'], ['nyx-zakat-result', 'Where the computed figure is written.']]
+    },
+    {
+      id: 'qibla', group: 'Regional', title: 'Qibla indicator', added: 'v1.5',
+      summary: 'A compass dial whose needle points toward the Qibla. Set data-nyx-qibla="degrees" (your computed bearing); pair with the Device Orientation API for a live compass.',
+      sections: [
+        { title: 'Bearing 119°', demo: '<div class="nyx-qibla" data-nyx-qibla="119"><span class="dir n">N</span><span class="dir e">E</span><span class="dir s">S</span><span class="dir w">W</span><span class="needle"></span><span class="kaaba">🕋</span><span class="hub"></span></div>' }
+      ],
+      classes: [['nyx-qibla[data-nyx-qibla]', 'Compass; runtime rotates the needle to the bearing.'], ['.needle / .kaaba / .dir', 'Pointer / Kaaba marker / N-E-S-W labels.']]
+    },
+    {
+      id: 'delivery', group: 'Regional', title: 'Delivery tracking', added: 'v1.5',
+      summary: 'A vertical order-tracking timeline — mark steps .done (completed) and .current (in progress). Common across MENA delivery and e-commerce apps.',
+      sections: [
+        { title: 'Order status', demo: '<div class="nyx-delivery"><div class="nyx-dstep done"><span class="nyx-ddot">✓</span><div class="nyx-dmeta"><div class="nyx-dtitle">Order placed</div><div class="nyx-dtime">10:24</div></div></div><div class="nyx-dstep done"><span class="nyx-ddot">✓</span><div class="nyx-dmeta"><div class="nyx-dtitle">Packed</div><div class="nyx-dtime">11:05</div></div></div><div class="nyx-dstep current"><span class="nyx-ddot">🚚</span><div class="nyx-dmeta"><div class="nyx-dtitle">Out for delivery</div><div class="nyx-dtime">12:30</div></div></div><div class="nyx-dstep"><span class="nyx-ddot">🏠</span><div class="nyx-dmeta"><div class="nyx-dtitle">Delivered</div><div class="nyx-dtime">—</div></div></div></div>' }
+      ],
+      classes: [['nyx-delivery', 'Vertical tracker.'], ['nyx-dstep done / current', 'A completed / in-progress step.'], ['nyx-ddot / nyx-dtitle / nyx-dtime', 'Step icon / title / timestamp.']]
+    },
+
+    /* ===== COMMERCE ===== */
+    {
+      id: 'product', group: 'Commerce', title: 'Product card', added: 'v1.5',
+      summary: 'A storefront product tile — media, tag, title, rating, price and an add-to-cart action.',
+      sections: [
+        { title: 'Product', demo: '<div class="nyx-product" style="max-width:240px"><div class="nyx-product-media">🎧<span class="nyx-product-tag nyx-badge nyx-badge-danger">-20%</span></div><div class="nyx-product-body"><div class="nyx-rating" style="font-size:14px"><input type="radio" name="pr" checked><label></label></div><div class="nyx-product-title">Wireless Headphones</div><div class="nyx-product-foot"><span class="nyx-price"><span class="amt">399</span><span class="cur">ر.س</span></span><button class="nyx-btn nyx-btn-primary nyx-btn-sm">Add</button></div></div></div>' }
+      ],
+      classes: [['nyx-product', 'Product card (hover lifts + glows).'], ['nyx-product-media / -tag', 'Image area / corner badge.'], ['nyx-product-body / -title / -foot', 'Content / name / price+action row.']]
+    },
+    {
+      id: 'cart', group: 'Commerce', title: 'Cart & order summary', added: 'v1.5',
+      summary: 'Cart line items with quantity steppers, and an order summary with subtotal, VAT and total.',
+      sections: [
+        { title: 'Cart', demo: '<div class="nyx-grid"><div class="nyx-col-7"><div class="nyx-cart-item"><span class="nyx-cart-thumb">🎧</span><div class="nyx-cart-meta"><div style="font-weight:600;font-size:var(--nyx-fs-sm)">Wireless Headphones</div><span class="nyx-caption">Black</span></div><div class="nyx-stepper"><button data-nyx-step="-1">−</button><input value="1" aria-label="qty"><button data-nyx-step="1">+</button></div><span class="nyx-price"><span class="amt">399</span><span class="cur">ر.س</span></span></div><div class="nyx-cart-item"><span class="nyx-cart-thumb">⌚</span><div class="nyx-cart-meta"><div style="font-weight:600;font-size:var(--nyx-fs-sm)">Smart Watch</div><span class="nyx-caption">42mm</span></div><div class="nyx-stepper"><button data-nyx-step="-1">−</button><input value="2" aria-label="qty"><button data-nyx-step="1">+</button></div><span class="nyx-price"><span class="amt">1,198</span><span class="cur">ر.س</span></span></div></div><div class="nyx-col-5"><div class="nyx-order"><div class="nyx-order-row"><span>Subtotal</span><span>1,597 ر.س</span></div><div class="nyx-order-row"><span>VAT (15%)</span><span>239.55 ر.س</span></div><div class="nyx-order-row"><span>Shipping</span><span>Free</span></div><div class="nyx-order-row total"><span>Total</span><span>1,836.55 ر.س</span></div><button class="nyx-btn nyx-btn-primary nyx-btn-block" style="margin-top:var(--nyx-s4)">Checkout</button></div></div></div>' }
+      ],
+      classes: [['nyx-cart-item / nyx-cart-thumb', 'A cart row / its thumbnail.'], ['nyx-order', 'Summary box.'], ['nyx-order-row / .total', 'A line / the bold total row.']]
+    },
+    {
+      id: 'coupon', group: 'Commerce', title: 'Coupon input', added: 'v1.5',
+      summary: 'A promo-code field with an apply button — wire the click to your validation.',
+      sections: [
+        { title: 'Apply a code', demo: '<div class="nyx-coupon" style="max-width:360px"><input class="nyx-input" placeholder="Promo code" aria-label="promo code"><button class="nyx-btn nyx-btn-secondary" onclick="Nyx.toast(\'Coupon applied ✓\',\'success\')">Apply</button></div>' }
+      ],
+      classes: [['nyx-coupon', 'Flex row (input + apply button).']]
+    },
+    {
+      id: 'payment', group: 'Commerce', title: 'Payment method', added: 'v1.5',
+      summary: 'Radio cards for choosing a payment method — the selected one glows. Includes options common in MENA (card, Apple Pay, cash on delivery, Mada/STC Pay).',
+      sections: [
+        { title: 'Choose method', demo: '<div class="nyx-pay" style="max-width:380px"><label class="nyx-pay-opt"><input type="radio" name="pay" checked><span class="nyx-pay-icon">💳</span> Card<span class="nyx-pay-check">✓</span></label><label class="nyx-pay-opt"><input type="radio" name="pay"><span class="nyx-pay-icon"></span> Apple Pay<span class="nyx-pay-check">✓</span></label><label class="nyx-pay-opt"><input type="radio" name="pay"><span class="nyx-pay-icon">💵</span> Cash on delivery<span class="nyx-pay-check">✓</span></label></div>' }
+      ],
+      classes: [['nyx-pay', 'Stack of options.'], ['nyx-pay-opt', 'A radio card (wraps a radio input); selected glows via :has().']]
+    },
+    {
+      id: 'address', group: 'Commerce', title: 'Address card', added: 'v1.5',
+      summary: 'A saved-address block for checkout — icon, label and the full address lines.',
+      sections: [
+        { title: 'Saved address', demo: '<div class="nyx-address" style="max-width:380px"><span class="nyx-address-icon">📍</span><div><div class="nyx-flex nyx-items-center nyx-gap-2" style="margin-bottom:4px"><strong>Home</strong> <span class="nyx-badge nyx-badge-success">Default</span></div><div class="nyx-muted">King Fahd Rd, Al Olaya<br>Riyadh 12211, Saudi Arabia</div></div></div>' }
+      ],
+      classes: [['nyx-address', 'Address card (icon + lines).'], ['nyx-address-icon', 'Accent location icon.']]
     }
   ];
 
@@ -946,7 +1092,7 @@
   PAGES.forEach(function (p) { byId[p.id] = p; });
 
   /* group display order (mirrors Bootstrap's docs taxonomy) */
-  var GROUP_ORDER = ['Getting Started', 'Customize', 'Layout', 'Content', 'Forms', 'Components', 'Helpers', 'Utilities', 'Signature', 'Motion', 'Regional'];
+  var GROUP_ORDER = ['Getting Started', 'Customize', 'Layout', 'Content', 'Forms', 'Components', 'Helpers', 'Utilities', 'Signature', 'Motion', 'Regional', 'Commerce'];
   function groupRank(g) { var i = GROUP_ORDER.indexOf(g); return i < 0 ? 99 : i; }
 
   /* ---------- i18n (optional; Arabic etc. provided via window.NYX_I18N) ---------- */

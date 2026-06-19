@@ -1,0 +1,44 @@
+/*! Nyx · forms-plus.css · v1.5.0 · MIT
+ * The forms-plus module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   16. FORMS+ (v1.5) — combobox, multi-select, phone, date picker
+   ============================================================ */
+/* combobox / autocomplete */
+.nyx-combobox{position:relative}
+.nyx-combobox-menu{position:absolute;top:calc(100% + 6px);inset-inline:0;z-index:120;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);padding:6px;max-height:240px;overflow:auto;display:none}
+.nyx-combobox.open .nyx-combobox-menu{display:block;animation:nyx-fade .15s var(--nyx-ease)}
+.nyx-combobox-opt{padding:8px 10px;border-radius:var(--nyx-radius-sm);cursor:pointer;font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted)}
+.nyx-combobox-opt:hover,.nyx-combobox-opt.active{background:color-mix(in srgb,var(--nyx-accent) 14%,transparent);color:var(--nyx-text)}
+.nyx-combobox-opt[hidden]{display:none}
+.nyx-combobox-empty{padding:8px 10px;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);display:none}
+.nyx-combobox.empty .nyx-combobox-empty{display:block}
+
+/* multi-select */
+.nyx-multiselect{position:relative}
+.nyx-multiselect-control{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:42px;padding:6px;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);cursor:text;transition:all .2s var(--nyx-ease)}
+.nyx-multiselect.open .nyx-multiselect-control{border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 22%,transparent)}
+.nyx-multiselect-control input{flex:1;min-width:70px;border:none;background:transparent;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-sm);padding:4px}
+.nyx-multiselect-menu{position:absolute;top:calc(100% + 6px);inset-inline:0;z-index:120;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);padding:6px;max-height:220px;overflow:auto;display:none}
+.nyx-multiselect.open .nyx-multiselect-menu{display:block;animation:nyx-fade .15s var(--nyx-ease)}
+.nyx-multiselect-opt{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--nyx-radius-sm);cursor:pointer;font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted)}
+.nyx-multiselect-opt:hover{background:var(--nyx-glass);color:var(--nyx-text)}
+.nyx-multiselect-opt.selected{color:var(--nyx-text)}
+.nyx-multiselect-opt.selected::after{content:"✓";margin-inline-start:auto;color:var(--nyx-accent);font-weight:700}
+.nyx-multiselect-opt[hidden]{display:none}
+
+/* phone input — dial-code + number */
+.nyx-phone{display:flex;align-items:stretch;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);overflow:hidden;transition:all .2s var(--nyx-ease)}
+.nyx-phone:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 22%,transparent)}
+.nyx-phone select{border:0;background:var(--nyx-surface-2);color:var(--nyx-text);font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);padding:0 10px;outline:none;cursor:pointer;border-inline-end:1px solid var(--nyx-border)}
+.nyx-phone input{flex:1;border:0;background:transparent;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-sm);padding:10px 14px}
+
+/* date picker — input + calendar popover */
+.nyx-datepicker{position:relative;display:inline-block}
+.nyx-datepicker-pop{position:absolute;top:calc(100% + 8px);inset-inline-start:0;z-index:130;display:none}
+.nyx-datepicker.open .nyx-datepicker-pop{display:block;animation:nyx-fade .15s var(--nyx-ease)}
+.nyx-calendar-head button{background:none;border:0;color:var(--nyx-text-muted);cursor:pointer;font-size:16px;padding:2px 9px;border-radius:var(--nyx-radius-sm);line-height:1}
+.nyx-calendar-head button:hover{background:var(--nyx-glass);color:var(--nyx-text)}
+.nyx-calendar-grid .day.event{position:relative}
+.nyx-calendar-grid .day.event::after{content:"";position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--nyx-accent-2)}

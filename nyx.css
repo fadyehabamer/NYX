@@ -1,6 +1,6 @@
 /*!
  * Nyx — The Design System for Modern SaaS
- * v1.4.0 · MIT License
+ * v1.5.0 · MIT License
  * Luminous Depth: every element lit from within.
  *
  * Usage:   <link rel="stylesheet" href="nyx.css">
@@ -766,6 +766,150 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-bilingual .ar{font-family:var(--nyx-font-ar);font-weight:600}
 .nyx-bilingual .en{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-body);letter-spacing:.01em}
 .nyx-bilingual.inline{flex-direction:row;align-items:baseline;gap:8px}
+
+/* ============================================================
+   16. FORMS+ (v1.5) — combobox, multi-select, phone, date picker
+   ============================================================ */
+/* combobox / autocomplete */
+.nyx-combobox{position:relative}
+.nyx-combobox-menu{position:absolute;top:calc(100% + 6px);inset-inline:0;z-index:120;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);padding:6px;max-height:240px;overflow:auto;display:none}
+.nyx-combobox.open .nyx-combobox-menu{display:block;animation:nyx-fade .15s var(--nyx-ease)}
+.nyx-combobox-opt{padding:8px 10px;border-radius:var(--nyx-radius-sm);cursor:pointer;font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted)}
+.nyx-combobox-opt:hover,.nyx-combobox-opt.active{background:color-mix(in srgb,var(--nyx-accent) 14%,transparent);color:var(--nyx-text)}
+.nyx-combobox-opt[hidden]{display:none}
+.nyx-combobox-empty{padding:8px 10px;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);display:none}
+.nyx-combobox.empty .nyx-combobox-empty{display:block}
+
+/* multi-select */
+.nyx-multiselect{position:relative}
+.nyx-multiselect-control{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:42px;padding:6px;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);cursor:text;transition:all .2s var(--nyx-ease)}
+.nyx-multiselect.open .nyx-multiselect-control{border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 22%,transparent)}
+.nyx-multiselect-control input{flex:1;min-width:70px;border:none;background:transparent;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-sm);padding:4px}
+.nyx-multiselect-menu{position:absolute;top:calc(100% + 6px);inset-inline:0;z-index:120;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);padding:6px;max-height:220px;overflow:auto;display:none}
+.nyx-multiselect.open .nyx-multiselect-menu{display:block;animation:nyx-fade .15s var(--nyx-ease)}
+.nyx-multiselect-opt{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--nyx-radius-sm);cursor:pointer;font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted)}
+.nyx-multiselect-opt:hover{background:var(--nyx-glass);color:var(--nyx-text)}
+.nyx-multiselect-opt.selected{color:var(--nyx-text)}
+.nyx-multiselect-opt.selected::after{content:"✓";margin-inline-start:auto;color:var(--nyx-accent);font-weight:700}
+.nyx-multiselect-opt[hidden]{display:none}
+
+/* phone input — dial-code + number */
+.nyx-phone{display:flex;align-items:stretch;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);overflow:hidden;transition:all .2s var(--nyx-ease)}
+.nyx-phone:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 22%,transparent)}
+.nyx-phone select{border:0;background:var(--nyx-surface-2);color:var(--nyx-text);font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);padding:0 10px;outline:none;cursor:pointer;border-inline-end:1px solid var(--nyx-border)}
+.nyx-phone input{flex:1;border:0;background:transparent;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-sm);padding:10px 14px}
+
+/* date picker — input + calendar popover */
+.nyx-datepicker{position:relative;display:inline-block}
+.nyx-datepicker-pop{position:absolute;top:calc(100% + 8px);inset-inline-start:0;z-index:130;display:none}
+.nyx-datepicker.open .nyx-datepicker-pop{display:block;animation:nyx-fade .15s var(--nyx-ease)}
+.nyx-calendar-head button{background:none;border:0;color:var(--nyx-text-muted);cursor:pointer;font-size:16px;padding:2px 9px;border-radius:var(--nyx-radius-sm);line-height:1}
+.nyx-calendar-head button:hover{background:var(--nyx-glass);color:var(--nyx-text)}
+.nyx-calendar-grid .day.event{position:relative}
+.nyx-calendar-grid .day.event::after{content:"";position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--nyx-accent-2)}
+
+/* ============================================================
+   17. OVERLAYS+ (v1.5) — sheet, FAB, back-to-top, top progress, context menu
+   ============================================================ */
+/* bottom sheet */
+.nyx-sheet{position:fixed;inset-inline:0;bottom:0;z-index:160;background:var(--nyx-surface);border-top:1px solid var(--nyx-border);border-start-start-radius:var(--nyx-radius-xl);border-start-end-radius:var(--nyx-radius-xl);box-shadow:var(--nyx-shadow-lg);padding:var(--nyx-s5);max-height:85vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s var(--nyx-ease)}
+.nyx-sheet.open{transform:none}
+.nyx-sheet .nyx-sheet-grip{width:40px;height:4px;border-radius:var(--nyx-radius-full);background:var(--nyx-border);margin:0 auto var(--nyx-s4)}
+
+/* floating action button + speed dial */
+.nyx-fab{position:fixed;inset-inline-end:var(--nyx-s5);bottom:var(--nyx-s5);z-index:140}
+.nyx-fab-btn{width:56px;height:56px;border-radius:var(--nyx-radius-full);border:0;cursor:pointer;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));color:#fff;font-size:24px;box-shadow:var(--nyx-glow),var(--nyx-shadow-lg);display:grid;place-items:center;transition:transform .25s var(--nyx-ease)}
+.nyx-fab.open .nyx-fab-btn{transform:rotate(45deg)}
+.nyx-fab-actions{position:absolute;bottom:68px;inset-inline-end:6px;display:flex;flex-direction:column;gap:var(--nyx-s3);align-items:flex-end}
+.nyx-fab-actions > *{opacity:0;transform:translateY(10px) scale(.9);pointer-events:none;transition:all .2s var(--nyx-ease)}
+.nyx-fab.open .nyx-fab-actions > *{opacity:1;transform:none;pointer-events:auto}
+.nyx-fab-action{display:inline-flex;align-items:center;gap:var(--nyx-s2)}
+.nyx-fab-mini{width:44px;height:44px;border-radius:var(--nyx-radius-full);border:1px solid var(--nyx-border);background:var(--nyx-surface-2);color:var(--nyx-text);display:grid;place-items:center;cursor:pointer;box-shadow:var(--nyx-shadow);font-size:18px}
+.nyx-fab-label{background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-sm);padding:4px 8px;font-size:var(--nyx-fs-xs);box-shadow:var(--nyx-shadow-sm)}
+
+/* back-to-top */
+.nyx-to-top{position:fixed;inset-inline-end:var(--nyx-s5);bottom:var(--nyx-s5);z-index:130;width:44px;height:44px;border-radius:var(--nyx-radius-full);border:1px solid var(--nyx-border);background:var(--nyx-surface-2);color:var(--nyx-text);cursor:pointer;display:grid;place-items:center;font-size:18px;box-shadow:var(--nyx-shadow-lg);opacity:0;transform:translateY(12px);pointer-events:none;transition:all .25s var(--nyx-ease)}
+.nyx-to-top.show{opacity:1;transform:none;pointer-events:auto}
+
+/* top page-load progress bar */
+.nyx-topbar{position:fixed;top:0;inset-inline:0;height:3px;z-index:400;pointer-events:none;background:transparent}
+.nyx-topbar > span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--nyx-accent),var(--nyx-accent-2));box-shadow:var(--nyx-glow);transition:width .3s var(--nyx-ease),opacity .4s var(--nyx-ease)}
+
+/* context menu */
+.nyx-context-menu{position:fixed;z-index:200;min-width:184px;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);padding:6px;display:none}
+.nyx-context-menu.open{display:block;animation:nyx-fade .12s var(--nyx-ease)}
+
+/* ============================================================
+   18. COMMERCE (v1.5) — product, cart, order, coupon, payment, address
+   ============================================================ */
+.nyx-product{display:flex;flex-direction:column;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;transition:all .2s var(--nyx-ease)}
+.nyx-product:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--nyx-accent) 50%,transparent);box-shadow:var(--nyx-glow),var(--nyx-shadow-lg)}
+.nyx-product-media{aspect-ratio:4/3;background:var(--nyx-surface-2);display:grid;place-items:center;font-size:42px;position:relative}
+.nyx-product-tag{position:absolute;top:10px;inset-inline-start:10px}
+.nyx-product-body{padding:var(--nyx-s4);display:flex;flex-direction:column;gap:6px}
+.nyx-product-title{font-weight:600;font-size:var(--nyx-fs-sm)}
+.nyx-product-foot{display:flex;align-items:center;justify-content:space-between;margin-top:var(--nyx-s2)}
+
+.nyx-cart-item{display:flex;align-items:center;gap:var(--nyx-s3);padding:var(--nyx-s3) 0;border-bottom:1px solid var(--nyx-border)}
+.nyx-cart-item:last-child{border-bottom:0}
+.nyx-cart-thumb{width:54px;height:54px;border-radius:var(--nyx-radius);background:var(--nyx-surface-2);display:grid;place-items:center;font-size:24px;flex-shrink:0}
+.nyx-cart-meta{flex:1;min-width:0}
+
+.nyx-order{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface);padding:var(--nyx-s5)}
+.nyx-order-row{display:flex;justify-content:space-between;font-size:var(--nyx-fs-sm);padding:6px 0;color:var(--nyx-text-muted)}
+.nyx-order-row.total{border-top:1px solid var(--nyx-border);margin-top:var(--nyx-s2);padding-top:var(--nyx-s3);color:var(--nyx-text);font-weight:700;font-size:var(--nyx-fs-base)}
+
+.nyx-coupon{display:flex;gap:var(--nyx-s2)}
+.nyx-coupon input{flex:1}
+
+.nyx-pay{display:flex;flex-direction:column;gap:var(--nyx-s2)}
+.nyx-pay-opt{position:relative;display:flex;align-items:center;gap:var(--nyx-s3);padding:12px 14px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);cursor:pointer;font-size:var(--nyx-fs-sm);transition:all .15s var(--nyx-ease)}
+.nyx-pay-opt:hover{border-color:color-mix(in srgb,var(--nyx-accent) 40%,transparent)}
+.nyx-pay-opt input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.nyx-pay-opt:has(input:checked){border-color:var(--nyx-accent);background:color-mix(in srgb,var(--nyx-accent) 8%,transparent);box-shadow:var(--nyx-glow)}
+.nyx-pay-icon{font-size:20px}
+.nyx-pay-opt .nyx-pay-check{margin-inline-start:auto;color:var(--nyx-accent);opacity:0}
+.nyx-pay-opt:has(input:checked) .nyx-pay-check{opacity:1}
+
+.nyx-address{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);padding:var(--nyx-s4);display:flex;gap:var(--nyx-s3);font-size:var(--nyx-fs-sm)}
+.nyx-address-icon{font-size:20px;color:var(--nyx-accent)}
+
+/* ============================================================
+   19. REGIONAL+ (v1.5) — countdown, zakat, qibla, delivery tracking
+   ============================================================ */
+/* countdown (Iftar / Suhoor / sale) */
+.nyx-countdown{display:inline-flex;gap:var(--nyx-s2);align-items:center}
+.nyx-countdown .unit{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:58px;padding:10px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);background:var(--nyx-surface)}
+.nyx-countdown .unit b{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xl);font-weight:700;line-height:1;color:var(--nyx-text)}
+.nyx-countdown .unit span{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
+.nyx-countdown .sep{font-size:var(--nyx-fs-lg);color:var(--nyx-text-muted)}
+
+/* zakat / quick calculator */
+.nyx-zakat{display:flex;flex-direction:column;gap:var(--nyx-s3);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface);padding:var(--nyx-s5);max-width:340px}
+.nyx-zakat-out{display:flex;align-items:baseline;justify-content:space-between;border-top:1px solid var(--nyx-border);padding-top:var(--nyx-s3)}
+.nyx-zakat-out b{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-2xl);color:var(--nyx-accent-2)}
+
+/* qibla compass */
+.nyx-qibla{width:128px;height:128px;border-radius:50%;border:2px solid var(--nyx-border);position:relative;display:grid;place-items:center;background:radial-gradient(circle,var(--nyx-surface-2),var(--nyx-surface));box-shadow:inset 0 0 24px rgba(0,0,0,.3)}
+.nyx-qibla .needle{position:absolute;bottom:50%;width:4px;height:48px;border-radius:2px;background:linear-gradient(var(--nyx-accent),transparent);transform-origin:bottom center;box-shadow:var(--nyx-glow);transition:transform .4s var(--nyx-ease)}
+.nyx-qibla .kaaba{position:absolute;font-size:16px;transform:translateY(-44px)}
+.nyx-qibla .dir{position:absolute;font-size:10px;font-family:var(--nyx-font-mono);color:var(--nyx-text-muted)}
+.nyx-qibla .dir.n{top:5px}.nyx-qibla .dir.s{bottom:5px}.nyx-qibla .dir.e{inset-inline-end:7px}.nyx-qibla .dir.w{inset-inline-start:7px}
+.nyx-qibla .hub{width:10px;height:10px;border-radius:50%;background:var(--nyx-accent);box-shadow:var(--nyx-glow)}
+
+/* delivery tracking (vertical) */
+.nyx-delivery{display:flex;flex-direction:column}
+.nyx-delivery .nyx-dstep{display:flex;gap:var(--nyx-s3);position:relative;padding-bottom:var(--nyx-s5)}
+.nyx-delivery .nyx-dstep:last-child{padding-bottom:0}
+.nyx-delivery .nyx-dstep::before{content:"";position:absolute;inset-inline-start:13px;top:26px;bottom:0;width:2px;background:var(--nyx-border)}
+.nyx-delivery .nyx-dstep:last-child::before{display:none}
+.nyx-delivery .nyx-ddot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);font-size:13px;flex-shrink:0;z-index:1}
+.nyx-delivery .nyx-dstep.done .nyx-ddot{background:var(--nyx-accent-2);border-color:var(--nyx-accent-2);color:#04130f}
+.nyx-delivery .nyx-dstep.done::before{background:var(--nyx-accent-2)}
+.nyx-delivery .nyx-dstep.current .nyx-ddot{background:var(--nyx-accent);border-color:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+.nyx-delivery .nyx-dmeta{padding-top:3px}
+.nyx-delivery .nyx-dtitle{font-size:var(--nyx-fs-sm);font-weight:600}
+.nyx-delivery .nyx-dtime{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-mono)}
 
 /* ============================================================
    RTL — flips for physical properties not covered by logical CSS

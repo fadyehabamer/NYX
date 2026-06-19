@@ -30,7 +30,7 @@
       <input type="text" placeholder="Search docs…" aria-label="Search docs" tabindex="-1" readonly />
       <span class="nyx-command">⌘K</span>
     </div>
-    <span class="nyx-badge nyx-badge-info hide-sm">v1.4.0</span>
+    <span class="nyx-badge nyx-badge-info hide-sm">v1.5.0</span>
     <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
     <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleDir()" aria-label="Toggle text direction (RTL)" title="Toggle RTL">⇄</button>
     <a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="https://example.com" aria-label="GitHub">★ <span class="hide-sm">Star</span></a>
@@ -97,6 +97,19 @@
     </div>
   </div>
 </div>
+
+<aside class="nyx-sheet" id="docSheet" role="dialog" aria-modal="true" aria-label="Quick actions">
+  <div class="nyx-sheet-grip"></div>
+  <div class="nyx-flex nyx-items-center nyx-justify-between" style="margin-bottom:var(--nyx-s4)">
+    <h3 class="nyx-h3">Quick actions</h3>
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" aria-label="Close" data-nyx-dismiss>✕</button>
+  </div>
+  <div class="nyx-list-group">
+    <a class="nyx-list-item">✎ Edit item</a>
+    <a class="nyx-list-item">⧉ Duplicate</a>
+    <a class="nyx-list-item">↗ Share link</a>
+  </div>
+</aside>
 
 <script src="nyx.js"></script>
 <script src="docs.js"></script>

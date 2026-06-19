@@ -1,0 +1,38 @@
+/*! Nyx · commerce.css · v1.5.0 · MIT
+ * The commerce module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   18. COMMERCE (v1.5) — product, cart, order, coupon, payment, address
+   ============================================================ */
+.nyx-product{display:flex;flex-direction:column;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;transition:all .2s var(--nyx-ease)}
+.nyx-product:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--nyx-accent) 50%,transparent);box-shadow:var(--nyx-glow),var(--nyx-shadow-lg)}
+.nyx-product-media{aspect-ratio:4/3;background:var(--nyx-surface-2);display:grid;place-items:center;font-size:42px;position:relative}
+.nyx-product-tag{position:absolute;top:10px;inset-inline-start:10px}
+.nyx-product-body{padding:var(--nyx-s4);display:flex;flex-direction:column;gap:6px}
+.nyx-product-title{font-weight:600;font-size:var(--nyx-fs-sm)}
+.nyx-product-foot{display:flex;align-items:center;justify-content:space-between;margin-top:var(--nyx-s2)}
+
+.nyx-cart-item{display:flex;align-items:center;gap:var(--nyx-s3);padding:var(--nyx-s3) 0;border-bottom:1px solid var(--nyx-border)}
+.nyx-cart-item:last-child{border-bottom:0}
+.nyx-cart-thumb{width:54px;height:54px;border-radius:var(--nyx-radius);background:var(--nyx-surface-2);display:grid;place-items:center;font-size:24px;flex-shrink:0}
+.nyx-cart-meta{flex:1;min-width:0}
+
+.nyx-order{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface);padding:var(--nyx-s5)}
+.nyx-order-row{display:flex;justify-content:space-between;font-size:var(--nyx-fs-sm);padding:6px 0;color:var(--nyx-text-muted)}
+.nyx-order-row.total{border-top:1px solid var(--nyx-border);margin-top:var(--nyx-s2);padding-top:var(--nyx-s3);color:var(--nyx-text);font-weight:700;font-size:var(--nyx-fs-base)}
+
+.nyx-coupon{display:flex;gap:var(--nyx-s2)}
+.nyx-coupon input{flex:1}
+
+.nyx-pay{display:flex;flex-direction:column;gap:var(--nyx-s2)}
+.nyx-pay-opt{position:relative;display:flex;align-items:center;gap:var(--nyx-s3);padding:12px 14px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);cursor:pointer;font-size:var(--nyx-fs-sm);transition:all .15s var(--nyx-ease)}
+.nyx-pay-opt:hover{border-color:color-mix(in srgb,var(--nyx-accent) 40%,transparent)}
+.nyx-pay-opt input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.nyx-pay-opt:has(input:checked){border-color:var(--nyx-accent);background:color-mix(in srgb,var(--nyx-accent) 8%,transparent);box-shadow:var(--nyx-glow)}
+.nyx-pay-icon{font-size:20px}
+.nyx-pay-opt .nyx-pay-check{margin-inline-start:auto;color:var(--nyx-accent);opacity:0}
+.nyx-pay-opt:has(input:checked) .nyx-pay-check{opacity:1}
+
+.nyx-address{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);padding:var(--nyx-s4);display:flex;gap:var(--nyx-s3);font-size:var(--nyx-fs-sm)}
+.nyx-address-icon{font-size:20px;color:var(--nyx-accent)}

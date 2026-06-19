@@ -1,5 +1,5 @@
 /*!
- * Nyx — runtime · v1.4.0 · MIT License
+ * Nyx — runtime · v1.5.0 · MIT License
  * Zero dependencies. UMD: window.Nyx (or CommonJS export).
  *
  * Declarative API (no JS to write):
@@ -70,13 +70,13 @@
 
   function close(target) {
     var t = el(target); if (t) t.classList.remove('open');
-    if (!$('.nyx-modal.open') && !$('.nyx-drawer.open')) {
+    if (!$('.nyx-modal.open') && !$('.nyx-drawer.open') && !$('.nyx-sheet.open')) {
       if (_backdrop) _backdrop.classList.remove('open');
       lockScroll(false);
     }
   }
   function closeAll() {
-    $$('.nyx-modal.open, .nyx-drawer.open').forEach(function (n) { n.classList.remove('open'); });
+    $$('.nyx-modal.open, .nyx-drawer.open, .nyx-sheet.open').forEach(function (n) { n.classList.remove('open'); });
     if (_backdrop) _backdrop.classList.remove('open');
     closeCommandPalette();
     lockScroll(false);
@@ -228,6 +228,7 @@
       var target = toggle.getAttribute('data-nyx-target');
       if (kind === 'modal') { e.preventDefault(); openModal(target); return; }
       if (kind === 'drawer') { e.preventDefault(); openDrawer(target); return; }
+      if (kind === 'sheet') { e.preventDefault(); openModal(target); return; }
       if (kind === 'popover') { e.preventDefault(); togglePopover(toggle); return; }
       if (kind === 'command') { e.preventDefault(); openCommandPalette(); return; }
       if (kind === 'collapse') { e.preventDefault(); toggleCollapse(toggle); return; }
@@ -260,9 +261,18 @@
     var hitem = e.target.closest('.nyx-hierarchy-cols .nyx-hitem');
     if (hitem) { hcolSelect(hitem); return; }
 
+    var fab = e.target.closest('.nyx-fab-btn');
+    if (fab) { var f = fab.closest('.nyx-fab'); if (f) f.classList.toggle('open'); return; }
+    if (e.target.closest('.nyx-to-top')) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+
     if (e.target.closest('.nyx-dropdown-item')) { closeDropdowns(); return; }
     if (!e.target.closest('.nyx-popover')) $$('.nyx-popover.open').forEach(function (o) { o.classList.remove('open'); });
     if (!e.target.closest('.nyx-dropdown')) closeDropdowns();
+    if (!e.target.closest('.nyx-combobox')) $$('.nyx-combobox.open').forEach(function (o) { o.classList.remove('open'); });
+    if (!e.target.closest('.nyx-multiselect')) $$('.nyx-multiselect.open').forEach(function (o) { o.classList.remove('open'); });
+    if (!e.target.closest('.nyx-datepicker')) $$('.nyx-datepicker.open').forEach(function (o) { o.classList.remove('open'); });
+    if (!e.target.closest('.nyx-fab')) $$('.nyx-fab.open').forEach(function (o) { o.classList.remove('open'); });
+    if (!e.target.closest('.nyx-context-menu')) $$('.nyx-context-menu.open').forEach(function (o) { o.classList.remove('open'); });
   });
 
   /* ---------- keyboard: ⌘K palette, Esc closes ---------- */
@@ -315,6 +325,149 @@
       .forEach(function (e) { e._nyxNum = true; e.textContent = toArabicNumerals(e.textContent); });
   }
 
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+  /* ---------- combobox / autocomplete ---------- */
+  function initCombobox(root) {
+    $$('.nyx-combobox', root).filter(function (c) { return !c._nyxCb; }).forEach(function (c) {
+      c._nyxCb = true;
+      var input = c.querySelector('input'), opts = $$('.nyx-combobox-opt', c);
+      function filter() {
+        var q = (input.value || '').trim().toLowerCase(), shown = 0;
+        opts.forEach(function (o) { var hit = o.textContent.toLowerCase().indexOf(q) > -1; o.hidden = !hit; if (hit) shown++; });
+        c.classList.toggle('empty', shown === 0);
+      }
+      input.addEventListener('focus', function () { c.classList.add('open'); filter(); });
+      input.addEventListener('input', function () { c.classList.add('open'); filter(); });
+      c.addEventListener('mousedown', function (e) {
+        var o = e.target.closest('.nyx-combobox-opt'); if (!o) return;
+        e.preventDefault(); input.value = o.getAttribute('data-value') || o.textContent.trim();
+        c.classList.remove('open'); input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    });
+  }
+
+  /* ---------- multi-select ---------- */
+  function initMultiselect(root) {
+    $$('.nyx-multiselect', root).filter(function (m) { return !m._nyxMs; }).forEach(function (m) {
+      m._nyxMs = true;
+      var control = m.querySelector('.nyx-multiselect-control'), input = control.querySelector('input');
+      var menu = m.querySelector('.nyx-multiselect-menu');
+      function valOf(o) { return o.getAttribute('data-value') || o.textContent.trim(); }
+      function addChip(val, label) {
+        if (control.querySelector('[data-val="' + val + '"]')) return;
+        var chip = doc.createElement('span');
+        chip.className = 'nyx-chip nyx-chip-accent'; chip.setAttribute('data-val', val);
+        chip.innerHTML = label + ' <span class="nyx-chip-x" role="button" aria-label="remove">×</span>';
+        control.insertBefore(chip, input);
+      }
+      control.addEventListener('click', function (e) {
+        var x = e.target.closest('.nyx-chip-x');
+        if (x) {
+          var chip = x.closest('.nyx-chip'), v = chip.getAttribute('data-val');
+          $$('.nyx-multiselect-opt', m).forEach(function (o) { if (valOf(o) === v) o.classList.remove('selected'); });
+          chip.remove(); return;
+        }
+        m.classList.add('open'); if (input) input.focus();
+      });
+      if (menu) menu.addEventListener('mousedown', function (e) {
+        var o = e.target.closest('.nyx-multiselect-opt'); if (!o) return; e.preventDefault();
+        var on = o.classList.toggle('selected');
+        if (on) addChip(valOf(o), o.textContent.trim());
+        else { var ex = control.querySelector('[data-val="' + valOf(o) + '"]'); if (ex) ex.remove(); }
+      });
+    });
+  }
+
+  /* ---------- date picker ---------- */
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var DOW = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+  function calMonthHtml(y, m, sel) {
+    var first = new Date(y, m, 1).getDay(), days = new Date(y, m + 1, 0).getDate();
+    var h = '<div class="nyx-calendar-head"><button data-cal="prev" aria-label="Previous month">‹</button><span>' + MONTHS[m] + ' ' + y + '</span><button data-cal="next" aria-label="Next month">›</button></div><div class="nyx-calendar-grid">';
+    DOW.forEach(function (d) { h += '<span class="dow">' + d + '</span>'; });
+    for (var i = 0; i < first; i++) h += '<span></span>';
+    for (var d = 1; d <= days; d++) {
+      var s = (sel && sel.y === y && sel.m === m && sel.d === d) ? ' selected' : '';
+      h += '<span class="day' + s + '" data-day="' + d + '">' + d + '</span>';
+    }
+    return h + '</div>';
+  }
+  function initDatepicker(root) {
+    $$('[data-nyx-datepicker]', root).filter(function (d) { return !d._nyxDp; }).forEach(function (dp) {
+      dp._nyxDp = true;
+      var input = dp.querySelector('input'), pop = dp.querySelector('.nyx-datepicker-pop');
+      if (!pop) { pop = doc.createElement('div'); pop.className = 'nyx-datepicker-pop'; dp.appendChild(pop); }
+      var cal = doc.createElement('div'); cal.className = 'nyx-calendar'; pop.appendChild(cal);
+      var now = new Date(), st = { y: now.getFullYear(), m: now.getMonth(), sel: null };
+      function render() { cal.innerHTML = calMonthHtml(st.y, st.m, st.sel); }
+      render();
+      input.addEventListener('focus', function () { dp.classList.add('open'); });
+      cal.addEventListener('click', function (e) {
+        var nav = e.target.closest('[data-cal]');
+        if (nav) {
+          st.m += nav.getAttribute('data-cal') === 'next' ? 1 : -1;
+          if (st.m > 11) { st.m = 0; st.y++; } if (st.m < 0) { st.m = 11; st.y--; }
+          render(); return;
+        }
+        var day = e.target.closest('.day[data-day]');
+        if (day) {
+          st.sel = { y: st.y, m: st.m, d: +day.getAttribute('data-day') };
+          input.value = st.y + '-' + pad(st.m + 1) + '-' + pad(st.sel.d);
+          dp.classList.remove('open'); render(); input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+    });
+  }
+
+  /* ---------- back-to-top + top progress bar ---------- */
+  function syncBackTop() {
+    var sy = window.scrollY || doc.documentElement.scrollTop;
+    $$('.nyx-to-top').forEach(function (b) { b.classList.toggle('show', sy > 320); });
+  }
+  var _tb = null, _tbTimer = null;
+  function topSpan() { if (!_tb) { _tb = doc.createElement('div'); _tb.className = 'nyx-topbar'; _tb.innerHTML = '<span></span>'; doc.body.appendChild(_tb); } return _tb.firstChild; }
+  var progress = {
+    start: function () { var s = topSpan(); s.style.opacity = '1'; var w = 8; s.style.width = '8%'; clearInterval(_tbTimer); _tbTimer = setInterval(function () { w += (92 - w) * 0.12; s.style.width = w.toFixed(1) + '%'; }, 400); return progress; },
+    set: function (p) { topSpan().style.width = Math.max(0, Math.min(100, p)) + '%'; return progress; },
+    done: function () { clearInterval(_tbTimer); var s = topSpan(); s.style.width = '100%'; setTimeout(function () { s.style.opacity = '0'; setTimeout(function () { s.style.width = '0'; }, 350); }, 220); return progress; }
+  };
+
+  /* ---------- countdown (Iftar / Suhoor / sale) ---------- */
+  function tickCountdown(c) {
+    var diff = Math.max(0, Math.floor((c._nyxTarget - new Date()) / 1000));
+    var u = $$('.unit b', c), h = Math.floor(diff / 3600), m = Math.floor((diff % 3600) / 60), s = diff % 60;
+    if (u[0]) u[0].textContent = pad(h); if (u[1]) u[1].textContent = pad(m); if (u[2]) u[2].textContent = pad(s);
+  }
+  function initCountdown(root) {
+    $$('.nyx-countdown[data-nyx-countdown]', root).filter(function (c) { return !c._nyxCd; }).forEach(function (c) {
+      c._nyxCd = true;
+      var p = c.getAttribute('data-nyx-countdown').split(':'), now = new Date();
+      var target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), +p[0], +p[1] || 0, 0);
+      if (target < now) target = new Date(target.getTime() + 86400000);
+      c._nyxTarget = target; tickCountdown(c); setInterval(function () { tickCountdown(c); }, 1000);
+    });
+  }
+
+  /* ---------- zakat / quick calculator ---------- */
+  function initZakat(root) {
+    $$('.nyx-zakat', root).filter(function (z) { return !z._nyxZ; }).forEach(function (z) {
+      z._nyxZ = true;
+      var amt = z.querySelector('.nyx-zakat-amount'), out = z.querySelector('.nyx-zakat-result');
+      var rate = (parseFloat(z.getAttribute('data-rate')) || 2.5) / 100;
+      function calc() { var v = parseFloat(amt.value) || 0; if (out) out.textContent = (v * rate).toLocaleString(undefined, { maximumFractionDigits: 2 }); }
+      if (amt) { amt.addEventListener('input', calc); calc(); }
+    });
+  }
+
+  /* ---------- qibla compass ---------- */
+  function initQibla(root) {
+    $$('.nyx-qibla[data-nyx-qibla]', root).filter(function (q) { return !q._nyxQ; }).forEach(function (q) {
+      q._nyxQ = true;
+      var n = q.querySelector('.needle'); if (n) n.style.transform = 'rotate(' + (parseFloat(q.getAttribute('data-nyx-qibla')) || 0) + 'deg)';
+    });
+  }
+
   /* ---------- hierarchy: collapsible tree + Miller columns ---------- */
   function initHierarchy(root) {
     $$('.nyx-hierarchy li', root).forEach(function (li) {
@@ -362,16 +515,35 @@
     initNumerals(root);
     initHierarchy(root);
     initPrayerTimes(root);
+    initCombobox(root);
+    initMultiselect(root);
+    initDatepicker(root);
+    initCountdown(root);
+    initZakat(root);
+    initQibla(root);
+    syncBackTop();
   }
+  window.addEventListener('scroll', syncBackTop, { passive: true });
+  /* right-click context menus */
+  doc.addEventListener('contextmenu', function (e) {
+    var host = e.target.closest('[data-nyx-contextmenu]'); if (!host) return;
+    var menu = el(host.getAttribute('data-nyx-contextmenu')); if (!menu) return;
+    e.preventDefault();
+    $$('.nyx-context-menu.open').forEach(function (m) { m.classList.remove('open'); });
+    var vw = doc.documentElement.clientWidth, vh = doc.documentElement.clientHeight;
+    menu.style.left = Math.min(e.clientX, vw - menu.offsetWidth - 8) + 'px';
+    menu.style.top = Math.min(e.clientY, vh - menu.offsetHeight - 8) + 'px';
+    menu.classList.add('open');
+  });
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', function () { init(); });
   else init();
 
   return {
-    version: '1.4.0',
+    version: '1.5.0',
     init: init, toast: toast,
     openModal: openModal, openDrawer: openDrawer, close: close, closeAll: closeAll,
     togglePopover: togglePopover, openCommandPalette: openCommandPalette, closeCommandPalette: closeCommandPalette,
     setTheme: setTheme, toggleTheme: toggleTheme, setDir: setDir, toggleDir: toggleDir, setAccent: setAccent,
-    toArabicNumerals: toArabicNumerals
+    toArabicNumerals: toArabicNumerals, progress: progress
   };
 });

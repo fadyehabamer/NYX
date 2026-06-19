@@ -14,7 +14,7 @@ var fs = require('fs');
 var path = require('path');
 var zlib = require('zlib');
 
-var VERSION = '1.4.0';
+var VERSION = '1.5.0';
 var SRC = path.join(__dirname, 'nyx.css');
 var JSSRC = path.join(__dirname, 'nyx.js');
 var OUT = path.join(__dirname, 'components');
@@ -45,7 +45,7 @@ function gz(s) { return (zlib.gzipSync(s).length / 1024).toFixed(1) + 'kb'; }
 var NAMES = {
   1: 'layout', 2: 'typography', 3: 'buttons', 4: 'cards', 5: 'forms',
   6: 'navigation', 7: 'feedback', 8: 'data', 9: 'overlays', 10: 'signature', 11: 'extras', 12: 'motion', 13: 'utilities',
-  14: 'hierarchy', 15: 'regional'
+  14: 'hierarchy', 15: 'regional', 16: 'forms-plus', 17: 'overlays-plus', 18: 'commerce', 19: 'regional-plus'
 };
 
 /* collect the big ==== banners (sections 1..11 + RTL) */

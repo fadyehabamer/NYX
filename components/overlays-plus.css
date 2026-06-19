@@ -1,0 +1,34 @@
+/*! Nyx · overlays-plus.css · v1.5.0 · MIT
+ * The overlays-plus module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   17. OVERLAYS+ (v1.5) — sheet, FAB, back-to-top, top progress, context menu
+   ============================================================ */
+/* bottom sheet */
+.nyx-sheet{position:fixed;inset-inline:0;bottom:0;z-index:160;background:var(--nyx-surface);border-top:1px solid var(--nyx-border);border-start-start-radius:var(--nyx-radius-xl);border-start-end-radius:var(--nyx-radius-xl);box-shadow:var(--nyx-shadow-lg);padding:var(--nyx-s5);max-height:85vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s var(--nyx-ease)}
+.nyx-sheet.open{transform:none}
+.nyx-sheet .nyx-sheet-grip{width:40px;height:4px;border-radius:var(--nyx-radius-full);background:var(--nyx-border);margin:0 auto var(--nyx-s4)}
+
+/* floating action button + speed dial */
+.nyx-fab{position:fixed;inset-inline-end:var(--nyx-s5);bottom:var(--nyx-s5);z-index:140}
+.nyx-fab-btn{width:56px;height:56px;border-radius:var(--nyx-radius-full);border:0;cursor:pointer;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));color:#fff;font-size:24px;box-shadow:var(--nyx-glow),var(--nyx-shadow-lg);display:grid;place-items:center;transition:transform .25s var(--nyx-ease)}
+.nyx-fab.open .nyx-fab-btn{transform:rotate(45deg)}
+.nyx-fab-actions{position:absolute;bottom:68px;inset-inline-end:6px;display:flex;flex-direction:column;gap:var(--nyx-s3);align-items:flex-end}
+.nyx-fab-actions > *{opacity:0;transform:translateY(10px) scale(.9);pointer-events:none;transition:all .2s var(--nyx-ease)}
+.nyx-fab.open .nyx-fab-actions > *{opacity:1;transform:none;pointer-events:auto}
+.nyx-fab-action{display:inline-flex;align-items:center;gap:var(--nyx-s2)}
+.nyx-fab-mini{width:44px;height:44px;border-radius:var(--nyx-radius-full);border:1px solid var(--nyx-border);background:var(--nyx-surface-2);color:var(--nyx-text);display:grid;place-items:center;cursor:pointer;box-shadow:var(--nyx-shadow);font-size:18px}
+.nyx-fab-label{background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-sm);padding:4px 8px;font-size:var(--nyx-fs-xs);box-shadow:var(--nyx-shadow-sm)}
+
+/* back-to-top */
+.nyx-to-top{position:fixed;inset-inline-end:var(--nyx-s5);bottom:var(--nyx-s5);z-index:130;width:44px;height:44px;border-radius:var(--nyx-radius-full);border:1px solid var(--nyx-border);background:var(--nyx-surface-2);color:var(--nyx-text);cursor:pointer;display:grid;place-items:center;font-size:18px;box-shadow:var(--nyx-shadow-lg);opacity:0;transform:translateY(12px);pointer-events:none;transition:all .25s var(--nyx-ease)}
+.nyx-to-top.show{opacity:1;transform:none;pointer-events:auto}
+
+/* top page-load progress bar */
+.nyx-topbar{position:fixed;top:0;inset-inline:0;height:3px;z-index:400;pointer-events:none;background:transparent}
+.nyx-topbar > span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--nyx-accent),var(--nyx-accent-2));box-shadow:var(--nyx-glow);transition:width .3s var(--nyx-ease),opacity .4s var(--nyx-ease)}
+
+/* context menu */
+.nyx-context-menu{position:fixed;z-index:200;min-width:184px;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);padding:6px;display:none}
+.nyx-context-menu.open{display:block;animation:nyx-fade .12s var(--nyx-ease)}

@@ -1,0 +1,40 @@
+/*! Nyx · regional-plus.css · v1.5.0 · MIT
+ * The regional-plus module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   19. REGIONAL+ (v1.5) — countdown, zakat, qibla, delivery tracking
+   ============================================================ */
+/* countdown (Iftar / Suhoor / sale) */
+.nyx-countdown{display:inline-flex;gap:var(--nyx-s2);align-items:center}
+.nyx-countdown .unit{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:58px;padding:10px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);background:var(--nyx-surface)}
+.nyx-countdown .unit b{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xl);font-weight:700;line-height:1;color:var(--nyx-text)}
+.nyx-countdown .unit span{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
+.nyx-countdown .sep{font-size:var(--nyx-fs-lg);color:var(--nyx-text-muted)}
+
+/* zakat / quick calculator */
+.nyx-zakat{display:flex;flex-direction:column;gap:var(--nyx-s3);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface);padding:var(--nyx-s5);max-width:340px}
+.nyx-zakat-out{display:flex;align-items:baseline;justify-content:space-between;border-top:1px solid var(--nyx-border);padding-top:var(--nyx-s3)}
+.nyx-zakat-out b{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-2xl);color:var(--nyx-accent-2)}
+
+/* qibla compass */
+.nyx-qibla{width:128px;height:128px;border-radius:50%;border:2px solid var(--nyx-border);position:relative;display:grid;place-items:center;background:radial-gradient(circle,var(--nyx-surface-2),var(--nyx-surface));box-shadow:inset 0 0 24px rgba(0,0,0,.3)}
+.nyx-qibla .needle{position:absolute;bottom:50%;width:4px;height:48px;border-radius:2px;background:linear-gradient(var(--nyx-accent),transparent);transform-origin:bottom center;box-shadow:var(--nyx-glow);transition:transform .4s var(--nyx-ease)}
+.nyx-qibla .kaaba{position:absolute;font-size:16px;transform:translateY(-44px)}
+.nyx-qibla .dir{position:absolute;font-size:10px;font-family:var(--nyx-font-mono);color:var(--nyx-text-muted)}
+.nyx-qibla .dir.n{top:5px}.nyx-qibla .dir.s{bottom:5px}.nyx-qibla .dir.e{inset-inline-end:7px}.nyx-qibla .dir.w{inset-inline-start:7px}
+.nyx-qibla .hub{width:10px;height:10px;border-radius:50%;background:var(--nyx-accent);box-shadow:var(--nyx-glow)}
+
+/* delivery tracking (vertical) */
+.nyx-delivery{display:flex;flex-direction:column}
+.nyx-delivery .nyx-dstep{display:flex;gap:var(--nyx-s3);position:relative;padding-bottom:var(--nyx-s5)}
+.nyx-delivery .nyx-dstep:last-child{padding-bottom:0}
+.nyx-delivery .nyx-dstep::before{content:"";position:absolute;inset-inline-start:13px;top:26px;bottom:0;width:2px;background:var(--nyx-border)}
+.nyx-delivery .nyx-dstep:last-child::before{display:none}
+.nyx-delivery .nyx-ddot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);font-size:13px;flex-shrink:0;z-index:1}
+.nyx-delivery .nyx-dstep.done .nyx-ddot{background:var(--nyx-accent-2);border-color:var(--nyx-accent-2);color:#04130f}
+.nyx-delivery .nyx-dstep.done::before{background:var(--nyx-accent-2)}
+.nyx-delivery .nyx-dstep.current .nyx-ddot{background:var(--nyx-accent);border-color:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+.nyx-delivery .nyx-dmeta{padding-top:3px}
+.nyx-delivery .nyx-dtitle{font-size:var(--nyx-fs-sm);font-weight:600}
+.nyx-delivery .nyx-dtime{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-mono)}
