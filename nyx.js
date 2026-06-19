@@ -374,18 +374,33 @@
   function initCombobox(root) {
     $$('.nyx-combobox', root).filter(function (c) { return !c._nyxCb; }).forEach(function (c) {
       c._nyxCb = true;
-      var input = c.querySelector('input'), opts = $$('.nyx-combobox-opt', c);
+      var input = c.querySelector('input'), opts = $$('.nyx-combobox-opt', c), menu = c.querySelector('.nyx-combobox-menu');
+      input.setAttribute('role', 'combobox'); input.setAttribute('aria-autocomplete', 'list'); input.setAttribute('aria-expanded', 'false');
+      if (menu) menu.setAttribute('role', 'listbox');
+      opts.forEach(function (o) { o.setAttribute('role', 'option'); o.setAttribute('tabindex', '-1'); });
+      function setOpen(on) { c.classList.toggle('open', on); input.setAttribute('aria-expanded', on ? 'true' : 'false'); }
       function filter() {
         var q = (input.value || '').trim().toLowerCase(), shown = 0;
         opts.forEach(function (o) { var hit = o.textContent.toLowerCase().indexOf(q) > -1; o.hidden = !hit; if (hit) shown++; });
         c.classList.toggle('empty', shown === 0);
       }
-      input.addEventListener('focus', function () { c.classList.add('open'); filter(); });
-      input.addEventListener('input', function () { c.classList.add('open'); filter(); });
+      function vis() { return opts.filter(function (o) { return !o.hidden; }); }
+      function setActive(list, i) {
+        opts.forEach(function (o) { o.classList.remove('active'); o.setAttribute('aria-selected', 'false'); });
+        if (list[i]) { list[i].classList.add('active'); list[i].setAttribute('aria-selected', 'true'); list[i].scrollIntoView({ block: 'nearest' }); }
+      }
+      function choose(o) { input.value = o.getAttribute('data-value') || o.textContent.trim(); setOpen(false); input.dispatchEvent(new Event('change', { bubbles: true })); }
+      input.addEventListener('focus', function () { setOpen(true); filter(); });
+      input.addEventListener('input', function () { setOpen(true); filter(); });
+      input.addEventListener('keydown', function (e) {
+        var list = vis(), cur = list.indexOf(c.querySelector('.nyx-combobox-opt.active'));
+        if (e.key === 'ArrowDown') { e.preventDefault(); setOpen(true); setActive(list, cur < 0 ? 0 : (cur + 1) % list.length); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(list, cur <= 0 ? list.length - 1 : cur - 1); }
+        else if (e.key === 'Enter') { var a = c.querySelector('.nyx-combobox-opt.active') || list[0]; if (a) { e.preventDefault(); choose(a); } }
+        else if (e.key === 'Escape') { setOpen(false); }
+      });
       c.addEventListener('mousedown', function (e) {
-        var o = e.target.closest('.nyx-combobox-opt'); if (!o) return;
-        e.preventDefault(); input.value = o.getAttribute('data-value') || o.textContent.trim();
-        c.classList.remove('open'); input.dispatchEvent(new Event('change', { bubbles: true }));
+        var o = e.target.closest('.nyx-combobox-opt'); if (!o) return; e.preventDefault(); choose(o);
       });
     });
   }
