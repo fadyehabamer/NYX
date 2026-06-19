@@ -1,0 +1,91 @@
+/*! Nyx · signature.css · v1.3.0 · MIT
+ * The signature module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   10. SIGNATURE ELEMENTS
+   ============================================================ */
+.nyx-spotlight{position:relative;text-align:center;padding:var(--nyx-s9) var(--nyx-s5);border-radius:var(--nyx-radius-xl);overflow:hidden;background:var(--nyx-surface);border:1px solid var(--nyx-border)}
+.nyx-spotlight::before{content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(circle,rgba(108,99,255,.35),transparent 60%);pointer-events:none}
+.nyx-spotlight::after{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:240px;height:1px;background:linear-gradient(90deg,transparent,var(--nyx-accent),transparent)}
+.nyx-spotlight > *{position:relative}
+
+.nyx-orbit{position:relative;width:220px;height:220px;margin-inline:auto}
+.nyx-orbit .nyx-orbit-center{position:absolute;inset:0;margin:auto;width:56px;height:56px;border-radius:var(--nyx-radius-lg);display:grid;place-items:center;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));box-shadow:var(--nyx-glow);font-size:22px;z-index:2}
+.nyx-orbit .nyx-ring{position:absolute;inset:0;margin:auto;border:1px solid var(--nyx-border);border-radius:50%}
+.nyx-orbit .nyx-ring.r1{width:120px;height:120px}
+.nyx-orbit .nyx-ring.r2{width:180px;height:180px}
+.nyx-orbit .nyx-ring.r3{width:220px;height:220px}
+.nyx-orbit .nyx-spin{position:absolute;inset:0;margin:auto;width:120px;height:120px;animation:nyx-orbit-rot 12s linear infinite}
+.nyx-orbit .nyx-spin.s2{width:180px;height:180px;animation-duration:18s;animation-direction:reverse}
+.nyx-orbit .nyx-node{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);font-size:14px;box-shadow:var(--nyx-shadow)}
+@keyframes nyx-orbit-rot{to{transform:rotate(360deg)}}
+
+.nyx-command{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:var(--nyx-radius-sm);background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-bottom-width:2px;color:var(--nyx-text);box-shadow:var(--nyx-shadow-sm)}
+
+.nyx-chip{display:inline-flex;align-items:center;gap:6px;font-size:var(--nyx-fs-sm);padding-block:5px;padding-inline:12px 6px;border-radius:var(--nyx-radius-full);background:var(--nyx-surface-2);border:1px solid var(--nyx-border);color:var(--nyx-text)}
+.nyx-chip .nyx-chip-x{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:var(--nyx-text-muted);transition:all .2s var(--nyx-ease);font-size:13px}
+.nyx-chip .nyx-chip-x:hover{background:var(--nyx-elev-hover);color:var(--nyx-text)}
+.nyx-chip-accent{background:rgba(108,99,255,.14);border-color:rgba(108,99,255,.35);color:var(--nyx-accent)}
+.nyx-chip-outline{background:transparent}
+
+.nyx-timeline{position:relative;padding-inline-start:var(--nyx-s6)}
+.nyx-timeline::before{content:"";position:absolute;inset-inline-start:9px;top:6px;bottom:6px;width:2px;background:var(--nyx-border)}
+.nyx-timeline .nyx-tl-item{position:relative;padding-bottom:var(--nyx-s5)}
+.nyx-timeline .nyx-tl-item:last-child{padding-bottom:0}
+.nyx-timeline .nyx-tl-dot{position:absolute;inset-inline-start:calc(-1 * var(--nyx-s6) + 2px);top:4px;width:16px;height:16px;border-radius:50%;background:var(--nyx-surface);border:2px solid var(--nyx-accent);box-shadow:var(--nyx-glow)}
+.nyx-timeline .nyx-tl-date{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);margin-bottom:var(--nyx-s2)}
+
+.nyx-meter{display:inline-grid;place-items:center;position:relative}
+.nyx-meter svg{transform:rotate(-90deg)}
+.nyx-meter .nyx-meter-track{fill:none;stroke:var(--nyx-surface-2);stroke-width:10}
+.nyx-meter .nyx-meter-fill{fill:none;stroke:url(#nyxMeterGrad);stroke-width:10;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(108,99,255,.6));transition:stroke-dashoffset .6s var(--nyx-ease)}
+.nyx-meter .nyx-meter-val{position:absolute;font-family:var(--nyx-font-display);font-weight:700;font-size:var(--nyx-fs-xl)}
+
+.nyx-gradient-border{position:relative;border-radius:var(--nyx-radius-lg);padding:1px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2),var(--nyx-accent));background-size:200% 200%;animation:nyx-gb 4s linear infinite}
+.nyx-gradient-border > *{background:var(--nyx-surface);border-radius:calc(var(--nyx-radius-lg) - 1px);padding:var(--nyx-s5)}
+@keyframes nyx-gb{to{background-position:200% 0}}
+
+.nyx-avatar{width:40px;height:40px;border-radius:50%;display:inline-grid;place-items:center;position:relative;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));color:#fff;font-weight:600;font-size:var(--nyx-fs-sm);font-family:var(--nyx-font-display);border:2px solid var(--nyx-surface);flex-shrink:0}
+.nyx-avatar.online::after{content:"";position:absolute;inset-inline-end:-1px;bottom:-1px;width:11px;height:11px;border-radius:50%;background:var(--nyx-accent-2);border:2px solid var(--nyx-bg)}
+.nyx-avatar-group{display:inline-flex}
+.nyx-avatar-group .nyx-avatar{margin-inline-start:-12px;transition:transform .2s var(--nyx-ease)}
+.nyx-avatar-group .nyx-avatar:first-child{margin-inline-start:0}
+.nyx-avatar-group .nyx-avatar:hover{transform:translateY(-3px);z-index:1}
+
+.nyx-notification-dot{position:relative;display:inline-flex}
+.nyx-notification-dot[data-count]::after{content:attr(data-count);position:absolute;top:-6px;inset-inline-end:-6px;min-width:18px;height:18px;padding:0 4px;border-radius:var(--nyx-radius-full);background:var(--nyx-danger);color:#fff;font-size:10px;font-weight:600;font-family:var(--nyx-font-mono);display:grid;place-items:center;border:2px solid var(--nyx-bg);box-shadow:0 0 12px rgba(255,77,106,.5)}
+.nyx-notification-dot.plain::after{content:"";min-width:0;width:10px;height:10px;padding:0;top:-2px;inset-inline-end:-2px}
+
+.nyx-marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.nyx-marquee .nyx-track{display:inline-flex;gap:var(--nyx-s7);align-items:center;animation:nyx-marquee 18s linear infinite;white-space:nowrap}
+.nyx-marquee:hover .nyx-track{animation-play-state:paused}
+.nyx-marquee .nyx-track span{color:var(--nyx-text-muted);font-family:var(--nyx-font-display);font-weight:700;font-size:var(--nyx-fs-lg);opacity:.7}
+@keyframes nyx-marquee{to{transform:translateX(-50%)}}
+
+/* segmented control */
+.nyx-segment{display:inline-flex;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);padding:3px;gap:3px}
+.nyx-segment label{position:relative;cursor:pointer}
+.nyx-segment input{position:absolute;opacity:0;width:0;height:0}
+.nyx-segment span{display:block;padding:6px 14px;border-radius:calc(var(--nyx-radius) - 3px);font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted);transition:all .2s var(--nyx-ease)}
+.nyx-segment input:checked + span{background:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+.nyx-segment input:focus-visible + span{outline:2px solid var(--nyx-accent);outline-offset:2px}
+
+/* rating */
+.nyx-rating{display:inline-flex;flex-direction:row-reverse;gap:2px}
+.nyx-rating input{position:absolute;opacity:0;width:0;height:0}
+.nyx-rating label{cursor:pointer;font-size:22px;line-height:1;color:var(--nyx-surface-2);transition:color .15s var(--nyx-ease)}
+.nyx-rating label::before{content:"★"}
+.nyx-rating input:checked ~ label,.nyx-rating label:hover,.nyx-rating label:hover ~ label{color:var(--nyx-warning)}
+
+/* empty state */
+.nyx-empty{text-align:center;padding:var(--nyx-s7);border:1px dashed var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-glass)}
+.nyx-empty .nyx-empty-icon{font-size:34px;opacity:.7;margin-bottom:var(--nyx-s3)}
+
+/* announcement banner */
+.nyx-banner{display:flex;align-items:center;justify-content:center;gap:var(--nyx-s3);flex-wrap:wrap;padding:10px 16px;border-radius:var(--nyx-radius);background:linear-gradient(120deg,rgba(108,99,255,.18),rgba(0,212,170,.14));border:1px solid var(--nyx-border);font-size:var(--nyx-fs-sm)}
+
+/* file dropzone */
+.nyx-dropzone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--nyx-s2);text-align:center;padding:var(--nyx-s7);border:2px dashed var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-glass);color:var(--nyx-text-muted);cursor:pointer;transition:all .2s var(--nyx-ease)}
+.nyx-dropzone:hover{border-color:var(--nyx-accent);color:var(--nyx-text);box-shadow:var(--nyx-glow)}
+.nyx-dropzone .nyx-dz-icon{font-size:28px}

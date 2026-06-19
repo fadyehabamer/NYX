@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nyx · Documentation</title>
+<meta name="description" content="Documentation for Nyx — components, usage, and live examples." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Cairo:wght@400;600;700;800&family=Aref+Ruqaa:wght@400;700&family=Lalezar&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="nyx.css" />
+<link rel="stylesheet" href="docs.css" />
+</head>
+<body class="nyx nyx-reset">
+
+<!-- ===================== NAVBAR ===================== -->
+<nav class="nyx-navbar">
+  <div class="nyx-flex nyx-items-center nyx-gap-4">
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost docs-menu-btn" id="docsMenuBtn" aria-label="Open navigation">☰</button>
+    <a class="docs-logo" href="index.html"><span class="mark">N</span><span><span class="pre">nyx</span>·Nyx</span></a>
+    <div class="docs-navlinks hide-sm">
+      <a href="docs.html" class="active">Docs</a>
+      <a href="index.html">Home</a>
+      <a href="docs.ar.html">العربية</a>
+    </div>
+  </div>
+  <div class="nyx-flex nyx-items-center nyx-gap-3">
+    <div class="nyx-search hide-sm" role="button" tabindex="0" data-nyx-toggle="command" aria-label="Open command palette">
+      <span class="nyx-search-icon" aria-hidden="true">⌕</span>
+      <input type="text" placeholder="Search docs…" aria-label="Search docs" tabindex="-1" readonly />
+      <span class="nyx-command">⌘K</span>
+    </div>
+    <span class="nyx-badge nyx-badge-info hide-sm">v1.3.0</span>
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleDir()" aria-label="Toggle text direction (RTL)" title="Toggle RTL">⇄</button>
+    <a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="https://example.com" aria-label="GitHub">★ <span class="hide-sm">Star</span></a>
+  </div>
+</nav>
+
+<!-- ===================== DOCS SHELL ===================== -->
+<div class="docs-grid">
+  <aside class="docs-side" id="docsSide" aria-label="Component navigation"><!-- built by docs.js --></aside>
+  <main class="docs-main" id="docsMain"><!-- routed page --></main>
+  <aside class="docs-toc" id="docsToc" aria-label="On this page"><!-- built by docs.js --></aside>
+</div>
+<div class="docs-backdrop" id="docsBackdrop"></div>
+
+<!-- ===================== SHARED OVERLAY INSTANCES (referenced by pages) ===================== -->
+<div class="nyx-modal" id="docModal" role="dialog" aria-modal="true" aria-labelledby="docModalTitle">
+  <div class="nyx-modal-box">
+    <div class="nyx-flex nyx-items-center nyx-justify-between" style="margin-bottom:var(--nyx-s4)">
+      <h3 class="nyx-h3" id="docModalTitle">Invite teammates</h3>
+      <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" aria-label="Close" data-nyx-dismiss>✕</button>
+    </div>
+    <p class="nyx-muted" style="margin-bottom:var(--nyx-s4)">Send an invite link — they will join your workspace instantly.</p>
+    <div class="nyx-input-group" style="margin-bottom:var(--nyx-s4)"><span class="nyx-addon">✉</span><input class="nyx-input" placeholder="name@team.com" aria-label="Email" /></div>
+    <div class="nyx-flex nyx-justify-between nyx-gap-3">
+      <button class="nyx-btn nyx-btn-ghost" data-nyx-dismiss>Cancel</button>
+      <button class="nyx-btn nyx-btn-primary" onclick="Nyx.toast('Invite sent ✓','success');Nyx.closeAll()">Send invite</button>
+    </div>
+  </div>
+</div>
+
+<aside class="nyx-drawer" id="docDrawer" role="dialog" aria-modal="true" aria-labelledby="docDrawerTitle">
+  <div class="nyx-flex nyx-items-center nyx-justify-between" style="margin-bottom:var(--nyx-s5)">
+    <h3 class="nyx-h3" id="docDrawerTitle">Notifications</h3>
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" aria-label="Close" data-nyx-dismiss>✕</button>
+  </div>
+  <div class="nyx-stack">
+    <div class="nyx-alert nyx-alert-info"><span class="nyx-alert-icon">✦</span><div>New comment on <strong>Roadmap</strong>.</div></div>
+    <div class="nyx-alert nyx-alert-success"><span class="nyx-alert-icon">✓</span><div>Deploy <strong>#482</strong> succeeded.</div></div>
+  </div>
+</aside>
+
+<aside class="nyx-drawer nyx-drawer-left" id="docDrawerLeft" role="dialog" aria-modal="true" aria-labelledby="docDrawerLeftTitle">
+  <div class="nyx-flex nyx-items-center nyx-justify-between" style="margin-bottom:var(--nyx-s5)">
+    <h3 class="nyx-h3" id="docDrawerLeftTitle">Filters</h3>
+    <button class="nyx-close" aria-label="Close" data-nyx-dismiss>✕</button>
+  </div>
+  <div class="nyx-stack">
+    <label class="nyx-checkbox"><input type="checkbox" checked><span class="nyx-box"></span> Active</label>
+    <label class="nyx-checkbox"><input type="checkbox"><span class="nyx-box"></span> Archived</label>
+    <label class="nyx-checkbox"><input type="checkbox"><span class="nyx-box"></span> Draft</label>
+  </div>
+</aside>
+
+<div class="nyx-command-palette" id="commandPalette" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="nyx-cp-box">
+    <div class="nyx-cp-input"><span class="nyx-search-icon">⌕</span><input placeholder="Jump to a component…" aria-label="Command search" /><span class="nyx-command">esc</span></div>
+    <div class="nyx-cp-list">
+      <a class="nyx-cp-item" href="#/buttons">⚡ Buttons</a>
+      <a class="nyx-cp-item" href="#/cards">🃏 Cards</a>
+      <a class="nyx-cp-item" href="#/inputs">📝 Forms</a>
+      <a class="nyx-cp-item" href="#/tables">📊 Tables &amp; Data</a>
+      <a class="nyx-cp-item" href="#/modal">🪟 Modal</a>
+      <a class="nyx-cp-item" href="#/spotlight">✦ Spotlight</a>
+    </div>
+  </div>
+</div>
+
+<script src="nyx.js"></script>
+<script src="docs.js"></script>
+</body>
+</html>

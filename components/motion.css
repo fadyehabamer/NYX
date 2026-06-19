@@ -1,0 +1,38 @@
+/*! Nyx · motion.css · v1.3.0 · MIT
+ * The motion module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   12. BIG TYPE & MOTION (v1.3)
+   ============================================================ */
+/* oversized hero type — the big-typography trend */
+.nyx-bigtype{font-family:var(--nyx-font-display);font-weight:800;font-size:clamp(46px,11vw,132px);line-height:.92;letter-spacing:-.04em;margin:0}
+.nyx-bigtype-sm{font-size:clamp(34px,7vw,72px)}
+.nyx-bigtype .stroke{-webkit-text-stroke:1.5px var(--nyx-accent);color:transparent}
+.nyx-bigtype .nyx-gradient-text{display:inline-block}
+.nyx-font-ruqaa{font-family:'Aref Ruqaa','Lalezar',serif}
+
+/* scroll-reveal (wire with data-nyx-reveal) */
+.nyx-reveal{opacity:0;transform:translateY(18px);transition:opacity .6s var(--nyx-ease),transform .6s var(--nyx-ease)}
+.nyx-reveal.nyx-in{opacity:1;transform:none}
+
+/* one-shot entrance animations + stagger delays */
+.nyx-anim-fade{animation:nyx-fade-in .6s var(--nyx-ease) both}
+.nyx-anim-up{animation:nyx-slide-up .6s var(--nyx-ease) both}
+.nyx-anim-zoom{animation:nyx-zoom-in .5s var(--nyx-ease) both}
+.nyx-anim-float{animation:nyx-float 3s var(--nyx-ease) infinite}
+.nyx-anim-delay-1{animation-delay:.1s}.nyx-anim-delay-2{animation-delay:.2s}.nyx-anim-delay-3{animation-delay:.3s}.nyx-anim-delay-4{animation-delay:.4s}
+@keyframes nyx-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes nyx-slide-up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes nyx-zoom-in{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes nyx-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* animated gradient text */
+.nyx-gradient-text.animated{background-size:200% auto;animation:nyx-text-shine 4s linear infinite}
+@keyframes nyx-text-shine{to{background-position:200% center}}
+
+/* animated aurora backdrop for heroes */
+.nyx-aurora{position:relative;overflow:hidden}
+.nyx-aurora::before{content:"";position:absolute;inset:-40%;z-index:0;background:conic-gradient(from 0deg,var(--nyx-accent),var(--nyx-accent-2),var(--nyx-danger),var(--nyx-accent));filter:blur(80px);opacity:.22;animation:nyx-aurora-rot 16s linear infinite}
+.nyx-aurora > *{position:relative;z-index:1}
+@keyframes nyx-aurora-rot{to{transform:rotate(360deg)}}

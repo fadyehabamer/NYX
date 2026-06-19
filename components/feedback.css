@@ -1,0 +1,52 @@
+/*! Nyx · feedback.css · v1.3.0 · MIT
+ * The feedback module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   7. FEEDBACK & STATUS
+   ============================================================ */
+.nyx-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);font-weight:500;padding:3px 10px;border-radius:var(--nyx-radius-full);background:var(--nyx-surface-2);color:var(--nyx-text-muted);border:1px solid var(--nyx-border)}
+.nyx-badge-success{background:rgba(0,212,170,.12);color:var(--nyx-accent-2);border-color:rgba(0,212,170,.3)}
+.nyx-badge-danger{background:rgba(255,77,106,.12);color:var(--nyx-danger);border-color:rgba(255,77,106,.3)}
+.nyx-badge-warning{background:rgba(255,176,32,.12);color:var(--nyx-warning);border-color:rgba(255,176,32,.3)}
+.nyx-badge-info{background:rgba(108,99,255,.14);color:var(--nyx-accent);border-color:rgba(108,99,255,.3)}
+.nyx-badge-dot{display:inline-flex;align-items:center;gap:8px;font-size:var(--nyx-fs-sm);color:var(--nyx-text)}
+.nyx-badge-dot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--nyx-accent-2);box-shadow:0 0 0 4px rgba(0,212,170,.18);animation:nyx-blink 1.6s var(--nyx-ease) infinite}
+@keyframes nyx-blink{50%{opacity:.4}}
+.nyx-alert{display:flex;gap:var(--nyx-s3);padding:14px 16px;border-radius:var(--nyx-radius);border:1px solid var(--nyx-border);background:var(--nyx-surface);border-inline-start-width:3px;font-size:var(--nyx-fs-sm)}
+.nyx-alert .nyx-alert-icon{font-size:18px;line-height:1.4}
+.nyx-alert-info{border-inline-start-color:var(--nyx-accent)}
+.nyx-alert-success{border-inline-start-color:var(--nyx-accent-2)}
+.nyx-alert-warning{border-inline-start-color:var(--nyx-warning)}
+.nyx-alert-danger{border-inline-start-color:var(--nyx-danger)}
+.nyx-progress{height:8px;background:var(--nyx-surface-2);border-radius:var(--nyx-radius-full);overflow:hidden}
+.nyx-progress > span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--nyx-accent),var(--nyx-accent-2));box-shadow:var(--nyx-glow);transition:width .4s var(--nyx-ease)}
+.nyx-skeleton{background:linear-gradient(90deg,var(--nyx-surface-2) 25%,var(--nyx-shimmer) 50%,var(--nyx-surface-2) 75%);background-size:200% 100%;border-radius:var(--nyx-radius);animation:nyx-shimmer 1.4s linear infinite}
+@keyframes nyx-shimmer{to{background-position:-200% 0}}
+.nyx-status-bar{display:flex;align-items:center;gap:0}
+.nyx-status-bar .nyx-step{display:flex;align-items:center;gap:var(--nyx-s2);font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted)}
+.nyx-status-bar .nyx-step .nyx-step-dot{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);font-size:var(--nyx-fs-xs);font-family:var(--nyx-font-mono)}
+.nyx-status-bar .nyx-step-line{flex:1;height:2px;min-width:24px;background:var(--nyx-border);margin-inline:var(--nyx-s2)}
+.nyx-status-bar .nyx-step.done .nyx-step-dot{background:var(--nyx-accent-2);border-color:var(--nyx-accent-2);color:#04130f}
+.nyx-status-bar .nyx-step.done + .nyx-step-line{background:var(--nyx-accent-2)}
+.nyx-status-bar .nyx-step.current .nyx-step-dot{background:var(--nyx-accent);border-color:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+.nyx-status-bar .nyx-step.current{color:var(--nyx-text)}
+/* spinners */
+.nyx-spinner{display:inline-block;width:24px;height:24px;border-radius:50%;border:3px solid var(--nyx-surface-2);border-top-color:var(--nyx-accent);animation:nyx-spin .7s linear infinite}
+.nyx-spinner-sm{width:16px;height:16px;border-width:2px}
+.nyx-spinner-lg{width:36px;height:36px;border-width:4px}
+.nyx-spinner-dots{display:inline-flex;gap:5px;align-items:center}
+.nyx-spinner-dots span{width:8px;height:8px;border-radius:50%;background:var(--nyx-accent);animation:nyx-bounce 1s var(--nyx-ease) infinite}
+.nyx-spinner-dots span:nth-child(2){animation-delay:.15s}
+.nyx-spinner-dots span:nth-child(3){animation-delay:.3s}
+@keyframes nyx-bounce{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-6px);opacity:1}}
+
+.nyx-toast-wrap{position:fixed;inset-inline-end:var(--nyx-s5);bottom:var(--nyx-s5);z-index:300;display:flex;flex-direction:column;gap:var(--nyx-s3);max-width:340px}
+.nyx-toast{display:flex;align-items:center;gap:var(--nyx-s3);padding:12px 16px;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-inline-start-width:3px;border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);font-size:var(--nyx-fs-sm);animation:nyx-toast-in .3s var(--nyx-ease)}
+.nyx-toast.nyx-out{animation:nyx-toast-out .3s var(--nyx-ease) forwards}
+.nyx-toast-info{border-inline-start-color:var(--nyx-accent)}
+.nyx-toast-success{border-inline-start-color:var(--nyx-accent-2)}
+.nyx-toast-warning{border-inline-start-color:var(--nyx-warning)}
+.nyx-toast-danger{border-inline-start-color:var(--nyx-danger)}
+@keyframes nyx-toast-in{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+@keyframes nyx-toast-out{to{opacity:0;transform:translateX(40px)}}

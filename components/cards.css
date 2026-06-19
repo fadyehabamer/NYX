@@ -1,0 +1,18 @@
+/*! Nyx · cards.css · v1.3.0 · MIT
+ * The cards module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   4. CARDS
+   ============================================================ */
+.nyx-card{background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);padding:var(--nyx-s5);box-shadow:var(--nyx-shadow-sm)}
+.nyx-card-glass{background:var(--nyx-glass);border:1px solid var(--nyx-glass-border);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:var(--nyx-radius-lg);padding:var(--nyx-s5)}
+.nyx-card-gradient{position:relative;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);padding:var(--nyx-s5);overflow:hidden}
+.nyx-card-gradient::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--nyx-accent),var(--nyx-accent-2))}
+.nyx-card-interactive{cursor:pointer;transition:all .2s var(--nyx-ease)}
+.nyx-card-interactive:hover{transform:translateY(-4px);border-color:rgba(108,99,255,.5);box-shadow:var(--nyx-glow),var(--nyx-shadow-lg)}
+.nyx-card-stat{background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);padding:var(--nyx-s5);display:flex;flex-direction:column;gap:var(--nyx-s2)}
+.nyx-card-stat .nyx-stat-num{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-2xl);line-height:1}
+.nyx-card-stat .nyx-stat-label{font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted)}
+.nyx-card-feature{background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);padding:var(--nyx-s5);display:flex;flex-direction:column;gap:var(--nyx-s3)}
+.nyx-card-feature .nyx-feat-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:var(--nyx-radius);background:rgba(108,99,255,.14);color:var(--nyx-accent);font-size:20px}

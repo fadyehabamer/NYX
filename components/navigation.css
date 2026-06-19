@@ -1,0 +1,50 @@
+/*! Nyx · navigation.css · v1.3.0 · MIT
+ * The navigation module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   6. NAVIGATION
+   ============================================================ */
+.nyx-navbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:var(--nyx-s4);padding:var(--nyx-s3) var(--nyx-s5);background:var(--nyx-navbar-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--nyx-border)}
+.nyx-sidebar{display:flex;flex-direction:column;gap:2px}
+.nyx-sidebar a{display:flex;align-items:center;gap:var(--nyx-s2);padding:8px 12px;border-radius:var(--nyx-radius);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);font-weight:500;transition:all .2s var(--nyx-ease);border-inline-start:2px solid transparent}
+.nyx-sidebar a:hover{color:var(--nyx-text);background:var(--nyx-glass)}
+.nyx-sidebar a.active{color:var(--nyx-text);background:rgba(108,99,255,.12);border-inline-start-color:var(--nyx-accent)}
+.nyx-breadcrumb{display:flex;align-items:center;gap:var(--nyx-s2);font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted);flex-wrap:wrap}
+.nyx-breadcrumb a:hover{color:var(--nyx-text)}
+.nyx-breadcrumb .nyx-sep{color:var(--nyx-border)}
+.nyx-breadcrumb [aria-current]{color:var(--nyx-text)}
+.nyx-tabs{display:flex;gap:var(--nyx-s1);border-bottom:1px solid var(--nyx-border)}
+.nyx-tab{background:none;border:none;color:var(--nyx-text-muted);font-family:var(--nyx-font-body);font-size:var(--nyx-fs-sm);font-weight:500;padding:10px 14px;cursor:pointer;position:relative;transition:color .2s var(--nyx-ease)}
+.nyx-tab::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--nyx-accent);transform:scaleX(0);transition:transform .2s var(--nyx-ease);box-shadow:0 0 12px var(--nyx-accent)}
+.nyx-tab:hover{color:var(--nyx-text)}
+.nyx-tab.active{color:var(--nyx-text)}
+.nyx-tab.active::after{transform:scaleX(1)}
+.nyx-tab-panel{display:none;padding-top:var(--nyx-s4)}
+.nyx-tab-panel.active{display:block;animation:nyx-fade .25s var(--nyx-ease)}
+@keyframes nyx-fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+/* nav pills */
+.nyx-nav-pills{display:flex;gap:6px;flex-wrap:wrap}
+.nyx-pill{padding:8px 14px;border-radius:var(--nyx-radius-full);font-size:var(--nyx-fs-sm);font-weight:500;color:var(--nyx-text-muted);cursor:pointer;border:1px solid transparent;background:none;font-family:var(--nyx-font-body);transition:all .2s var(--nyx-ease)}
+.nyx-pill:hover{color:var(--nyx-text);background:var(--nyx-glass)}
+.nyx-pill.active{background:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+.nyx-pagination{display:flex;align-items:center;gap:var(--nyx-s1)}
+.nyx-pagination button{min-width:36px;height:36px;border:1px solid var(--nyx-border);background:var(--nyx-surface);color:var(--nyx-text-muted);border-radius:var(--nyx-radius);cursor:pointer;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);transition:all .2s var(--nyx-ease)}
+.nyx-pagination button:hover{border-color:var(--nyx-accent);color:var(--nyx-text)}
+.nyx-pagination button.active{background:var(--nyx-accent);border-color:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+/* dropdown */
+.nyx-dropdown{position:relative;display:inline-flex}
+.nyx-dropdown-menu{position:absolute;top:calc(100% + 8px);inset-inline-start:0;z-index:120;min-width:184px;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);padding:6px;display:none}
+.nyx-dropdown.open .nyx-dropdown-menu{display:block;animation:nyx-fade .15s var(--nyx-ease)}
+.nyx-dropdown-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--nyx-radius-sm);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);cursor:pointer;white-space:nowrap;width:100%;text-align:start;background:none;border:none;font-family:var(--nyx-font-body)}
+.nyx-dropdown-item:hover{background:rgba(108,99,255,.12);color:var(--nyx-text)}
+.nyx-dropdown-divider{height:1px;background:var(--nyx-border);margin:6px 0}
+
+.nyx-command-palette{position:fixed;inset:0;z-index:200;display:none;background:var(--nyx-overlay-bg);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding-top:14vh;justify-content:center;align-items:flex-start}
+.nyx-command-palette.open{display:flex;animation:nyx-fade .2s var(--nyx-ease)}
+.nyx-command-palette .nyx-cp-box{width:min(560px,92vw);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);box-shadow:var(--nyx-shadow-lg),var(--nyx-glow);overflow:hidden}
+.nyx-cp-input{display:flex;align-items:center;gap:var(--nyx-s3);padding:16px 18px;border-bottom:1px solid var(--nyx-border)}
+.nyx-cp-input input{flex:1;background:transparent;border:none;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-lg)}
+.nyx-cp-list{max-height:320px;overflow:auto;padding:var(--nyx-s2)}
+.nyx-cp-item{display:flex;align-items:center;gap:var(--nyx-s3);padding:10px 12px;border-radius:var(--nyx-radius);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);cursor:pointer}
+.nyx-cp-item:hover,.nyx-cp-item.active{background:rgba(108,99,255,.12);color:var(--nyx-text)}

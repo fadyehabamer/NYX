@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>نيكس · التوثيق</title>
+<meta name="description" content="توثيق نيكس — المكوّنات والاستخدام وأمثلة حيّة. أول مكتبة CSS مبنية للمطوّرين العرب." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Cairo:wght@400;600;700;800&family=Aref+Ruqaa:wght@400;700&family=Lalezar&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="nyx.css" />
+<link rel="stylesheet" href="docs.css" />
+</head>
+<body class="nyx nyx-reset">
+
+<!-- ===================== NAVBAR ===================== -->
+<nav class="nyx-navbar">
+  <div class="nyx-flex nyx-items-center nyx-gap-4">
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost docs-menu-btn" id="docsMenuBtn" aria-label="فتح القائمة">☰</button>
+    <a class="docs-logo" href="index.ar.html"><span class="mark">N</span><span><span class="pre">nyx</span>·نيكس</span></a>
+    <div class="docs-navlinks hide-sm">
+      <a href="docs.ar.html" class="active">التوثيق</a>
+      <a href="index.ar.html">الرئيسية</a>
+      <a href="docs.html">EN</a>
+    </div>
+  </div>
+  <div class="nyx-flex nyx-items-center nyx-gap-3">
+    <div class="nyx-search hide-sm" role="button" tabindex="0" data-nyx-toggle="command" aria-label="فتح لوحة الأوامر">
+      <span class="nyx-search-icon" aria-hidden="true">⌕</span>
+      <input type="text" placeholder="ابحث في التوثيق…" aria-label="بحث" tabindex="-1" readonly />
+      <span class="nyx-command">⌘K</span>
+    </div>
+    <span class="nyx-badge nyx-badge-info hide-sm">v1.3.0</span>
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="تبديل السمة" title="تبديل السمة">◐</button>
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleDir()" aria-label="تبديل الاتجاه" title="تبديل الاتجاه">⇄</button>
+    <a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="https://example.com" aria-label="نجمة على GitHub">★ <span class="hide-sm">نجمة</span></a>
+  </div>
+</nav>
+
+<div class="nyx-container" style="padding-block:var(--nyx-s3) 0">
+  <div class="nyx-banner"><span class="nyx-badge nyx-badge-info">عربي</span> أوّل مكتبة CSS مبنية للمطوّرين العرب — بدعم RTL كامل وخطوط عربية. <a href="index.ar.html" class="nyx-gradient-text" style="font-weight:600">الصفحة الرئيسية ←</a></div>
+</div>
+
+<!-- ===================== DOCS SHELL ===================== -->
+<div class="docs-grid">
+  <aside class="docs-side" id="docsSide" aria-label="تنقّل المكوّنات"></aside>
+  <main class="docs-main" id="docsMain"></main>
+  <aside class="docs-toc" id="docsToc" aria-label="في هذه الصفحة"></aside>
+</div>
+<div class="docs-backdrop" id="docsBackdrop"></div>
+
+<!-- ===================== SHARED OVERLAY INSTANCES ===================== -->
+<div class="nyx-modal" id="docModal" role="dialog" aria-modal="true" aria-labelledby="docModalTitle">
+  <div class="nyx-modal-box">
+    <div class="nyx-flex nyx-items-center nyx-justify-between" style="margin-bottom:var(--nyx-s4)">
+      <h3 class="nyx-h3" id="docModalTitle">دعوة الزملاء</h3>
+      <button class="nyx-close" aria-label="إغلاق" data-nyx-dismiss>✕</button>
+    </div>
+    <p class="nyx-muted" style="margin-bottom:var(--nyx-s4)">أرسل رابط دعوة — وسينضمّون إلى مساحة عملك فوراً.</p>
+    <div class="nyx-input-group" style="margin-bottom:var(--nyx-s4)"><span class="nyx-addon">✉</span><input class="nyx-input" placeholder="name@team.com" aria-label="البريد الإلكتروني" /></div>
+    <div class="nyx-flex nyx-justify-between nyx-gap-3">
+      <button class="nyx-btn nyx-btn-ghost" data-nyx-dismiss>إلغاء</button>
+      <button class="nyx-btn nyx-btn-primary" onclick="Nyx.toast('تم إرسال الدعوة ✓','success');Nyx.closeAll()">إرسال الدعوة</button>
+    </div>
+  </div>
+</div>
+
+<aside class="nyx-drawer" id="docDrawer" role="dialog" aria-modal="true" aria-labelledby="docDrawerTitle">
+  <div class="nyx-flex nyx-items-center nyx-justify-between" style="margin-bottom:var(--nyx-s5)">
+    <h3 class="nyx-h3" id="docDrawerTitle">الإشعارات</h3>
+    <button class="nyx-close" aria-label="إغلاق" data-nyx-dismiss>✕</button>
+  </div>
+  <div class="nyx-stack">
+    <div class="nyx-alert nyx-alert-info"><span class="nyx-alert-icon">✦</span><div>تعليق جديد على <strong>خارطة الطريق</strong>.</div></div>
+    <div class="nyx-alert nyx-alert-success"><span class="nyx-alert-icon">✓</span><div>نجح النشر <strong>#482</strong>.</div></div>
+  </div>
+</aside>
+
+<aside class="nyx-drawer nyx-drawer-left" id="docDrawerLeft" role="dialog" aria-modal="true" aria-labelledby="docDrawerLeftTitle">
+  <div class="nyx-flex nyx-items-center nyx-justify-between" style="margin-bottom:var(--nyx-s5)">
+    <h3 class="nyx-h3" id="docDrawerLeftTitle">المرشّحات</h3>
+    <button class="nyx-close" aria-label="إغلاق" data-nyx-dismiss>✕</button>
+  </div>
+  <div class="nyx-stack">
+    <label class="nyx-checkbox"><input type="checkbox" checked><span class="nyx-box"></span> نشط</label>
+    <label class="nyx-checkbox"><input type="checkbox"><span class="nyx-box"></span> مؤرشف</label>
+    <label class="nyx-checkbox"><input type="checkbox"><span class="nyx-box"></span> مسودّة</label>
+  </div>
+</aside>
+
+<div class="nyx-command-palette" id="commandPalette" role="dialog" aria-modal="true" aria-label="لوحة الأوامر">
+  <div class="nyx-cp-box">
+    <div class="nyx-cp-input"><span class="nyx-search-icon">⌕</span><input placeholder="انتقل إلى مكوّن…" aria-label="بحث الأوامر" /><span class="nyx-command">esc</span></div>
+    <div class="nyx-cp-list">
+      <a class="nyx-cp-item" href="#/buttons">⚡ الأزرار</a>
+      <a class="nyx-cp-item" href="#/cards">🃏 البطاقات</a>
+      <a class="nyx-cp-item" href="#/inputs">📝 النماذج</a>
+      <a class="nyx-cp-item" href="#/big-type">🅰 الخط الكبير</a>
+      <a class="nyx-cp-item" href="#/rtl">↔ دعم RTL</a>
+    </div>
+  </div>
+</div>
+
+<script src="nyx.js"></script>
+<script>document.documentElement.setAttribute('dir', 'rtl'); document.documentElement.setAttribute('lang', 'ar');</script>
+<script src="docs.ar.js"></script>
+<script src="docs.js"></script>
+</body>
+</html>

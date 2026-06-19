@@ -1,0 +1,35 @@
+/*! Nyx · layout.css · v1.3.0 · MIT
+ * The layout module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   1. LAYOUT
+   ============================================================ */
+.nyx-container{max-width:1280px;margin-inline:auto;padding-inline:var(--nyx-s5)}
+.nyx-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--nyx-s4)}
+.nyx-col-1{grid-column:span 1}.nyx-col-2{grid-column:span 2}.nyx-col-3{grid-column:span 3}
+.nyx-col-4{grid-column:span 4}.nyx-col-5{grid-column:span 5}.nyx-col-6{grid-column:span 6}
+.nyx-col-7{grid-column:span 7}.nyx-col-8{grid-column:span 8}.nyx-col-9{grid-column:span 9}
+.nyx-col-10{grid-column:span 10}.nyx-col-11{grid-column:span 11}.nyx-col-12{grid-column:span 12}
+.nyx-flex{display:flex}.nyx-inline-flex{display:inline-flex}
+.nyx-items-center{align-items:center}.nyx-items-start{align-items:flex-start}
+.nyx-justify-between{justify-content:space-between}.nyx-justify-center{justify-content:center}
+.nyx-wrap{flex-wrap:wrap}.nyx-flex-col{flex-direction:column}.nyx-grow{flex:1}
+.nyx-gap-1{gap:var(--nyx-s1)}.nyx-gap-2{gap:var(--nyx-s2)}.nyx-gap-3{gap:var(--nyx-s3)}
+.nyx-gap-4{gap:var(--nyx-s4)}.nyx-gap-5{gap:var(--nyx-s5)}.nyx-gap-6{gap:var(--nyx-s6)}
+.nyx-stack{display:flex;flex-direction:column;gap:var(--nyx-s4)}
+.nyx-divider{display:flex;align-items:center;gap:var(--nyx-s3);color:var(--nyx-text-muted);
+  font-size:var(--nyx-fs-xs);text-transform:uppercase;letter-spacing:.08em;margin:var(--nyx-s5) 0}
+.nyx-divider::before,.nyx-divider::after{content:"";flex:1;height:1px;background:var(--nyx-border)}
+.nyx-divider.plain{margin-block:var(--nyx-s4)}
+.nyx-ratio{position:relative;width:100%}
+.nyx-ratio::before{content:"";display:block;padding-top:56.25%}
+.nyx-ratio-1x1::before{padding-top:100%}
+.nyx-ratio-4x3::before{padding-top:75%}
+.nyx-ratio > *{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:var(--nyx-radius)}
+
+@media(max-width:1024px){[class*="nyx-col-"]{grid-column:span 6}}
+@media(max-width:640px){
+  [class*="nyx-col-"]{grid-column:span 12}
+  .nyx-container{padding-inline:var(--nyx-s4)}
+}

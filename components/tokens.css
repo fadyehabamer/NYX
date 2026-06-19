@@ -1,0 +1,58 @@
+/*! Nyx · tokens.css · v1.3.0 · MIT
+ * Design tokens — dark + light themes. Required by every other file.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ---------- TOKENS · DARK (default) ---------- */
+:root{
+  --nyx-bg:#0a0b0f; --nyx-surface:#12141a; --nyx-surface-2:#1c1f2a;
+  --nyx-border:#2a2d3a; --nyx-accent:#6c63ff; --nyx-accent-2:#00d4aa;
+  --nyx-danger:#ff4d6a; --nyx-warning:#ffb020; --nyx-text:#e8eaf0;
+  --nyx-text-muted:#6b7280; --nyx-glass:rgba(255,255,255,0.04);
+
+  /* theme-variant surfaces (flip in light mode) */
+  --nyx-navbar-bg:rgba(10,11,15,.72);
+  --nyx-overlay-bg:rgba(5,6,10,.65);
+  --nyx-elev-hover:rgba(255,255,255,.08);
+  --nyx-glass-border:rgba(255,255,255,.08);
+  --nyx-shimmer:#252836;
+
+  --nyx-radius-sm:6px; --nyx-radius:10px; --nyx-radius-lg:16px;
+  --nyx-radius-xl:24px; --nyx-radius-full:9999px;
+
+  --nyx-shadow-sm:0 1px 3px rgba(0,0,0,.4);
+  --nyx-shadow:0 4px 16px rgba(0,0,0,.5);
+  --nyx-shadow-lg:0 12px 40px rgba(0,0,0,.6);
+  --nyx-glow:0 0 24px rgba(108,99,255,.35);
+
+  --nyx-fs-xs:11px; --nyx-fs-sm:13px; --nyx-fs-base:15px; --nyx-fs-lg:17px;
+  --nyx-fs-xl:22px; --nyx-fs-2xl:30px; --nyx-fs-3xl:42px;
+
+  --nyx-s1:4px; --nyx-s2:8px; --nyx-s3:12px; --nyx-s4:16px; --nyx-s5:24px;
+  --nyx-s6:32px; --nyx-s7:48px; --nyx-s8:64px; --nyx-s9:96px;
+
+  --nyx-font-display:'Plus Jakarta Sans',system-ui,sans-serif;
+  --nyx-font-body:'Inter',system-ui,sans-serif;
+  --nyx-font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --nyx-font-ar:'Cairo','Inter',system-ui,sans-serif;            /* Arabic body */
+  --nyx-font-ar-display:'Aref Ruqaa','Lalezar',serif;            /* Arabic hero display (Ruq'ah cursive) */
+  --nyx-ease:cubic-bezier(.4,0,.2,1);
+}
+
+/* ---------- TOKENS · LIGHT (one-attribute swap) ---------- */
+:root[data-theme="light"]{
+  --nyx-bg:#f5f6fb; --nyx-surface:#ffffff; --nyx-surface-2:#eef0f7;
+  --nyx-border:#e2e5ef; --nyx-accent:#6c5cff; --nyx-accent-2:#06b690;
+  --nyx-danger:#e23a54; --nyx-warning:#c07a00; --nyx-text:#15171f;
+  --nyx-text-muted:#6b7280; --nyx-glass:rgba(20,22,45,0.03);
+
+  --nyx-navbar-bg:rgba(255,255,255,.72);
+  --nyx-overlay-bg:rgba(20,22,45,.40);
+  --nyx-elev-hover:rgba(20,22,50,.06);
+  --nyx-glass-border:rgba(20,22,50,.10);
+  --nyx-shimmer:#e7eaf3;
+
+  --nyx-shadow-sm:0 1px 2px rgba(20,22,50,.08);
+  --nyx-shadow:0 6px 20px rgba(20,22,50,.10);
+  --nyx-shadow-lg:0 16px 40px rgba(20,22,50,.16);
+  --nyx-glow:0 0 22px rgba(108,92,255,.22);
+}

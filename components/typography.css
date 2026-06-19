@@ -1,0 +1,21 @@
+/*! Nyx · typography.css · v1.3.0 · MIT
+ * The typography module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   2. TYPOGRAPHY
+   ============================================================ */
+.nyx-display{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-3xl);line-height:1.1;letter-spacing:-.02em}
+.nyx-h1{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-2xl);letter-spacing:-.02em;line-height:1.2}
+.nyx-h2{font-family:var(--nyx-font-display);font-weight:700;font-size:var(--nyx-fs-xl);letter-spacing:-.01em;line-height:1.25}
+.nyx-h3{font-family:var(--nyx-font-display);font-weight:700;font-size:var(--nyx-fs-lg)}
+.nyx-h4{font-family:var(--nyx-font-display);font-weight:600;font-size:var(--nyx-fs-base)}
+.nyx-h5{font-family:var(--nyx-font-display);font-weight:600;font-size:var(--nyx-fs-sm)}
+.nyx-h6{font-family:var(--nyx-font-display);font-weight:600;font-size:var(--nyx-fs-xs);text-transform:uppercase;letter-spacing:.1em}
+.nyx-body{font-size:var(--nyx-fs-base);color:var(--nyx-text)}
+.nyx-lead{font-size:var(--nyx-fs-lg);color:var(--nyx-text);line-height:1.7;font-weight:400}
+.nyx-caption{font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted)}
+.nyx-overline{font-size:var(--nyx-fs-xs);text-transform:uppercase;letter-spacing:.12em;color:var(--nyx-accent);font-weight:600;font-family:var(--nyx-font-mono)}
+.nyx-muted{color:var(--nyx-text-muted)}
+.nyx-gradient-text{background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.nyx-code{font-family:var(--nyx-font-mono);font-size:.9em;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);padding:2px 6px;border-radius:var(--nyx-radius-sm);color:var(--nyx-accent-2)}

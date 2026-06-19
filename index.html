@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nyx — The Design System for Modern SaaS</title>
+<meta name="description" content="Nyx is a modern, dark-mode-native CSS/JS component framework with Luminous Depth — every element lit from within. Zero dependencies." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Cairo:wght@400;600;700;800&family=Aref+Ruqaa:wght@400;700&family=Lalezar&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="nyx.css" />
+<style>
+  html{scroll-behavior:smooth;scroll-padding-top:80px}
+  .lp-logo{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-lg);display:flex;align-items:center;gap:8px}
+  .lp-logo .mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));box-shadow:var(--nyx-glow);display:grid;place-items:center;color:#fff;font-size:14px}
+  .lp-logo .pre{color:var(--nyx-accent)}
+  .lp-links{display:flex;align-items:center;gap:var(--nyx-s4);font-size:var(--nyx-fs-sm);font-weight:500}
+  .lp-links a{color:var(--nyx-text-muted);transition:color .2s var(--nyx-ease)}
+  .lp-links a:hover{color:var(--nyx-text)}
+  section.lp{padding-block:var(--nyx-s9)}
+  .lp-section-head{text-align:center;max-width:620px;margin:0 auto var(--nyx-s7)}
+  pre{margin:0;background:#070810;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);padding:var(--nyx-s4);overflow-x:auto}
+  pre code{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);line-height:1.7;color:#c8cce0;display:block}
+  .t-tag{color:#6c63ff}.t-attr{color:#00d4aa}.t-str{color:#ffb020}.t-cmt{color:#4b5061}
+  .lp-comp{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--nyx-s4)}
+  .lp-comp a{text-decoration:none}
+  .lp-footer{padding-block:var(--nyx-s7);text-align:center;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);border-top:1px solid var(--nyx-border)}
+  @media(max-width:780px){.lp-comp{grid-template-columns:1fr}.hide-sm{display:none}section.lp{padding-block:var(--nyx-s7)}.nyx-display{font-size:var(--nyx-fs-2xl)}}
+</style>
+</head>
+<body class="nyx nyx-reset">
+
+<!-- ===================== NAVBAR ===================== -->
+<nav class="nyx-navbar">
+  <div class="nyx-flex nyx-items-center nyx-gap-4">
+    <a class="lp-logo" href="index.html"><span class="mark">N</span><span><span class="pre">nyx</span>·Nyx</span></a>
+    <span class="nyx-badge nyx-badge-info hide-sm">v1.3.0</span>
+  </div>
+  <div class="nyx-flex nyx-items-center nyx-gap-4">
+    <div class="lp-links hide-sm">
+      <a href="#features">Features</a>
+      <a href="#components">Components</a>
+      <a href="docs.html">Docs</a>
+      <a href="index.ar.html">العربية</a>
+    </div>
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleDir()" aria-label="Toggle text direction (RTL)" title="Toggle RTL">⇄</button>
+    <a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="https://example.com">★ <span class="hide-sm">Star</span> <span class="nyx-badge">2.4k</span></a>
+    <a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="docs.html">Get started</a>
+  </div>
+</nav>
+
+<div class="nyx-container">
+
+  <div class="nyx-banner" style="margin-top:var(--nyx-s4)"><span class="nyx-badge nyx-badge-info">New</span> The first CSS library built for Arabic developers — full RTL &amp; Arabic fonts. <a href="index.ar.html" class="nyx-gradient-text" style="font-weight:600">النسخة العربية ←</a></div>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="lp" style="padding-top:var(--nyx-s6)">
+    <div class="nyx-spotlight">
+      <span class="nyx-overline">The Design System for Modern SaaS</span>
+      <h1 class="nyx-display" style="margin-top:var(--nyx-s4)">Build interfaces with <span class="nyx-gradient-text">Luminous Depth</span></h1>
+      <p class="nyx-lead nyx-muted" style="max-width:560px;margin:var(--nyx-s4) auto 0">A modern, opinionated component framework where every element feels lit from within. Zero dependencies. Dark-mode native. ~500 lines of CSS.</p>
+      <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap" style="margin-top:var(--nyx-s6)">
+        <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.html#/installation">Get started</a>
+        <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs.html">Browse components</a>
+      </div>
+    </div>
+
+    <!-- trusted by -->
+    <div class="nyx-marquee" style="margin-top:var(--nyx-s6)">
+      <div class="nyx-track">
+        <span>Acme</span><span>Globex</span><span>Initech</span><span>Umbrella</span><span>Hooli</span><span>Stark</span>
+        <span>Acme</span><span>Globex</span><span>Initech</span><span>Umbrella</span><span>Hooli</span><span>Stark</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INSTALL ===================== -->
+  <section class="lp" id="install" style="padding-top:0">
+    <div class="nyx-grid nyx-items-center">
+      <div class="nyx-col-5 nyx-stack">
+        <h2 class="nyx-h1">Drop it into any page</h2>
+        <p class="nyx-muted">Two files, no build step. Link the stylesheet, opt your <span class="nyx-code">&lt;body&gt;</span> into Nyx, and add the runtime for tabs, modals and toasts.</p>
+        <div class="nyx-flex nyx-gap-3 nyx-wrap">
+          <a class="nyx-btn nyx-btn-secondary" href="docs.html#/installation">Read the guide</a>
+          <button class="nyx-btn nyx-btn-ghost" onclick="Nyx.toast('Snippet copied ✓','success')">Copy snippet</button>
+        </div>
+      </div>
+      <div class="nyx-col-7">
+        <pre><code><span class="t-cmt">&lt;!-- 1. the framework --&gt;</span>
+<span class="t-tag">&lt;link</span> <span class="t-attr">rel</span>=<span class="t-str">"stylesheet"</span> <span class="t-attr">href</span>=<span class="t-str">"nyx.css"</span><span class="t-tag">&gt;</span>
+
+<span class="t-cmt">&lt;!-- 2. opt the body in --&gt;</span>
+<span class="t-tag">&lt;body</span> <span class="t-attr">class</span>=<span class="t-str">"nyx nyx-reset"</span><span class="t-tag">&gt;</span>
+  <span class="t-tag">&lt;button</span> <span class="t-attr">class</span>=<span class="t-str">"nyx-btn nyx-btn-primary"</span><span class="t-tag">&gt;</span>Hello<span class="t-tag">&lt;/button&gt;</span>
+
+<span class="t-cmt">&lt;!-- 3. the runtime --&gt;</span>
+<span class="t-tag">&lt;script</span> <span class="t-attr">src</span>=<span class="t-str">"nyx.js"</span><span class="t-tag">&gt;&lt;/script&gt;</span></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FEATURES ===================== -->
+  <section class="lp" id="features">
+    <div class="lp-section-head">
+      <span class="nyx-overline">Why Nyx</span>
+      <h2 class="nyx-h1" style="margin-top:var(--nyx-s2)">Designed for the SaaS era</h2>
+      <p class="nyx-muted" style="margin-top:var(--nyx-s2)">Opinionated defaults, a token system you can retheme in one line, and behaviors that need no JavaScript to wire up.</p>
+    </div>
+    <div class="nyx-grid">
+      <div class="nyx-col-4"><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">✦</span><h3 class="nyx-h4">Luminous Depth</h3><p class="nyx-caption">Every interactive element is lit from within — colored glows, layered surfaces, glass.</p></div></div>
+      <div class="nyx-col-4"><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">⚡</span><h3 class="nyx-h4">Zero dependencies</h3><p class="nyx-caption">Two files, ~500 lines of CSS, a tiny vanilla-JS runtime. Just Google Fonts.</p></div></div>
+      <div class="nyx-col-4"><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">🎛️</span><h3 class="nyx-h4">Declarative JS</h3><p class="nyx-caption">Modals, tabs, drawers and scrollspy wire up with <span class="nyx-code">data-nyx-*</span> — no code.</p></div></div>
+      <div class="nyx-col-4"><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">🎨</span><h3 class="nyx-h4">Token theming</h3><p class="nyx-caption">Override any <span class="nyx-code">--nyx-*</span> variable to retheme everything. No recompile.</p></div></div>
+      <div class="nyx-col-4"><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">🌙</span><h3 class="nyx-h4">Dark-mode native</h3><p class="nyx-caption">Built dark-first, the way modern SaaS tools actually look.</p></div></div>
+      <div class="nyx-col-4"><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">📱</span><h3 class="nyx-h4">Fully responsive</h3><p class="nyx-caption">Works from a 1440px dashboard down to a 375px phone. Accessible by default.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ===================== COMPONENTS PREVIEW ===================== -->
+  <section class="lp" id="components">
+    <div class="lp-section-head">
+      <span class="nyx-overline">40+ components</span>
+      <h2 class="nyx-h1" style="margin-top:var(--nyx-s2)">Everything you need to ship</h2>
+      <p class="nyx-muted" style="margin-top:var(--nyx-s2)">Each component has its own page with usage, live examples and a class reference. Jump in:</p>
+    </div>
+    <div class="lp-comp">
+      <a href="docs.html#/buttons"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">Buttons</h3><p class="nyx-caption">Six variants, glow, loading & icon styles.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-btn nyx-btn-primary nyx-btn-sm">Primary</span><span class="nyx-btn nyx-btn-glow nyx-btn-sm">Glow</span></div></div></a>
+      <a href="docs.html#/cards"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">Cards</h3><p class="nyx-caption">Glass, gradient, stat & feature layouts.</p><div class="nyx-card-gradient" style="margin-top:var(--nyx-s3);padding:var(--nyx-s3)"><span class="nyx-caption">Gradient card</span></div></div></a>
+      <a href="docs.html#/inputs"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">Forms</h3><p class="nyx-caption">Inputs, selects, switches & search.</p><div style="margin-top:var(--nyx-s3)"><label class="nyx-toggle"><input type="checkbox" checked tabindex="-1" aria-label="preview"><span class="nyx-track"></span></label></div></div></a>
+      <a href="docs.html#/tables"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">Tables & Data</h3><p class="nyx-caption">Sortable tables, data grids, KPI rows.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-badge nyx-badge-success">▲ 12%</span><span class="nyx-badge">MRR</span></div></div></a>
+      <a href="docs.html#/modal"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">Overlays</h3><p class="nyx-caption">Modal, drawer, tooltip, popover.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-command">⌘ K</span><span class="nyx-badge nyx-badge-info">esc</span></div></div></a>
+      <a href="docs.html#/spotlight"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">Signature</h3><p class="nyx-caption">Spotlight, orbit, meter, timeline & more.</p><div class="nyx-flex nyx-gap-2 nyx-items-center" style="margin-top:var(--nyx-s3)"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">N</span><span class="nyx-badge-dot">live</span></div></div></a>
+    </div>
+    <div class="nyx-flex nyx-justify-center" style="margin-top:var(--nyx-s6)">
+      <a class="nyx-btn nyx-btn-secondary nyx-btn-lg" href="docs.html">Open the full docs →</a>
+    </div>
+  </section>
+
+</div>
+
+<footer class="lp-footer">
+  <div class="nyx-container">
+    <p>Built with <span class="nyx-gradient-text" style="font-weight:700">Nyx</span> · MIT License · The Design System for Modern SaaS</p>
+  </div>
+</footer>
+
+<script src="nyx.js"></script>
+</body>
+</html>

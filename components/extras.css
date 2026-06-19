@@ -1,0 +1,68 @@
+/*! Nyx · extras.css · v1.3.0 · MIT
+ * The extras module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   11. MORE COMPONENTS (v1.2)
+   ============================================================ */
+/* stepper (number input) */
+.nyx-stepper{display:inline-flex;align-items:stretch;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);overflow:hidden;background:var(--nyx-surface)}
+.nyx-stepper button{width:36px;border:none;background:var(--nyx-surface-2);color:var(--nyx-text);cursor:pointer;font-size:16px;line-height:1;transition:all .2s var(--nyx-ease)}
+.nyx-stepper button:hover{background:var(--nyx-elev-hover);color:var(--nyx-accent)}
+.nyx-stepper input{width:52px;border:none;background:transparent;color:var(--nyx-text);text-align:center;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);outline:none}
+
+/* OTP / pin input */
+.nyx-otp{display:inline-flex;gap:8px}
+.nyx-otp input{width:44px;height:52px;text-align:center;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-lg);color:var(--nyx-text);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);outline:none;transition:all .2s var(--nyx-ease)}
+.nyx-otp input:focus{border-color:var(--nyx-accent);box-shadow:0 0 0 3px rgba(108,99,255,.18),var(--nyx-glow)}
+
+/* tag input */
+.nyx-tag-input{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);transition:all .2s var(--nyx-ease)}
+.nyx-tag-input:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px rgba(108,99,255,.18)}
+.nyx-tag-input input{flex:1;min-width:120px;border:none;background:transparent;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-sm);padding:4px}
+
+/* split button */
+.nyx-btn-split{display:inline-flex}
+.nyx-btn-split > .nyx-btn:first-child{border-start-end-radius:0;border-end-end-radius:0}
+.nyx-btn-split > .nyx-dropdown > .nyx-btn{border-start-start-radius:0;border-end-start-radius:0;border-inline-start:1px solid rgba(255,255,255,.18);padding-inline:10px}
+
+/* toolbar */
+.nyx-toolbar{display:flex;align-items:center;gap:var(--nyx-s2);flex-wrap:wrap;padding:8px;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius)}
+.nyx-toolbar-sep{width:1px;align-self:stretch;background:var(--nyx-border);margin-inline:4px}
+
+/* tree view (uses collapse) */
+.nyx-tree{font-size:var(--nyx-fs-sm)}
+.nyx-tree-label{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:var(--nyx-radius-sm);cursor:pointer;color:var(--nyx-text);transition:background .2s var(--nyx-ease)}
+.nyx-tree-label:hover{background:var(--nyx-glass)}
+.nyx-tree-label::before{content:"▸";color:var(--nyx-text-muted);font-size:10px;transition:transform .2s var(--nyx-ease)}
+.nyx-tree-label.active::before{transform:rotate(90deg)}
+.nyx-tree-children{padding-inline-start:18px}
+.nyx-tree-leaf{display:flex;align-items:center;gap:8px;padding:6px 8px 6px 26px;color:var(--nyx-text-muted)}
+
+/* vertical tabs */
+.nyx-tabs-vertical{display:flex;gap:var(--nyx-s5)}
+.nyx-tabs-vertical .nyx-tabs{flex-direction:column;border-bottom:none;border-inline-end:1px solid var(--nyx-border);gap:2px}
+.nyx-tabs-vertical .nyx-tab::after{left:auto;right:auto;inset-inline-end:-1px;top:0;bottom:0;width:2px;height:auto;transform:scaleY(0)}
+.nyx-tabs-vertical .nyx-tab.active::after{transform:scaleY(1)}
+
+/* calendar */
+.nyx-calendar{display:inline-block;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);padding:var(--nyx-s4);width:280px}
+.nyx-calendar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--nyx-s3);font-family:var(--nyx-font-display);font-weight:700}
+.nyx-calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+.nyx-calendar-grid .dow{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);padding:4px 0;font-family:var(--nyx-font-mono)}
+.nyx-calendar-grid .day{aspect-ratio:1;display:grid;place-items:center;border-radius:var(--nyx-radius-sm);font-size:var(--nyx-fs-sm);cursor:pointer;transition:background .15s var(--nyx-ease)}
+.nyx-calendar-grid .day:hover{background:var(--nyx-glass)}
+.nyx-calendar-grid .day.muted{color:var(--nyx-text-muted);opacity:.4}
+.nyx-calendar-grid .day.today{border:1px solid var(--nyx-accent);color:var(--nyx-accent)}
+.nyx-calendar-grid .day.selected{background:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+
+/* file item */
+.nyx-file{display:flex;align-items:center;gap:var(--nyx-s3);padding:12px 14px;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius)}
+.nyx-file .nyx-file-icon{width:38px;height:38px;border-radius:var(--nyx-radius-sm);display:grid;place-items:center;background:rgba(108,99,255,.14);color:var(--nyx-accent);font-size:18px;flex-shrink:0}
+.nyx-file .nyx-file-meta{flex:1;min-width:0}
+.nyx-file .nyx-file-name{font-size:var(--nyx-fs-sm);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nyx-file .nyx-file-sub{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
+
+/* sparkline */
+.nyx-sparkline{display:inline-flex;align-items:flex-end;gap:3px;height:40px}
+.nyx-sparkline span{width:6px;background:linear-gradient(180deg,var(--nyx-accent),var(--nyx-accent-2));border-radius:2px;opacity:.85}

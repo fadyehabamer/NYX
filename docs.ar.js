@@ -1,0 +1,105 @@
+/* ==========================================================
+   Nyx docs — Arabic (العربية) locale pack.
+   Load BEFORE docs.js. Untranslated fields fall back to English.
+   ========================================================== */
+window.NYX_I18N = {
+  _ui: {
+    filter: 'تصفية…',
+    added: 'أُضيف في',
+    viewSource: 'المصدر',
+    classRef: 'مرجع الأصناف',
+    jsApi: 'واجهة جافاسكربت',
+    thClass: 'الصنف / الرمز',
+    thDesc: 'الوصف',
+    prev: 'السابق',
+    next: 'التالي',
+    onThisPage: 'في هذه الصفحة'
+  },
+  _groups: {
+    'Getting Started': 'البداية',
+    'Customize': 'التخصيص',
+    'Layout': 'التخطيط',
+    'Content': 'المحتوى',
+    'Forms': 'النماذج',
+    'Components': 'المكوّنات',
+    'Helpers': 'المساعدات',
+    'Utilities': 'الأدوات',
+    'Signature': 'عناصر مميّزة',
+    'Motion': 'الحركة'
+  },
+  _terms: {
+    'Variants': 'الأنماط', 'Sizes & states': 'الأحجام والحالات', 'Outline & group': 'محدّد ومجموعة',
+    'Usage': 'الاستخدام', 'Basic': 'أساسي', 'Default': 'افتراضي', 'Intents': 'الدلالات',
+    'Slides': 'الشرائح', 'Examples': 'أمثلة', 'Month': 'شهر', 'Stars': 'نجوم', 'Tags': 'وسوم',
+    'Float': 'تعويم', 'Slider': 'منزلق', 'Switchable': 'قابل للتبديل', 'Pills': 'أقراص',
+    'Items': 'عناصر', 'Steps': 'خطوات', 'Try it': 'جرّبه', 'Toggle': 'تبديل', 'Open it': 'افتحه',
+    'Grouped': 'مجمّع', 'Four sides': 'أربع جهات', 'Four digits': 'أربعة أرقام', 'Quantity': 'الكمية',
+    'Menu': 'قائمة', 'Single-open': 'فتح واحد', 'Variants & dot': 'الأنماط والنقطة',
+    'Hero headline': 'عنوان رئيسي', 'Outline stroke': 'حدّ مفرّغ', 'Entrances (stagger)': 'دخول متدرّج',
+    'Float loop': 'حلقة تعويم', 'Aurora hero': 'شفق متحرّك', 'Type & color': 'النوع واللون',
+    'Bundle — everything': 'الحزمة — كل شيء', 'À la carte — pick modules': 'حسب الطلب — اختر الوحدات', 'Files': 'الملفات',
+    'Twelve columns': 'اثنا عشر عموداً', 'Scale': 'المقياس', 'Backgrounds': 'الخلفيات', 'Radii': 'الانحناءات',
+    'Elevation': 'الارتفاع', 'Widths': 'العروض', 'Levels': 'المستويات', 'Values': 'القيم',
+    'Override tokens': 'تجاوز الرموز', 'Light mode': 'الوضع الفاتح', 'Enable': 'التفعيل', 'Mirrored in place': 'منعكس في مكانه'
+  },
+  pages: {
+    /* Getting Started */
+    introduction: { title: 'مقدمة', summary: 'نيكس مكتبة مكوّنات CSS/JS داكنة المظهر بطابع «العمق المضيء»: كل عنصر تفاعلي يبدو مُضاءً من الداخل. بلا اعتماديات، وبسمتين داكنة وفاتحة، ودعم كامل للكتابة من اليمين لليسار.' },
+    installation: { title: 'التثبيت', summary: 'ملفّان فقط وبلا خطوة بناء. اربط ملف الأنماط، وأضف الصنف nyx إلى عنصر body، ثم أضف ملف التشغيل.' },
+    download: { title: 'التحميل', summary: 'حمّل الإطار كاملاً كحزمة واحدة، أو حمّل ملفات المكوّنات التي تحتاجها فقط — كل ملف منفصل يتطلّب tokens.css.' },
+    javascript: { title: 'جافاسكربت', summary: 'ملف nyx.js متوافق مع UMD، يُهيّئ نفسه تلقائياً. معظم السلوكيات تعريفية عبر سمات data-nyx-*، فلا حاجة لكتابة جافاسكربت.' },
+    rtl: { title: 'دعم RTL', summary: 'نيكس ثنائي الاتجاه بالكامل. اضبط dir="rtl" على عنصر html (أو استدعِ Nyx.toggleDir) وستنعكس كل المكوّنات تلقائياً.' },
+    /* Customize */
+    theming: { title: 'السمات', summary: 'كل قيمة هي متغيّر CSS في :root. تجاوز أي متغيّر ‎--nyx-*‎ لإعادة التنسيق، وبدّل بين الداكن والفاتح بسمة واحدة.' },
+    /* Layout */
+    grid: { title: 'الشبكة', summary: 'شبكة CSS من 12 عموداً. استخدم nyx-grid على الحاوية وأصناف nyx-col من 1 إلى 12 على الأبناء.' },
+    container: { title: 'الحاوية', summary: 'تتوسّط المحتوى بعرض أقصى 1280 بكسل مع حشو جانبي متجاوب.' },
+    /* Content */
+    typography: { title: 'الطباعة', summary: 'خط Plus Jakarta Sans للعناوين وInter للنصّ، ويتحوّل تلقائياً إلى خطّي Cairo وAref Ruqaa في وضع RTL.' },
+    /* Forms */
+    inputs: { title: 'الحقول', summary: 'حقول إدخال داكنة مع توهّج عند التركيز، إضافةً إلى التسميات وتلميحات المساعدة.' },
+    select: { title: 'القوائم' }, switches: { title: 'المفاتيح والاختيارات' }, search: { title: 'البحث' },
+    'input-group': { title: 'مجموعة إدخال' }, range: { title: 'المنزلق' }, floating: { title: 'تسمية عائمة' },
+    stepper: { title: 'العدّاد' }, otp: { title: 'رمز التحقّق' }, 'tag-input': { title: 'إدخال الوسوم' },
+    /* Components */
+    buttons: { title: 'الأزرار', summary: 'ستة أنماط، وثلاثة أحجام، إضافةً إلى حالات التحميل والتعطيل — وكلها مُضاءة من الداخل عند التحويم.' },
+    'button-group': { title: 'مجموعة أزرار' }, 'close-button': { title: 'زر الإغلاق' },
+    cards: { title: 'البطاقات', summary: 'أسطح ذات عمق — زجاجية، وبحدود متدرّجة، وتفاعلية، إضافةً إلى تخطيطات الإحصاءات والمزايا.' },
+    badges: { title: 'الشارات' }, alerts: { title: 'التنبيهات', summary: 'رسائل بنطاقات ملوّنة على الحافة البادئة مع خانة أيقونة.' },
+    toasts: { title: 'الإشعارات', summary: 'إشعارات تظهر في الزاوية وتختفي تلقائياً. تُستدعى عبر Nyx.toast.' },
+    progress: { title: 'التقدّم والهيكل' }, 'status-bar': { title: 'شريط الحالة' },
+    navbar: { title: 'شريط التنقّل' }, sidebar: { title: 'الشريط الجانبي' }, breadcrumb: { title: 'مسار التنقّل' },
+    tabs: { title: 'التبويبات', summary: 'تبويبات بخطّ سفلي متوهّج. أضف data-nyx-tabs إلى الحاوية وسيتكفّل المُشغّل بالتبديل.' },
+    'nav-pills': { title: 'أقراص التنقّل' }, pagination: { title: 'ترقيم الصفحات' },
+    'command-palette': { title: 'لوحة الأوامر' }, tables: { title: 'الجداول والبيانات' },
+    modal: { title: 'النافذة', summary: 'نافذة حوارية متمركزة فوق خلفية ضبابية. تُفتح وتُغلق تعريفياً، وتُغلق بمفتاح Esc أو بالنقر على الخلفية.' },
+    drawer: { title: 'الدرج' }, tooltips: { title: 'التلميحات' }, popovers: { title: 'المنبثقات' },
+    accordion: { title: 'الأكورديون', summary: 'ألواح قابلة للطيّ متراصّة. أضف data-nyx-accordion لإبقاء لوح واحد مفتوحاً فقط.' },
+    collapse: { title: 'الطيّ' }, 'list-group': { title: 'مجموعة قائمة' }, spinner: { title: 'مؤشّر التحميل' },
+    carousel: { title: 'العارض الدوّار', summary: 'عرض شرائح مع أزرار للسابق/التالي ومؤشّرات قابلة للنقر.' },
+    dropdown: { title: 'القائمة المنسدلة', summary: 'قائمة إجراءات قابلة للفتح. تُفتح بالنقر وتُغلق بالنقر خارجها أو بمفتاح Esc.' },
+    'split-button': { title: 'زر مقسوم' }, toolbar: { title: 'شريط الأدوات' }, tree: { title: 'شجرة' },
+    'vertical-tabs': { title: 'تبويبات رأسية' }, calendar: { title: 'التقويم' }, file: { title: 'عنصر ملف' },
+    /* Helpers */
+    stack: { title: 'تكديس' }, divider: { title: 'فاصل' }, ratio: { title: 'النسبة' },
+    'vertical-rule': { title: 'فاصل رأسي' }, 'visually-hidden': { title: 'مخفي بصرياً' },
+    'stretched-link': { title: 'رابط ممتد' }, 'focus-ring': { title: 'حلقة التركيز' },
+    clearfix: { title: 'تنظيف العوم' }, 'text-truncate': { title: 'اقتطاع النص' },
+    /* Utilities */
+    flexbox: { title: 'أدوات فلكس' }, spacing: { title: 'التباعد', summary: 'أدوات الهوامش والحشو على مقياس 4 بكسل (0–6) بجهات بادئة ولاحقة واعية للاتجاه.' },
+    display: { title: 'العرض' }, text: { title: 'النص' }, colors: { title: 'الألوان' },
+    borders: { title: 'الحدود' }, shadows: { title: 'الظلال' }, sizing: { title: 'الأبعاد' },
+    opacity: { title: 'الشفافية' }, position: { title: 'الموضع' },
+    /* Signature */
+    spotlight: { title: 'الإضاءة' }, orbit: { title: 'المدار' }, command: { title: 'مفتاح الأوامر' },
+    chip: { title: 'الرقاقة' }, timeline: { title: 'الخط الزمني' }, meter: { title: 'العداد الدائري' },
+    'gradient-border': { title: 'حدّ متدرّج' }, avatar: { title: 'الصورة الرمزية' },
+    'notification-dot': { title: 'نقطة الإشعار' }, marquee: { title: 'الشريط المتحرك' },
+    segmented: { title: 'تحكّم مقسّم' }, rating: { title: 'التقييم' }, 'empty-state': { title: 'حالة فارغة' },
+    banner: { title: 'لافتة' }, dropzone: { title: 'منطقة الإسقاط' }, sparkline: { title: 'مخطّط مصغّر' },
+    /* Motion */
+    'big-type': { title: 'الخط الكبير', summary: 'طباعة عملاقة للواجهات الرئيسية — اتّجاه الخط الكبير الرائج. يتحوّل في وضع RTL إلى خط Aref Ruqaa العربي الانسيابي (رقعة).' },
+    animations: { title: 'الحركات', summary: 'حركات دخول متدرّجة، وحلقة تعويم، وتدرّج لوني متحرّك، وخلفية شفق دوّارة — تحترم جميعها prefers-reduced-motion.' },
+    reveal: { title: 'الكشف عند التمرير', summary: 'أضف data-nyx-reveal لتظهر العناصر بتلاشٍ وارتفاع عند دخولها إطار العرض، ويُهيّئها المُشغّل تلقائياً.' }
+  }
+};
