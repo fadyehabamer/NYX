@@ -1,4 +1,4 @@
-/*! Nyx · navigation.css · v1.3.0 · MIT
+/*! Nyx · navigation.css · v1.4.0 · MIT
  * The navigation module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -9,7 +9,7 @@
 .nyx-sidebar{display:flex;flex-direction:column;gap:2px}
 .nyx-sidebar a{display:flex;align-items:center;gap:var(--nyx-s2);padding:8px 12px;border-radius:var(--nyx-radius);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);font-weight:500;transition:all .2s var(--nyx-ease);border-inline-start:2px solid transparent}
 .nyx-sidebar a:hover{color:var(--nyx-text);background:var(--nyx-glass)}
-.nyx-sidebar a.active{color:var(--nyx-text);background:rgba(108,99,255,.12);border-inline-start-color:var(--nyx-accent)}
+.nyx-sidebar a.active{color:var(--nyx-text);background:color-mix(in srgb,var(--nyx-accent) 12%,transparent);border-inline-start-color:var(--nyx-accent)}
 .nyx-breadcrumb{display:flex;align-items:center;gap:var(--nyx-s2);font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted);flex-wrap:wrap}
 .nyx-breadcrumb a:hover{color:var(--nyx-text)}
 .nyx-breadcrumb .nyx-sep{color:var(--nyx-border)}
@@ -37,7 +37,7 @@
 .nyx-dropdown-menu{position:absolute;top:calc(100% + 8px);inset-inline-start:0;z-index:120;min-width:184px;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);padding:6px;display:none}
 .nyx-dropdown.open .nyx-dropdown-menu{display:block;animation:nyx-fade .15s var(--nyx-ease)}
 .nyx-dropdown-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--nyx-radius-sm);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);cursor:pointer;white-space:nowrap;width:100%;text-align:start;background:none;border:none;font-family:var(--nyx-font-body)}
-.nyx-dropdown-item:hover{background:rgba(108,99,255,.12);color:var(--nyx-text)}
+.nyx-dropdown-item:hover{background:color-mix(in srgb,var(--nyx-accent) 12%,transparent);color:var(--nyx-text)}
 .nyx-dropdown-divider{height:1px;background:var(--nyx-border);margin:6px 0}
 
 .nyx-command-palette{position:fixed;inset:0;z-index:200;display:none;background:var(--nyx-overlay-bg);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding-top:14vh;justify-content:center;align-items:flex-start}
@@ -47,4 +47,4 @@
 .nyx-cp-input input{flex:1;background:transparent;border:none;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-lg)}
 .nyx-cp-list{max-height:320px;overflow:auto;padding:var(--nyx-s2)}
 .nyx-cp-item{display:flex;align-items:center;gap:var(--nyx-s3);padding:10px 12px;border-radius:var(--nyx-radius);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);cursor:pointer}
-.nyx-cp-item:hover,.nyx-cp-item.active{background:rgba(108,99,255,.12);color:var(--nyx-text)}
+.nyx-cp-item:hover,.nyx-cp-item.active{background:color-mix(in srgb,var(--nyx-accent) 12%,transparent);color:var(--nyx-text)}

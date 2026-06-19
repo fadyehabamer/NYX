@@ -1,4 +1,4 @@
-/*! Nyx · forms.css · v1.3.0 · MIT
+/*! Nyx · forms.css · v1.4.0 · MIT
  * The forms module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -8,18 +8,18 @@
 .nyx-label{display:block;font-size:var(--nyx-fs-sm);font-weight:500;margin-bottom:var(--nyx-s2)}
 .nyx-input,.nyx-textarea,.nyx-select{width:100%;font-family:var(--nyx-font-body);font-size:var(--nyx-fs-sm);color:var(--nyx-text);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);padding:10px 14px;transition:all .2s var(--nyx-ease)}
 .nyx-input::placeholder,.nyx-textarea::placeholder{color:var(--nyx-text-muted)}
-.nyx-input:focus,.nyx-textarea:focus,.nyx-select:focus{outline:none;border-color:var(--nyx-accent);box-shadow:0 0 0 3px rgba(108,99,255,.18),var(--nyx-glow)}
+.nyx-input:focus,.nyx-textarea:focus,.nyx-select:focus{outline:none;border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 18%,transparent),var(--nyx-glow)}
 .nyx-textarea{resize:vertical;min-height:90px}
 .nyx-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M3 5l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-inline-end:36px}
 .nyx-form-hint{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);margin-top:var(--nyx-s2)}
 .nyx-input-group{display:flex;align-items:stretch;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);overflow:hidden;transition:all .2s var(--nyx-ease)}
-.nyx-input-group:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px rgba(108,99,255,.18)}
+.nyx-input-group:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 18%,transparent)}
 .nyx-input-group .nyx-addon{display:grid;place-items:center;padding-inline:14px;color:var(--nyx-text-muted);background:var(--nyx-surface-2);font-size:var(--nyx-fs-sm)}
 .nyx-input-group .nyx-input{border:none;background:transparent;box-shadow:none !important}
 .nyx-input-group .nyx-btn{border-radius:0}
 
 .nyx-search{display:flex;align-items:center;gap:var(--nyx-s3);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-full);padding:8px 8px 8px 16px;transition:all .2s var(--nyx-ease);max-width:420px}
-.nyx-search:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px rgba(108,99,255,.18),var(--nyx-glow)}
+.nyx-search:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 18%,transparent),var(--nyx-glow)}
 .nyx-search input{flex:1;background:transparent;border:none;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-sm)}
 .nyx-search .nyx-search-icon{color:var(--nyx-text-muted)}
 
@@ -53,3 +53,17 @@
 .nyx-float > .nyx-input{padding-top:18px;padding-bottom:6px}
 .nyx-float > label{position:absolute;top:50%;inset-inline-start:14px;transform:translateY(-50%);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);pointer-events:none;transition:all .15s var(--nyx-ease)}
 .nyx-float > .nyx-input:focus + label,.nyx-float > .nyx-input:not(:placeholder-shown) + label{top:13px;transform:translateY(0);font-size:var(--nyx-fs-xs);color:var(--nyx-accent)}
+
+/* validation states — add .is-valid / .is-invalid, or wrap a form in
+   .nyx-was-validated to drive feedback from the browser's :valid/:invalid */
+.nyx-input.is-valid,.nyx-textarea.is-valid,.nyx-select.is-valid,.nyx-was-validated .nyx-input:valid,.nyx-was-validated .nyx-textarea:valid,.nyx-was-validated .nyx-select:valid{border-color:var(--nyx-accent-2)}
+.nyx-input.is-valid:focus,.nyx-textarea.is-valid:focus,.nyx-select.is-valid:focus{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent-2) 24%,transparent)}
+.nyx-input.is-invalid,.nyx-textarea.is-invalid,.nyx-select.is-invalid,.nyx-was-validated .nyx-input:invalid,.nyx-was-validated .nyx-textarea:invalid,.nyx-was-validated .nyx-select:invalid{border-color:var(--nyx-danger)}
+.nyx-input.is-invalid:focus,.nyx-textarea.is-invalid:focus,.nyx-select.is-invalid:focus{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-danger) 24%,transparent)}
+.nyx-checkbox.is-invalid .nyx-box,.nyx-radio.is-invalid .nyx-box{border-color:var(--nyx-danger)}
+.nyx-valid-feedback,.nyx-invalid-feedback{display:none;font-size:var(--nyx-fs-xs);margin-top:var(--nyx-s2)}
+.nyx-valid-feedback{color:var(--nyx-accent-2)}
+.nyx-invalid-feedback{color:var(--nyx-danger)}
+.is-valid ~ .nyx-valid-feedback,.is-invalid ~ .nyx-invalid-feedback{display:block}
+.nyx-was-validated .nyx-input:valid ~ .nyx-valid-feedback,.nyx-was-validated .nyx-textarea:valid ~ .nyx-valid-feedback,.nyx-was-validated .nyx-select:valid ~ .nyx-valid-feedback{display:block}
+.nyx-was-validated .nyx-input:invalid ~ .nyx-invalid-feedback,.nyx-was-validated .nyx-textarea:invalid ~ .nyx-invalid-feedback,.nyx-was-validated .nyx-select:invalid ~ .nyx-invalid-feedback{display:block}

@@ -1,4 +1,4 @@
-/*! Nyx · feedback.css · v1.3.0 · MIT
+/*! Nyx · feedback.css · v1.4.0 · MIT
  * The feedback module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -6,12 +6,12 @@
    7. FEEDBACK & STATUS
    ============================================================ */
 .nyx-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);font-weight:500;padding:3px 10px;border-radius:var(--nyx-radius-full);background:var(--nyx-surface-2);color:var(--nyx-text-muted);border:1px solid var(--nyx-border)}
-.nyx-badge-success{background:rgba(0,212,170,.12);color:var(--nyx-accent-2);border-color:rgba(0,212,170,.3)}
+.nyx-badge-success{background:color-mix(in srgb,var(--nyx-accent-2) 12%,transparent);color:var(--nyx-accent-2);border-color:color-mix(in srgb,var(--nyx-accent-2) 30%,transparent)}
 .nyx-badge-danger{background:rgba(255,77,106,.12);color:var(--nyx-danger);border-color:rgba(255,77,106,.3)}
 .nyx-badge-warning{background:rgba(255,176,32,.12);color:var(--nyx-warning);border-color:rgba(255,176,32,.3)}
-.nyx-badge-info{background:rgba(108,99,255,.14);color:var(--nyx-accent);border-color:rgba(108,99,255,.3)}
+.nyx-badge-info{background:color-mix(in srgb,var(--nyx-accent) 14%,transparent);color:var(--nyx-accent);border-color:color-mix(in srgb,var(--nyx-accent) 30%,transparent)}
 .nyx-badge-dot{display:inline-flex;align-items:center;gap:8px;font-size:var(--nyx-fs-sm);color:var(--nyx-text)}
-.nyx-badge-dot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--nyx-accent-2);box-shadow:0 0 0 4px rgba(0,212,170,.18);animation:nyx-blink 1.6s var(--nyx-ease) infinite}
+.nyx-badge-dot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--nyx-accent-2);box-shadow:0 0 0 4px color-mix(in srgb,var(--nyx-accent-2) 18%,transparent);animation:nyx-blink 1.6s var(--nyx-ease) infinite}
 @keyframes nyx-blink{50%{opacity:.4}}
 .nyx-alert{display:flex;gap:var(--nyx-s3);padding:14px 16px;border-radius:var(--nyx-radius);border:1px solid var(--nyx-border);background:var(--nyx-surface);border-inline-start-width:3px;font-size:var(--nyx-fs-sm)}
 .nyx-alert .nyx-alert-icon{font-size:18px;line-height:1.4}

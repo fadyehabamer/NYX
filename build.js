@@ -12,11 +12,34 @@
 'use strict';
 var fs = require('fs');
 var path = require('path');
+var zlib = require('zlib');
 
-var VERSION = '1.3.0';
+var VERSION = '1.4.0';
 var SRC = path.join(__dirname, 'nyx.css');
+var JSSRC = path.join(__dirname, 'nyx.js');
 var OUT = path.join(__dirname, 'components');
 var css = fs.readFileSync(SRC, 'utf8');
+
+/* ---- minifiers (string-safe; no external deps) ---- */
+var SENT = '__NYXSTR__';
+function minifyCss(src) {
+  var strings = [];
+  src = src.replace(/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/g, function (s) {
+    strings.push(s); return SENT + (strings.length - 1) + SENT;     // protect literals
+  });
+  src = src.replace(/\/\*[\s\S]*?\*\//g, '');                        // drop comments
+  src = src.replace(/\s+/g, ' ');                                    // collapse whitespace
+  src = src.replace(/\s*([{}:;,>])\s*/g, '$1');                      // trim around safe punctuation only (keeps calc()/+~ combinators valid)
+  src = src.replace(/;}/g, '}').trim();                              // drop trailing semicolons
+  return src.replace(new RegExp(SENT + '(\\d+)' + SENT, 'g'), function (_, n) { return strings[+n]; });
+}
+function minifyJs(src) {
+  src = src.replace(/\/\*[\s\S]*?\*\//g, '');                        // strip block comments (incl. header); keep newlines = ASI-safe
+  return src.split('\n').map(function (l) { return l.replace(/^\s+/, ''); })
+    .filter(function (l) { return l.length; }).join('\n').trim() + '\n';
+}
+function kb(s) { return (Buffer.byteLength(s) / 1024).toFixed(1) + 'kb'; }
+function gz(s) { return (zlib.gzipSync(s).length / 1024).toFixed(1) + 'kb'; }
 
 /* numbered banner index -> filename */
 var NAMES = {
@@ -67,5 +90,15 @@ banners.forEach(function (b, i) {
 /* write the bundle copy into components too, for one-click "everything" */
 fs.copyFileSync(SRC, path.join(OUT, 'nyx.bundle.css'));
 
+/* ---- minified distribution (project root, for npm/CDN) ---- */
+var minCss = '/*! Nyx v' + VERSION + ' · MIT · the first CSS library built for Arabic developers */\n' + minifyCss(css) + '\n';
+var jsRaw = fs.readFileSync(JSSRC, 'utf8');
+var minJs = '/*! Nyx v' + VERSION + ' · MIT */\n' + minifyJs(jsRaw);
+fs.writeFileSync(path.join(__dirname, 'nyx.min.css'), minCss);
+fs.writeFileSync(path.join(__dirname, 'nyx.min.js'), minJs);
+
 console.log('Built ' + written.length + ' component files + nyx.bundle.css in components/:');
 console.log('  ' + written.map(function (n) { return n + '.css'; }).join(', '));
+console.log('Minified distribution (root):');
+console.log('  nyx.min.css   ' + kb(minCss) + ' min · ' + gz(minCss) + ' gzip   (source ' + kb(css) + ')');
+console.log('  nyx.min.js    ' + kb(minJs) + ' min · ' + gz(minJs) + ' gzip   (source ' + kb(jsRaw) + ')');

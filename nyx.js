@@ -33,9 +33,15 @@
   function toggleTheme() { setTheme(docEl.getAttribute('data-theme') === 'light' ? 'dark' : 'light'); }
   function setDir(d) { docEl.setAttribute('dir', d); store('nyx-dir', d); }
   function toggleDir() { setDir(docEl.getAttribute('dir') === 'rtl' ? 'ltr' : 'rtl'); }
+  function setAccent(a) {
+    if (a && a !== 'violet') docEl.setAttribute('data-accent', a);
+    else docEl.removeAttribute('data-accent');
+    store('nyx-accent', a || 'violet');
+  }
   (function applySaved() {
     var t = read('nyx-theme'); if (t) docEl.setAttribute('data-theme', t);
     var d = read('nyx-dir'); if (d) docEl.setAttribute('dir', d);
+    var a = read('nyx-accent'); if (a && a !== 'violet') docEl.setAttribute('data-accent', a);
   })();
 
   /* ---------- shared backdrop (auto-created) ---------- */
@@ -309,6 +315,6 @@
     init: init, toast: toast,
     openModal: openModal, openDrawer: openDrawer, close: close, closeAll: closeAll,
     togglePopover: togglePopover, openCommandPalette: openCommandPalette, closeCommandPalette: closeCommandPalette,
-    setTheme: setTheme, toggleTheme: toggleTheme, setDir: setDir, toggleDir: toggleDir
+    setTheme: setTheme, toggleTheme: toggleTheme, setDir: setDir, toggleDir: toggleDir, setAccent: setAccent
   };
 });

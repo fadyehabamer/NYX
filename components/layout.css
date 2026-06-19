@@ -1,4 +1,4 @@
-/*! Nyx · layout.css · v1.3.0 · MIT
+/*! Nyx · layout.css · v1.4.0 · MIT
  * The layout module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -28,8 +28,24 @@
 .nyx-ratio-4x3::before{padding-top:75%}
 .nyx-ratio > *{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:var(--nyx-radius)}
 
-@media(max-width:1024px){[class*="nyx-col-"]{grid-column:span 6}}
+/* auto-collapse for bare cols (no explicit breakpoint class) */
+@media(max-width:1024px){[class*="nyx-col-"]:not([class*="-sm-"]):not([class*="-md-"]):not([class*="-lg-"]):not([class*="-xl-"]){grid-column:span 6}}
 @media(max-width:640px){
-  [class*="nyx-col-"]{grid-column:span 12}
+  [class*="nyx-col-"]:not([class*="-sm-"]):not([class*="-md-"]):not([class*="-lg-"]):not([class*="-xl-"]){grid-column:span 12}
   .nyx-container{padding-inline:var(--nyx-s4)}
+}
+/* responsive grid — Bootstrap-style breakpoints (mobile-first, min-width).
+   Pair a base col for mobile with a breakpoint col: class="nyx-col-12 nyx-col-md-6" */
+.nyx-col-auto{grid-column:auto}
+@media(min-width:640px){
+  .nyx-col-sm-1{grid-column:span 1}.nyx-col-sm-2{grid-column:span 2}.nyx-col-sm-3{grid-column:span 3}.nyx-col-sm-4{grid-column:span 4}.nyx-col-sm-5{grid-column:span 5}.nyx-col-sm-6{grid-column:span 6}.nyx-col-sm-7{grid-column:span 7}.nyx-col-sm-8{grid-column:span 8}.nyx-col-sm-9{grid-column:span 9}.nyx-col-sm-10{grid-column:span 10}.nyx-col-sm-11{grid-column:span 11}.nyx-col-sm-12{grid-column:span 12}
+}
+@media(min-width:768px){
+  .nyx-col-md-1{grid-column:span 1}.nyx-col-md-2{grid-column:span 2}.nyx-col-md-3{grid-column:span 3}.nyx-col-md-4{grid-column:span 4}.nyx-col-md-5{grid-column:span 5}.nyx-col-md-6{grid-column:span 6}.nyx-col-md-7{grid-column:span 7}.nyx-col-md-8{grid-column:span 8}.nyx-col-md-9{grid-column:span 9}.nyx-col-md-10{grid-column:span 10}.nyx-col-md-11{grid-column:span 11}.nyx-col-md-12{grid-column:span 12}
+}
+@media(min-width:1024px){
+  .nyx-col-lg-1{grid-column:span 1}.nyx-col-lg-2{grid-column:span 2}.nyx-col-lg-3{grid-column:span 3}.nyx-col-lg-4{grid-column:span 4}.nyx-col-lg-5{grid-column:span 5}.nyx-col-lg-6{grid-column:span 6}.nyx-col-lg-7{grid-column:span 7}.nyx-col-lg-8{grid-column:span 8}.nyx-col-lg-9{grid-column:span 9}.nyx-col-lg-10{grid-column:span 10}.nyx-col-lg-11{grid-column:span 11}.nyx-col-lg-12{grid-column:span 12}
+}
+@media(min-width:1280px){
+  .nyx-col-xl-1{grid-column:span 1}.nyx-col-xl-2{grid-column:span 2}.nyx-col-xl-3{grid-column:span 3}.nyx-col-xl-4{grid-column:span 4}.nyx-col-xl-5{grid-column:span 5}.nyx-col-xl-6{grid-column:span 6}.nyx-col-xl-7{grid-column:span 7}.nyx-col-xl-8{grid-column:span 8}.nyx-col-xl-9{grid-column:span 9}.nyx-col-xl-10{grid-column:span 10}.nyx-col-xl-11{grid-column:span 11}.nyx-col-xl-12{grid-column:span 12}
 }

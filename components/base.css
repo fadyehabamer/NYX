@@ -1,4 +1,4 @@
-/*! Nyx · base.css · v1.3.0 · MIT
+/*! Nyx · base.css · v1.4.0 · MIT
  * Reset + body.nyx canvas/typography. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -8,17 +8,17 @@ body.nyx{
   background:var(--nyx-bg);color:var(--nyx-text);
   font-family:var(--nyx-font-body);font-size:var(--nyx-fs-base);line-height:1.6;
   -webkit-font-smoothing:antialiased;margin:0;
-  background-image:radial-gradient(900px 500px at 80% -10%,rgba(108,99,255,.10),transparent 60%),
-                   radial-gradient(700px 400px at -10% 20%,rgba(0,212,170,.06),transparent 55%);
+  background-image:radial-gradient(900px 500px at 80% -10%,color-mix(in srgb,var(--nyx-accent) 10%,transparent),transparent 60%),
+                   radial-gradient(700px 400px at -10% 20%,color-mix(in srgb,var(--nyx-accent-2) 6%,transparent),transparent 55%);
   background-attachment:fixed;transition:background-color .3s var(--nyx-ease),color .3s var(--nyx-ease);
 }
 [data-theme="light"] body.nyx{
-  background-image:radial-gradient(900px 500px at 80% -10%,rgba(108,99,255,.10),transparent 60%),
-                   radial-gradient(700px 400px at -10% 20%,rgba(0,212,170,.10),transparent 55%);
+  background-image:radial-gradient(900px 500px at 80% -10%,color-mix(in srgb,var(--nyx-accent) 10%,transparent),transparent 60%),
+                   radial-gradient(700px 400px at -10% 20%,color-mix(in srgb,var(--nyx-accent-2) 10%,transparent),transparent 55%);
 }
 body.nyx *,body.nyx *::before,body.nyx *::after{box-sizing:border-box}
 body.nyx a{color:inherit;text-decoration:none}
-body.nyx ::selection{background:rgba(108,99,255,.35);color:#fff}
+body.nyx ::selection{background:color-mix(in srgb,var(--nyx-accent) 35%,transparent);color:#fff}
 .nyx-root :focus-visible,body.nyx :focus-visible{outline:2px solid var(--nyx-accent);outline-offset:2px;border-radius:var(--nyx-radius-sm)}
 body.nyx ::-webkit-scrollbar{width:10px;height:10px}
 body.nyx ::-webkit-scrollbar-thumb{background:var(--nyx-surface-2);border-radius:var(--nyx-radius-full);border:2px solid var(--nyx-bg)}

@@ -1,4 +1,4 @@
-/*! Nyx · utilities.css · v1.3.0 · MIT
+/*! Nyx · utilities.css · v1.4.0 · MIT
  * The utilities module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -47,5 +47,5 @@
 .nyx-vr{display:inline-block;align-self:stretch;width:1px;min-height:1em;background:var(--nyx-border)}
 .nyx-visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .nyx-stretched-link::after{content:"";position:absolute;inset:0;z-index:1}
-.nyx-focus-ring:focus{outline:none;box-shadow:0 0 0 3px rgba(108,99,255,.4)}
+.nyx-focus-ring:focus{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 40%,transparent)}
 .nyx-clearfix::after{content:"";display:block;clear:both}

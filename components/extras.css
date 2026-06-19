@@ -1,4 +1,4 @@
-/*! Nyx · extras.css · v1.3.0 · MIT
+/*! Nyx · extras.css · v1.4.0 · MIT
  * The extras module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -14,11 +14,11 @@
 /* OTP / pin input */
 .nyx-otp{display:inline-flex;gap:8px}
 .nyx-otp input{width:44px;height:52px;text-align:center;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-lg);color:var(--nyx-text);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);outline:none;transition:all .2s var(--nyx-ease)}
-.nyx-otp input:focus{border-color:var(--nyx-accent);box-shadow:0 0 0 3px rgba(108,99,255,.18),var(--nyx-glow)}
+.nyx-otp input:focus{border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 18%,transparent),var(--nyx-glow)}
 
 /* tag input */
 .nyx-tag-input{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);transition:all .2s var(--nyx-ease)}
-.nyx-tag-input:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px rgba(108,99,255,.18)}
+.nyx-tag-input:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 18%,transparent)}
 .nyx-tag-input input{flex:1;min-width:120px;border:none;background:transparent;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-sm);padding:4px}
 
 /* split button */
@@ -58,7 +58,7 @@
 
 /* file item */
 .nyx-file{display:flex;align-items:center;gap:var(--nyx-s3);padding:12px 14px;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius)}
-.nyx-file .nyx-file-icon{width:38px;height:38px;border-radius:var(--nyx-radius-sm);display:grid;place-items:center;background:rgba(108,99,255,.14);color:var(--nyx-accent);font-size:18px;flex-shrink:0}
+.nyx-file .nyx-file-icon{width:38px;height:38px;border-radius:var(--nyx-radius-sm);display:grid;place-items:center;background:color-mix(in srgb,var(--nyx-accent) 14%,transparent);color:var(--nyx-accent);font-size:18px;flex-shrink:0}
 .nyx-file .nyx-file-meta{flex:1;min-width:0}
 .nyx-file .nyx-file-name{font-size:var(--nyx-fs-sm);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nyx-file .nyx-file-sub{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}

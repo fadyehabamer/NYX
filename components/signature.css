@@ -1,4 +1,4 @@
-/*! Nyx · signature.css · v1.3.0 · MIT
+/*! Nyx · signature.css · v1.4.0 · MIT
  * The signature module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -6,7 +6,7 @@
    10. SIGNATURE ELEMENTS
    ============================================================ */
 .nyx-spotlight{position:relative;text-align:center;padding:var(--nyx-s9) var(--nyx-s5);border-radius:var(--nyx-radius-xl);overflow:hidden;background:var(--nyx-surface);border:1px solid var(--nyx-border)}
-.nyx-spotlight::before{content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(circle,rgba(108,99,255,.35),transparent 60%);pointer-events:none}
+.nyx-spotlight::before{content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(circle,color-mix(in srgb,var(--nyx-accent) 35%,transparent),transparent 60%);pointer-events:none}
 .nyx-spotlight::after{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:240px;height:1px;background:linear-gradient(90deg,transparent,var(--nyx-accent),transparent)}
 .nyx-spotlight > *{position:relative}
 
@@ -26,7 +26,7 @@
 .nyx-chip{display:inline-flex;align-items:center;gap:6px;font-size:var(--nyx-fs-sm);padding-block:5px;padding-inline:12px 6px;border-radius:var(--nyx-radius-full);background:var(--nyx-surface-2);border:1px solid var(--nyx-border);color:var(--nyx-text)}
 .nyx-chip .nyx-chip-x{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:var(--nyx-text-muted);transition:all .2s var(--nyx-ease);font-size:13px}
 .nyx-chip .nyx-chip-x:hover{background:var(--nyx-elev-hover);color:var(--nyx-text)}
-.nyx-chip-accent{background:rgba(108,99,255,.14);border-color:rgba(108,99,255,.35);color:var(--nyx-accent)}
+.nyx-chip-accent{background:color-mix(in srgb,var(--nyx-accent) 14%,transparent);border-color:color-mix(in srgb,var(--nyx-accent) 35%,transparent);color:var(--nyx-accent)}
 .nyx-chip-outline{background:transparent}
 
 .nyx-timeline{position:relative;padding-inline-start:var(--nyx-s6)}
@@ -39,7 +39,7 @@
 .nyx-meter{display:inline-grid;place-items:center;position:relative}
 .nyx-meter svg{transform:rotate(-90deg)}
 .nyx-meter .nyx-meter-track{fill:none;stroke:var(--nyx-surface-2);stroke-width:10}
-.nyx-meter .nyx-meter-fill{fill:none;stroke:url(#nyxMeterGrad);stroke-width:10;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(108,99,255,.6));transition:stroke-dashoffset .6s var(--nyx-ease)}
+.nyx-meter .nyx-meter-fill{fill:none;stroke:url(#nyxMeterGrad);stroke-width:10;stroke-linecap:round;filter:drop-shadow(0 0 6px color-mix(in srgb,var(--nyx-accent) 60%,transparent));transition:stroke-dashoffset .6s var(--nyx-ease)}
 .nyx-meter .nyx-meter-val{position:absolute;font-family:var(--nyx-font-display);font-weight:700;font-size:var(--nyx-fs-xl)}
 
 .nyx-gradient-border{position:relative;border-radius:var(--nyx-radius-lg);padding:1px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2),var(--nyx-accent));background-size:200% 200%;animation:nyx-gb 4s linear infinite}
@@ -83,7 +83,7 @@
 .nyx-empty .nyx-empty-icon{font-size:34px;opacity:.7;margin-bottom:var(--nyx-s3)}
 
 /* announcement banner */
-.nyx-banner{display:flex;align-items:center;justify-content:center;gap:var(--nyx-s3);flex-wrap:wrap;padding:10px 16px;border-radius:var(--nyx-radius);background:linear-gradient(120deg,rgba(108,99,255,.18),rgba(0,212,170,.14));border:1px solid var(--nyx-border);font-size:var(--nyx-fs-sm)}
+.nyx-banner{display:flex;align-items:center;justify-content:center;gap:var(--nyx-s3);flex-wrap:wrap;padding:10px 16px;border-radius:var(--nyx-radius);background:linear-gradient(120deg,color-mix(in srgb,var(--nyx-accent) 18%,transparent),color-mix(in srgb,var(--nyx-accent-2) 14%,transparent));border:1px solid var(--nyx-border);font-size:var(--nyx-fs-sm)}
 
 /* file dropzone */
 .nyx-dropzone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--nyx-s2);text-align:center;padding:var(--nyx-s7);border:2px dashed var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-glass);color:var(--nyx-text-muted);cursor:pointer;transition:all .2s var(--nyx-ease)}

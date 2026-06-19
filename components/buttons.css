@@ -1,4 +1,4 @@
-/*! Nyx · buttons.css · v1.3.0 · MIT
+/*! Nyx · buttons.css · v1.4.0 · MIT
  * The buttons module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -14,10 +14,10 @@
 }
 .nyx-btn:active{transform:translateY(1px)}
 .nyx-btn:disabled,.nyx-btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
-.nyx-btn-primary{background:linear-gradient(120deg,var(--nyx-accent),#8b7bff);color:#fff;box-shadow:var(--nyx-shadow-sm)}
+.nyx-btn-primary{background:linear-gradient(120deg,var(--nyx-accent),color-mix(in srgb,var(--nyx-accent) 60%,#ffffff));color:#fff;box-shadow:var(--nyx-shadow-sm)}
 .nyx-btn-primary:hover{box-shadow:var(--nyx-glow),var(--nyx-shadow);transform:translateY(-1px)}
 .nyx-btn-secondary{background:transparent;border-color:var(--nyx-accent-2);color:var(--nyx-accent-2)}
-.nyx-btn-secondary:hover{background:rgba(0,212,170,.10);box-shadow:0 0 24px rgba(0,212,170,.25)}
+.nyx-btn-secondary:hover{background:color-mix(in srgb,var(--nyx-accent-2) 10%,transparent);box-shadow:0 0 24px color-mix(in srgb,var(--nyx-accent-2) 25%,transparent)}
 .nyx-btn-ghost{background:transparent;border-color:transparent;color:var(--nyx-text-muted)}
 .nyx-btn-ghost:hover{border-color:var(--nyx-border);color:var(--nyx-text);background:var(--nyx-glass)}
 .nyx-btn-danger{background:linear-gradient(120deg,var(--nyx-danger),#ff6f86);color:#fff}
@@ -26,9 +26,9 @@
 .nyx-btn-glass:hover{background:var(--nyx-elev-hover);box-shadow:var(--nyx-shadow)}
 /* outline variants (Bootstrap-style, all colors) */
 .nyx-btn-outline-primary{background:transparent;border-color:var(--nyx-accent);color:var(--nyx-accent)}
-.nyx-btn-outline-primary:hover{background:rgba(108,99,255,.12);box-shadow:var(--nyx-glow)}
+.nyx-btn-outline-primary:hover{background:color-mix(in srgb,var(--nyx-accent) 12%,transparent);box-shadow:var(--nyx-glow)}
 .nyx-btn-outline-success{background:transparent;border-color:var(--nyx-accent-2);color:var(--nyx-accent-2)}
-.nyx-btn-outline-success:hover{background:rgba(0,212,170,.12)}
+.nyx-btn-outline-success:hover{background:color-mix(in srgb,var(--nyx-accent-2) 12%,transparent)}
 .nyx-btn-outline-danger{background:transparent;border-color:var(--nyx-danger);color:var(--nyx-danger)}
 .nyx-btn-outline-danger:hover{background:rgba(255,77,106,.12)}
 .nyx-btn-outline-warning{background:transparent;border-color:var(--nyx-warning);color:var(--nyx-warning)}
@@ -45,8 +45,8 @@
 .nyx-btn-glow:hover{transform:translateY(-1px)}
 @keyframes nyx-spin{to{transform:rotate(360deg)}}
 @keyframes nyx-pulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(108,99,255,0),0 0 18px rgba(108,99,255,.30)}
-  50%{box-shadow:0 0 0 6px rgba(108,99,255,0),0 0 34px rgba(108,99,255,.55)}
+  0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--nyx-accent) 0%,transparent),0 0 18px color-mix(in srgb,var(--nyx-accent) 30%,transparent)}
+  50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--nyx-accent) 0%,transparent),0 0 34px color-mix(in srgb,var(--nyx-accent) 55%,transparent)}
 }
 /* button group */
 .nyx-btn-group{display:inline-flex}

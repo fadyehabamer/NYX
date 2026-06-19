@@ -1,4 +1,4 @@
-/*! Nyx · data.css · v1.3.0 · MIT
+/*! Nyx · data.css · v1.4.0 · MIT
  * The data module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -24,6 +24,6 @@
 .nyx-list-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--nyx-surface);border-bottom:1px solid var(--nyx-border);font-size:var(--nyx-fs-sm);transition:background .2s var(--nyx-ease)}
 .nyx-list-item:last-child{border-bottom:none}
 a.nyx-list-item:hover{background:var(--nyx-glass)}
-.nyx-list-item.active{background:rgba(108,99,255,.12);color:var(--nyx-text)}
+.nyx-list-item.active{background:color-mix(in srgb,var(--nyx-accent) 12%,transparent);color:var(--nyx-text)}
 @media(max-width:880px){.nyx-kpi-row{grid-template-columns:repeat(2,1fr)}.nyx-data-grid table{min-width:560px}}
 @media(max-width:480px){.nyx-kpi-row{grid-template-columns:1fr}}
