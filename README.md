@@ -4,7 +4,7 @@
 
 > Think Bootstrap, but opinionated for the SaaS era, dark by default, and bilingual.
 
-**Distribution:** grab the all-in-one bundle (`nyx.css`), the minified build (`nyx.min.css` ~10kb gzip · `nyx.min.js` ~3.6kb gzip), load it from a CDN (jsDelivr/unpkg), `npm install nyx-ui`, or download just the modules you need from `components/` (each requires `components/tokens.css`). Run `node build.js` to regenerate the modules **and** the minified files from the bundle.
+**Distribution:** grab the all-in-one bundle (`nyx.css`), the minified build (`nyx.min.css` ~11kb gzip · `nyx.min.js` ~4kb gzip), load it from a CDN (jsDelivr/unpkg), `npm install nyx-ui`, or download just the modules you need from `components/` (each requires `components/tokens.css`). Run `node build.js` to regenerate the modules **and** the minified files from the bundle.
 
 ---
 
