@@ -591,6 +591,51 @@
       classes: [['nyx-tree / nyx-tree-children', 'Tree wrapper / nested level.'], ['nyx-tree-label', 'Expandable node (data-nyx-toggle="collapse").'], ['nyx-tree-leaf', 'Leaf item.']]
     },
     {
+      id: 'hierarchy', group: 'Components', title: 'Hierarchy', added: 'v1.4',
+      summary: 'File / org hierarchies in two interactive layouts — a vertical indented tree you can expand/collapse, and a horizontal Finder-style column browser (Miller columns) you can drill through. Both wire up automatically and mirror in RTL.',
+      sections: [
+        {
+          title: 'Vertical — click a folder to collapse', demo:
+            '<div class="nyx-hierarchy"><ul>' +
+            '<li><span class="nyx-hierarchy-node active"><span class="ico">📁</span> app <span class="meta">root</span></span><ul>' +
+            '<li><span class="nyx-hierarchy-node"><span class="ico">📁</span> components</span><ul>' +
+            '<li><span class="nyx-hierarchy-node"><span class="ico">📄</span> buttons.css <span class="meta">6kb</span></span></li>' +
+            '<li><span class="nyx-hierarchy-node"><span class="ico">📄</span> cards.css <span class="meta">4kb</span></span></li>' +
+            '</ul></li>' +
+            '<li><span class="nyx-hierarchy-node"><span class="ico">📄</span> index.html</span></li>' +
+            '<li><span class="nyx-hierarchy-node"><span class="ico">📄</span> nyx.css <span class="meta">65kb</span></span></li>' +
+            '</ul></li></ul></div>'
+        },
+        {
+          title: 'Horizontal — drill through the columns', demo:
+            '<div class="nyx-hierarchy-cols">' +
+            '<div class="nyx-hcol">' +
+            '<span class="nyx-hitem active" data-nyx-hcol="#hcB">📁 app <span class="chev">›</span></span>' +
+            '<span class="nyx-hitem" data-nyx-hcol="#hcDocs">📁 docs <span class="chev">›</span></span>' +
+            '<span class="nyx-hitem">📄 readme.md</span></div>' +
+            '<div class="nyx-hcol" id="hcB">' +
+            '<span class="nyx-hitem active" data-nyx-hcol="#hcC">📁 components <span class="chev">›</span></span>' +
+            '<span class="nyx-hitem">📄 index.html</span>' +
+            '<span class="nyx-hitem">📄 nyx.css</span></div>' +
+            '<div class="nyx-hcol" id="hcDocs" hidden>' +
+            '<span class="nyx-hitem">📄 guide.md</span>' +
+            '<span class="nyx-hitem">📄 api.md</span></div>' +
+            '<div class="nyx-hcol" id="hcC">' +
+            '<span class="nyx-hitem">📄 buttons.css</span>' +
+            '<span class="nyx-hitem active">📄 cards.css</span>' +
+            '<span class="nyx-hitem">📄 forms.css</span></div>' +
+            '</div>'
+        }
+      ],
+      classes: [
+        ['nyx-hierarchy', 'Vertical tree wrapper (nested <ul>/<li>) — folders collapse on click.'],
+        ['nyx-hierarchy-node', 'A tree row; .active highlights, .meta adds a trailing detail. Runtime adds a caret to rows with children.'],
+        ['nyx-hierarchy-cols', 'Horizontal Miller-columns browser.'],
+        ['nyx-hcol / nyx-hitem', 'A column / a selectable row (.chev for the arrow).'],
+        ['data-nyx-hcol="#id"', 'On a row: selecting it reveals that column and hides deeper ones.']
+      ]
+    },
+    {
       id: 'vertical-tabs', group: 'Components', title: 'Vertical tabs', added: 'v1.2',
       summary: 'The tabs component laid out vertically — the same data-nyx-tabs wiring.',
       sections: [{ title: 'Side tabs', demo: '<div class="nyx-tabs-vertical"><div class="nyx-tabs" data-nyx-tabs><button class="nyx-tab active" data-nyx-tab="vt1">Profile</button><button class="nyx-tab" data-nyx-tab="vt2">Account</button><button class="nyx-tab" data-nyx-tab="vt3">Billing</button></div><div style="flex:1"><div class="nyx-tab-panel active" data-nyx-panel="vt1">Profile settings.</div><div class="nyx-tab-panel" data-nyx-panel="vt2">Account settings.</div><div class="nyx-tab-panel" data-nyx-panel="vt3">Billing settings.</div></div></div>' }],
@@ -846,6 +891,54 @@
       summary: 'Add data-nyx-reveal to fade-and-rise elements in as they scroll into view — wired automatically by the runtime via IntersectionObserver.',
       sections: [{ title: 'Usage', lang: 'html', code: '<div data-nyx-reveal>\n  I fade and rise into view on scroll.\n</div>' }],
       classes: [['data-nyx-reveal', 'Reveal-on-scroll (runtime adds .nyx-reveal then .nyx-in).']]
+    },
+
+    /* ===== REGIONAL (MENA) ===== */
+    {
+      id: 'prayer-times', group: 'Regional', title: 'Prayer times', added: 'v1.4',
+      summary: 'A row of the five daily prayers — add data-nyx-prayers and the runtime reads each data-time and glows whichever prayer is next from the device clock. A staple of MENA apps.',
+      sections: [
+        {
+          title: 'Today (the next prayer is auto-highlighted)', demo:
+            '<div class="nyx-prayer-times" data-nyx-prayers>' +
+            '<div class="nyx-prayer" data-time="04:38"><span class="name">Fajr</span><span class="time">04:38</span></div>' +
+            '<div class="nyx-prayer" data-time="12:09"><span class="name">Dhuhr</span><span class="time">12:09</span></div>' +
+            '<div class="nyx-prayer" data-time="15:34"><span class="name">Asr</span><span class="time">15:34</span></div>' +
+            '<div class="nyx-prayer" data-time="18:42"><span class="name">Maghrib</span><span class="time">18:42</span></div>' +
+            '<div class="nyx-prayer" data-time="20:12"><span class="name">Isha</span><span class="time">20:12</span></div>' +
+            '</div>'
+        },
+        { title: 'Arabic + Arabic-Indic numerals', text: 'Same component in RTL — data-time stays Western for parsing while data-nyx-numerals renders the display as ٠-٩.', demo: '<div dir="rtl" class="nyx-prayer-times" data-nyx-prayers><div class="nyx-prayer" data-time="04:38"><span class="name">الفجر</span><span class="time" data-nyx-numerals="arab">04:38</span></div><div class="nyx-prayer" data-time="12:09"><span class="name">الظهر</span><span class="time" data-nyx-numerals="arab">12:09</span></div><div class="nyx-prayer" data-time="15:34"><span class="name">العصر</span><span class="time" data-nyx-numerals="arab">15:34</span></div><div class="nyx-prayer" data-time="18:42"><span class="name">المغرب</span><span class="time" data-nyx-numerals="arab">18:42</span></div><div class="nyx-prayer" data-time="20:12"><span class="name">العشاء</span><span class="time" data-nyx-numerals="arab">20:12</span></div></div>' },
+        { title: 'Markup', lang: 'html', code: '<div class="nyx-prayer-times" data-nyx-prayers>\n  <div class="nyx-prayer" data-time="04:38"><span class="name">Fajr</span><span class="time">04:38</span></div>\n  <!-- … the runtime adds .next to the upcoming prayer -->\n</div>' }
+      ],
+      classes: [['nyx-prayer-times[data-nyx-prayers]', 'Flex row; runtime highlights the next prayer.'], ['nyx-prayer[data-time="HH:MM"]', 'One prayer (.name + .time); data-time drives the logic.'], ['nyx-prayer next', 'Manual highlight if you don’t use the runtime.'], ['data-nyx-numerals="arab"', 'Runtime converts 0-9 to ٠-٩.']]
+    },
+    {
+      id: 'hijri-date', group: 'Regional', title: 'Hijri date', added: 'v1.4',
+      summary: 'Show the Hijri (Islamic) date alongside the Gregorian one — stacked or inline. You provide the values (e.g. from Intl.DateTimeFormat with the islamic calendar).',
+      sections: [
+        { title: 'Stacked', demo: '<div class="nyx-datepair"><span class="hijri">١٥ رمضان ١٤٤٦</span><span class="greg">2025-03-15</span></div>' },
+        { title: 'Inline + badge', demo: '<div class="nyx-flex nyx-gap-4 nyx-items-center"><div class="nyx-datepair inline"><span class="hijri">15 Ramadan 1446</span><span class="greg">· 15 Mar 2025</span></div><span class="nyx-badge nyx-badge-info">رمضان كريم</span></div>' }
+      ],
+      classes: [['nyx-datepair', 'Stacked Hijri (.hijri) over Gregorian (.greg).'], ['nyx-datepair inline', 'Lay the two out on one line.']]
+    },
+    {
+      id: 'price', group: 'Regional', title: 'Price & currency', added: 'v1.4',
+      summary: 'A price with a currency symbol and optional period or strike-through original. Works with Gulf/MENA symbols — ﷼ ر.س · د.إ · ج.م · د.ك · د.ب — or any other.',
+      sections: [
+        { title: 'Amounts', demo: '<div class="nyx-flex nyx-gap-6 nyx-items-end nyx-wrap"><span class="nyx-price"><span class="amt">١٢٠</span><span class="cur">ر.س</span><span class="per">/ شهر</span></span><span class="nyx-price"><span class="cur">د.إ</span><span class="amt">499</span></span><span class="nyx-price lg"><span class="amt">29</span><span class="cur">﷼</span><span class="per"><del>49</del></span></span></div>' }
+      ],
+      classes: [['nyx-price', 'Inline price (.amt + .cur + optional .per).'], ['nyx-price lg', 'Display-size amount.'], ['.per > del', 'Strike-through original price.']]
+    },
+    {
+      id: 'bilingual', group: 'Regional', title: 'Bilingual label', added: 'v1.4',
+      summary: 'Pair an Arabic label with its Latin transliteration / English — stacked or inline. The Arabic line uses the Arabic font automatically; great for bilingual menus, nav and product names.',
+      sections: [
+        { title: 'Stacked', demo: '<div class="nyx-flex nyx-gap-6 nyx-wrap"><span class="nyx-bilingual"><span class="ar">لوحة التحكّم</span><span class="en">Dashboard</span></span><span class="nyx-bilingual"><span class="ar">الفواتير</span><span class="en">Invoices</span></span><span class="nyx-bilingual"><span class="ar">الإعدادات</span><span class="en">Settings</span></span></div>' },
+        { title: 'Inline', demo: '<span class="nyx-bilingual inline"><span class="ar">مرحباً</span><span class="en">— Marhaban</span></span>' },
+        { title: 'Arabic-Indic numerals (JS)', text: 'Add data-nyx-numerals="arab" to convert 0-9 to ٠-٩ on init, or call Nyx.toArabicNumerals(value) yourself.', demo: '<div class="nyx-flex nyx-gap-5 nyx-wrap nyx-items-center"><span>Order <strong data-nyx-numerals="arab">#10482</strong></span><span class="nyx-badge nyx-badge-success" data-nyx-numerals="arab">2025</span></div>', lang: 'js', code: "Nyx.toArabicNumerals('2025');  // => '٢٠٢٥'" }
+      ],
+      classes: [['nyx-bilingual', 'Arabic (.ar) over Latin (.en).'], ['nyx-bilingual inline', 'One-line layout.'], ['data-nyx-numerals="arab"', 'Convert Western digits to Arabic-Indic on init.'], ['Nyx.toArabicNumerals(v)', 'Helper that returns the converted string.']]
     }
   ];
 
@@ -853,7 +946,7 @@
   PAGES.forEach(function (p) { byId[p.id] = p; });
 
   /* group display order (mirrors Bootstrap's docs taxonomy) */
-  var GROUP_ORDER = ['Getting Started', 'Customize', 'Layout', 'Content', 'Forms', 'Components', 'Helpers', 'Utilities', 'Signature', 'Motion'];
+  var GROUP_ORDER = ['Getting Started', 'Customize', 'Layout', 'Content', 'Forms', 'Components', 'Helpers', 'Utilities', 'Signature', 'Motion', 'Regional'];
   function groupRank(g) { var i = GROUP_ORDER.indexOf(g); return i < 0 ? 99 : i; }
 
   /* ---------- i18n (optional; Arabic etc. provided via window.NYX_I18N) ---------- */

@@ -1,0 +1,35 @@
+/*! Nyx · hierarchy.css · v1.4.0 · MIT
+ * The hierarchy module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   14. HIERARCHY (v1.4) — file/org trees, vertical + horizontal
+   ============================================================ */
+/* vertical indented tree with elbow connectors */
+.nyx-hierarchy{font-size:var(--nyx-fs-sm)}
+.nyx-hierarchy ul{list-style:none;margin:0;padding-inline-start:22px}
+.nyx-hierarchy > ul{padding-inline-start:0}
+.nyx-hierarchy li{position:relative;padding-block:1px}
+.nyx-hierarchy ul ul > li::before{content:"";position:absolute;inset-inline-start:-12px;top:0;bottom:50%;width:1px;background:var(--nyx-border)}
+.nyx-hierarchy ul ul > li::after{content:"";position:absolute;inset-inline-start:-12px;top:50%;width:11px;height:1px;background:var(--nyx-border)}
+.nyx-hierarchy ul ul > li:last-child::before{bottom:auto;height:50%}
+.nyx-hierarchy-node{display:inline-flex;align-items:center;gap:8px;padding:5px 10px;border-radius:var(--nyx-radius-sm);color:var(--nyx-text);transition:background .15s var(--nyx-ease)}
+.nyx-hierarchy-node:hover{background:var(--nyx-glass)}
+.nyx-hierarchy-node.active{background:color-mix(in srgb,var(--nyx-accent) 14%,transparent);color:var(--nyx-accent)}
+.nyx-hierarchy-node .ico{font-size:15px;line-height:1}
+.nyx-hierarchy-node .meta{margin-inline-start:auto;padding-inline-start:var(--nyx-s4);color:var(--nyx-text-muted);font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs)}
+.nyx-hierarchy-node.has-kids{cursor:pointer}
+.nyx-hierarchy-node .caret{display:inline-block;font-size:9px;color:var(--nyx-text-muted);transition:transform .15s var(--nyx-ease);transform:rotate(90deg)}
+.nyx-hierarchy li.nyx-collapsed > ul{display:none}
+.nyx-hierarchy li.nyx-collapsed > .nyx-hierarchy-node .caret{transform:rotate(0)}
+[dir="rtl"] .nyx-hierarchy li.nyx-collapsed > .nyx-hierarchy-node .caret{transform:rotate(180deg)}
+
+/* horizontal Finder/Miller columns — a left-to-right file hierarchy */
+.nyx-hierarchy-cols{display:flex;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow-x:auto;background:var(--nyx-surface)}
+.nyx-hierarchy-cols .nyx-hcol{min-width:184px;flex:0 0 auto;border-inline-end:1px solid var(--nyx-border);padding:6px;display:flex;flex-direction:column;gap:1px}
+.nyx-hierarchy-cols .nyx-hcol[hidden]{display:none}
+.nyx-hierarchy-cols .nyx-hcol:last-child{border-inline-end:none}
+.nyx-hierarchy-cols .nyx-hitem{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--nyx-radius-sm);cursor:pointer;color:var(--nyx-text-muted);transition:background .15s var(--nyx-ease)}
+.nyx-hierarchy-cols .nyx-hitem:hover{background:var(--nyx-glass);color:var(--nyx-text)}
+.nyx-hierarchy-cols .nyx-hitem.active{background:color-mix(in srgb,var(--nyx-accent) 16%,transparent);color:var(--nyx-text)}
+.nyx-hierarchy-cols .nyx-hitem .chev{margin-inline-start:auto;opacity:.55;font-size:11px}

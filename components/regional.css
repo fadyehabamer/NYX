@@ -1,0 +1,34 @@
+/*! Nyx · regional.css · v1.4.0 · MIT
+ * The regional module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   15. REGIONAL — built for MENA (v1.4)
+   ============================================================ */
+/* prayer times — five daily prayers, highlight the next one */
+.nyx-prayer-times{display:flex;gap:var(--nyx-s2);flex-wrap:wrap}
+.nyx-prayer{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:74px;padding:10px 12px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);background:var(--nyx-surface);text-align:center}
+.nyx-prayer .name{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
+.nyx-prayer .time{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);font-weight:600;color:var(--nyx-text)}
+.nyx-prayer.next{border-color:var(--nyx-accent);background:color-mix(in srgb,var(--nyx-accent) 10%,transparent);box-shadow:var(--nyx-glow)}
+.nyx-prayer.next .name{color:var(--nyx-accent)}
+
+/* dual Hijri + Gregorian date */
+.nyx-datepair{display:inline-flex;flex-direction:column;line-height:1.3}
+.nyx-datepair .hijri{font-family:var(--nyx-font-display);font-weight:700}
+.nyx-datepair .greg{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-mono)}
+.nyx-datepair.inline{flex-direction:row;align-items:baseline;gap:8px}
+
+/* price + currency (use any symbol: ﷼ د.إ ج.م د.ك …) */
+.nyx-price{display:inline-flex;align-items:baseline;gap:5px;font-family:var(--nyx-font-display);color:var(--nyx-text)}
+.nyx-price .amt{font-weight:800;font-size:var(--nyx-fs-xl);line-height:1}
+.nyx-price .cur{font-size:.72em;color:var(--nyx-text-muted);font-family:var(--nyx-font-body)}
+.nyx-price .per{font-size:.7em;color:var(--nyx-text-muted);font-family:var(--nyx-font-body);align-self:flex-end}
+.nyx-price.lg .amt{font-size:var(--nyx-fs-3xl)}
+.nyx-price del{color:var(--nyx-text-muted);font-weight:400;font-size:.7em}
+
+/* bilingual label — Arabic over Latin (or inline) */
+.nyx-bilingual{display:inline-flex;flex-direction:column;line-height:1.25}
+.nyx-bilingual .ar{font-family:var(--nyx-font-ar);font-weight:600}
+.nyx-bilingual .en{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-body);letter-spacing:.01em}
+.nyx-bilingual.inline{flex-direction:row;align-items:baseline;gap:8px}

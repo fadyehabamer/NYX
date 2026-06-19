@@ -25,7 +25,8 @@ window.NYX_I18N = {
     'Helpers': 'المساعدات',
     'Utilities': 'الأدوات',
     'Signature': 'عناصر مميّزة',
-    'Motion': 'الحركة'
+    'Motion': 'الحركة',
+    'Regional': 'مخصّص للمنطقة'
   },
   _terms: {
     'Variants': 'الأنماط', 'Sizes & states': 'الأحجام والحالات', 'Outline & group': 'محدّد ومجموعة',
@@ -44,7 +45,10 @@ window.NYX_I18N = {
     'Accent themes': 'سمات اللون', 'Prebuilt themes': 'سمات جاهزة', 'Live playground': 'مساحة تجريبية حيّة', 'Live swatch': 'عيّنة حيّة',
     'Responsive breakpoints': 'نقاط التجاوب', 'Markup': 'الترميز', 'Twelve columns': 'اثنا عشر عموداً',
     'Valid & invalid': 'صالح وغير صالح', 'Whole form — native constraints': 'النموذج كاملاً — قيود أصلية',
-    'CDN — jsDelivr / unpkg': 'شبكة توصيل (CDN)', 'npm': 'npm', 'Bundle — everything': 'الحزمة — كل شيء'
+    'CDN — jsDelivr / unpkg': 'شبكة توصيل (CDN)', 'npm': 'npm', 'Bundle — everything': 'الحزمة — كل شيء',
+    'Vertical — connected tree': 'عمودي — شجرة موصولة', 'Horizontal — column browser': 'أفقي — متصفّح أعمدة',
+    'Today': 'اليوم', 'Stacked': 'متراصّ', 'Inline': 'في سطر', 'Inline + badge': 'في سطر + شارة', 'Amounts': 'مبالغ',
+    'Arabic + Arabic-Indic numerals': 'بالعربية والأرقام العربية-الهندية', 'Arabic-Indic numerals (JS)': 'الأرقام العربية-الهندية (JS)'
   },
   pages: {
     /* Getting Started */
@@ -84,6 +88,7 @@ window.NYX_I18N = {
     carousel: { title: 'العارض الدوّار', summary: 'عرض شرائح مع أزرار للسابق/التالي ومؤشّرات قابلة للنقر.' },
     dropdown: { title: 'القائمة المنسدلة', summary: 'قائمة إجراءات قابلة للفتح. تُفتح بالنقر وتُغلق بالنقر خارجها أو بمفتاح Esc.' },
     'split-button': { title: 'زر مقسوم' }, toolbar: { title: 'شريط الأدوات' }, tree: { title: 'شجرة' },
+    hierarchy: { title: 'التسلسل الهرمي', summary: 'تسلسلات هرمية للملفات أو المؤسّسة بتخطيطين — شجرة عمودية بخطوط رابطة، ومتصفّح أعمدة أفقي بأسلوب «فايندر». كلاهما ينعكس تلقائياً في وضع RTL.' },
     'vertical-tabs': { title: 'تبويبات رأسية' }, calendar: { title: 'التقويم' }, file: { title: 'عنصر ملف' },
     /* Helpers */
     stack: { title: 'تكديس' }, divider: { title: 'فاصل' }, ratio: { title: 'النسبة' },
@@ -105,6 +110,11 @@ window.NYX_I18N = {
     /* Motion */
     'big-type': { title: 'الخط الكبير', summary: 'طباعة عملاقة للواجهات الرئيسية — اتّجاه الخط الكبير الرائج. يتحوّل في وضع RTL إلى خط Aref Ruqaa العربي الانسيابي (رقعة).' },
     animations: { title: 'الحركات', summary: 'حركات دخول متدرّجة، وحلقة تعويم، وتدرّج لوني متحرّك، وخلفية شفق دوّارة — تحترم جميعها prefers-reduced-motion.' },
-    reveal: { title: 'الكشف عند التمرير', summary: 'أضف data-nyx-reveal لتظهر العناصر بتلاشٍ وارتفاع عند دخولها إطار العرض، ويُهيّئها المُشغّل تلقائياً.' }
+    reveal: { title: 'الكشف عند التمرير', summary: 'أضف data-nyx-reveal لتظهر العناصر بتلاشٍ وارتفاع عند دخولها إطار العرض، ويُهيّئها المُشغّل تلقائياً.' },
+    /* Regional (MENA) */
+    'prayer-times': { title: 'مواقيت الصلاة', summary: 'صفّ بالصلوات الخمس مع إبراز الصلاة القادمة وتوهّجها — عنصر أساسي في تطبيقات المنطقة. CSS خالص، وأنت تزوّد الأوقات.' },
+    'hijri-date': { title: 'التاريخ الهجري', summary: 'اعرض التاريخ الهجري إلى جانب الميلادي — متراصّاً أو في سطر واحد. أنت تزوّد القيم (مثلاً عبر Intl.DateTimeFormat بالتقويم الإسلامي).' },
+    price: { title: 'السعر والعملة', summary: 'سعر مع رمز العملة وفترة اختيارية أو سعر مشطوب. يعمل مع رموز عملات الخليج والمنطقة — ﷼ ر.س · د.إ · ج.م · د.ك — أو أيّ رمز آخر.' },
+    bilingual: { title: 'تسمية ثنائية اللغة', summary: 'اقرن تسمية عربية بنظيرتها اللاتينية/الإنجليزية — متراصّة أو في سطر. يستخدم السطر العربي الخطّ العربي تلقائياً. مع محوّل الأرقام العربية-الهندية.' }
   }
 };
