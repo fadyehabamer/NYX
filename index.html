@@ -25,7 +25,43 @@
   .lp-comp{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--nyx-s4)}
   .lp-comp a{text-decoration:none}
   .lp-footer{padding-block:var(--nyx-s7);text-align:center;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);border-top:1px solid var(--nyx-border)}
-  @media(max-width:780px){.lp-comp{grid-template-columns:1fr}.hide-sm{display:none}section.lp{padding-block:var(--nyx-s7)}.nyx-display{font-size:var(--nyx-fs-2xl)}}
+  /* ---- hero (redesign) ---- */
+  .hero{position:relative;text-align:center;padding-top:var(--nyx-s6);padding-bottom:var(--nyx-s7)}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-full);font-size:var(--nyx-fs-sm);font-weight:500;color:var(--nyx-text-muted);background:var(--nyx-surface);box-shadow:var(--nyx-shadow-sm)}
+  .hero-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--nyx-accent-2);box-shadow:0 0 0 4px rgba(0,212,170,.18)}
+  .hero h1{max-width:16ch;margin-inline:auto;line-height:1.02}
+  .hero h1 .l2{display:block}
+  .hero-sub{max-width:540px;margin-inline:auto}
+  .hero-cta .nyx-btn{border-radius:var(--nyx-radius-full)}
+  /* radiating rings + floating app tiles */
+  .hero-orbits{position:relative;height:300px;margin-top:var(--nyx-s6);overflow:hidden}
+  .hero-orbits .ring,.hero-orbits .hero-glow,.hero-orbits .hero-pos{position:absolute;left:50%;top:50%}
+  .hero-orbits .ring{border:1px solid var(--nyx-border);border-radius:50%;transform:translate(-50%,-50%)}
+  .hero-orbits .ring.r1{width:170px;height:170px;opacity:.75}
+  .hero-orbits .ring.r2{width:330px;height:330px;opacity:.55}
+  .hero-orbits .ring.r3{width:510px;height:510px;opacity:.35}
+  .hero-orbits .ring.r4{width:710px;height:710px;opacity:.2}
+  .hero-glow{width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(108,99,255,.28),transparent 62%);filter:blur(18px);transform:translate(-50%,-50%);pointer-events:none}
+  .hero-pos.center{transform:translate(-50%,-50%);z-index:3}
+  .hero-pos.p1{transform:translate(calc(-50% - 170px),calc(-50% - 66px))}
+  .hero-pos.p2{transform:translate(calc(-50% + 178px),calc(-50% - 28px))}
+  .hero-pos.p3{transform:translate(calc(-50% - 116px),calc(-50% + 96px))}
+  .hero-pos.p4{transform:translate(calc(-50% + 126px),calc(-50% + 104px))}
+  .hero-tile{width:62px;height:62px;border-radius:18px;display:grid;place-items:center;font-size:26px;background:var(--nyx-surface);border:1px solid var(--nyx-border);box-shadow:var(--nyx-shadow-lg);animation:nyx-float 4s var(--nyx-ease) infinite}
+  .hero-tile.center{width:86px;height:86px;font-size:36px;color:#fff;font-family:var(--nyx-font-display);font-weight:800;border:0;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));box-shadow:var(--nyx-glow),var(--nyx-shadow-lg)}
+  .hero-tile.t-violet{color:var(--nyx-accent);background:rgba(108,99,255,.16)}
+  .hero-tile.t-teal{color:var(--nyx-accent-2);background:rgba(0,212,170,.14)}
+  .hero-tile.t-amber{color:#ffb020;background:rgba(255,176,32,.14)}
+  .hero-pos.center .hero-tile{animation-delay:.2s}
+  .hero-pos.p2 .hero-tile{animation-delay:.7s}
+  .hero-pos.p3 .hero-tile{animation-delay:1.2s}
+  .hero-pos.p4 .hero-tile{animation-delay:1.7s}
+  @media(max-width:780px){.lp-comp{grid-template-columns:1fr}.hide-sm{display:none}section.lp{padding-block:var(--nyx-s7)}.nyx-display{font-size:var(--nyx-fs-2xl)}
+    .hero-orbits{height:240px}
+    .hero-orbits .ring.r1{width:130px;height:130px}.hero-orbits .ring.r2{width:240px;height:240px}.hero-orbits .ring.r3{width:360px;height:360px}.hero-orbits .ring.r4{display:none}
+    .hero-glow{width:240px;height:240px}
+    .hero-tile{width:50px;height:50px;font-size:21px;border-radius:15px}.hero-tile.center{width:66px;height:66px;font-size:28px}
+    .hero-pos.p1{transform:translate(calc(-50% - 112px),calc(-50% - 52px))}.hero-pos.p2{transform:translate(calc(-50% + 118px),calc(-50% - 22px))}.hero-pos.p3{transform:translate(calc(-50% - 80px),calc(-50% + 74px))}.hero-pos.p4{display:none}}
 </style>
 </head>
 <body class="nyx nyx-reset">
@@ -52,28 +88,34 @@
 
 <div class="nyx-container">
 
-  <div class="nyx-banner" style="margin-top:var(--nyx-s4)"><span class="nyx-badge nyx-badge-info">New</span> The first CSS library built for Arabic developers — full RTL &amp; Arabic fonts. <a href="index.ar.html" class="nyx-gradient-text" style="font-weight:600">النسخة العربية ←</a></div>
-
   <!-- ===================== HERO ===================== -->
-  <section class="lp" style="padding-top:var(--nyx-s6)">
-    <div class="nyx-spotlight">
-      <span class="nyx-overline">The Design System for Modern SaaS</span>
-      <h1 class="nyx-display" style="margin-top:var(--nyx-s4)">Build interfaces with <span class="nyx-gradient-text">Luminous Depth</span></h1>
-      <p class="nyx-lead nyx-muted" style="max-width:560px;margin:var(--nyx-s4) auto 0">A modern, opinionated component framework where every element feels lit from within. Zero dependencies. Dark-mode native. ~500 lines of CSS.</p>
-      <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap" style="margin-top:var(--nyx-s6)">
-        <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.html#/installation">Get started</a>
-        <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs.html">Browse components</a>
-      </div>
+  <section class="hero">
+    <span class="hero-eyebrow nyx-anim-up"><span class="dot"></span> The first CSS library built for Arabic developers</span>
+    <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1" style="margin-top:var(--nyx-s5)">Interfaces with<span class="l2 nyx-gradient-text animated">Luminous Depth</span></h1>
+    <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2" style="margin-top:var(--nyx-s5)">A dark-mode-native component framework where every element feels lit from within — full RTL, Arabic fonts, a light theme, and zero dependencies.</p>
+    <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta nyx-anim-up nyx-anim-delay-3" style="margin-top:var(--nyx-s6)">
+      <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.html#/installation">Get started</a>
+      <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs.html">Browse components</a>
     </div>
 
-    <!-- trusted by -->
-    <div class="nyx-marquee" style="margin-top:var(--nyx-s6)">
-      <div class="nyx-track">
-        <span>Acme</span><span>Globex</span><span>Initech</span><span>Umbrella</span><span>Hooli</span><span>Stark</span>
-        <span>Acme</span><span>Globex</span><span>Initech</span><span>Umbrella</span><span>Hooli</span><span>Stark</span>
-      </div>
+    <div class="hero-orbits nyx-anim-fade nyx-anim-delay-4" aria-hidden="true">
+      <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span><span class="ring r4"></span>
+      <span class="hero-glow"></span>
+      <span class="hero-pos center"><span class="hero-tile center">N</span></span>
+      <span class="hero-pos p1"><span class="hero-tile t-violet">✦</span></span>
+      <span class="hero-pos p2"><span class="hero-tile t-teal">⚡</span></span>
+      <span class="hero-pos p3"><span class="hero-tile t-amber">◈</span></span>
+      <span class="hero-pos p4"><span class="hero-tile">↔</span></span>
     </div>
   </section>
+
+  <!-- trusted by -->
+  <div class="nyx-marquee">
+    <div class="nyx-track">
+      <span>Acme</span><span>Globex</span><span>Initech</span><span>Umbrella</span><span>Hooli</span><span>Stark</span>
+      <span>Acme</span><span>Globex</span><span>Initech</span><span>Umbrella</span><span>Hooli</span><span>Stark</span>
+    </div>
+  </div>
 
   <!-- ===================== INSTALL ===================== -->
   <section class="lp" id="install" style="padding-top:0">
