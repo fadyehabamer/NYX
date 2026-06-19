@@ -34,7 +34,18 @@
     <div class="au-card">
       <div class="nyx-flex nyx-justify-between nyx-items-center" style="margin-bottom:var(--nyx-s5)">
         <h2 class="nyx-h2" id="authTitle">Welcome back</h2>
-        <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="Toggle theme">◐</button>
+        <div class="nyx-flex nyx-items-center nyx-gap-2">
+          <div class="nyx-dropdown">
+            <button class="nyx-btn nyx-btn-ghost nyx-btn-sm" data-nyx-toggle="dropdown" aria-haspopup="true">Templates ▾</button>
+            <div class="nyx-dropdown-menu" style="inset-inline-start:auto;inset-inline-end:0">
+              <a class="nyx-dropdown-item" href="dashboard.html">▦ Dashboard</a>
+              <a class="nyx-dropdown-item" href="checkout.html">🛒 Checkout</a>
+              <a class="nyx-dropdown-item" href="pricing.html">💳 Pricing</a>
+              <a class="nyx-dropdown-item" href="auth.html">🔐 Auth</a>
+            </div>
+          </div>
+          <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="Toggle theme">◐</button>
+        </div>
       </div>
 
       <div class="nyx-tabs" data-nyx-tabs style="margin-bottom:var(--nyx-s5)">
