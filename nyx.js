@@ -1,5 +1,5 @@
 /*!
- * Nyx — runtime · v1.3.0 · MIT License
+ * Nyx — runtime · v1.4.0 · MIT License
  * Zero dependencies. UMD: window.Nyx (or CommonJS export).
  *
  * Declarative API (no JS to write):
@@ -13,7 +13,7 @@
  *
  * Imperative API:
  *   Nyx.toast · openModal · openDrawer · close · closeAll · togglePopover
- *   Nyx.openCommandPalette · setTheme · toggleTheme · setDir · toggleDir · init
+ *   Nyx.openCommandPalette · setTheme · toggleTheme · setDir · toggleDir · setAccent · init
  * ========================================================== */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory();
@@ -311,7 +311,7 @@
   else init();
 
   return {
-    version: '1.3.0',
+    version: '1.4.0',
     init: init, toast: toast,
     openModal: openModal, openDrawer: openDrawer, close: close, closeAll: closeAll,
     togglePopover: togglePopover, openCommandPalette: openCommandPalette, closeCommandPalette: closeCommandPalette,

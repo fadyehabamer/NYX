@@ -24,10 +24,10 @@ var css = fs.readFileSync(SRC, 'utf8');
 var SENT = '__NYXSTR__';
 function minifyCss(src) {
   var strings = [];
+  src = src.replace(/\/\*[\s\S]*?\*\//g, '');                        // drop comments FIRST (apostrophes in comments would mis-pair string protection)
   src = src.replace(/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/g, function (s) {
     strings.push(s); return SENT + (strings.length - 1) + SENT;     // protect literals
   });
-  src = src.replace(/\/\*[\s\S]*?\*\//g, '');                        // drop comments
   src = src.replace(/\s+/g, ' ');                                    // collapse whitespace
   src = src.replace(/\s*([{}:;,>])\s*/g, '$1');                      // trim around safe punctuation only (keeps calc()/+~ combinators valid)
   src = src.replace(/;}/g, '}').trim();                              // drop trailing semicolons

@@ -1,0 +1,52 @@
+{
+  "name": "nyx-ui",
+  "version": "1.0.0",
+  "description": "Dark-mode-native CSS/JS component framework with Luminous Depth — full RTL & Arabic support. The first CSS library built for Arabic developers.",
+  "keywords": [
+    "css",
+    "ui",
+    "components",
+    "framework",
+    "design-system",
+    "dark-mode",
+    "rtl",
+    "arabic",
+    "luminous-depth",
+    "zero-dependencies"
+  ],
+  "homepage": "https://example.com/nyx",
+  "license": "MIT",
+  "author": "Nyx",
+  "main": "nyx.js",
+  "style": "nyx.css",
+  "unpkg": "nyx.min.css",
+  "jsdelivr": "nyx.min.css",
+  "sideEffects": [
+    "*.css",
+    "nyx.js",
+    "nyx.min.js"
+  ],
+  "exports": {
+    ".": {
+      "style": "./nyx.css",
+      "default": "./nyx.js"
+    },
+    "./css": "./nyx.css",
+    "./css/min": "./nyx.min.css",
+    "./js": "./nyx.js",
+    "./js/min": "./nyx.min.js",
+    "./components/*": "./components/*"
+  },
+  "files": [
+    "nyx.css",
+    "nyx.min.css",
+    "nyx.js",
+    "nyx.min.js",
+    "components/",
+    "build.js",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node build.js"
+  }
+}

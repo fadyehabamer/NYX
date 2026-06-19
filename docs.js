@@ -92,23 +92,26 @@
     },
     {
       id: 'download', group: 'Getting Started', title: 'Download', added: 'v1.2',
-      summary: 'Grab the whole framework as one bundle, or download just the component files you need — every à-la-carte file requires tokens.css for its CSS variables.',
+      summary: 'Grab the whole framework as one bundle, load the minified build from a CDN, install from npm, or download just the component files you need — every à-la-carte file requires tokens.css for its CSS variables.',
       sections: [
         { title: 'Bundle — everything', lang: 'html', code: '<!-- one file, every component -->\n<link rel="stylesheet" href="nyx.css">\n<script src="nyx.js"></script>' },
+        { title: 'CDN — jsDelivr / unpkg', text: 'No install — load the minified build straight from a CDN (swap nyx-ui for your published package name; @1 tracks the latest 1.x).', lang: 'html', code: '<!-- jsDelivr -->\n<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nyx-ui@1/nyx.min.css">\n<script src="https://cdn.jsdelivr.net/npm/nyx-ui@1/nyx.min.js"></script>\n\n<!-- unpkg -->\n<link rel="stylesheet" href="https://unpkg.com/nyx-ui@1/nyx.min.css">' },
+        { title: 'npm', text: 'Published with an exports map, so you can import the full bundle, the minified build, or individual modules.', lang: 'bash', code: 'npm install nyx-ui' },
         { title: 'À la carte — pick modules', lang: 'html', code: '<!-- tokens.css is always required -->\n<link rel="stylesheet" href="components/tokens.css">\n<link rel="stylesheet" href="components/base.css">\n<link rel="stylesheet" href="components/buttons.css">\n<link rel="stylesheet" href="components/cards.css">' },
         {
           title: 'Files', nocode: true, demo:
             '<div class="nyx-list-group">' +
-            '<div class="nyx-list-item"><span><strong>nyx.css</strong> <span class="nyx-caption">· the full bundle</span></span><a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="nyx.css" download>↓ Bundle</a></div>' +
-            '<div class="nyx-list-item"><span><strong>nyx.js</strong> <span class="nyx-caption">· runtime</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.js" download>↓ JS</a></div>' +
+            '<div class="nyx-list-item"><span><strong>nyx.css</strong> <span class="nyx-caption">· full bundle</span></span><a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="nyx.css" download>↓ Bundle</a></div>' +
+            '<div class="nyx-list-item"><span><strong>nyx.min.css</strong> <span class="nyx-badge nyx-badge-success">~10kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.min.css" download>↓ Min CSS</a></div>' +
+            '<div class="nyx-list-item"><span><strong>nyx.js</strong> · <strong>nyx.min.js</strong> <span class="nyx-badge nyx-badge-success">~3.6kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.min.js" download>↓ Min JS</a></div>' +
             '<div class="nyx-list-item"><span><strong>tokens.css</strong> <span class="nyx-badge nyx-badge-warning">required</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="components/tokens.css" download>↓ CSS</a></div>' +
-            ['base', 'layout', 'typography', 'buttons', 'cards', 'forms', 'navigation', 'feedback', 'data', 'overlays', 'signature', 'extras', 'rtl'].map(function (n) {
+            ['base', 'layout', 'typography', 'buttons', 'cards', 'forms', 'navigation', 'feedback', 'data', 'overlays', 'signature', 'extras', 'motion', 'utilities', 'rtl'].map(function (n) {
               return '<div class="nyx-list-item"><span>' + n + '.css</span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="components/' + n + '.css" download>↓ CSS</a></div>';
             }).join('') +
             '</div>'
         }
       ],
-      classes: [['nyx.css', 'The bundle — all modules in one file.'], ['components/*.css', 'Individual modules (each needs tokens.css).'], ['node build.js', 'Regenerates components/ from the bundle.']]
+      classes: [['nyx.css / nyx.min.css', 'The bundle — full + minified (~10kb gzip).'], ['nyx.min.js', 'Minified runtime (~3.6kb gzip).'], ['CDN (jsDelivr/unpkg)', 'Serve the minified build with no install.'], ['components/*.css', 'Individual modules (each needs tokens.css).'], ['node build.js', 'Regenerates components/ + the minified files.']]
     },
     {
       id: 'theming', group: 'Customize', title: 'Theming',
@@ -118,14 +121,45 @@
           title: 'Override tokens', lang: 'css',
           code: ':root {\n  --nyx-accent:   #ff5d8f;   /* swap the violet for pink   */\n  --nyx-accent-2: #29e0c4;   /* secondary / success accent */\n  --nyx-radius:   12px;      /* round everything a bit more */\n}'
         },
+        {
+          title: 'Accent themes', nocode: true,
+          text: 'Every tint, border and glow derives from --nyx-accent through color-mix(), so swapping two variables retones the whole UI. Ship a prebuilt data-accent theme, or call Nyx.setAccent() (persists to localStorage). These buttons retheme this entire page live:',
+          demo: '<div class="nyx-flex nyx-gap-3 nyx-wrap">' +
+            '<button class="nyx-btn nyx-btn-glass nyx-btn-sm" onclick="Nyx.setAccent(\'violet\')"><span style="color:#6c63ff">●</span> Violet</button>' +
+            '<button class="nyx-btn nyx-btn-glass nyx-btn-sm" onclick="Nyx.setAccent(\'emerald\')"><span style="color:#10b981">●</span> Emerald</button>' +
+            '<button class="nyx-btn nyx-btn-glass nyx-btn-sm" onclick="Nyx.setAccent(\'rose\')"><span style="color:#f43f6b">●</span> Rose</button>' +
+            '<button class="nyx-btn nyx-btn-glass nyx-btn-sm" onclick="Nyx.setAccent(\'amber\')"><span style="color:#f59e0b">●</span> Amber</button>' +
+            '</div>'
+        },
+        { title: 'Prebuilt themes', lang: 'html', code: '<!-- one attribute on <html>; default is violet -->\n<html data-accent="emerald">   <!-- violet · emerald · rose · amber -->\n\n<!-- or at runtime, persisted to localStorage -->\n<button onclick="Nyx.setAccent(\'rose\')">Rose</button>' },
+        {
+          title: 'Live playground', nocode: true,
+          text: 'Drag and pick — these controls write --nyx-* variables onto the preview box only. Because the tints are color-mixed, everything inside recolors instantly.',
+          demo: '<div class="nyx-card" id="nyxPlay">' +
+            '<div class="nyx-flex nyx-gap-5 nyx-wrap nyx-items-center" style="margin-bottom:var(--nyx-s4)">' +
+            '<label class="nyx-caption nyx-flex nyx-items-center nyx-gap-2">Accent <input type="color" value="#6c63ff" oninput="document.getElementById(\'nyxPlay\').style.setProperty(\'--nyx-accent\',this.value)"></label>' +
+            '<label class="nyx-caption nyx-flex nyx-items-center nyx-gap-2">Accent 2 <input type="color" value="#00d4aa" oninput="document.getElementById(\'nyxPlay\').style.setProperty(\'--nyx-accent-2\',this.value)"></label>' +
+            '<label class="nyx-caption nyx-flex nyx-items-center nyx-gap-2">Radius <input type="range" min="0" max="22" value="10" class="nyx-range" style="width:120px" oninput="var p=document.getElementById(\'nyxPlay\');p.style.setProperty(\'--nyx-radius\',this.value+\'px\');p.style.setProperty(\'--nyx-radius-lg\',(+this.value+6)+\'px\')"></label>' +
+            '</div>' +
+            '<div class="nyx-flex nyx-gap-3 nyx-wrap nyx-items-center">' +
+            '<button class="nyx-btn nyx-btn-primary">Primary</button>' +
+            '<button class="nyx-btn nyx-btn-outline-primary">Outline</button>' +
+            '<span class="nyx-badge nyx-badge-info">badge</span>' +
+            '<span class="nyx-chip nyx-chip-accent">chip</span>' +
+            '<label class="nyx-toggle"><input type="checkbox" checked aria-label="preview"><span class="nyx-track"></span></label>' +
+            '<div class="nyx-progress" style="width:120px"><span style="width:64%"></span></div>' +
+            '</div></div>'
+        },
         { title: 'Live swatch', demo: '<div class="nyx-flex nyx-gap-3 nyx-wrap"><span style="width:56px;height:56px;border-radius:12px;background:var(--nyx-accent);box-shadow:var(--nyx-glow)"></span><span style="width:56px;height:56px;border-radius:12px;background:var(--nyx-accent-2)"></span><span style="width:56px;height:56px;border-radius:12px;background:var(--nyx-danger)"></span><span style="width:56px;height:56px;border-radius:12px;background:var(--nyx-warning)"></span></div>' },
         { title: 'Light mode', text: 'Nyx ships a built-in light theme — flip it with a single attribute on <html>, or call Nyx.toggleTheme() to switch and persist at runtime (try the ◐ button in the navbar).', lang: 'html', code: '<html data-theme="light">   <!-- default is "dark" -->\n\n<!-- runtime toggle, saved to localStorage -->\n<button onclick="Nyx.toggleTheme()">Toggle theme</button>' }
       ],
       classes: [
-        ['--nyx-accent', 'Primary violet. Drives buttons, focus, glow.'],
-        ['--nyx-accent-2', 'Teal-green secondary / success accent.'],
+        ['--nyx-accent', 'Primary accent. Every tint/border/glow color-mixes from it.'],
+        ['--nyx-accent-2', 'Secondary / success accent (gradients, success states).'],
+        ['data-accent="…"', 'Prebuilt theme on <html>: violet · emerald · rose · amber.'],
+        ['Nyx.setAccent(name)', 'Switch accent theme at runtime; persists to localStorage.'],
         ['--nyx-bg / --nyx-surface / --nyx-surface-2', 'Layered dark surfaces for depth.'],
-        ['--nyx-glow', 'The signature colored glow shadow.'],
+        ['--nyx-glow', 'The signature colored glow (derives from --nyx-accent).'],
         ['--nyx-fs-xs … --nyx-fs-3xl', 'Type scale (11 → 42px).'],
         ['--nyx-s1 … --nyx-s9', 'Spacing scale on a 4px base.']
       ]
@@ -145,7 +179,8 @@
         ['Nyx.openCommandPalette()', 'Open the ⌘K palette.'],
         ['Nyx.init(root)', 'Re-wire data-nyx-* inside root. Idempotent.'],
         ['Nyx.toggleTheme() / setTheme(t)', 'Switch light/dark; persists to localStorage.'],
-        ['Nyx.toggleDir() / setDir(d)', 'Flip LTR/RTL; persists to localStorage.']
+        ['Nyx.toggleDir() / setDir(d)', 'Flip LTR/RTL; persists to localStorage.'],
+        ['Nyx.setAccent(name)', 'Set accent theme (violet|emerald|rose|amber); persists.']
       ]
     },
 
@@ -162,11 +197,20 @@
     /* ===== LAYOUT ===== */
     {
       id: 'grid', group: 'Layout', title: 'Grid',
-      summary: 'A 12-column CSS Grid. Use .nyx-grid on a wrapper and .nyx-col-{1..12} on children. Columns collapse to 6 below 1024px and to full width below 640px.',
+      summary: 'A 12-column CSS Grid. Use .nyx-grid on a wrapper and .nyx-col-{1..12} on children. Bare columns auto-collapse (to 6 below 1024px, full-width below 640px); add breakpoint classes for explicit control.',
       sections: [
-        { title: 'Twelve columns', demo: '<div class="nyx-grid"><div class="nyx-col-6"><div class="nyx-card" style="text-align:center;padding:12px">col-6</div></div><div class="nyx-col-6"><div class="nyx-card" style="text-align:center;padding:12px">col-6</div></div><div class="nyx-col-4"><div class="nyx-card" style="text-align:center;padding:12px">col-4</div></div><div class="nyx-col-4"><div class="nyx-card" style="text-align:center;padding:12px">col-4</div></div><div class="nyx-col-4"><div class="nyx-card" style="text-align:center;padding:12px">col-4</div></div></div>' }
+        { title: 'Twelve columns', demo: '<div class="nyx-grid"><div class="nyx-col-6"><div class="nyx-card" style="text-align:center;padding:12px">col-6</div></div><div class="nyx-col-6"><div class="nyx-card" style="text-align:center;padding:12px">col-6</div></div><div class="nyx-col-4"><div class="nyx-card" style="text-align:center;padding:12px">col-4</div></div><div class="nyx-col-4"><div class="nyx-card" style="text-align:center;padding:12px">col-4</div></div><div class="nyx-col-4"><div class="nyx-card" style="text-align:center;padding:12px">col-4</div></div></div>' },
+        { title: 'Responsive breakpoints', added: 'v1.4', text: 'Pair a base mobile column with a breakpoint column (sm 640 · md 768 · lg 1024 · xl 1280, mobile-first min-width). This row is full-width on phones, halves at md, thirds at lg. Resize to see it.', demo: '<div class="nyx-grid"><div class="nyx-col-12 nyx-col-md-6 nyx-col-lg-4"><div class="nyx-card" style="text-align:center;padding:12px">12 · md-6 · lg-4</div></div><div class="nyx-col-12 nyx-col-md-6 nyx-col-lg-4"><div class="nyx-card" style="text-align:center;padding:12px">12 · md-6 · lg-4</div></div><div class="nyx-col-12 nyx-col-md-12 nyx-col-lg-4"><div class="nyx-card" style="text-align:center;padding:12px">12 · md-12 · lg-4</div></div></div>' },
+        { title: 'Markup', lang: 'html', code: '<div class="nyx-grid">\n  <!-- full-width on mobile, half at md, third at lg -->\n  <div class="nyx-col-12 nyx-col-md-6 nyx-col-lg-4"> … </div>\n  <div class="nyx-col-12 nyx-col-md-6 nyx-col-lg-4"> … </div>\n  <div class="nyx-col-12 nyx-col-md-12 nyx-col-lg-4"> … </div>\n</div>' }
       ],
-      classes: [['nyx-grid', '12-column grid container, 16px gap.'], ['nyx-col-1 … nyx-col-12', 'Span N of 12 columns.']]
+      classes: [
+        ['nyx-grid', '12-column grid container, 16px gap.'],
+        ['nyx-col-1 … nyx-col-12', 'Span N of 12 (all widths; bare cols auto-collapse).'],
+        ['nyx-col-sm-* (≥640)', 'Span N from the small breakpoint up.'],
+        ['nyx-col-md-* (≥768)', 'Span N from the medium breakpoint up.'],
+        ['nyx-col-lg-* (≥1024)', 'Span N from the large breakpoint up.'],
+        ['nyx-col-xl-* (≥1280)', 'Span N from the extra-large breakpoint up.']
+      ]
     },
     {
       id: 'flexbox', group: 'Utilities', title: 'Flex utilities',
@@ -231,6 +275,20 @@
         { title: 'Select', demo: '<label class="nyx-label" for="s1">Plan</label><select class="nyx-select" id="s1"><option>Starter</option><option>Pro</option><option>Enterprise</option></select>' }
       ],
       classes: [['nyx-input / nyx-textarea / nyx-select', 'Form fields.'], ['nyx-label', 'Field label.'], ['nyx-form-hint', 'Helper text below a field.']]
+    },
+    {
+      id: 'validation', group: 'Forms', title: 'Validation', added: 'v1.4',
+      summary: 'Bootstrap-style validity states. Add .is-valid / .is-invalid to a field, or wrap a form in .nyx-was-validated to drive it from the browser’s native :valid/:invalid — then place a sibling .nyx-valid-feedback / .nyx-invalid-feedback message.',
+      sections: [
+        { title: 'Valid & invalid', demo: '<div class="nyx-stack"><div><label class="nyx-label">Email</label><input class="nyx-input is-valid" value="you@company.com" aria-label="Email"><div class="nyx-valid-feedback">Looks good.</div></div><div><label class="nyx-label">Password</label><input class="nyx-input is-invalid" type="password" value="123" aria-label="Password"><div class="nyx-invalid-feedback">Use at least 8 characters.</div></div><div><label class="nyx-label">Plan</label><select class="nyx-select is-invalid" aria-label="Plan"><option>Choose…</option></select><div class="nyx-invalid-feedback">Please pick a plan.</div></div></div>' },
+        { title: 'Whole form — native constraints', text: 'Wrap a form in .nyx-was-validated and feedback shows automatically from the browser’s constraint validation — no per-field classes needed.', lang: 'html', code: '<form class="nyx-was-validated">\n  <input class="nyx-input" type="email" required>\n  <div class="nyx-invalid-feedback">Enter a valid email.</div>\n</form>' }
+      ],
+      classes: [
+        ['is-valid / is-invalid', 'Validity state on an input / textarea / select.'],
+        ['nyx-valid-feedback', 'Success message (shows next to .is-valid).'],
+        ['nyx-invalid-feedback', 'Error message (shows next to .is-invalid).'],
+        ['nyx-was-validated', 'On a <form>: drives feedback from :valid / :invalid.']
+      ]
     },
     {
       id: 'input-group', group: 'Forms', title: 'Input group',

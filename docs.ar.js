@@ -40,7 +40,11 @@ window.NYX_I18N = {
     'Bundle — everything': 'الحزمة — كل شيء', 'À la carte — pick modules': 'حسب الطلب — اختر الوحدات', 'Files': 'الملفات',
     'Twelve columns': 'اثنا عشر عموداً', 'Scale': 'المقياس', 'Backgrounds': 'الخلفيات', 'Radii': 'الانحناءات',
     'Elevation': 'الارتفاع', 'Widths': 'العروض', 'Levels': 'المستويات', 'Values': 'القيم',
-    'Override tokens': 'تجاوز الرموز', 'Light mode': 'الوضع الفاتح', 'Enable': 'التفعيل', 'Mirrored in place': 'منعكس في مكانه'
+    'Override tokens': 'تجاوز الرموز', 'Light mode': 'الوضع الفاتح', 'Enable': 'التفعيل', 'Mirrored in place': 'منعكس في مكانه',
+    'Accent themes': 'سمات اللون', 'Prebuilt themes': 'سمات جاهزة', 'Live playground': 'مساحة تجريبية حيّة', 'Live swatch': 'عيّنة حيّة',
+    'Responsive breakpoints': 'نقاط التجاوب', 'Markup': 'الترميز', 'Twelve columns': 'اثنا عشر عموداً',
+    'Valid & invalid': 'صالح وغير صالح', 'Whole form — native constraints': 'النموذج كاملاً — قيود أصلية',
+    'CDN — jsDelivr / unpkg': 'شبكة توصيل (CDN)', 'npm': 'npm', 'Bundle — everything': 'الحزمة — كل شيء'
   },
   pages: {
     /* Getting Started */
@@ -58,6 +62,7 @@ window.NYX_I18N = {
     typography: { title: 'الطباعة', summary: 'خط Plus Jakarta Sans للعناوين وInter للنصّ، ويتحوّل تلقائياً إلى خطّي IBM Plex Sans Arabic وAref Ruqaa في وضع RTL.' },
     /* Forms */
     inputs: { title: 'الحقول', summary: 'حقول إدخال داكنة مع توهّج عند التركيز، إضافةً إلى التسميات وتلميحات المساعدة.' },
+    validation: { title: 'التحقّق', summary: 'حالات صحّة بأسلوب Bootstrap. أضِف is-valid أو is-invalid إلى الحقل، أو لُفّ النموذج بـ nyx-was-validated ليعتمد على تحقّق المتصفّح الأصلي، ثم ضع رسالة nyx-valid-feedback أو nyx-invalid-feedback المجاورة.' },
     select: { title: 'القوائم' }, switches: { title: 'المفاتيح والاختيارات' }, search: { title: 'البحث' },
     'input-group': { title: 'مجموعة إدخال' }, range: { title: 'المنزلق' }, floating: { title: 'تسمية عائمة' },
     stepper: { title: 'العدّاد' }, otp: { title: 'رمز التحقّق' }, 'tag-input': { title: 'إدخال الوسوم' },

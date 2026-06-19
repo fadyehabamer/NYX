@@ -1,10 +1,10 @@
 # Nyx
 
-**The Design System for Modern SaaS — and the first CSS library built for Arabic developers.** A dark-mode-native CSS/JS component framework with one signature trait — **Luminous Depth**: every interactive element feels lit from within. Ships **dark + light themes**, full **RTL** support with Arabic fonts (IBM Plex Sans Arabic + Aref Ruqaa), a complete **utilities & helpers** layer, **big-type** hero + **animation** utilities, and a per-component documentation site in **English & العربية**. Zero dependencies (except Google Fonts), ~690 lines of CSS, a tiny vanilla-JS runtime.
+**The Design System for Modern SaaS — and the first CSS library built for Arabic developers.** A dark-mode-native CSS/JS component framework with one signature trait — **Luminous Depth**: every interactive element feels lit from within. Ships **dark + light themes**, **prebuilt accent themes** (violet · emerald · rose · amber, retuned via `color-mix()`), full **RTL** support with Arabic fonts (IBM Plex Sans Arabic + Aref Ruqaa), a complete **utilities & helpers** layer, a **responsive 12-column grid**, **form validation** states, **big-type** hero + **animation** utilities, and a per-component documentation site in **English & العربية**. Zero dependencies (except Google Fonts), a tiny vanilla-JS runtime.
 
 > Think Bootstrap, but opinionated for the SaaS era, dark by default, and bilingual.
 
-**Distribution:** grab the all-in-one bundle (`nyx.css`) or download just the modules you need from `components/` (each requires `components/tokens.css`). Run `node build.js` to regenerate the modules from the bundle.
+**Distribution:** grab the all-in-one bundle (`nyx.css`), the minified build (`nyx.min.css` ~10kb gzip · `nyx.min.js` ~3.6kb gzip), load it from a CDN (jsDelivr/unpkg), `npm install nyx-ui`, or download just the modules you need from `components/` (each requires `components/tokens.css`). Run `node build.js` to regenerate the modules **and** the minified files from the bundle.
 
 ---
 
