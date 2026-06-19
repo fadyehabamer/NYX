@@ -12,11 +12,28 @@
   .db{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 57px)}
   .db-side{border-inline-end:1px solid var(--nyx-border);padding:var(--nyx-s4);background:var(--nyx-surface)}
   .db-main{padding:var(--nyx-s5);max-width:1100px}
+  .db-view[hidden]{display:none}
+  .db-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--nyx-s5);gap:var(--nyx-s4);flex-wrap:wrap}
   .db-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--nyx-s4)}
   .db-cols{display:grid;grid-template-columns:1.7fr 1fr;gap:var(--nyx-s4);margin-top:var(--nyx-s4);align-items:start}
   .trend{font-size:var(--nyx-fs-xs);font-weight:600}
   .trend.up{color:var(--nyx-accent-2)}.trend.down{color:var(--nyx-danger)}
-  @media(max-width:920px){.db{grid-template-columns:1fr}.db-side{display:none}.db-kpis{grid-template-columns:repeat(2,1fr)}.db-cols{grid-template-columns:1fr}}
+  .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--nyx-s4)}
+  .cal-wrap{display:flex;gap:var(--nyx-s4);align-items:flex-start}
+  .cal-wrap .cal-main{flex:1}
+  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--nyx-s3)}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+  .cal-grid .dow{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-mono);padding:6px 0}
+  .cal-grid .day{aspect-ratio:1;display:grid;place-items:center;border-radius:var(--nyx-radius);font-size:var(--nyx-fs-sm);cursor:pointer;position:relative;transition:background .15s var(--nyx-ease);border:1px solid transparent}
+  .cal-grid .day:hover{background:var(--nyx-glass)}
+  .cal-grid .day.today{border-color:var(--nyx-accent);color:var(--nyx-accent);font-weight:700}
+  .cal-grid .day.selected{background:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+  .cal-grid .day.event::after{content:"";position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--nyx-accent-2)}
+  .cal-grid .day.selected.event::after{background:#fff}
+  .bars{display:flex;align-items:flex-end;gap:12px;height:170px;padding-block:var(--nyx-s4) var(--nyx-s5)}
+  .bars .bar{flex:1;background:linear-gradient(180deg,var(--nyx-accent),var(--nyx-accent-2));border-radius:6px 6px 0 0;position:relative;min-width:12px}
+  .bars .bar b{position:absolute;bottom:-22px;inset-inline:0;text-align:center;font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-weight:400;font-family:var(--nyx-font-mono)}
+  @media(max-width:920px){.db{grid-template-columns:1fr}.db-side{display:none}.db-kpis{grid-template-columns:repeat(2,1fr)}.db-cols,.prod-grid{grid-template-columns:1fr}.cal-wrap{flex-direction:column}.cal-wrap .nyx-card{width:100%!important}}
 </style>
 </head>
 <body class="nyx nyx-reset">
@@ -36,12 +53,13 @@
 <div class="db">
   <aside class="db-side">
     <nav class="nyx-sidebar">
-      <a class="active" href="#">▦ Overview</a>
-      <a href="#">🧾 Orders</a>
-      <a href="#">👥 Customers</a>
-      <a href="#">📦 Products</a>
-      <a href="#">📈 Analytics</a>
-      <a href="#">⚙ Settings</a>
+      <a data-view="overview" href="#overview">▦ Overview</a>
+      <a data-view="orders" href="#orders">🧾 Orders</a>
+      <a data-view="customers" href="#customers">👥 Customers</a>
+      <a data-view="products" href="#products">📦 Products</a>
+      <a data-view="analytics" href="#analytics">📈 Analytics</a>
+      <a data-view="calendar" href="#calendar">🗓 Calendar</a>
+      <a data-view="settings" href="#settings">⚙ Settings</a>
     </nav>
     <div class="nyx-divider" style="margin-block:var(--nyx-s4)">Templates</div>
     <nav class="nyx-sidebar">
@@ -55,41 +73,188 @@
   </aside>
 
   <main class="db-main">
-    <div class="nyx-flex nyx-items-center nyx-justify-between" style="margin-bottom:var(--nyx-s5)">
-      <div><h1 class="nyx-h2">Overview</h1><p class="nyx-caption">Last 30 days</p></div>
-      <button class="nyx-btn nyx-btn-primary nyx-btn-sm" data-nyx-toggle="modal" data-nyx-target="#newOrder">+ New order</button>
-    </div>
 
-    <div class="db-kpis">
-      <div class="nyx-card-stat"><span class="nyx-stat-label">Revenue</span><span class="nyx-stat-num">$48.2k</span><div class="nyx-flex nyx-items-center nyx-justify-between"><span class="trend up">▲ 12.4%</span><span class="nyx-sparkline"><span style="height:40%"></span><span style="height:55%"></span><span style="height:45%"></span><span style="height:70%"></span><span style="height:60%"></span><span style="height:85%"></span></span></div></div>
-      <div class="nyx-card-stat"><span class="nyx-stat-label">Orders</span><span class="nyx-stat-num">1,284</span><div class="nyx-flex nyx-items-center nyx-justify-between"><span class="trend up">▲ 8.1%</span><span class="nyx-sparkline"><span style="height:50%"></span><span style="height:40%"></span><span style="height:65%"></span><span style="height:55%"></span><span style="height:75%"></span><span style="height:80%"></span></span></div></div>
-      <div class="nyx-card-stat"><span class="nyx-stat-label">Customers</span><span class="nyx-stat-num">932</span><div class="nyx-flex nyx-items-center nyx-justify-between"><span class="trend up">▲ 3.9%</span><span class="nyx-sparkline"><span style="height:60%"></span><span style="height:50%"></span><span style="height:55%"></span><span style="height:62%"></span><span style="height:58%"></span><span style="height:70%"></span></span></div></div>
-      <div class="nyx-card-stat"><span class="nyx-stat-label">Refunds</span><span class="nyx-stat-num">2.1%</span><div class="nyx-flex nyx-items-center nyx-justify-between"><span class="trend down">▼ 0.6%</span><span class="nyx-sparkline"><span style="height:70%"></span><span style="height:60%"></span><span style="height:55%"></span><span style="height:45%"></span><span style="height:40%"></span><span style="height:35%"></span></span></div></div>
-    </div>
+    <!-- ============ OVERVIEW ============ -->
+    <section class="db-view" data-view="overview">
+      <div class="db-head">
+        <div><h1 class="nyx-h2">Overview</h1><p class="nyx-caption">Last 30 days</p></div>
+        <button class="nyx-btn nyx-btn-primary nyx-btn-sm" data-nyx-toggle="modal" data-nyx-target="#newOrder">+ New order</button>
+      </div>
+      <div class="db-kpis">
+        <div class="nyx-card-stat"><span class="nyx-stat-label">Revenue</span><span class="nyx-stat-num">$48.2k</span><div class="nyx-flex nyx-items-center nyx-justify-between"><span class="trend up">▲ 12.4%</span><span class="nyx-sparkline"><span style="height:40%"></span><span style="height:55%"></span><span style="height:45%"></span><span style="height:70%"></span><span style="height:60%"></span><span style="height:85%"></span></span></div></div>
+        <div class="nyx-card-stat"><span class="nyx-stat-label">Orders</span><span class="nyx-stat-num">1,284</span><div class="nyx-flex nyx-items-center nyx-justify-between"><span class="trend up">▲ 8.1%</span><span class="nyx-sparkline"><span style="height:50%"></span><span style="height:40%"></span><span style="height:65%"></span><span style="height:55%"></span><span style="height:75%"></span><span style="height:80%"></span></span></div></div>
+        <div class="nyx-card-stat"><span class="nyx-stat-label">Customers</span><span class="nyx-stat-num">932</span><div class="nyx-flex nyx-items-center nyx-justify-between"><span class="trend up">▲ 3.9%</span><span class="nyx-sparkline"><span style="height:60%"></span><span style="height:50%"></span><span style="height:55%"></span><span style="height:62%"></span><span style="height:58%"></span><span style="height:70%"></span></span></div></div>
+        <div class="nyx-card-stat"><span class="nyx-stat-label">Refunds</span><span class="nyx-stat-num">2.1%</span><div class="nyx-flex nyx-items-center nyx-justify-between"><span class="trend down">▼ 0.6%</span><span class="nyx-sparkline"><span style="height:70%"></span><span style="height:60%"></span><span style="height:55%"></span><span style="height:45%"></span><span style="height:40%"></span><span style="height:35%"></span></span></div></div>
+      </div>
+      <div class="db-cols">
+        <div class="nyx-card" style="padding:0;overflow:hidden">
+          <div class="nyx-flex nyx-items-center nyx-justify-between" style="padding:var(--nyx-s4)"><h3 class="nyx-h4">Recent orders</h3><a class="nyx-btn nyx-btn-ghost nyx-btn-sm" href="#orders">View all →</a></div>
+          <table class="nyx-table nyx-table-sortable" style="border:0;border-radius:0">
+            <thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>Total</th></tr></thead>
+            <tbody>
+              <tr><td>#10482</td><td>Lina H.</td><td><span class="nyx-badge nyx-badge-success">Paid</span></td><td>1,836 ر.س</td></tr>
+              <tr><td>#10481</td><td>Omar K.</td><td><span class="nyx-badge nyx-badge-warning">Pending</span></td><td>399 ر.س</td></tr>
+              <tr><td>#10480</td><td>Sara M.</td><td><span class="nyx-badge nyx-badge-success">Paid</span></td><td>2,540 ر.س</td></tr>
+              <tr><td>#10479</td><td>Yousef A.</td><td><span class="nyx-badge nyx-badge-danger">Refunded</span></td><td>120 ر.س</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="nyx-card">
+          <h3 class="nyx-h4" style="margin-bottom:var(--nyx-s4)">Activity</h3>
+          <div class="nyx-timeline">
+            <div class="nyx-tl-item"><div class="nyx-tl-dot"></div><div class="nyx-tl-date">2 min ago</div><div>New order <strong>#10482</strong> · 1,836 ر.س</div></div>
+            <div class="nyx-tl-item"><div class="nyx-tl-dot"></div><div class="nyx-tl-date">26 min ago</div><div>Payout of <strong>$2,400</strong> initiated</div></div>
+            <div class="nyx-tl-item"><div class="nyx-tl-dot"></div><div class="nyx-tl-date">1 hr ago</div><div>New customer <strong>Sara M.</strong> signed up</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <div class="db-cols">
+    <!-- ============ ORDERS ============ -->
+    <section class="db-view" data-view="orders" hidden>
+      <div class="db-head"><div><h1 class="nyx-h2">Orders</h1><p class="nyx-caption">1,284 total</p></div>
+        <div class="nyx-flex nyx-gap-2">
+          <div class="nyx-search"><span class="nyx-search-icon">⌕</span><input placeholder="Search orders…" aria-label="search orders"></div>
+          <button class="nyx-btn nyx-btn-primary nyx-btn-sm" data-nyx-toggle="modal" data-nyx-target="#newOrder">+ New</button>
+        </div>
+      </div>
       <div class="nyx-card" style="padding:0;overflow:hidden">
-        <div class="nyx-flex nyx-items-center nyx-justify-between" style="padding:var(--nyx-s4)"><h3 class="nyx-h4">Recent orders</h3><a class="nyx-btn nyx-btn-ghost nyx-btn-sm" href="#">View all →</a></div>
         <table class="nyx-table nyx-table-sortable" style="border:0;border-radius:0">
-          <thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>Total</th></tr></thead>
+          <thead><tr><th>Order</th><th>Customer</th><th>Date</th><th>Status</th><th>Total</th></tr></thead>
           <tbody>
-            <tr><td>#10482</td><td>Lina H.</td><td><span class="nyx-badge nyx-badge-success">Paid</span></td><td>1,836 ر.س</td></tr>
-            <tr><td>#10481</td><td>Omar K.</td><td><span class="nyx-badge nyx-badge-warning">Pending</span></td><td>399 ر.س</td></tr>
-            <tr><td>#10480</td><td>Sara M.</td><td><span class="nyx-badge nyx-badge-success">Paid</span></td><td>2,540 ر.س</td></tr>
-            <tr><td>#10479</td><td>Yousef A.</td><td><span class="nyx-badge nyx-badge-danger">Refunded</span></td><td>120 ر.س</td></tr>
+            <tr><td>#10482</td><td>Lina H.</td><td>Jun 19</td><td><span class="nyx-badge nyx-badge-success">Paid</span></td><td>1,836 ر.س</td></tr>
+            <tr><td>#10481</td><td>Omar K.</td><td>Jun 19</td><td><span class="nyx-badge nyx-badge-warning">Pending</span></td><td>399 ر.س</td></tr>
+            <tr><td>#10480</td><td>Sara M.</td><td>Jun 18</td><td><span class="nyx-badge nyx-badge-success">Paid</span></td><td>2,540 ر.س</td></tr>
+            <tr><td>#10479</td><td>Yousef A.</td><td>Jun 18</td><td><span class="nyx-badge nyx-badge-danger">Refunded</span></td><td>120 ر.س</td></tr>
+            <tr><td>#10478</td><td>Maya R.</td><td>Jun 17</td><td><span class="nyx-badge nyx-badge-success">Paid</span></td><td>880 ر.س</td></tr>
+            <tr><td>#10477</td><td>Ali T.</td><td>Jun 17</td><td><span class="nyx-badge nyx-badge-info">Shipped</span></td><td>1,200 ر.س</td></tr>
+            <tr><td>#10476</td><td>Noor S.</td><td>Jun 16</td><td><span class="nyx-badge nyx-badge-success">Paid</span></td><td>3,150 ر.س</td></tr>
           </tbody>
         </table>
       </div>
+      <div class="nyx-flex nyx-justify-between nyx-items-center" style="margin-top:var(--nyx-s4)">
+        <span class="nyx-caption">Showing 7 of 1,284</span>
+        <div class="nyx-pagination"><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>›</button></div>
+      </div>
+    </section>
 
-      <div class="nyx-card">
-        <h3 class="nyx-h4" style="margin-bottom:var(--nyx-s4)">Activity</h3>
-        <div class="nyx-timeline">
-          <div class="nyx-tl-item"><div class="nyx-tl-dot"></div><div class="nyx-tl-date">2 min ago</div><div>New order <strong>#10482</strong> · 1,836 ر.س</div></div>
-          <div class="nyx-tl-item"><div class="nyx-tl-dot"></div><div class="nyx-tl-date">26 min ago</div><div>Payout of <strong>$2,400</strong> initiated</div></div>
-          <div class="nyx-tl-item"><div class="nyx-tl-dot"></div><div class="nyx-tl-date">1 hr ago</div><div>New customer <strong>Sara M.</strong> signed up</div></div>
+    <!-- ============ CUSTOMERS ============ -->
+    <section class="db-view" data-view="customers" hidden>
+      <div class="db-head"><div><h1 class="nyx-h2">Customers</h1><p class="nyx-caption">932 total</p></div>
+        <div class="nyx-search"><span class="nyx-search-icon">⌕</span><input placeholder="Search customers…" aria-label="search customers"></div>
+      </div>
+      <div class="nyx-card" style="padding:0;overflow:hidden">
+        <table class="nyx-table" style="border:0;border-radius:0">
+          <thead><tr><th>Customer</th><th>Email</th><th>Orders</th><th>Spent</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><span class="nyx-flex nyx-items-center nyx-gap-2"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">LH</span> Lina H.</span></td><td class="nyx-muted">lina@mail.com</td><td>14</td><td>12,480 ر.س</td><td><span class="nyx-badge nyx-badge-success">VIP</span></td></tr>
+            <tr><td><span class="nyx-flex nyx-items-center nyx-gap-2"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">OK</span> Omar K.</span></td><td class="nyx-muted">omar@mail.com</td><td>6</td><td>3,990 ر.س</td><td><span class="nyx-badge">Active</span></td></tr>
+            <tr><td><span class="nyx-flex nyx-items-center nyx-gap-2"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">SM</span> Sara M.</span></td><td class="nyx-muted">sara@mail.com</td><td>9</td><td>7,210 ر.س</td><td><span class="nyx-badge nyx-badge-success">VIP</span></td></tr>
+            <tr><td><span class="nyx-flex nyx-items-center nyx-gap-2"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">YA</span> Yousef A.</span></td><td class="nyx-muted">yousef@mail.com</td><td>2</td><td>540 ر.س</td><td><span class="nyx-badge nyx-badge-warning">New</span></td></tr>
+            <tr><td><span class="nyx-flex nyx-items-center nyx-gap-2"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">MR</span> Maya R.</span></td><td class="nyx-muted">maya@mail.com</td><td>11</td><td>9,860 ر.س</td><td><span class="nyx-badge">Active</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ PRODUCTS ============ -->
+    <section class="db-view" data-view="products" hidden>
+      <div class="db-head"><div><h1 class="nyx-h2">Products</h1><p class="nyx-caption">48 items</p></div>
+        <button class="nyx-btn nyx-btn-primary nyx-btn-sm">+ Add product</button>
+      </div>
+      <div class="prod-grid">
+        <div class="nyx-product"><div class="nyx-product-media">🎧<span class="nyx-product-tag nyx-badge nyx-badge-danger">-20%</span></div><div class="nyx-product-body"><div class="nyx-product-title">Wireless Headphones</div><div class="nyx-product-foot"><span class="nyx-price"><span class="amt">399</span><span class="cur">ر.س</span></span><span class="nyx-badge nyx-badge-success">In stock</span></div></div></div>
+        <div class="nyx-product"><div class="nyx-product-media">⌚</div><div class="nyx-product-body"><div class="nyx-product-title">Smart Watch 42mm</div><div class="nyx-product-foot"><span class="nyx-price"><span class="amt">599</span><span class="cur">ر.س</span></span><span class="nyx-badge nyx-badge-success">In stock</span></div></div></div>
+        <div class="nyx-product"><div class="nyx-product-media">📱</div><div class="nyx-product-body"><div class="nyx-product-title">Phone Stand Pro</div><div class="nyx-product-foot"><span class="nyx-price"><span class="amt">89</span><span class="cur">ر.س</span></span><span class="nyx-badge nyx-badge-warning">Low</span></div></div></div>
+        <div class="nyx-product"><div class="nyx-product-media">🔌</div><div class="nyx-product-body"><div class="nyx-product-title">USB-C Charger</div><div class="nyx-product-foot"><span class="nyx-price"><span class="amt">120</span><span class="cur">ر.س</span></span><span class="nyx-badge nyx-badge-danger">Out</span></div></div></div>
+        <div class="nyx-product"><div class="nyx-product-media">🎮</div><div class="nyx-product-body"><div class="nyx-product-title">Game Controller</div><div class="nyx-product-foot"><span class="nyx-price"><span class="amt">249</span><span class="cur">ر.س</span></span><span class="nyx-badge nyx-badge-success">In stock</span></div></div></div>
+        <div class="nyx-product"><div class="nyx-product-media">⌨️</div><div class="nyx-product-body"><div class="nyx-product-title">Mechanical Keyboard</div><div class="nyx-product-foot"><span class="nyx-price"><span class="amt">459</span><span class="cur">ر.س</span></span><span class="nyx-badge nyx-badge-success">In stock</span></div></div></div>
+      </div>
+    </section>
+
+    <!-- ============ ANALYTICS ============ -->
+    <section class="db-view" data-view="analytics" hidden>
+      <div class="db-head"><div><h1 class="nyx-h2">Analytics</h1><p class="nyx-caption">Revenue by month</p></div>
+        <div class="nyx-segment"><label><input type="radio" name="rng" checked><span>6M</span></label><label><input type="radio" name="rng"><span>1Y</span></label></div>
+      </div>
+      <div class="db-cols">
+        <div class="nyx-card">
+          <h3 class="nyx-h4" style="margin-bottom:var(--nyx-s2)">Revenue</h3>
+          <div class="bars">
+            <div class="bar" style="height:45%"><b>Jan</b></div><div class="bar" style="height:62%"><b>Feb</b></div><div class="bar" style="height:54%"><b>Mar</b></div><div class="bar" style="height:78%"><b>Apr</b></div><div class="bar" style="height:68%"><b>May</b></div><div class="bar" style="height:92%"><b>Jun</b></div>
+          </div>
+        </div>
+        <div class="nyx-card nyx-flex nyx-flex-col nyx-items-center" style="gap:var(--nyx-s3)">
+          <h3 class="nyx-h4" style="align-self:flex-start">Goal progress</h3>
+          <div class="nyx-meter" style="width:140px;height:140px">
+            <svg width="140" height="140" viewBox="0 0 140 140"><defs><linearGradient id="nyxMeterGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--nyx-accent)"/><stop offset="1" stop-color="var(--nyx-accent-2)"/></linearGradient></defs><circle class="nyx-meter-track" cx="70" cy="70" r="60"/><circle class="nyx-meter-fill" cx="70" cy="70" r="60" stroke-dasharray="377" stroke-dashoffset="98"/></svg>
+            <span class="nyx-meter-val">74%</span>
+          </div>
+          <span class="nyx-caption">$37k of $50k target</span>
         </div>
       </div>
-    </div>
+      <div class="db-kpis" style="margin-top:var(--nyx-s4)">
+        <div class="nyx-card-stat"><span class="nyx-stat-label">Conversion</span><span class="nyx-stat-num">3.4%</span><span class="trend up">▲ 0.4%</span></div>
+        <div class="nyx-card-stat"><span class="nyx-stat-label">Avg. order</span><span class="nyx-stat-num">1,124 ﷼</span><span class="trend up">▲ 5.2%</span></div>
+        <div class="nyx-card-stat"><span class="nyx-stat-label">Sessions</span><span class="nyx-stat-num">84.1k</span><span class="trend up">▲ 9.8%</span></div>
+        <div class="nyx-card-stat"><span class="nyx-stat-label">Bounce</span><span class="nyx-stat-num">38%</span><span class="trend down">▼ 1.1%</span></div>
+      </div>
+    </section>
+
+    <!-- ============ CALENDAR (built dynamically by JS) ============ -->
+    <section class="db-view" data-view="calendar" hidden>
+      <div class="db-head"><div><h1 class="nyx-h2">Calendar</h1><p class="nyx-caption">Schedule &amp; events</p></div>
+        <button class="nyx-btn nyx-btn-glass nyx-btn-sm" id="calToday">Today</button>
+      </div>
+      <div class="cal-wrap">
+        <div class="nyx-card cal-main">
+          <div class="cal-head">
+            <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" id="calPrev" aria-label="Previous month">‹</button>
+            <strong id="calLabel" class="nyx-h4"></strong>
+            <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" id="calNext" aria-label="Next month">›</button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+        <div class="nyx-card" style="width:280px">
+          <h3 class="nyx-h4" id="calDayLabel" style="margin-bottom:var(--nyx-s3)">Events</h3>
+          <div id="calEvents" class="nyx-stack" style="gap:var(--nyx-s2)"></div>
+          <button class="nyx-btn nyx-btn-secondary nyx-btn-sm nyx-btn-block" style="margin-top:var(--nyx-s4)" id="calAdd">+ Add event</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SETTINGS ============ -->
+    <section class="db-view" data-view="settings" hidden>
+      <div class="db-head"><h1 class="nyx-h2">Settings</h1></div>
+      <div style="max-width:560px" class="nyx-stack">
+        <div class="nyx-card">
+          <h3 class="nyx-h4" style="margin-bottom:var(--nyx-s4)">Profile</h3>
+          <div class="nyx-stack">
+            <div><label class="nyx-label">Name</label><input class="nyx-input" value="Fady A." aria-label="name"></div>
+            <div><label class="nyx-label">Email</label><input class="nyx-input" type="email" value="fady@store.com" aria-label="email"></div>
+          </div>
+        </div>
+        <div class="nyx-card">
+          <h3 class="nyx-h4" style="margin-bottom:var(--nyx-s4)">Appearance</h3>
+          <div class="nyx-flex nyx-items-center nyx-justify-between" style="margin-bottom:var(--nyx-s4)"><span>Dark mode</span><label class="nyx-toggle"><input type="checkbox" checked onchange="Nyx.toggleTheme()" aria-label="dark mode"><span class="nyx-track"></span></label></div>
+          <span class="nyx-label">Accent</span>
+          <div class="nyx-flex nyx-gap-2 nyx-wrap">
+            <button class="nyx-btn nyx-btn-glass nyx-btn-sm" onclick="Nyx.setAccent('violet')"><span style="color:#6c63ff">●</span> Violet</button>
+            <button class="nyx-btn nyx-btn-glass nyx-btn-sm" onclick="Nyx.setAccent('emerald')"><span style="color:#10b981">●</span> Emerald</button>
+            <button class="nyx-btn nyx-btn-glass nyx-btn-sm" onclick="Nyx.setAccent('rose')"><span style="color:#f43f6b">●</span> Rose</button>
+            <button class="nyx-btn nyx-btn-glass nyx-btn-sm" onclick="Nyx.setAccent('amber')"><span style="color:#f59e0b">●</span> Amber</button>
+          </div>
+        </div>
+        <div class="nyx-card">
+          <h3 class="nyx-h4" style="margin-bottom:var(--nyx-s4)">Notifications</h3>
+          <label class="nyx-checkbox" style="display:flex;margin-bottom:10px"><input type="checkbox" checked><span class="nyx-box"></span> Email me about new orders</label>
+          <label class="nyx-checkbox" style="display:flex;margin-bottom:10px"><input type="checkbox"><span class="nyx-box"></span> Weekly summary</label>
+          <label class="nyx-checkbox" style="display:flex"><input type="checkbox" checked><span class="nyx-box"></span> Product mentions</label>
+        </div>
+        <div class="nyx-flex nyx-justify-end nyx-gap-2"><button class="nyx-btn nyx-btn-ghost">Cancel</button><button class="nyx-btn nyx-btn-primary" onclick="Nyx.toast('Settings saved ✓','success')">Save changes</button></div>
+      </div>
+    </section>
+
   </main>
 </div>
 
@@ -108,10 +273,74 @@
 <!-- command palette -->
 <div class="nyx-command-palette" id="cp" role="dialog" aria-modal="true" aria-label="Command palette">
   <div class="nyx-cp-box"><div class="nyx-cp-input"><span class="nyx-search-icon">⌕</span><input placeholder="Jump to…" aria-label="command"><span class="nyx-command">esc</span></div>
-    <div class="nyx-cp-list"><a class="nyx-cp-item" href="#">▦ Overview</a><a class="nyx-cp-item" href="#">🧾 Orders</a><a class="nyx-cp-item" href="#">👥 Customers</a><a class="nyx-cp-item" href="#">⚙ Settings</a></div>
+    <div class="nyx-cp-list"><a class="nyx-cp-item" href="#overview">▦ Overview</a><a class="nyx-cp-item" href="#orders">🧾 Orders</a><a class="nyx-cp-item" href="#customers">👥 Customers</a><a class="nyx-cp-item" href="#products">📦 Products</a><a class="nyx-cp-item" href="#analytics">📈 Analytics</a><a class="nyx-cp-item" href="#calendar">🗓 Calendar</a><a class="nyx-cp-item" href="#settings">⚙ Settings</a></div>
   </div>
 </div>
 
 <script src="../nyx.js"></script>
+<script>
+/* ---------- view router ---------- */
+var VIEWS = ['overview','orders','customers','products','analytics','calendar','settings'];
+function showView(v) {
+  if (VIEWS.indexOf(v) < 0) v = 'overview';
+  document.querySelectorAll('.db-view').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
+  document.querySelectorAll('.db-side a[data-view]').forEach(function (a) { a.classList.toggle('active', a.getAttribute('data-view') === v); });
+  if (v === 'calendar') renderCalendar();
+  if (window.Nyx) Nyx.closeCommandPalette && Nyx.closeCommandPalette();
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', function () { showView((location.hash || '#overview').slice(1)); });
+
+/* ---------- dynamic calendar ---------- */
+var MO = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var today = new Date();
+var cal = { y: today.getFullYear(), m: today.getMonth(), sel: null };
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
+function key(y, m, d) { return y + '-' + pad(m + 1) + '-' + pad(d); }
+var EVENTS = {};
+(function seed() {
+  EVENTS[key(today.getFullYear(), today.getMonth(), Math.min(3, 28))] = [{ t: 'Team standup', b: 'info' }];
+  EVENTS[key(today.getFullYear(), today.getMonth(), Math.min(12, 28))] = [{ t: 'Product launch', b: 'success' }, { t: 'Press release', b: 'info' }];
+  EVENTS[key(today.getFullYear(), today.getMonth(), Math.min(21, 28))] = [{ t: 'Supplier payout', b: 'warning' }];
+  EVENTS[key(today.getFullYear(), today.getMonth(), today.getDate())] = [{ t: 'Review monthly metrics', b: 'info' }];
+})();
+function renderCalendar() {
+  var grid = document.getElementById('calGrid'); if (!grid) return;
+  document.getElementById('calLabel').textContent = MO[cal.m] + ' ' + cal.y;
+  var first = new Date(cal.y, cal.m, 1).getDay(), days = new Date(cal.y, cal.m + 1, 0).getDate();
+  var html = '';
+  DOW.forEach(function (d) { html += '<span class="dow">' + d + '</span>'; });
+  for (var i = 0; i < first; i++) html += '<span></span>';
+  for (var d = 1; d <= days; d++) {
+    var k = key(cal.y, cal.m, d), cls = 'day';
+    if (cal.y === today.getFullYear() && cal.m === today.getMonth() && d === today.getDate()) cls += ' today';
+    if (cal.sel === k) cls += ' selected';
+    if (EVENTS[k]) cls += ' event';
+    html += '<span class="' + cls + '" data-key="' + k + '">' + d + '</span>';
+  }
+  grid.innerHTML = html;
+  renderEvents();
+}
+function renderEvents() {
+  var k = cal.sel || key(today.getFullYear(), today.getMonth(), today.getDate());
+  document.getElementById('calDayLabel').textContent = k;
+  var evs = EVENTS[k] || [], box = document.getElementById('calEvents');
+  if (!evs.length) { box.innerHTML = '<div class="nyx-empty" style="padding:var(--nyx-s4)"><div class="nyx-empty-icon">🗓</div><div class="nyx-caption">No events</div></div>'; return; }
+  box.innerHTML = evs.map(function (e) { return '<div class="nyx-alert nyx-alert-' + e.b + '"><span class="nyx-alert-icon">•</span><div>' + e.t + '</div></div>'; }).join('');
+}
+document.getElementById('calPrev').addEventListener('click', function () { if (--cal.m < 0) { cal.m = 11; cal.y--; } renderCalendar(); });
+document.getElementById('calNext').addEventListener('click', function () { if (++cal.m > 11) { cal.m = 0; cal.y++; } renderCalendar(); });
+document.getElementById('calToday').addEventListener('click', function () { cal.y = today.getFullYear(); cal.m = today.getMonth(); cal.sel = key(cal.y, cal.m, today.getDate()); renderCalendar(); });
+document.getElementById('calGrid').addEventListener('click', function (e) { var d = e.target.closest('.day[data-key]'); if (!d) return; cal.sel = d.getAttribute('data-key'); renderCalendar(); });
+document.getElementById('calAdd').addEventListener('click', function () {
+  var k = cal.sel || key(today.getFullYear(), today.getMonth(), today.getDate());
+  (EVENTS[k] = EVENTS[k] || []).push({ t: 'New event', b: 'info' });
+  renderCalendar(); Nyx.toast('Event added to ' + k, 'success');
+});
+
+/* boot */
+showView((location.hash || '#overview').slice(1));
+</script>
 </body>
 </html>
