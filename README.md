@@ -1,6 +1,6 @@
 # Nyx
 
-**The Design System for Modern SaaS — and the first CSS library built for Arabic developers.** A dark-mode-native CSS/JS component framework with one signature trait — **Luminous Depth**: every interactive element feels lit from within. Ships **dark + light themes**, full **RTL** support with Arabic fonts (Cairo + Lalezar), a complete **utilities & helpers** layer, **big-type** hero + **animation** utilities, and a per-component documentation site in **English & العربية**. Zero dependencies (except Google Fonts), ~690 lines of CSS, a tiny vanilla-JS runtime.
+**The Design System for Modern SaaS — and the first CSS library built for Arabic developers.** A dark-mode-native CSS/JS component framework with one signature trait — **Luminous Depth**: every interactive element feels lit from within. Ships **dark + light themes**, full **RTL** support with Arabic fonts (IBM Plex Sans Arabic + Aref Ruqaa), a complete **utilities & helpers** layer, **big-type** hero + **animation** utilities, and a per-component documentation site in **English & العربية**. Zero dependencies (except Google Fonts), ~690 lines of CSS, a tiny vanilla-JS runtime.
 
 > Think Bootstrap, but opinionated for the SaaS era, dark by default, and bilingual.
 

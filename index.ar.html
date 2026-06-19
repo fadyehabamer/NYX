@@ -7,7 +7,7 @@
 <meta name="description" content="نيكس: أوّل مكتبة مكوّنات CSS/JS مبنية للمطوّرين العرب، بدعم RTL كامل وخطوط عربية وطابع العمق المضيء." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Cairo:wght@400;600;700;800&family=Aref+Ruqaa:wght@400;700&family=Lalezar&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Aref+Ruqaa:wght@400;700&family=Lalezar&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="nyx.css" />
 <style>
   html{scroll-behavior:smooth;scroll-padding-top:80px}
@@ -59,6 +59,34 @@
     .hero-glow{width:240px;height:240px}
     .hero-tile{width:50px;height:50px;font-size:21px;border-radius:15px}.hero-tile.center{width:66px;height:66px;font-size:28px}
     .hero-pos.p1{transform:translate(calc(-50% - 112px),calc(-50% - 52px))}.hero-pos.p2{transform:translate(calc(-50% + 118px),calc(-50% - 22px))}.hero-pos.p3{transform:translate(calc(-50% - 80px),calc(-50% + 74px))}.hero-pos.p4{display:none}}
+  /* ---- section polish (install / features / stats / cta / footer) ---- */
+  .sec-eyebrow{margin-bottom:var(--nyx-s3)}
+  .feat-tile{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:22px;border:1px solid var(--nyx-border)}
+  .feat-tile.v{color:var(--nyx-accent);background:rgba(108,99,255,.14)}
+  .feat-tile.t{color:var(--nyx-accent-2);background:rgba(0,212,170,.13)}
+  .feat-tile.a{color:#ffb020;background:rgba(255,176,32,.13)}
+  .code-window{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;background:#070810;box-shadow:var(--nyx-shadow-lg)}
+  .code-window .cw-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--nyx-border);background:var(--nyx-surface)}
+  .code-window .cw-bar i{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .code-window .cw-bar .r{background:#ff5f57}.code-window .cw-bar .y{background:#febc2e}.code-window .cw-bar .g{background:#28c840}
+  .code-window .cw-bar em{margin-inline-start:auto;font-style:normal;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
+  .code-window pre{margin:0;border:0;border-radius:0;box-shadow:none;background:#070810;padding:var(--nyx-s4);overflow-x:auto}
+  .code-window pre code{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);line-height:1.7;color:#c8cce0;display:block}
+  .code-window .t-tag{color:#6c63ff}.code-window .t-attr{color:#00d4aa}.code-window .t-str{color:#ffb020}.code-window .t-cmt{color:#4b5061}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--nyx-s4)}
+  .stat{text-align:center;padding:var(--nyx-s5) var(--nyx-s4);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface)}
+  .stat b{display:block;font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-2xl);line-height:1.1;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat span{display:block;margin-top:6px;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+  .cta-band{position:relative;text-align:center;padding:var(--nyx-s8) var(--nyx-s5);border-radius:var(--nyx-radius-xl);border:1px solid var(--nyx-border);background:var(--nyx-surface);overflow:hidden}
+  .cta-band::before{content:"";position:absolute;inset:-40% 0 auto 0;height:380px;background:radial-gradient(circle at 50% 0,rgba(108,99,255,.32),transparent 60%);pointer-events:none}
+  .cta-band > *{position:relative}
+  .foot{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:var(--nyx-s5);text-align:start;padding-block:var(--nyx-s7) var(--nyx-s5)}
+  .foot h4{font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted);margin-bottom:var(--nyx-s3);font-weight:700}
+  .foot a{display:block;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);padding:4px 0;transition:color .2s var(--nyx-ease)}
+  .foot a:hover{color:var(--nyx-text)}
+  .foot-brand p{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);max-width:34ch;margin-top:var(--nyx-s3)}
+  .foot-bottom{border-top:1px solid var(--nyx-border);padding-block:var(--nyx-s4);text-align:center;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+  @media(max-width:780px){.stats{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr;gap:var(--nyx-s4)}.foot-brand{grid-column:1/-1}}
 </style>
 </head>
 <body class="nyx nyx-reset">
@@ -111,28 +139,65 @@
     </div>
   </div>
 
+  <!-- ===================== INSTALL ===================== -->
+  <section class="lp" id="install" style="padding-top:0">
+    <div class="nyx-grid nyx-items-center">
+      <div class="nyx-col-5 nyx-stack" data-nyx-reveal>
+        <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> التثبيت</span>
+        <h2 class="nyx-h1">أضِفها إلى أيّ صفحة</h2>
+        <p class="nyx-muted">ملفّان فقط وبلا خطوة بناء. اربط ملف الأنماط، وأضِف الصنف <span class="nyx-code">nyx</span> إلى عنصر <span class="nyx-code">&lt;body&gt;</span>، ثم أضِف المُشغّل للتبويبات والنوافذ والإشعارات.</p>
+        <div class="nyx-flex nyx-gap-3 nyx-wrap">
+          <a class="nyx-btn nyx-btn-secondary" href="docs.ar.html#/installation">اقرأ الدليل</a>
+          <button class="nyx-btn nyx-btn-ghost" onclick="Nyx.toast('تم نسخ المقتطف ✓','success')">انسخ المقتطف</button>
+        </div>
+      </div>
+      <div class="nyx-col-7" data-nyx-reveal>
+        <div class="code-window"><div class="cw-bar"><i class="r"></i><i class="y"></i><i class="g"></i><em>index.html</em></div>
+        <pre dir="ltr"><code><span class="t-cmt">&lt;!-- 1. the framework --&gt;</span>
+<span class="t-tag">&lt;link</span> <span class="t-attr">rel</span>=<span class="t-str">"stylesheet"</span> <span class="t-attr">href</span>=<span class="t-str">"nyx.css"</span><span class="t-tag">&gt;</span>
+
+<span class="t-cmt">&lt;!-- 2. opt the body in (RTL) --&gt;</span>
+<span class="t-tag">&lt;body</span> <span class="t-attr">class</span>=<span class="t-str">"nyx nyx-reset"</span> <span class="t-attr">dir</span>=<span class="t-str">"rtl"</span><span class="t-tag">&gt;</span>
+  <span class="t-tag">&lt;button</span> <span class="t-attr">class</span>=<span class="t-str">"nyx-btn nyx-btn-primary"</span><span class="t-tag">&gt;</span>ابدأ<span class="t-tag">&lt;/button&gt;</span>
+
+<span class="t-cmt">&lt;!-- 3. the runtime --&gt;</span>
+<span class="t-tag">&lt;script</span> <span class="t-attr">src</span>=<span class="t-str">"nyx.js"</span><span class="t-tag">&gt;&lt;/script&gt;</span></code></pre></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== FEATURES ===================== -->
   <section class="lp" id="features">
     <div class="lp-section-head">
-      <span class="nyx-overline">لماذا نيكس</span>
-      <h2 class="nyx-h1 nyx-font-ruqaa" style="margin-top:var(--nyx-s2)">مصمّمة لعصر الـ SaaS — وللعربية أوّلاً</h2>
+      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> لماذا نيكس</span>
+      <h2 class="nyx-h1 nyx-font-ruqaa" style="margin-top:var(--nyx-s3)">مصمّمة لعصر الـ SaaS — وللعربية أوّلاً</h2>
       <p class="nyx-muted" style="margin-top:var(--nyx-s2)">إعدادات افتراضية مدروسة، ونظام رموز تعيد تنسيقه بسطر واحد، وسلوكيات لا تحتاج كتابة جافاسكربت.</p>
     </div>
     <div class="nyx-grid">
-      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">✦</span><h3 class="nyx-h4">العمق المضيء</h3><p class="nyx-caption">كلّ عنصر تفاعلي مُضاء من الداخل — توهّجات ملوّنة وأسطح متعدّدة وزجاج.</p></div></div>
-      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">↔</span><h3 class="nyx-h4">دعم RTL كامل</h3><p class="nyx-caption">مبنيّة بخصائص CSS المنطقية، فكل المكوّنات تنعكس تلقائياً مع خطوط عربية.</p></div></div>
-      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">⚡</span><h3 class="nyx-h4">بلا اعتماديات</h3><p class="nyx-caption">ملفّان فقط، و‎CSS‎ مختصر، ومُشغّل جافاسكربت صغير. لا شيء سوى خطوط جوجل.</p></div></div>
-      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">🎨</span><h3 class="nyx-h4">سمات قابلة للتخصيص</h3><p class="nyx-caption">تجاوز أيّ متغيّر ‎--nyx-*‎ لإعادة التنسيق بالكامل، وبدّل بين الداكن والفاتح.</p></div></div>
-      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">🎛️</span><h3 class="nyx-h4">جافاسكربت تعريفي</h3><p class="nyx-caption">النوافذ والتبويبات والأدراج عبر سمات ‎data-nyx-*‎ — دون كتابة كود.</p></div></div>
-      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">📱</span><h3 class="nyx-h4">متجاوبة بالكامل</h3><p class="nyx-caption">من لوحة تحكّم عريضة إلى هاتف بعرض 375 بكسل. ومتاحة للجميع.</p></div></div>
+      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="feat-tile v">✦</span><h3 class="nyx-h4">العمق المضيء</h3><p class="nyx-caption">كلّ عنصر تفاعلي مُضاء من الداخل — توهّجات ملوّنة وأسطح متعدّدة وزجاج.</p></div></div>
+      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="feat-tile t">↔</span><h3 class="nyx-h4">دعم RTL كامل</h3><p class="nyx-caption">مبنيّة بخصائص CSS المنطقية، فكل المكوّنات تنعكس تلقائياً مع خطوط عربية.</p></div></div>
+      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="feat-tile a">⚡</span><h3 class="nyx-h4">بلا اعتماديات</h3><p class="nyx-caption">ملفّان فقط، و‎CSS‎ مختصر، ومُشغّل جافاسكربت صغير. لا شيء سوى خطوط جوجل.</p></div></div>
+      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="feat-tile v">🎨</span><h3 class="nyx-h4">سمات قابلة للتخصيص</h3><p class="nyx-caption">تجاوز أيّ متغيّر ‎--nyx-*‎ لإعادة التنسيق بالكامل، وبدّل بين الداكن والفاتح.</p></div></div>
+      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="feat-tile t">🎛️</span><h3 class="nyx-h4">جافاسكربت تعريفي</h3><p class="nyx-caption">النوافذ والتبويبات والأدراج عبر سمات ‎data-nyx-*‎ — دون كتابة كود.</p></div></div>
+      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="feat-tile a">📱</span><h3 class="nyx-h4">متجاوبة بالكامل</h3><p class="nyx-caption">من لوحة تحكّم عريضة إلى هاتف بعرض 375 بكسل. ومتاحة للجميع.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ===================== STATS ===================== -->
+  <section class="lp" id="stats" style="padding-top:0">
+    <div class="stats">
+      <div class="stat" data-nyx-reveal><b>+80</b><span>صفحة موثّقة</span></div>
+      <div class="stat" data-nyx-reveal><b>~500</b><span>سطر CSS</span></div>
+      <div class="stat" data-nyx-reveal><b>0</b><span>اعتماديات</span></div>
+      <div class="stat" data-nyx-reveal><b>2</b><span>سمتان · RTL كامل</span></div>
     </div>
   </section>
 
   <!-- ===================== COMPONENTS ===================== -->
   <section class="lp" id="components">
     <div class="lp-section-head">
-      <span class="nyx-overline">أكثر من 80 صفحة</span>
-      <h2 class="nyx-h1 nyx-font-ruqaa" style="margin-top:var(--nyx-s2)">كل ما تحتاجه لتطلق منتجك</h2>
+      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> أكثر من 80 صفحة</span>
+      <h2 class="nyx-h1 nyx-font-ruqaa" style="margin-top:var(--nyx-s3)">كل ما تحتاجه لتطلق منتجك</h2>
       <p class="nyx-muted" style="margin-top:var(--nyx-s2)">لكلّ مكوّن صفحته الخاصّة مع الاستخدام وأمثلة حيّة ومرجع للأصناف. ابدأ من هنا:</p>
     </div>
     <div class="lp-comp">
@@ -148,11 +213,51 @@
     </div>
   </section>
 
+  <!-- ===================== CLOSING CTA ===================== -->
+  <section class="lp" id="cta">
+    <div class="cta-band" data-nyx-reveal>
+      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> جاهزون متى استعددت</span>
+      <h2 class="nyx-bigtype nyx-bigtype-sm" style="margin-top:var(--nyx-s4)">ابدأ البناء <span class="nyx-gradient-text animated">في العتمة.</span></h2>
+      <p class="nyx-lead nyx-muted" style="max-width:540px;margin:var(--nyx-s4) auto 0">بلا إعداد وبلا اعتماديات. أضِف ملفّين فقط وأطلق واجهة مضيئة جاهزة للعربية اليوم.</p>
+      <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta" style="margin-top:var(--nyx-s6)">
+        <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.ar.html#/installation">ابدأ الآن</a>
+        <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="index.html">English version →</a>
+      </div>
+    </div>
+  </section>
+
 </div>
 
-<footer class="lp-footer">
+<footer>
   <div class="nyx-container">
-    <p>صُنع بـ <span class="nyx-gradient-text" style="font-weight:700">نيكس</span> · رخصة MIT · أوّل مكتبة CSS للمطوّرين العرب</p>
+    <div class="foot">
+      <div class="foot-brand">
+        <a class="lp-logo" href="index.ar.html"><span class="mark">N</span><span><span class="pre">nyx</span>·نيكس</span></a>
+        <p>مكتبة المكوّنات داكنة المظهر — أوّل مكتبة CSS مبنية للمطوّرين العرب.</p>
+      </div>
+      <div>
+        <h4>التوثيق</h4>
+        <a href="docs.ar.html#/installation">التثبيت</a>
+        <a href="docs.ar.html#/theming">السمات</a>
+        <a href="docs.ar.html#/rtl">دعم RTL</a>
+        <a href="docs.ar.html#/buttons">المكوّنات</a>
+      </div>
+      <div>
+        <h4>المكتبة</h4>
+        <a href="docs.ar.html#/download">التحميل</a>
+        <a href="docs.ar.html#/javascript">جافاسكربت</a>
+        <a href="docs.ar.html#/grid">التخطيط</a>
+        <a href="docs.ar.html#/spacing">الأدوات</a>
+      </div>
+      <div>
+        <h4>المزيد</h4>
+        <a href="index.html">English</a>
+        <a href="https://example.com">GitHub ★</a>
+        <a href="docs.ar.html#/big-type">الخط الكبير</a>
+        <a href="docs.ar.html#/animations">الحركة</a>
+      </div>
+    </div>
+    <div class="foot-bottom">صُنع بـ <span class="nyx-gradient-text" style="font-weight:700">نيكس</span> · رخصة MIT · عمقٌ مضيء، داكن أوّلاً وعربيّ أوّلاً.</div>
   </div>
 </footer>
 

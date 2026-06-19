@@ -55,7 +55,7 @@ window.NYX_I18N = {
     grid: { title: 'الشبكة', summary: 'شبكة CSS من 12 عموداً. استخدم nyx-grid على الحاوية وأصناف nyx-col من 1 إلى 12 على الأبناء.' },
     container: { title: 'الحاوية', summary: 'تتوسّط المحتوى بعرض أقصى 1280 بكسل مع حشو جانبي متجاوب.' },
     /* Content */
-    typography: { title: 'الطباعة', summary: 'خط Plus Jakarta Sans للعناوين وInter للنصّ، ويتحوّل تلقائياً إلى خطّي Cairo وAref Ruqaa في وضع RTL.' },
+    typography: { title: 'الطباعة', summary: 'خط Plus Jakarta Sans للعناوين وInter للنصّ، ويتحوّل تلقائياً إلى خطّي IBM Plex Sans Arabic وAref Ruqaa في وضع RTL.' },
     /* Forms */
     inputs: { title: 'الحقول', summary: 'حقول إدخال داكنة مع توهّج عند التركيز، إضافةً إلى التسميات وتلميحات المساعدة.' },
     select: { title: 'القوائم' }, switches: { title: 'المفاتيح والاختيارات' }, search: { title: 'البحث' },

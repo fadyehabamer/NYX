@@ -7,7 +7,7 @@
 <meta name="description" content="Nyx is a modern, dark-mode-native CSS/JS component framework with Luminous Depth — every element lit from within. Zero dependencies." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Cairo:wght@400;600;700;800&family=Aref+Ruqaa:wght@400;700&family=Lalezar&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Aref+Ruqaa:wght@400;700&family=Lalezar&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="nyx.css" />
 <style>
   html{scroll-behavior:smooth;scroll-padding-top:80px}
@@ -62,6 +62,32 @@
     .hero-glow{width:240px;height:240px}
     .hero-tile{width:50px;height:50px;font-size:21px;border-radius:15px}.hero-tile.center{width:66px;height:66px;font-size:28px}
     .hero-pos.p1{transform:translate(calc(-50% - 112px),calc(-50% - 52px))}.hero-pos.p2{transform:translate(calc(-50% + 118px),calc(-50% - 22px))}.hero-pos.p3{transform:translate(calc(-50% - 80px),calc(-50% + 74px))}.hero-pos.p4{display:none}}
+  /* ---- section polish (install / features / stats / cta / footer) ---- */
+  .sec-eyebrow{margin-bottom:var(--nyx-s3)}
+  .feat-tile{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:22px;border:1px solid var(--nyx-border)}
+  .feat-tile.v{color:var(--nyx-accent);background:rgba(108,99,255,.14)}
+  .feat-tile.t{color:var(--nyx-accent-2);background:rgba(0,212,170,.13)}
+  .feat-tile.a{color:#ffb020;background:rgba(255,176,32,.13)}
+  .code-window{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;background:#070810;box-shadow:var(--nyx-shadow-lg)}
+  .code-window .cw-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--nyx-border);background:var(--nyx-surface)}
+  .code-window .cw-bar i{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .code-window .cw-bar .r{background:#ff5f57}.code-window .cw-bar .y{background:#febc2e}.code-window .cw-bar .g{background:#28c840}
+  .code-window .cw-bar em{margin-inline-start:auto;font-style:normal;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
+  .code-window pre{border:0;border-radius:0;box-shadow:none}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--nyx-s4)}
+  .stat{text-align:center;padding:var(--nyx-s5) var(--nyx-s4);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface)}
+  .stat b{display:block;font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-2xl);line-height:1.1;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat span{display:block;margin-top:6px;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+  .cta-band{position:relative;text-align:center;padding:var(--nyx-s8) var(--nyx-s5);border-radius:var(--nyx-radius-xl);border:1px solid var(--nyx-border);background:var(--nyx-surface);overflow:hidden}
+  .cta-band::before{content:"";position:absolute;inset:-40% 0 auto 0;height:380px;background:radial-gradient(circle at 50% 0,rgba(108,99,255,.32),transparent 60%);pointer-events:none}
+  .cta-band > *{position:relative}
+  .foot{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:var(--nyx-s5);text-align:start;padding-block:var(--nyx-s7) var(--nyx-s5)}
+  .foot h4{font-size:var(--nyx-fs-xs);text-transform:uppercase;letter-spacing:.1em;color:var(--nyx-text-muted);margin-bottom:var(--nyx-s3);font-family:var(--nyx-font-mono)}
+  .foot a{display:block;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);padding:4px 0;transition:color .2s var(--nyx-ease)}
+  .foot a:hover{color:var(--nyx-text)}
+  .foot-brand p{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);max-width:32ch;margin-top:var(--nyx-s3)}
+  .foot-bottom{border-top:1px solid var(--nyx-border);padding-block:var(--nyx-s4);text-align:center;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+  @media(max-width:780px){.stats{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr;gap:var(--nyx-s4)}.foot-brand{grid-column:1/-1}}
 </style>
 </head>
 <body class="nyx nyx-reset">
@@ -120,7 +146,8 @@
   <!-- ===================== INSTALL ===================== -->
   <section class="lp" id="install" style="padding-top:0">
     <div class="nyx-grid nyx-items-center">
-      <div class="nyx-col-5 nyx-stack">
+      <div class="nyx-col-5 nyx-stack" data-nyx-reveal>
+        <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> Installation</span>
         <h2 class="nyx-h1">Drop it into any page</h2>
         <p class="nyx-muted">Two files, no build step. Link the stylesheet, opt your <span class="nyx-code">&lt;body&gt;</span> into Nyx, and add the runtime for tabs, modals and toasts.</p>
         <div class="nyx-flex nyx-gap-3 nyx-wrap">
@@ -128,7 +155,8 @@
           <button class="nyx-btn nyx-btn-ghost" onclick="Nyx.toast('Snippet copied ✓','success')">Copy snippet</button>
         </div>
       </div>
-      <div class="nyx-col-7">
+      <div class="nyx-col-7" data-nyx-reveal>
+        <div class="code-window"><div class="cw-bar"><i class="r"></i><i class="y"></i><i class="g"></i><em>index.html</em></div>
         <pre><code><span class="t-cmt">&lt;!-- 1. the framework --&gt;</span>
 <span class="t-tag">&lt;link</span> <span class="t-attr">rel</span>=<span class="t-str">"stylesheet"</span> <span class="t-attr">href</span>=<span class="t-str">"nyx.css"</span><span class="t-tag">&gt;</span>
 
@@ -137,7 +165,7 @@
   <span class="t-tag">&lt;button</span> <span class="t-attr">class</span>=<span class="t-str">"nyx-btn nyx-btn-primary"</span><span class="t-tag">&gt;</span>Hello<span class="t-tag">&lt;/button&gt;</span>
 
 <span class="t-cmt">&lt;!-- 3. the runtime --&gt;</span>
-<span class="t-tag">&lt;script</span> <span class="t-attr">src</span>=<span class="t-str">"nyx.js"</span><span class="t-tag">&gt;&lt;/script&gt;</span></code></pre>
+<span class="t-tag">&lt;script</span> <span class="t-attr">src</span>=<span class="t-str">"nyx.js"</span><span class="t-tag">&gt;&lt;/script&gt;</span></code></pre></div>
       </div>
     </div>
   </section>
@@ -145,25 +173,35 @@
   <!-- ===================== FEATURES ===================== -->
   <section class="lp" id="features">
     <div class="lp-section-head">
-      <span class="nyx-overline">Why Nyx</span>
-      <h2 class="nyx-h1" style="margin-top:var(--nyx-s2)">Designed for the SaaS era</h2>
+      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> Why Nyx</span>
+      <h2 class="nyx-h1" style="margin-top:var(--nyx-s3)">Designed for the SaaS era</h2>
       <p class="nyx-muted" style="margin-top:var(--nyx-s2)">Opinionated defaults, a token system you can retheme in one line, and behaviors that need no JavaScript to wire up.</p>
     </div>
     <div class="nyx-grid">
-      <div class="nyx-col-4"><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">✦</span><h3 class="nyx-h4">Luminous Depth</h3><p class="nyx-caption">Every interactive element is lit from within — colored glows, layered surfaces, glass.</p></div></div>
-      <div class="nyx-col-4"><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">⚡</span><h3 class="nyx-h4">Zero dependencies</h3><p class="nyx-caption">Two files, ~500 lines of CSS, a tiny vanilla-JS runtime. Just Google Fonts.</p></div></div>
-      <div class="nyx-col-4"><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">🎛️</span><h3 class="nyx-h4">Declarative JS</h3><p class="nyx-caption">Modals, tabs, drawers and scrollspy wire up with <span class="nyx-code">data-nyx-*</span> — no code.</p></div></div>
-      <div class="nyx-col-4"><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">🎨</span><h3 class="nyx-h4">Token theming</h3><p class="nyx-caption">Override any <span class="nyx-code">--nyx-*</span> variable to retheme everything. No recompile.</p></div></div>
-      <div class="nyx-col-4"><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">🌙</span><h3 class="nyx-h4">Dark-mode native</h3><p class="nyx-caption">Built dark-first, the way modern SaaS tools actually look.</p></div></div>
-      <div class="nyx-col-4"><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="nyx-feat-icon">📱</span><h3 class="nyx-h4">Fully responsive</h3><p class="nyx-caption">Works from a 1440px dashboard down to a 375px phone. Accessible by default.</p></div></div>
+      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="feat-tile v">✦</span><h3 class="nyx-h4">Luminous Depth</h3><p class="nyx-caption">Every interactive element is lit from within — colored glows, layered surfaces, glass.</p></div></div>
+      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="feat-tile t">⚡</span><h3 class="nyx-h4">Zero dependencies</h3><p class="nyx-caption">Two files, ~500 lines of CSS, a tiny vanilla-JS runtime. Just Google Fonts.</p></div></div>
+      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="feat-tile a">🎛️</span><h3 class="nyx-h4">Declarative JS</h3><p class="nyx-caption">Modals, tabs, drawers and scrollspy wire up with <span class="nyx-code">data-nyx-*</span> — no code.</p></div></div>
+      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="feat-tile v">🎨</span><h3 class="nyx-h4">Token theming</h3><p class="nyx-caption">Override any <span class="nyx-code">--nyx-*</span> variable to retheme everything. No recompile.</p></div></div>
+      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="feat-tile t">↔</span><h3 class="nyx-h4">RTL &amp; Arabic-first</h3><p class="nyx-caption">Logical properties mirror every component; Arabic fonts ship in the box.</p></div></div>
+      <div class="nyx-col-4" data-nyx-reveal><div class="nyx-card nyx-card-interactive nyx-card-feature"><span class="feat-tile a">📱</span><h3 class="nyx-h4">Fully responsive</h3><p class="nyx-caption">Works from a 1440px dashboard down to a 375px phone. Accessible by default.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ===================== STATS ===================== -->
+  <section class="lp" id="stats" style="padding-top:0">
+    <div class="stats">
+      <div class="stat" data-nyx-reveal><b>80+</b><span>documented pages</span></div>
+      <div class="stat" data-nyx-reveal><b>~500</b><span>lines of CSS</span></div>
+      <div class="stat" data-nyx-reveal><b>0</b><span>dependencies</span></div>
+      <div class="stat" data-nyx-reveal><b>2</b><span>themes · full RTL</span></div>
     </div>
   </section>
 
   <!-- ===================== COMPONENTS PREVIEW ===================== -->
   <section class="lp" id="components">
     <div class="lp-section-head">
-      <span class="nyx-overline">40+ components</span>
-      <h2 class="nyx-h1" style="margin-top:var(--nyx-s2)">Everything you need to ship</h2>
+      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> 40+ components</span>
+      <h2 class="nyx-h1" style="margin-top:var(--nyx-s3)">Everything you need to ship</h2>
       <p class="nyx-muted" style="margin-top:var(--nyx-s2)">Each component has its own page with usage, live examples and a class reference. Jump in:</p>
     </div>
     <div class="lp-comp">
@@ -179,11 +217,51 @@
     </div>
   </section>
 
+  <!-- ===================== CLOSING CTA ===================== -->
+  <section class="lp" id="cta">
+    <div class="cta-band" data-nyx-reveal>
+      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> Ready when you are</span>
+      <h2 class="nyx-bigtype nyx-bigtype-sm" style="margin-top:var(--nyx-s4)">Start building <span class="nyx-gradient-text animated">in the dark.</span></h2>
+      <p class="nyx-lead nyx-muted" style="max-width:520px;margin:var(--nyx-s4) auto 0">Zero setup, zero dependencies. Drop in two files and ship a luminous, RTL-ready interface today.</p>
+      <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta" style="margin-top:var(--nyx-s6)">
+        <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.html#/installation">Get started</a>
+        <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="index.ar.html">النسخة العربية ←</a>
+      </div>
+    </div>
+  </section>
+
 </div>
 
-<footer class="lp-footer">
+<footer>
   <div class="nyx-container">
-    <p>Built with <span class="nyx-gradient-text" style="font-weight:700">Nyx</span> · MIT License · The Design System for Modern SaaS</p>
+    <div class="foot">
+      <div class="foot-brand">
+        <a class="lp-logo" href="index.html"><span class="mark">N</span><span><span class="pre">nyx</span>·Nyx</span></a>
+        <p>The dark-mode-native component framework — the first CSS library built for Arabic developers.</p>
+      </div>
+      <div>
+        <h4>Docs</h4>
+        <a href="docs.html#/installation">Installation</a>
+        <a href="docs.html#/theming">Theming</a>
+        <a href="docs.html#/rtl">RTL support</a>
+        <a href="docs.html#/buttons">Components</a>
+      </div>
+      <div>
+        <h4>Library</h4>
+        <a href="docs.html#/download">Download</a>
+        <a href="docs.html#/javascript">JavaScript</a>
+        <a href="docs.html#/grid">Layout</a>
+        <a href="docs.html#/spacing">Utilities</a>
+      </div>
+      <div>
+        <h4>More</h4>
+        <a href="index.ar.html">العربية</a>
+        <a href="https://example.com">GitHub ★</a>
+        <a href="docs.html#/big-type">Big type</a>
+        <a href="docs.html#/animations">Motion</a>
+      </div>
+    </div>
+    <div class="foot-bottom">Built with <span class="nyx-gradient-text" style="font-weight:700">Nyx</span> · MIT License · Luminous Depth, dark-first &amp; Arabic-first.</div>
   </div>
 </footer>
 

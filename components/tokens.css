@@ -33,7 +33,7 @@
   --nyx-font-display:'Plus Jakarta Sans',system-ui,sans-serif;
   --nyx-font-body:'Inter',system-ui,sans-serif;
   --nyx-font-mono:'JetBrains Mono',ui-monospace,monospace;
-  --nyx-font-ar:'Cairo','Inter',system-ui,sans-serif;            /* Arabic body */
+  --nyx-font-ar:'IBM Plex Sans Arabic','Inter',system-ui,sans-serif; /* Arabic body */
   --nyx-font-ar-display:'Aref Ruqaa','Lalezar',serif;            /* Arabic hero display (Ruq'ah cursive) */
   --nyx-ease:cubic-bezier(.4,0,.2,1);
 }
