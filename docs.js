@@ -287,14 +287,30 @@
       id: 'typography', group: 'Content', title: 'Typography',
       summary: 'Plus Jakarta Sans for display, Inter for body, JetBrains Mono for code. A clear scale from overline to display.',
       sections: [
-        { title: 'Scale', demo: '<div class="nyx-stack"><span class="nyx-overline">Overline · eyebrow</span><h1 class="nyx-display">Display <span class="nyx-gradient-text">gradient</span></h1><h2 class="nyx-h2">Heading two</h2><p class="nyx-lead">A lead paragraph in a calmer, larger voice.</p><p class="nyx-body">Body copy with inline <span class="nyx-code">nyx-code</span> and <span class="nyx-muted">muted</span> text.</p></div>' }
+        { title: 'Scale', demo: '<div class="nyx-stack"><span class="nyx-overline">Overline · eyebrow</span><h1 class="nyx-display">Display <span class="nyx-gradient-text">gradient</span></h1><h2 class="nyx-h2">Heading two</h2><p class="nyx-lead">A lead paragraph in a calmer, larger voice.</p><p class="nyx-body">Body copy with inline <span class="nyx-code">nyx-code</span> and <span class="nyx-muted">muted</span> text.</p></div>' },
+        { title: 'Weights', demo: '<div class="nyx-stack nyx-gap-1"><p class="nyx-fw-light">Light · 300 — the quick brown fox</p><p class="nyx-fw-normal">Normal · 400 — the quick brown fox</p><p class="nyx-fw-medium">Medium · 500 — the quick brown fox</p><p class="nyx-fw-semibold">Semibold · 600 — the quick brown fox</p><p class="nyx-fw-bold">Bold · 700 — the quick brown fox</p><p class="nyx-fw-black">Black · 900 — the quick brown fox</p></div>' },
+        { title: 'Size scale', demo: '<div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><span class="nyx-text-xs">xs</span><span class="nyx-text-sm">sm</span><span class="nyx-text-base">base</span><span class="nyx-text-lg">lg</span><span class="nyx-text-xl">xl</span><span class="nyx-text-2xl">2xl</span><span class="nyx-text-3xl">3xl</span></div>' },
+        { title: 'Inline & decoration', demo: '<p class="nyx-body nyx-leading-relaxed">Press <kbd class="nyx-kbd">⌘</kbd> <kbd class="nyx-kbd">K</kbd> to search, open a <a href="#/typography" class="nyx-link">styled link</a>, <mark class="nyx-mark">highlight</mark> a phrase, <span class="nyx-strike">strike</span> it out, or glow an <span class="nyx-text-glow nyx-text-accent">accent</span> word.</p>' },
+        { title: 'Gradient & outline', demo: '<div class="nyx-stack"><h3 class="nyx-h2 nyx-gradient-text">Violet → teal (default)</h3><h3 class="nyx-h2 nyx-gradient-text cool">Cool · teal → violet</h3><h3 class="nyx-h2 nyx-gradient-text warm">Warm · amber → rose</h3><h3 class="nyx-h2 nyx-text-stroke">Outlined stroke</h3></div>' },
+        { title: 'Blockquote', demo: '<blockquote class="nyx-blockquote">Design is not just what it looks like and feels like. Design is how it works.<cite>— Steve Jobs</cite></blockquote>' },
+        { title: 'Prose (rich text)', text: 'Wrap raw HTML — article bodies, markdown output — in .nyx-prose and headings, lists, links, code and quotes all get consistent, RTL-aware rhythm.', demo: '<div class="nyx-prose"><h3>Rich content</h3><p>Headings, <strong>bold</strong>, inline <code>code</code> and <a href="#/typography">links</a> all get sensible spacing automatically.</p><ul><li>Logical block rhythm</li><li>RTL-aware indentation</li></ul><blockquote>Quotes are styled too.</blockquote></div>' },
+        { title: 'Truncate & clamp', demo: '<div class="nyx-stack" style="max-width:320px"><p class="nyx-text-truncate">Single line truncates with an ellipsis when it overflows the container width.</p><p class="nyx-line-clamp-2">Clamped to two lines: after the second line it cuts off with an ellipsis no matter how much more copy follows here in the source markup.</p></div>' },
+        { title: 'Tabular numerals', text: 'Add .nyx-nums-tabular so digits share one width — prices, tables and counters stay aligned.', demo: '<div class="nyx-stack nyx-gap-1 nyx-text-lg"><span class="nyx-nums-tabular">1,209.40</span><span class="nyx-nums-tabular">88,003.15</span><span class="nyx-nums-tabular">7.99</span></div>' }
       ],
       classes: [
         ['nyx-display, nyx-h1 … nyx-h6', 'Display + heading levels.'],
-        ['nyx-lead / nyx-body / nyx-caption', 'Paragraph styles.'],
-        ['nyx-overline / nyx-muted', 'Eyebrow label / muted color.'],
-        ['nyx-gradient-text', 'Accent→teal gradient clip.'],
-        ['nyx-code', 'Inline monospace code.']
+        ['nyx-lead / nyx-lead-sm / nyx-body / nyx-caption / nyx-overline', 'Paragraph + label styles.'],
+        ['nyx-text-xs … -3xl', 'Font-size scale utilities.'],
+        ['nyx-fw-light … -black', 'Weights 300–900.'],
+        ['nyx-leading-* / nyx-tracking-*', 'Line-height + letter-spacing (tracking auto-resets in RTL).'],
+        ['nyx-font-display|body|mono|serif', 'Font-family utilities (serif = Aref Ruqaa).'],
+        ['nyx-gradient-text (+ .cool / .warm / .animated)', 'Gradient-clip variants.'],
+        ['nyx-text-stroke / nyx-text-glow', 'Outlined / glowing text.'],
+        ['nyx-link / nyx-mark / nyx-kbd / nyx-code', 'Animated link, highlight, key, inline code.'],
+        ['nyx-blockquote / nyx-prose', 'Pull-quote / rich-text container.'],
+        ['nyx-dropcap / nyx-smallcaps', 'Drop cap / small caps (Arabic-aware).'],
+        ['nyx-text-truncate / nyx-line-clamp-1..3', 'Single- and multi-line clamp.'],
+        ['nyx-nums-tabular / nyx-text-balance / nyx-text-pretty', 'Tabular figures + modern text-wrap.']
       ]
     },
 

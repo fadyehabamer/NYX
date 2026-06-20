@@ -29,6 +29,24 @@
 .nyx-fw-normal{font-weight:400}.nyx-fw-medium{font-weight:500}.nyx-fw-bold{font-weight:700}
 .nyx-text-truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .nyx-text-accent{color:var(--nyx-accent)}.nyx-text-accent-2{color:var(--nyx-accent-2)}.nyx-text-danger{color:var(--nyx-danger)}.nyx-text-warning{color:var(--nyx-warning)}.nyx-text-muted{color:var(--nyx-text-muted)}
+/* font-size scale */
+.nyx-text-xs{font-size:var(--nyx-fs-xs)}.nyx-text-sm{font-size:var(--nyx-fs-sm)}.nyx-text-base{font-size:var(--nyx-fs-base)}.nyx-text-lg{font-size:var(--nyx-fs-lg)}.nyx-text-xl{font-size:var(--nyx-fs-xl)}.nyx-text-2xl{font-size:var(--nyx-fs-2xl)}.nyx-text-3xl{font-size:var(--nyx-fs-3xl)}
+/* font weight */
+.nyx-fw-light{font-weight:300}.nyx-fw-semibold{font-weight:600}.nyx-fw-extrabold{font-weight:800}.nyx-fw-black{font-weight:900}
+/* line-height */
+.nyx-leading-none{line-height:1}.nyx-leading-tight{line-height:1.2}.nyx-leading-snug{line-height:1.4}.nyx-leading-normal{line-height:1.6}.nyx-leading-relaxed{line-height:1.8}.nyx-leading-loose{line-height:2.1}
+/* letter-spacing (Latin; auto-reset for Arabic in the RTL layer) */
+.nyx-tracking-tight{letter-spacing:-.02em}.nyx-tracking-normal{letter-spacing:0}.nyx-tracking-wide{letter-spacing:.05em}.nyx-tracking-wider{letter-spacing:.12em}
+/* font family */
+.nyx-font-display{font-family:var(--nyx-font-display)}.nyx-font-body{font-family:var(--nyx-font-body)}.nyx-font-mono{font-family:var(--nyx-font-mono)}.nyx-font-serif{font-family:'Aref Ruqaa','Lalezar',serif}
+/* multi-line clamp */
+.nyx-line-clamp-1,.nyx-line-clamp-2,.nyx-line-clamp-3{display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+.nyx-line-clamp-1{-webkit-line-clamp:1}.nyx-line-clamp-2{-webkit-line-clamp:2}.nyx-line-clamp-3{-webkit-line-clamp:3}
+/* text-wrap + whitespace */
+.nyx-text-balance{text-wrap:balance}.nyx-text-pretty{text-wrap:pretty}.nyx-text-nowrap{white-space:nowrap}.nyx-text-break{overflow-wrap:break-word;word-break:break-word}
+/* numerics + extra decoration */
+.nyx-nums-tabular{font-variant-numeric:tabular-nums}.nyx-nums-slashed{font-variant-numeric:slashed-zero}
+.nyx-underline{text-decoration:underline;text-underline-offset:2px}.nyx-no-underline{text-decoration:none}.nyx-strike{text-decoration:line-through}.nyx-italic{font-style:italic}
 /* background */
 .nyx-bg-surface{background:var(--nyx-surface)}.nyx-bg-surface-2{background:var(--nyx-surface-2)}.nyx-bg-accent{background:var(--nyx-accent);color:#fff}.nyx-bg-glass{background:var(--nyx-glass)}
 /* borders + radius */

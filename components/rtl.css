@@ -7,6 +7,9 @@
    ============================================================ */
 [dir="rtl"]{--nyx-font-body:var(--nyx-font-ar);--nyx-font-display:var(--nyx-font-ar)}
 [dir="rtl"] .nyx-bigtype{font-family:var(--nyx-font-ar-display);font-weight:700;letter-spacing:0;line-height:1.35;padding-block:.08em}
+/* Arabic never letter-spaces: neutralise tracking + small-caps, give the drop cap a cursive face */
+[dir="rtl"] .nyx-tracking-tight,[dir="rtl"] .nyx-tracking-wide,[dir="rtl"] .nyx-tracking-wider,[dir="rtl"] .nyx-smallcaps{letter-spacing:normal;font-variant:normal}
+[dir="rtl"] .nyx-dropcap::first-letter{font-family:var(--nyx-font-ar-display)}
 [dir="rtl"] .nyx-select{background-position:left 14px center}
 [dir="rtl"] .nyx-toast-wrap{animation:none}
 [dir="rtl"] .nyx-toast{animation-name:nyx-toast-in-rtl}

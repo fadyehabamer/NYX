@@ -19,3 +19,42 @@
 .nyx-muted{color:var(--nyx-text-muted)}
 .nyx-gradient-text{background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
 .nyx-code{font-family:var(--nyx-font-mono);font-size:.9em;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);padding:2px 6px;border-radius:var(--nyx-radius-sm);color:var(--nyx-accent-2)}
+.nyx-lead-sm{font-size:var(--nyx-fs-base);color:var(--nyx-text-muted);line-height:1.65}
+/* gradient-text variants (modifiers keep the clip from .nyx-gradient-text) */
+.nyx-gradient-text.cool{background-image:linear-gradient(120deg,var(--nyx-accent-2),var(--nyx-accent))}
+.nyx-gradient-text.warm{background-image:linear-gradient(120deg,var(--nyx-warning),var(--nyx-danger))}
+.nyx-text-stroke{-webkit-text-stroke:1.5px var(--nyx-accent);color:transparent}
+.nyx-text-glow{text-shadow:0 0 18px color-mix(in srgb,var(--nyx-accent) 70%,transparent)}
+.nyx-smallcaps{font-variant:small-caps}
+/* animated underline link */
+.nyx-link{position:relative;color:var(--nyx-accent);text-decoration:none;cursor:pointer}
+.nyx-link::after{content:"";position:absolute;inset-inline-start:0;bottom:-2px;width:100%;height:1.5px;background:currentColor;transform:scaleX(0);transition:transform .25s var(--nyx-ease)}
+.nyx-link:hover::after,.nyx-link:focus-visible::after{transform:scaleX(1)}
+/* highlight + keyboard key */
+.nyx-mark{background:color-mix(in srgb,var(--nyx-accent) 22%,transparent);color:var(--nyx-text);padding:.05em .3em;border-radius:var(--nyx-radius-sm)}
+.nyx-kbd{display:inline-block;font-family:var(--nyx-font-mono);font-size:.82em;line-height:1;padding:3px 7px;color:var(--nyx-text);background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-bottom-width:2px;border-radius:var(--nyx-radius-sm);box-shadow:0 1px 0 rgba(0,0,0,.18)}
+/* pull-quote */
+.nyx-blockquote{border-inline-start:3px solid var(--nyx-accent);padding-inline-start:var(--nyx-s4);font-size:var(--nyx-fs-lg);line-height:1.6;color:var(--nyx-text)}
+.nyx-blockquote cite,.nyx-blockquote footer{display:block;margin-top:var(--nyx-s2);font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted);font-style:normal}
+/* drop cap (articles) */
+.nyx-dropcap::first-letter{float:inline-start;font-family:var(--nyx-font-display);font-size:3.1em;line-height:.78;font-weight:800;margin-inline-end:.08em;margin-top:.04em;color:var(--nyx-accent)}
+/* rich-text container — style raw HTML (articles, markdown output) */
+.nyx-prose{color:var(--nyx-text);line-height:1.75;font-size:var(--nyx-fs-base);max-width:70ch}
+.nyx-prose :where(h1,h2,h3,h4){font-family:var(--nyx-font-display);line-height:1.25;margin:1.6em 0 .6em}
+.nyx-prose :where(h1,h2,h3,h4):first-child{margin-top:0}
+.nyx-prose h1{font-size:var(--nyx-fs-2xl);font-weight:800;letter-spacing:-.02em}
+.nyx-prose h2{font-size:var(--nyx-fs-xl);font-weight:700;letter-spacing:-.01em}
+.nyx-prose h3{font-size:var(--nyx-fs-lg);font-weight:700}
+.nyx-prose h4{font-size:var(--nyx-fs-base);font-weight:600}
+.nyx-prose :where(p,ul,ol,blockquote,pre,table){margin:0 0 1.1em}
+.nyx-prose a{color:var(--nyx-accent);text-decoration:underline;text-underline-offset:2px;text-decoration-color:color-mix(in srgb,var(--nyx-accent) 45%,transparent)}
+.nyx-prose a:hover{text-decoration-color:var(--nyx-accent)}
+.nyx-prose strong{color:var(--nyx-text);font-weight:700}
+.nyx-prose code{font-family:var(--nyx-font-mono);font-size:.88em;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);padding:2px 6px;border-radius:var(--nyx-radius-sm);color:var(--nyx-accent-2)}
+.nyx-prose pre{background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);padding:var(--nyx-s4);overflow:auto}
+.nyx-prose pre code{background:none;border:0;padding:0;color:var(--nyx-text)}
+.nyx-prose :where(ul,ol){padding-inline-start:1.4em}
+.nyx-prose li{margin:.35em 0}
+.nyx-prose blockquote{border-inline-start:3px solid var(--nyx-accent);padding-inline-start:var(--nyx-s4);color:var(--nyx-text-muted);font-style:italic}
+.nyx-prose hr{border:0;border-top:1px solid var(--nyx-border);margin:2em 0}
+.nyx-prose img{max-width:100%;border-radius:var(--nyx-radius)}
