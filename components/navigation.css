@@ -32,6 +32,15 @@
 .nyx-pagination button{min-width:36px;height:36px;border:1px solid var(--nyx-border);background:var(--nyx-surface);color:var(--nyx-text-muted);border-radius:var(--nyx-radius);cursor:pointer;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);transition:all .2s var(--nyx-ease)}
 .nyx-pagination button:hover{border-color:var(--nyx-accent);color:var(--nyx-text)}
 .nyx-pagination button.active{background:var(--nyx-accent);border-color:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+.nyx-pagination button:disabled{opacity:.4;cursor:not-allowed}
+.nyx-pagination .nyx-page-gap{min-width:36px;text-align:center;color:var(--nyx-text-muted)}
+/* variants */
+.nyx-pagination.rounded button{border-radius:var(--nyx-radius-full)}
+.nyx-pagination.ghost button{border-color:transparent;background:transparent}
+.nyx-pagination.ghost button:hover{background:var(--nyx-surface-2)}
+.nyx-pagination.ghost button.active{background:color-mix(in srgb,var(--nyx-accent) 16%,transparent);border-color:transparent;color:var(--nyx-accent);box-shadow:none}
+.nyx-pagination.sm button{min-width:30px;height:30px;font-size:var(--nyx-fs-xs)}
+.nyx-pagination-info{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
 /* dropdown */
 .nyx-dropdown{position:relative;display:inline-flex}
 .nyx-dropdown-menu{position:absolute;top:calc(100% + 8px);inset-inline-start:0;z-index:120;min-width:184px;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);padding:6px;display:none}

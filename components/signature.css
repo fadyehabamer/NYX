@@ -46,7 +46,7 @@
 .nyx-gradient-border > *{background:var(--nyx-surface);border-radius:calc(var(--nyx-radius-lg) - 1px);padding:var(--nyx-s5)}
 @keyframes nyx-gb{to{background-position:200% 0}}
 
-.nyx-avatar{width:40px;height:40px;border-radius:50%;display:inline-grid;place-items:center;position:relative;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));color:#fff;font-weight:600;font-size:var(--nyx-fs-sm);font-family:var(--nyx-font-display);border:2px solid var(--nyx-surface);flex-shrink:0}
+.nyx-avatar{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;line-height:1;text-align:center;position:relative;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));color:#fff;font-weight:600;font-size:var(--nyx-fs-sm);font-family:var(--nyx-font-display);border:2px solid var(--nyx-surface);flex-shrink:0;overflow:hidden}
 .nyx-avatar.online::after{content:"";position:absolute;inset-inline-end:-1px;bottom:-1px;width:11px;height:11px;border-radius:50%;background:var(--nyx-accent-2);border:2px solid var(--nyx-bg)}
 .nyx-avatar-group{display:inline-flex}
 .nyx-avatar-group .nyx-avatar{margin-inline-start:-12px;transition:transform .2s var(--nyx-ease)}

@@ -512,13 +512,14 @@
   /* ---------- date picker ---------- */
   var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   var DOW = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-  function calMonthHtml(y, m, sel) {
+  function calMonthHtml(y, m, sel, today) {
     var first = new Date(y, m, 1).getDay(), days = new Date(y, m + 1, 0).getDate();
     var h = '<div class="nyx-calendar-head"><button data-cal="prev" aria-label="Previous month">‹</button><span>' + MONTHS[m] + ' ' + y + '</span><button data-cal="next" aria-label="Next month">›</button></div><div class="nyx-calendar-grid">';
     DOW.forEach(function (d) { h += '<span class="dow">' + d + '</span>'; });
     for (var i = 0; i < first; i++) h += '<span></span>';
     for (var d = 1; d <= days; d++) {
       var s = (sel && sel.y === y && sel.m === m && sel.d === d) ? ' selected' : '';
+      if (today && today.y === y && today.m === m && today.d === d) s += ' today';
       h += '<span class="day' + s + '" data-day="' + d + '">' + d + '</span>';
     }
     return h + '</div>';
@@ -529,13 +530,16 @@
       var input = dp.querySelector('input'), pop = dp.querySelector('.nyx-datepicker-pop');
       if (!pop) { pop = doc.createElement('div'); pop.className = 'nyx-datepicker-pop'; dp.appendChild(pop); }
       var cal = doc.createElement('div'); cal.className = 'nyx-calendar'; pop.appendChild(cal);
-      var now = new Date(), st = { y: now.getFullYear(), m: now.getMonth(), sel: null };
-      function render() { cal.innerHTML = calMonthHtml(st.y, st.m, st.sel); }
+      var now = new Date(), st = { y: now.getFullYear(), m: now.getMonth(), sel: null, today: { y: now.getFullYear(), m: now.getMonth(), d: now.getDate() } };
+      function render() { cal.innerHTML = calMonthHtml(st.y, st.m, st.sel, st.today); }
       render();
       input.addEventListener('focus', function () { dp.classList.add('open'); });
       cal.addEventListener('click', function (e) {
         var nav = e.target.closest('[data-cal]');
         if (nav) {
+          /* render() replaces the clicked button's node; without this the click would
+             bubble to the document handler as a detached target and close the picker. */
+          e.stopPropagation();
           st.m += nav.getAttribute('data-cal') === 'next' ? 1 : -1;
           if (st.m > 11) { st.m = 0; st.y++; } if (st.m < 0) { st.m = 11; st.y--; }
           render(); return;
@@ -547,6 +551,94 @@
           dp.classList.remove('open'); render(); input.dispatchEvent(new Event('change', { bubbles: true }));
         }
       });
+    });
+  }
+
+  /* ---------- standalone calendar (data-nyx-calendar) ---------- */
+  function initCalendar(root) {
+    $$('.nyx-calendar[data-nyx-calendar]', root).filter(function (c) { return !c._nyxCal; }).forEach(function (cal) {
+      cal._nyxCal = true;
+      var now = new Date();
+      var st = { y: now.getFullYear(), m: now.getMonth(), sel: null, today: { y: now.getFullYear(), m: now.getMonth(), d: now.getDate() } };
+      function render() { cal.innerHTML = calMonthHtml(st.y, st.m, st.sel, st.today); }
+      render();
+      cal.addEventListener('click', function (e) {
+        var nav = e.target.closest('[data-cal]');
+        if (nav) {
+          st.m += nav.getAttribute('data-cal') === 'next' ? 1 : -1;
+          if (st.m > 11) { st.m = 0; st.y++; } if (st.m < 0) { st.m = 11; st.y--; }
+          render(); return;
+        }
+        var day = e.target.closest('.day[data-day]');
+        if (day) {
+          st.sel = { y: st.y, m: st.m, d: +day.getAttribute('data-day') };
+          render();
+          cal.dispatchEvent(new CustomEvent('nyx:date', { bubbles: true, detail: st.sel }));
+        }
+      });
+    });
+  }
+
+  /* ---------- dual-handle range (min / max); paints --nyx-lo / --nyx-hi ---------- */
+  function rangeFill(wrap) {
+    var ins = $$('input[type="range"]', wrap); if (ins.length < 2) return;
+    var min = parseFloat(ins[0].min) || 0, max = parseFloat(ins[0].max); if (isNaN(max)) max = 100;
+    var a = parseFloat(ins[0].value), b = parseFloat(ins[1].value);
+    if (isNaN(a)) a = min; if (isNaN(b)) b = max;
+    var lo = Math.min(a, b), hi = Math.max(a, b);
+    function pct(v) { return max > min ? ((v - min) / (max - min)) * 100 : 0; }
+    wrap.style.setProperty('--nyx-lo', pct(lo));
+    wrap.style.setProperty('--nyx-hi', pct(hi));
+    wrap.setAttribute('data-lo', lo); wrap.setAttribute('data-hi', hi);
+    var out = wrap.parentNode && wrap.parentNode.querySelector('.nyx-range-out');
+    if (out) out.textContent = lo + ' – ' + hi;
+  }
+  function initRange(root) {
+    $$('.nyx-range', root).filter(function (r) { return $$('input[type="range"]', r).length >= 2 && !r._nyxRg; })
+      .forEach(function (r) { r._nyxRg = true; rangeFill(r); });
+  }
+  doc.addEventListener('input', function (e) {
+    var r = e.target.closest && e.target.closest('.nyx-range');
+    if (r && e.target.type === 'range') rangeFill(r);
+  });
+
+  /* ---------- kanban: drag & drop cards within / across columns ---------- */
+  function initKanban(root) {
+    $$('.nyx-kanban', root).filter(function (k) { return !k._nyxKb; }).forEach(function (board) {
+      board._nyxKb = true;
+      var dragging = null;
+      function mark() { $$('.nyx-kanban-card', board).forEach(function (c) { c.setAttribute('draggable', 'true'); }); }
+      mark();
+      function cardAfter(col, y) {
+        var cards = $$('.nyx-kanban-card:not(.nyx-dragging)', col), best = null, bestOff = -Infinity;
+        cards.forEach(function (c) {
+          var box = c.getBoundingClientRect(), off = y - box.top - box.height / 2;
+          if (off < 0 && off > bestOff) { bestOff = off; best = c; }
+        });
+        return best;
+      }
+      board.addEventListener('dragstart', function (e) {
+        var card = e.target.closest('.nyx-kanban-card'); if (!card) return;
+        dragging = card; card.classList.add('nyx-dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        try { e.dataTransfer.setData('text/plain', card.textContent); } catch (x) {}
+      });
+      board.addEventListener('dragend', function () {
+        if (dragging) dragging.classList.remove('nyx-dragging');
+        $$('.nyx-kanban-col', board).forEach(function (col) { col.classList.remove('nyx-drop-over'); });
+        if (dragging) dragging.dispatchEvent(new CustomEvent('nyx:kanban-move', { bubbles: true }));
+        dragging = null;
+      });
+      board.addEventListener('dragover', function (e) {
+        if (!dragging) return;
+        var col = e.target.closest('.nyx-kanban-col'); if (!col) return;
+        e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+        $$('.nyx-kanban-col', board).forEach(function (c) { c.classList.toggle('nyx-drop-over', c === col); });
+        var after = cardAfter(col, e.clientY);
+        if (after == null) col.appendChild(dragging);
+        else col.insertBefore(dragging, after);
+      });
+      board.addEventListener('drop', function (e) { if (dragging) e.preventDefault(); });
     });
   }
 
@@ -585,7 +677,17 @@
       z._nyxZ = true;
       var amt = z.querySelector('.nyx-zakat-amount'), out = z.querySelector('.nyx-zakat-result');
       var rate = (parseFloat(z.getAttribute('data-rate')) || 2.5) / 100;
-      function calc() { var v = parseFloat(amt.value) || 0; if (out) out.textContent = (v * rate).toLocaleString(undefined, { maximumFractionDigits: 2 }); }
+      var grp = amt && amt.closest('.nyx-input-group');
+      function calc() {
+        if (!amt) return;
+        /* string input → keep digits + a single decimal point only */
+        var clean = amt.value.replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1');
+        if (clean !== amt.value) amt.value = clean;
+        var invalid = amt.value !== '' && isNaN(parseFloat(amt.value));
+        if (grp) grp.classList.toggle('nyx-invalid', invalid);
+        var v = parseFloat(amt.value) || 0;
+        if (out) out.textContent = (v * rate).toLocaleString(undefined, { maximumFractionDigits: 2 });
+      }
       if (amt) { amt.addEventListener('input', calc); calc(); }
     });
   }
@@ -660,6 +762,9 @@
     initReveal(root);
     initSquares(root);
     initSlider(root);
+    initRange(root);
+    initKanban(root);
+    initCalendar(root);
     initNumerals(root);
     initHierarchy(root);
     initPrayerTimes(root);

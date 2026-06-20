@@ -28,8 +28,10 @@
 .nyx-tooltip:hover .nyx-tip.right{transform:translateY(-50%)}
 .nyx-popover{position:relative;display:inline-flex}
 .nyx-popover .nyx-pop{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);z-index:120;min-width:200px;padding:var(--nyx-s4);background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);font-size:var(--nyx-fs-sm);display:none}
-.nyx-popover.open .nyx-pop{display:block;animation:nyx-fade .2s var(--nyx-ease)}
+.nyx-popover.open .nyx-pop{display:block;animation:nyx-pop-in .18s var(--nyx-ease)}
 .nyx-popover .nyx-pop::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:var(--nyx-surface-2);border-right:1px solid var(--nyx-border);border-bottom:1px solid var(--nyx-border);margin-top:-5px}
+/* keep translateX(-50%) on every frame so the panel never drifts off-centre while opening */
+@keyframes nyx-pop-in{from{opacity:0;transform:translateX(-50%) translateY(6px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
 /* collapse + accordion */
 .nyx-collapse{max-height:0;overflow:hidden;transition:max-height .3s var(--nyx-ease)}
@@ -52,3 +54,12 @@
 .nyx-carousel-dots{position:absolute;bottom:12px;inset-inline:0;display:flex;justify-content:center;gap:6px;z-index:2}
 .nyx-carousel-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(255,255,255,.45);cursor:pointer;padding:0;transition:all .2s var(--nyx-ease)}
 .nyx-carousel-dots button.active{background:#fff;box-shadow:var(--nyx-glow);width:20px;border-radius:var(--nyx-radius-full)}
+/* slide content shouldn't add its own frame on top of the carousel border */
+.nyx-carousel .nyx-slide > .nyx-spotlight{border:0;border-radius:0}
+.nyx-carousel.flat{border:0}
+.nyx-carousel.flat .nyx-carousel-ctrl .nyx-btn{box-shadow:var(--nyx-shadow-lg)}
+/* optional caption band over a slide */
+.nyx-carousel-caption{position:absolute;inset-inline:0;bottom:0;z-index:1;padding:var(--nyx-s5) var(--nyx-s4) var(--nyx-s4);background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;text-align:start}
+.nyx-carousel-caption h3,.nyx-carousel-caption h4{color:#fff;margin:0}
+/* fade-only transition (no horizontal jump) is the default; .slide cross-fades softer */
+.nyx-carousel.fade .nyx-slide.active{animation:nyx-fade-in .5s var(--nyx-ease)}

@@ -139,7 +139,7 @@
             '<div class="nyx-flex nyx-gap-5 nyx-wrap nyx-items-center" style="margin-bottom:var(--nyx-s4)">' +
             '<label class="nyx-caption nyx-flex nyx-items-center nyx-gap-2">Accent <input type="color" value="#6c63ff" oninput="document.getElementById(\'nyxPlay\').style.setProperty(\'--nyx-accent\',this.value)"></label>' +
             '<label class="nyx-caption nyx-flex nyx-items-center nyx-gap-2">Accent 2 <input type="color" value="#00d4aa" oninput="document.getElementById(\'nyxPlay\').style.setProperty(\'--nyx-accent-2\',this.value)"></label>' +
-            '<label class="nyx-caption nyx-flex nyx-items-center nyx-gap-2">Radius <input type="range" min="0" max="22" value="10" class="nyx-range" style="width:120px" oninput="var p=document.getElementById(\'nyxPlay\');p.style.setProperty(\'--nyx-radius\',this.value+\'px\');p.style.setProperty(\'--nyx-radius-lg\',(+this.value+6)+\'px\')"></label>' +
+            '<label class="nyx-caption nyx-flex nyx-items-center nyx-gap-2">Radius <input type="range" min="0" max="22" value="10" class="nyx-slider" style="width:120px" oninput="var p=document.getElementById(\'nyxPlay\');p.style.setProperty(\'--nyx-radius\',this.value+\'px\');p.style.setProperty(\'--nyx-radius-lg\',(+this.value+6)+\'px\')"></label>' +
             '</div>' +
             '<div class="nyx-flex nyx-gap-3 nyx-wrap nyx-items-center">' +
             '<button class="nyx-btn nyx-btn-primary">Primary</button>' +
@@ -348,9 +348,9 @@
     },
     {
       id: 'phone', group: 'Forms', title: 'Phone input', added: 'v1.5',
-      summary: 'A dial-code select fused with a number field — preloaded here with Gulf / MENA codes.',
+      summary: 'A dial-code select fused with a number field — preloaded here with flags + Gulf / MENA codes, and a single focus ring around the whole control.',
       sections: [
-        { title: 'Dial code + number', demo: '<div class="nyx-phone" style="max-width:300px"><select aria-label="country code"><option>+966</option><option>+971</option><option>+20</option><option>+965</option><option>+974</option><option>+973</option><option>+968</option></select><input type="tel" placeholder="5X XXX XXXX" aria-label="phone"></div>' }
+        { title: 'Dial code + number', demo: '<div class="nyx-phone" style="max-width:300px"><select aria-label="country code"><option>🇸🇦 +966</option><option>🇦🇪 +971</option><option>🇪🇬 +20</option><option>🇰🇼 +965</option><option>🇶🇦 +974</option><option>🇧🇭 +973</option><option>🇴🇲 +968</option></select><input type="tel" placeholder="5X XXX XXXX" aria-label="phone"></div>' }
       ],
       classes: [['nyx-phone', 'Flex wrapper; focus-within glows the whole control.'], ['nyx-phone select', 'The dial-code addon.']]
     },
@@ -381,9 +381,9 @@
 
     {
       id: 'range', group: 'Forms', title: 'Range', added: 'v1.1',
-      summary: 'A styled slider input with a glowing thumb that works across WebKit and Firefox.',
-      sections: [{ title: 'Slider', demo: '<input type="range" class="nyx-range" min="0" max="100" value="60" aria-label="Volume">' }],
-      classes: [['nyx-range', 'Styled input[type=range].']]
+      summary: 'A dual-handle range for picking a min and a max. The runtime keeps the lower value as the start handle, paints the selected segment, and (optionally) writes the live value to a sibling .nyx-range-out.',
+      sections: [{ title: 'Min / max', demo: '<div style="max-width:340px"><div class="nyx-range"><div class="nyx-range-track"></div><div class="nyx-range-fill"></div><input type="range" min="0" max="100" value="25" aria-label="minimum"><input type="range" min="0" max="100" value="75" aria-label="maximum"></div><div style="display:flex;justify-content:space-between;margin-top:6px"><span class="nyx-caption">Selected range</span><span class="nyx-range-out nyx-caption">25 – 75</span></div></div>' }],
+      classes: [['nyx-range', 'Dual-handle wrapper: two input[type=range] + .nyx-range-track + .nyx-range-fill.'], ['nyx-range-fill', 'Selected segment (driven by --nyx-lo / --nyx-hi the runtime sets).'], ['nyx-range-out', 'Optional sibling showing the live “lo – hi” value.']]
     },
     {
       id: 'floating', group: 'Forms', title: 'Floating label', added: 'v1.1',
@@ -401,8 +401,11 @@
     {
       id: 'otp', group: 'Forms', title: 'OTP input', added: 'v1.2',
       summary: 'A one-time-code / PIN entry that auto-advances as you type and steps back on delete.',
-      sections: [{ title: 'Four digits', demo: '<div class="nyx-otp"><input maxlength="1" inputmode="numeric" aria-label="digit 1"><input maxlength="1" inputmode="numeric" aria-label="digit 2"><input maxlength="1" inputmode="numeric" aria-label="digit 3"><input maxlength="1" inputmode="numeric" aria-label="digit 4"></div>' }],
-      classes: [['nyx-otp', 'Wrapper of single-character inputs (auto-advance via the runtime).']]
+      sections: [
+        { title: 'Four digits', demo: '<div class="nyx-otp"><input maxlength="1" inputmode="numeric" aria-label="digit 1"><input maxlength="1" inputmode="numeric" aria-label="digit 2"><input maxlength="1" inputmode="numeric" aria-label="digit 3"><input maxlength="1" inputmode="numeric" aria-label="digit 4"></div>' },
+        { title: 'Need more? Use otp-input-kit', nocode: true, demo: '<div class="nyx-alert nyx-alert-info"><span class="nyx-alert-icon">📦</span><div>For paste-to-fill, masking, variable length and framework bindings, reach for the standalone package <strong>otp-input-kit</strong> by the same author — <a href="https://fadyehabamer.github.io/otp-input-kit/demo/" target="_blank" rel="noopener" style="color:var(--nyx-accent)">live demo &amp; docs ↗</a>.</div></div>' }
+      ],
+      classes: [['nyx-otp', 'Wrapper of single-character inputs (auto-advance via the runtime).'], ['otp-input-kit', 'External package for advanced OTP (paste, masking, variable length): fadyehabamer.github.io/otp-input-kit.']]
     },
     {
       id: 'tag-input', group: 'Forms', title: 'Tag input', added: 'v1.2',
@@ -481,9 +484,9 @@
       id: 'status-bar', group: 'Components', title: 'Status bar',
       summary: 'A multi-step progress indicator for onboarding and checkout flows, à la Stripe.',
       sections: [
-        { title: 'Steps', demo: '<div class="nyx-status-bar"><div class="nyx-step done"><span class="nyx-step-dot">✓</span> Account</div><span class="nyx-step-line"></span><div class="nyx-step done"><span class="nyx-step-dot">✓</span> Profile</div><span class="nyx-step-line"></span><div class="nyx-step current"><span class="nyx-step-dot">3</span> Billing</div><span class="nyx-step-line"></span><div class="nyx-step"><span class="nyx-step-dot">4</span> Done</div></div>' }
+        { title: 'Steps', demo: '<div class="nyx-status-bar"><div class="nyx-step done"><span class="nyx-step-dot">✓</span><span>Account</span></div><div class="nyx-step done"><span class="nyx-step-dot">✓</span><span>Profile</span></div><div class="nyx-step current"><span class="nyx-step-dot">3</span><span>Billing</span></div><div class="nyx-step"><span class="nyx-step-dot">4</span><span>Done</span></div></div>' }
       ],
-      classes: [['nyx-status-bar', 'Flex row of steps.'], ['nyx-step + .done / .current', 'A step and its state.'], ['nyx-step-line', 'Connector between steps.']]
+      classes: [['nyx-status-bar', 'Even flex row; auto-draws connectors between steps.'], ['nyx-step (+ .done / .current)', 'A step: dot + label, with state.'], ['nyx-step-dot', 'The numbered or checked circle.']]
     },
     {
       id: 'navbar', group: 'Components', title: 'Navbar',
@@ -521,9 +524,12 @@
       id: 'pagination', group: 'Components', title: 'Pagination',
       summary: 'Numbered page controls with a glowing active page.',
       sections: [
-        { title: 'Basic', demo: '<div class="nyx-pagination"><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>›</button></div>' }
+        { title: 'Basic', demo: '<div class="nyx-pagination"><button>‹</button><button class="active">1</button><button>2</button><button>3</button><span class="nyx-page-gap">…</span><button>12</button><button>›</button></div>' },
+        { title: 'Rounded', demo: '<div class="nyx-pagination rounded"><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>›</button></div>' },
+        { title: 'Ghost', demo: '<div class="nyx-pagination ghost"><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>›</button></div>' },
+        { title: 'Compact + page info', demo: '<div class="nyx-flex nyx-items-center nyx-gap-4 nyx-wrap"><div class="nyx-pagination sm"><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>›</button></div><span class="nyx-pagination-info">Page 1 of 12</span></div>' }
       ],
-      classes: [['nyx-pagination', 'Wrapper around <button> pages.'], ['button.active', 'Current page.']]
+      classes: [['nyx-pagination', 'Wrapper around <button> pages.'], ['button.active / :disabled', 'Current / disabled page.'], ['.rounded / .ghost / .sm', 'Pill, borderless and compact variants.'], ['nyx-page-gap / nyx-pagination-info', 'Ellipsis gap and a “page X of Y” label.']]
     },
     {
       id: 'command-palette', group: 'Components', title: 'Command palette',
@@ -538,9 +544,11 @@
       summary: 'A styled table with hover rows, a click-to-sort variant, a dense spreadsheet-like grid, and a KPI row.',
       sections: [
         { title: 'Sortable table', text: 'Add nyx-table-sortable and click any header — the runtime sorts numerically or alphabetically.', demo: '<table class="nyx-table nyx-table-sortable"><thead><tr><th>User</th><th>Plan</th><th>MRR</th></tr></thead><tbody><tr><td>Ava Chen</td><td>Pro</td><td>$49</td></tr><tr><td>Liam Patel</td><td>Enterprise</td><td>$499</td></tr><tr><td>Noah Kim</td><td>Starter</td><td>$0</td></tr></tbody></table>' },
+        { title: 'Striped · bordered · compact', demo: '<table class="nyx-table striped bordered compact"><thead><tr><th>User</th><th>Plan</th><th>MRR</th></tr></thead><tbody><tr><td>Ava Chen</td><td>Pro</td><td>$49</td></tr><tr><td>Liam Patel</td><td>Enterprise</td><td>$499</td></tr><tr class="selected"><td>Noah Kim</td><td>Starter</td><td>$0</td></tr></tbody></table>' },
+        { title: 'Responsive (scroll)', demo: '<div class="nyx-table-wrap"><table class="nyx-table"><thead><tr><th>User</th><th>Plan</th><th>Seats</th><th>MRR</th><th>Status</th></tr></thead><tbody><tr><td>Ava Chen</td><td>Pro</td><td>12</td><td>$49</td><td><span class="nyx-badge nyx-badge-success">Active</span></td></tr><tr><td>Liam Patel</td><td>Enterprise</td><td>240</td><td>$499</td><td><span class="nyx-badge nyx-badge-success">Active</span></td></tr></tbody></table></div>' },
         { title: 'KPI row', demo: '<div class="nyx-kpi-row"><div class="nyx-card-stat"><span class="nyx-stat-label">MRR</span><span class="nyx-stat-num">$48.2k</span><span class="nyx-badge nyx-badge-success">▲ 12%</span></div><div class="nyx-card-stat"><span class="nyx-stat-label">Churn</span><span class="nyx-stat-num">1.8%</span><span class="nyx-badge nyx-badge-success">▼ 0.3%</span></div><div class="nyx-card-stat"><span class="nyx-stat-label">Signups</span><span class="nyx-stat-num">1,204</span><span class="nyx-badge nyx-badge-warning">flat</span></div><div class="nyx-card-stat"><span class="nyx-stat-label">NPS</span><span class="nyx-stat-num">72</span><span class="nyx-badge nyx-badge-success">▲ 5</span></div></div>' }
       ],
-      classes: [['nyx-table', 'Styled table.'], ['nyx-table-sortable', 'Adds click-to-sort headers.'], ['nyx-data-grid', 'Dense, sticky-header grid.'], ['nyx-kpi-row', '4-up responsive stat grid.']]
+      classes: [['nyx-table', 'Styled table.'], ['.striped / .bordered / .compact / .borderless', 'Row stripes, cell borders, dense padding, no borders.'], ['tr.selected', 'Highlighted row.'], ['nyx-table-sortable', 'Click-to-sort headers (runtime).'], ['nyx-table-wrap', 'Scroll container for wide tables.'], ['nyx-kpi-row', '4-up responsive stat grid.']]
     },
     {
       id: 'modal', group: 'Components', title: 'Modal',
@@ -562,7 +570,7 @@
       id: 'tooltips', group: 'Components', title: 'Tooltips',
       summary: 'CSS-only hover tooltips on any of four sides — no JavaScript.',
       sections: [
-        { title: 'Four sides', demo: '<div class="nyx-flex nyx-gap-4 nyx-wrap"><span class="nyx-tooltip"><button class="nyx-btn nyx-btn-glass">Top</button><span class="nyx-tip top">Tooltip on top</span></span><span class="nyx-tooltip"><button class="nyx-btn nyx-btn-glass">Right</button><span class="nyx-tip right">On the right</span></span><span class="nyx-tooltip"><button class="nyx-btn nyx-btn-glass">Bottom</button><span class="nyx-tip bottom">Below</span></span></div>' }
+        { title: 'Four sides', demo: '<div class="nyx-flex nyx-gap-4 nyx-wrap"><span class="nyx-tooltip"><button class="nyx-btn nyx-btn-glass">Top</button><span class="nyx-tip top">Tooltip on top</span></span><span class="nyx-tooltip"><button class="nyx-btn nyx-btn-glass">Right</button><span class="nyx-tip right">On the right</span></span><span class="nyx-tooltip"><button class="nyx-btn nyx-btn-glass">Bottom</button><span class="nyx-tip bottom">Below</span></span><span class="nyx-tooltip"><button class="nyx-btn nyx-btn-glass">Left</button><span class="nyx-tip left">On the left</span></span></div>' }
       ],
       classes: [['nyx-tooltip', 'Hover target wrapper.'], ['nyx-tip top/right/bottom/left', 'Tooltip + placement.']]
     },
@@ -620,8 +628,8 @@
     {
       id: 'carousel', group: 'Components', title: 'Carousel', added: 'v1.1',
       summary: 'A slideshow with prev/next controls and clickable indicator dots.',
-      sections: [{ title: 'Slides', demo: '<div class="nyx-carousel" data-nyx-carousel><div class="nyx-slide active"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2">Slide one</h3></div></div><div class="nyx-slide"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2 nyx-gradient-text">Slide two</h3></div></div><div class="nyx-slide"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2">Slide three</h3></div></div><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl prev" data-nyx-slide="prev" aria-label="Previous">‹</button><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl next" data-nyx-slide="next" aria-label="Next">›</button><div class="nyx-carousel-dots"><button class="active" data-nyx-slide-to="0" aria-label="Slide 1"></button><button data-nyx-slide-to="1" aria-label="Slide 2"></button><button data-nyx-slide-to="2" aria-label="Slide 3"></button></div></div>' }],
-      classes: [['nyx-carousel', 'Slideshow wrapper.'], ['nyx-slide', 'A slide (one has .active).'], ['data-nyx-slide / data-nyx-slide-to', 'Prev/next controls and indicator dots.']]
+      sections: [{ title: 'Slides', demo: '<div class="nyx-carousel" data-nyx-carousel><div class="nyx-slide active"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2">Slide one</h3></div></div><div class="nyx-slide"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2 nyx-gradient-text">Slide two</h3></div></div><div class="nyx-slide"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2">Slide three</h3></div></div><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl prev" data-nyx-slide="prev" aria-label="Previous">‹</button><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl next" data-nyx-slide="next" aria-label="Next">›</button><div class="nyx-carousel-dots"><button class="active" data-nyx-slide-to="0" aria-label="Slide 1"></button><button data-nyx-slide-to="1" aria-label="Slide 2"></button><button data-nyx-slide-to="2" aria-label="Slide 3"></button></div></div>' }, { title: 'Flat, with caption', demo: '<div class="nyx-carousel flat" data-nyx-carousel><div class="nyx-slide active"><div style="position:relative;min-height:150px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2))"><div class="nyx-carousel-caption"><h4 class="nyx-h4">Mountains</h4><p class="nyx-caption">A caption band over the slide.</p></div></div></div><div class="nyx-slide"><div style="position:relative;min-height:150px;background:linear-gradient(120deg,var(--nyx-accent-2),var(--nyx-accent))"><div class="nyx-carousel-caption"><h4 class="nyx-h4">Ocean</h4><p class="nyx-caption">Add .flat to drop the outer frame.</p></div></div></div><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl prev" data-nyx-slide="prev" aria-label="Previous">‹</button><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl next" data-nyx-slide="next" aria-label="Next">›</button></div>' }],
+      classes: [['nyx-carousel (+ .flat)', 'Slideshow wrapper; .flat drops the border.'], ['nyx-slide', 'A slide (one has .active).'], ['nyx-carousel-caption', 'Optional gradient caption band over a slide.'], ['data-nyx-slide / data-nyx-slide-to', 'Prev/next controls and indicator dots.']]
     },
     {
       id: 'nav-pills', group: 'Components', title: 'Nav pills', added: 'v1.1',
@@ -747,9 +755,9 @@
     },
     {
       id: 'calendar', group: 'Components', title: 'Calendar', added: 'v1.2',
-      summary: 'A styled month grid with today and selected states — compose your own date picker around it.',
-      sections: [{ title: 'Month', demo: '<div class="nyx-calendar"><div class="nyx-calendar-head"><button class="nyx-btn nyx-btn-icon nyx-btn-sm nyx-btn-ghost" aria-label="previous month">‹</button><span>June 2026</span><button class="nyx-btn nyx-btn-icon nyx-btn-sm nyx-btn-ghost" aria-label="next month">›</button></div><div class="nyx-calendar-grid"><span class="dow">S</span><span class="dow">M</span><span class="dow">T</span><span class="dow">W</span><span class="dow">T</span><span class="dow">F</span><span class="dow">S</span><span class="day muted">31</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day today">19</span><span class="day">20</span><span class="day">21</span><span class="day selected">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span><span class="day muted">1</span><span class="day muted">2</span><span class="day muted">3</span><span class="day muted">4</span></div></div>' }],
-      classes: [['nyx-calendar', 'Month container.'], ['nyx-calendar-grid .day', 'Day cell (+ .today / .selected / .muted).']]
+      summary: 'A month grid that renders the current month and pages through months with ‹ ›; click a day to select it. Add data-nyx-calendar and the runtime wires it (today + selection states). Leave the attribute off for a static, read-only month.',
+      sections: [{ title: 'Interactive month', demo: '<div class="nyx-calendar" data-nyx-calendar><div class="nyx-calendar-head"><button class="nyx-btn nyx-btn-icon nyx-btn-sm nyx-btn-ghost" aria-label="previous month">‹</button><span>June 2026</span><button class="nyx-btn nyx-btn-icon nyx-btn-sm nyx-btn-ghost" aria-label="next month">›</button></div><div class="nyx-calendar-grid"><span class="dow">S</span><span class="dow">M</span><span class="dow">T</span><span class="dow">W</span><span class="dow">T</span><span class="dow">F</span><span class="dow">S</span><span class="day muted">31</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day today">19</span><span class="day">20</span><span class="day">21</span><span class="day selected">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span><span class="day muted">1</span><span class="day muted">2</span><span class="day muted">3</span><span class="day muted">4</span></div></div>' }],
+      classes: [['nyx-calendar (+ data-nyx-calendar)', 'Month container; the attribute makes ‹ › paging and day-select live.'], ['nyx-calendar-grid .day', 'Day cell (+ .today / .selected / .muted).']]
     },
     {
       id: 'file', group: 'Components', title: 'File item', added: 'v1.2',
@@ -993,8 +1001,11 @@
     {
       id: 'reveal', group: 'Motion', title: 'Scroll reveal', added: 'v1.3',
       summary: 'Add data-nyx-reveal to fade-and-rise elements in as they scroll into view — wired automatically by the runtime via IntersectionObserver.',
-      sections: [{ title: 'Usage', lang: 'html', code: '<div data-nyx-reveal>\n  I fade and rise into view on scroll.\n</div>' }],
-      classes: [['data-nyx-reveal', 'Reveal-on-scroll (runtime adds .nyx-reveal then .nyx-in).']]
+      sections: [
+        { title: 'Live demo', text: 'Each card fades and rises in once as it enters the viewport — scroll the page to retrigger. Stagger a group by adding an inline transition-delay to each item.', demo: '<div class="nyx-flex nyx-gap-4 nyx-wrap"><div class="nyx-card" style="flex:1 1 150px" data-nyx-reveal>Fades in</div><div class="nyx-card" style="flex:1 1 150px;transition-delay:.12s" data-nyx-reveal>…then this</div><div class="nyx-card" style="flex:1 1 150px;transition-delay:.24s" data-nyx-reveal>…then this</div></div>' },
+        { title: 'Usage', lang: 'html', code: '<div data-nyx-reveal>I fade and rise in on scroll.</div>\n\n<!-- stagger a group with inline delays -->\n<div data-nyx-reveal style="transition-delay:.12s"> … </div>\n<div data-nyx-reveal style="transition-delay:.24s"> … </div>\n\n<!-- after injecting markup dynamically, re-wire: -->\n<script>Nyx.init(container)</script>' }
+      ],
+      classes: [['data-nyx-reveal', 'Reveal-on-scroll; the runtime adds .nyx-reveal then .nyx-in via IntersectionObserver.'], ['transition-delay', 'Inline per-item delay to stagger a group.']]
     },
 
     /* ===== BACKGROUNDS ===== */
@@ -1106,11 +1117,11 @@
     },
     {
       id: 'kanban', group: 'Components', title: 'Kanban board', added: 'v1.7',
-      summary: 'Horizontally-scrolling columns of cards for boards and pipelines. RTL flips the column order automatically.',
+      summary: 'Horizontally-scrolling columns of cards for boards and pipelines. Cards are drag-and-drop — reorder within a column or move across columns (the runtime wires it). RTL flips the column order automatically.',
       sections: [
         { title: 'Board', demo: '<div class="nyx-kanban"><div class="nyx-kanban-col"><h4>To do <span class="nyx-badge">2</span></h4><div class="nyx-kanban-card">Design tokens</div><div class="nyx-kanban-card">RTL audit</div></div><div class="nyx-kanban-col"><h4>In progress <span class="nyx-badge">1</span></h4><div class="nyx-kanban-card">Charts module</div></div><div class="nyx-kanban-col"><h4>Done <span class="nyx-badge">1</span></h4><div class="nyx-kanban-card">Backgrounds</div></div></div>' }
       ],
-      classes: [['nyx-kanban', 'Scrollable column row.'], ['nyx-kanban-col', 'A column (header + cards).'], ['nyx-kanban-card', 'A draggable-looking card.']]
+      classes: [['nyx-kanban', 'Scrollable column row (runtime enables drag-and-drop).'], ['nyx-kanban-col', 'A column (header + cards); highlights as a drop target.'], ['nyx-kanban-card', 'A card you can drag between columns.']]
     },
     {
       id: 'notifications', group: 'Components', title: 'Notifications', added: 'v1.7',
@@ -1178,9 +1189,9 @@
     },
     {
       id: 'zakat', group: 'Regional', title: 'Zakat calculator', added: 'v1.5',
-      summary: 'A live 2.5% calculator (override with data-rate). Type an amount of eligible wealth and the due figure updates instantly.',
+      summary: 'A live 2.5% calculator (override with data-rate). The amount is a text field with built-in numeric validation (digits + one decimal only); type eligible wealth and the due figure updates instantly.',
       sections: [
-        { title: 'Calculate', demo: '<div class="nyx-zakat"><div><label class="nyx-label">Eligible wealth</label><div class="nyx-input-group"><span class="nyx-addon">ر.س</span><input class="nyx-input nyx-zakat-amount" type="number" value="100000" aria-label="wealth"></div></div><div class="nyx-zakat-out"><span class="nyx-muted">Zakat due (2.5%)</span><b><span class="nyx-zakat-result">0</span> ر.س</b></div></div>' }
+        { title: 'Calculate', demo: '<div class="nyx-zakat"><div><label class="nyx-label">Eligible wealth</label><div class="nyx-input-group"><span class="nyx-addon">ر.س</span><input class="nyx-input nyx-zakat-amount" type="text" inputmode="decimal" value="100000" aria-label="wealth"></div></div><div class="nyx-zakat-out"><span class="nyx-muted">Zakat due (2.5%)</span><b><span class="nyx-zakat-result">0</span> ر.س</b></div></div>' }
       ],
       classes: [['nyx-zakat', 'Wrapper (data-rate sets the %; default 2.5).'], ['nyx-zakat-amount', 'The amount input (runtime listens).'], ['nyx-zakat-result', 'Where the computed figure is written.']]
     },

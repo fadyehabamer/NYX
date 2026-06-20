@@ -13,6 +13,15 @@
 .nyx-table tbody tr:last-child td{border-bottom:none}
 .nyx-table-sortable th{cursor:pointer;user-select:none}
 .nyx-table-sortable th::after{content:"↕";margin-inline-start:6px;opacity:.4;font-size:11px}
+/* variants */
+.nyx-table.striped tbody tr:nth-child(even){background:color-mix(in srgb,var(--nyx-surface-2) 60%,transparent)}
+.nyx-table.bordered th,.nyx-table.bordered td{border-inline-end:1px solid var(--nyx-border)}
+.nyx-table.bordered th:last-child,.nyx-table.bordered td:last-child{border-inline-end:0}
+.nyx-table.compact th,.nyx-table.compact td{padding:7px 12px}
+.nyx-table.borderless,.nyx-table.borderless th,.nyx-table.borderless td{border:0}
+.nyx-table tbody tr.selected{background:color-mix(in srgb,var(--nyx-accent) 12%,transparent)}
+.nyx-table-wrap{overflow-x:auto;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg)}
+.nyx-table-wrap > .nyx-table{border:0;border-radius:0}
 .nyx-data-grid{font-size:var(--nyx-fs-xs);font-family:var(--nyx-font-mono);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);overflow:auto}
 .nyx-data-grid table{width:100%;border-collapse:collapse}
 .nyx-data-grid th,.nyx-data-grid td{padding:6px 10px;border:1px solid var(--nyx-border);white-space:nowrap}

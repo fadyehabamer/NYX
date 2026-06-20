@@ -17,11 +17,18 @@
 .nyx-input-group .nyx-addon{display:grid;place-items:center;padding-inline:14px;color:var(--nyx-text-muted);background:var(--nyx-surface-2);font-size:var(--nyx-fs-sm)}
 .nyx-input-group .nyx-input{border:none;background:transparent;box-shadow:none !important}
 .nyx-input-group .nyx-btn{border-radius:0}
+.nyx-input-group.nyx-invalid{border-color:var(--nyx-danger)}
+.nyx-input-group.nyx-invalid:focus-within{box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-danger) 20%,transparent)}
 
 .nyx-search{display:flex;align-items:center;gap:var(--nyx-s3);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-full);padding:8px 8px 8px 16px;transition:all .2s var(--nyx-ease);max-width:420px}
 .nyx-search:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 18%,transparent),var(--nyx-glow)}
 .nyx-search input{flex:1;background:transparent;border:none;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-sm)}
 .nyx-search .nyx-search-icon{color:var(--nyx-text-muted)}
+/* grouped inputs: only the :focus-within wrapper shows the ring — never the inner control */
+.nyx-input-group .nyx-input,.nyx-input-group input,.nyx-input-group .nyx-select,
+.nyx-search input,.nyx-phone input,.nyx-phone select,
+.nyx-input-group .nyx-input:focus,.nyx-input-group input:focus,.nyx-input-group .nyx-select:focus,
+.nyx-search input:focus,.nyx-phone input:focus,.nyx-phone select:focus{border:0;outline:0;box-shadow:none}
 
 .nyx-toggle{position:relative;display:inline-flex;align-items:center;cursor:pointer}
 .nyx-toggle input{position:absolute;opacity:0;width:0;height:0}
@@ -43,16 +50,13 @@
 .nyx-radio input:checked + .nyx-box::after{transform:scale(1)}
 .nyx-checkbox input:focus-visible + .nyx-box,.nyx-radio input:focus-visible + .nyx-box{outline:2px solid var(--nyx-accent);outline-offset:2px}
 
-/* range slider */
-.nyx-range{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:var(--nyx-radius-full);background:var(--nyx-surface-2);outline:none;cursor:pointer}
-.nyx-range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--nyx-accent);box-shadow:var(--nyx-glow);border:2px solid var(--nyx-surface);cursor:pointer}
-.nyx-range::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--nyx-accent);box-shadow:var(--nyx-glow);border:2px solid var(--nyx-surface);cursor:pointer}
+/* single-handle range is .nyx-slider (§23); dual-handle .nyx-range lives there too */
 
 /* floating label */
 .nyx-float{position:relative}
-.nyx-float > .nyx-input{padding-top:18px;padding-bottom:6px}
-.nyx-float > label{position:absolute;top:50%;inset-inline-start:14px;transform:translateY(-50%);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);pointer-events:none;transition:all .15s var(--nyx-ease)}
-.nyx-float > .nyx-input:focus + label,.nyx-float > .nyx-input:not(:placeholder-shown) + label{top:13px;transform:translateY(0);font-size:var(--nyx-fs-xs);color:var(--nyx-accent)}
+.nyx-float > .nyx-input{height:58px;padding:24px 14px 8px}
+.nyx-float > label{position:absolute;top:50%;inset-inline-start:15px;transform:translateY(-50%);transform-origin:inline-start;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);pointer-events:none;transition:transform .16s var(--nyx-ease),color .16s var(--nyx-ease)}
+.nyx-float > .nyx-input:focus + label,.nyx-float > .nyx-input:not(:placeholder-shown) + label{transform:translateY(calc(-50% - 13px)) scale(.82);color:var(--nyx-accent)}
 
 /* validation states — add .is-valid / .is-invalid, or wrap a form in
    .nyx-was-validated to drive feedback from the browser's :valid/:invalid */
