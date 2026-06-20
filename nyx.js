@@ -365,6 +365,22 @@
     els.forEach(function (e) { ro.observe(e); });
   }
 
+  /* ---------- interactive hover-lit squares (.nyx-bg-squares) ---------- */
+  function initSquares(root) {
+    $$('.nyx-bg-squares', root).filter(function (e) { return !e._nyxSq; }).forEach(function (e) {
+      e._nyxSq = true;
+      e.addEventListener('pointermove', function (ev) {
+        var r = e.getBoundingClientRect();
+        e.style.setProperty('--nyx-mx', (ev.clientX - r.left) + 'px');
+        e.style.setProperty('--nyx-my', (ev.clientY - r.top) + 'px');
+      }, { passive: true });
+      e.addEventListener('pointerleave', function () {
+        e.style.setProperty('--nyx-mx', '-300px');
+        e.style.setProperty('--nyx-my', '-300px');
+      });
+    });
+  }
+
   /* ---------- Arabic-Indic numerals (MENA) ---------- */
   var AR_DIGITS = '٠١٢٣٤٥٦٧٨٩';
   function toArabicNumerals(value) {
@@ -603,6 +619,7 @@
     $$('[data-nyx-spy]', root).forEach(initSpy);
     $$('.nyx-table-sortable', root).forEach(initSortable);
     initReveal(root);
+    initSquares(root);
     initNumerals(root);
     initHierarchy(root);
     initPrayerTimes(root);

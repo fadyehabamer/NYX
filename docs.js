@@ -997,6 +997,34 @@
       classes: [['data-nyx-reveal', 'Reveal-on-scroll (runtime adds .nyx-reveal then .nyx-in).']]
     },
 
+    /* ===== BACKGROUNDS ===== */
+    {
+      id: 'backgrounds', group: 'Backgrounds', title: 'Background effects', added: 'v1.7',
+      summary: 'Ambient backdrop layers — drop a class on any section, card or band and place your content inside; no child markup needed. Each paints a decorative layer behind the content in its own stacking context, every tint derives from --nyx-accent (so they retheme with the accent + data-accent), and all animated variants are switched off under prefers-reduced-motion.',
+      sections: [
+        { title: 'Grid lines', text: 'The masked hero grid, made reusable. Size the cell with --nyx-bg-cell.', demo: '<div class="nyx-bg-grid" style="border:1px solid var(--nyx-border);border-radius:14px;padding:40px 24px;text-align:center"><span class="nyx-overline">.nyx-bg-grid</span><h3 class="nyx-h4" style="margin-top:8px">Masked grid lines</h3></div>' },
+        { title: 'Dot grid', demo: '<div class="nyx-bg-dots" style="border:1px solid var(--nyx-border);border-radius:14px;padding:40px 24px;text-align:center"><span class="nyx-overline">.nyx-bg-dots</span><h3 class="nyx-h4" style="margin-top:8px">Dotted backdrop</h3></div>' },
+        { title: 'Mesh gradient', text: 'Static layered accent blobs — a soft, premium hero wash.', demo: '<div class="nyx-bg-mesh" style="border:1px solid var(--nyx-border);border-radius:14px;padding:48px 24px;text-align:center"><span class="nyx-overline">.nyx-bg-mesh</span><h3 class="nyx-h4" style="margin-top:8px">Layered accent mesh</h3></div>' },
+        { title: 'Animated gradient surface', text: 'A two-tone gradient that slowly pans. Add .animated to move it.', demo: '<div class="nyx-bg-gradient animated" style="border-radius:14px;padding:48px 24px;text-align:center"><h3 class="nyx-h4" style="color:#fff">.nyx-bg-gradient.animated</h3></div>' },
+        { title: 'Conic beams', text: 'Lighthouse light rays from the top edge. Add .animated to sweep them.', demo: '<div class="nyx-bg-beams animated" style="border:1px solid var(--nyx-border);border-radius:14px;min-height:170px;display:grid;place-items:center"><h3 class="nyx-h4">.nyx-bg-beams.animated</h3></div>' },
+        { title: 'Film grain (stackable)', text: 'A grain overlay painted on ::after, so it stacks on top of any other effect — here on the mesh.', demo: '<div class="nyx-bg-mesh nyx-bg-noise" style="border:1px solid var(--nyx-border);border-radius:14px;padding:48px 24px;text-align:center"><h3 class="nyx-h4" style="margin-top:8px">.nyx-bg-mesh.nyx-bg-noise</h3></div>' },
+        { title: 'Interactive squares', text: 'A grid that lights up under the cursor — the runtime feeds the pointer position to the layer. Move your mouse across it.', demo: '<div class="nyx-bg-squares" style="border:1px solid var(--nyx-border);border-radius:14px;min-height:180px;display:grid;place-items:center"><h3 class="nyx-h4">Hover me — .nyx-bg-squares</h3></div>' },
+        { title: 'Starfield', text: 'Two parallax layers of drifting stars on the dark canvas.', demo: '<div class="nyx-bg-stars" style="border:1px solid var(--nyx-border);border-radius:14px;min-height:170px;display:grid;place-items:center"><h3 class="nyx-h4">.nyx-bg-stars</h3></div>' },
+        { title: 'Usage', lang: 'html', code: '<!-- drop a class on any box; put content inside -->\n<section class="nyx-bg-grid">\n  <h1>Lit from within</h1>\n</section>\n\n<!-- animated variants -->\n<div class="nyx-bg-gradient animated"> … </div>\n<div class="nyx-bg-beams animated"> … </div>\n\n<!-- size the tiled patterns -->\n<div class="nyx-bg-dots" style="--nyx-bg-cell:18px"> … </div>\n\n<!-- stack the grain on top of another effect -->\n<div class="nyx-bg-mesh nyx-bg-noise"> … </div>\n\n<!-- squares need the runtime to wire the pointer -->\n<script src="nyx.js"></script>   <!-- or Nyx.init(container) after render -->' }
+      ],
+      classes: [
+        ['nyx-bg-grid', 'Masked grid lines.'],
+        ['nyx-bg-dots', 'Masked dot grid.'],
+        ['nyx-bg-mesh', 'Static layered accent mesh gradient.'],
+        ['nyx-bg-gradient (+.animated)', 'Two-tone gradient surface; .animated pans it.'],
+        ['nyx-bg-beams (+.animated)', 'Conic light rays; .animated sweeps them.'],
+        ['nyx-bg-noise', 'Film-grain overlay (::after) — stack on any other bg.'],
+        ['nyx-bg-squares', 'Interactive hover-lit grid (needs Nyx.init).'],
+        ['nyx-bg-stars', 'Drifting parallax starfield.'],
+        ['--nyx-bg-cell', 'Tile size for grid / dots / squares.']
+      ]
+    },
+
     /* ===== REGIONAL (MENA) ===== */
     {
       id: 'prayer-times', group: 'Regional', title: 'Prayer times', added: 'v1.4',

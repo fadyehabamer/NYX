@@ -35,10 +35,10 @@
   .hero-eyebrow b{color:var(--nyx-text);font-weight:600}
   .sec-eyebrow{margin-bottom:var(--nyx-s3)}
   /* ---- hero ---- */
-  .hero{position:relative;text-align:center;padding-top:var(--nyx-s7);padding-bottom:var(--nyx-s7);isolation:isolate}
-  .hero::before{content:"";position:absolute;inset:-120px -50vw 0;z-index:-1;pointer-events:none;
-    background-image:linear-gradient(var(--nyx-border) 1px,transparent 1px),linear-gradient(90deg,var(--nyx-border) 1px,transparent 1px);
-    background-size:56px 56px;opacity:.35;
+  .hero{text-align:center;padding-top:var(--nyx-s7);padding-bottom:var(--nyx-s7)}
+  /* full-bleed grid backdrop — reuses .nyx-bg-grid, widened past the container */
+  .hero.nyx-bg-grid{overflow:visible}
+  .hero.nyx-bg-grid::before{inset:-120px -50vw 0;opacity:.35;
     -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000,transparent 75%);
     mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000,transparent 75%)}
   .hero h1{max-width:15ch;margin-inline:auto;line-height:1.02}
@@ -213,7 +213,7 @@
 <div class="nyx-container">
 
   <!-- ===================== HERO ===================== -->
-  <section class="hero">
+  <section class="hero nyx-bg-grid">
     <span class="hero-eyebrow nyx-anim-up"><span class="dot"></span> The first CSS library built for <b>Arabic developers</b></span>
     <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1" style="margin-top:var(--nyx-s5)">Interfaces with<span class="l2 nyx-gradient-text animated">Luminous Depth</span></h1>
     <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2" style="margin-top:var(--nyx-s5)">A dark-mode-native component framework where every element feels lit from within — full RTL, Arabic fonts, a light theme, and zero dependencies.</p>

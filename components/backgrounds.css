@@ -1,0 +1,87 @@
+/*! Nyx · backgrounds.css · v1.6.0 · MIT
+ * The backgrounds module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   20. BACKGROUNDS (v1.7) — ambient gradient, grid & interactive layers
+   ============================================================ */
+/* Each paints a decorative ::before/::after behind its content in an
+   isolated stacking context (z-index:-1) — drop a class on any section,
+   card or band and place content inside; no child markup needed. Every
+   tint derives from --nyx-accent via color-mix(), so they retheme with
+   the accent + data-accent. Animated variants are neutralised by the
+   global prefers-reduced-motion guard at the end of this file. Size the
+   tiled patterns with --nyx-bg-cell. */
+
+/* — grid lines (the hero pattern, made reusable) — */
+.nyx-bg-grid{position:relative;overflow:hidden;isolation:isolate}
+.nyx-bg-grid::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(var(--nyx-border) 1px,transparent 1px),linear-gradient(90deg,var(--nyx-border) 1px,transparent 1px);
+  background-size:var(--nyx-bg-cell,56px) var(--nyx-bg-cell,56px);opacity:.4;
+  -webkit-mask-image:radial-gradient(ellipse 75% 65% at 50% 30%,#000,transparent 78%);
+          mask-image:radial-gradient(ellipse 75% 65% at 50% 30%,#000,transparent 78%)}
+
+/* — dot grid (softer cousin of the grid) — */
+.nyx-bg-dots{position:relative;overflow:hidden;isolation:isolate}
+.nyx-bg-dots::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background-image:radial-gradient(color-mix(in srgb,var(--nyx-border) 80%,var(--nyx-text-muted)) 1.4px,transparent 1.5px);
+  background-size:var(--nyx-bg-cell,24px) var(--nyx-bg-cell,24px);opacity:.7;
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 30%,#000,transparent 80%);
+          mask-image:radial-gradient(ellipse 80% 70% at 50% 30%,#000,transparent 80%)}
+
+/* — static mesh gradient (layered accent blobs) — */
+.nyx-bg-mesh{position:relative;overflow:hidden;isolation:isolate}
+.nyx-bg-mesh::before{content:"";position:absolute;inset:-10%;z-index:-1;pointer-events:none;filter:blur(14px);
+  background:
+    radial-gradient(38% 48% at 15% 18%,color-mix(in srgb,var(--nyx-accent) 42%,transparent),transparent 70%),
+    radial-gradient(44% 54% at 85% 22%,color-mix(in srgb,var(--nyx-accent-2) 38%,transparent),transparent 72%),
+    radial-gradient(50% 58% at 75% 88%,color-mix(in srgb,var(--nyx-accent) 30%,transparent),transparent 74%),
+    radial-gradient(40% 50% at 25% 92%,color-mix(in srgb,var(--nyx-accent-2) 24%,transparent),transparent 72%)}
+
+/* — animated gradient surface (the panel version of gradient-text) — */
+.nyx-bg-gradient{position:relative;overflow:hidden;isolation:isolate}
+.nyx-bg-gradient::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-size:200% 200%;
+  background-image:linear-gradient(120deg,
+    color-mix(in srgb,var(--nyx-accent) 55%,transparent),
+    color-mix(in srgb,var(--nyx-accent-2) 55%,transparent),
+    color-mix(in srgb,var(--nyx-accent) 55%,transparent))}
+.nyx-bg-gradient.animated::before{animation:nyx-bg-pan 9s var(--nyx-ease) infinite}
+@keyframes nyx-bg-pan{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* — conic light beams (lighthouse rays); add .animated to sweep — */
+.nyx-bg-beams{position:relative;overflow:hidden;isolation:isolate}
+.nyx-bg-beams::before{content:"";position:absolute;left:50%;top:0;width:160%;aspect-ratio:1/1;transform:translateX(-50%);transform-origin:50% 0;z-index:-1;pointer-events:none;filter:blur(8px);
+  background:conic-gradient(from 180deg at 50% 0,
+    transparent 4deg,color-mix(in srgb,var(--nyx-accent) 28%,transparent) 12deg,transparent 22deg,
+    transparent 44deg,color-mix(in srgb,var(--nyx-accent-2) 24%,transparent) 54deg,transparent 66deg,
+    transparent 294deg,color-mix(in srgb,var(--nyx-accent-2) 24%,transparent) 306deg,transparent 316deg,
+    transparent 338deg,color-mix(in srgb,var(--nyx-accent) 28%,transparent) 348deg,transparent 356deg);
+  -webkit-mask-image:radial-gradient(ellipse 65% 75% at 50% 0,#000,transparent 72%);
+          mask-image:radial-gradient(ellipse 65% 75% at 50% 0,#000,transparent 72%)}
+.nyx-bg-beams.animated::before{animation:nyx-bg-sweep 18s linear infinite}
+@keyframes nyx-bg-sweep{to{transform:translateX(-50%) rotate(360deg)}}
+
+/* — film grain / noise (use alone, or stack on another bg via ::after) — */
+.nyx-bg-noise{position:relative;isolation:isolate}
+.nyx-bg-noise::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.045;mix-blend-mode:overlay;background-size:160px 160px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='nyxn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23nyxn)'/%3E%3C/svg%3E")}
+
+/* — interactive hover-lit squares (needs nyx.js to set --nyx-mx/--nyx-my) — */
+.nyx-bg-squares{position:relative;overflow:hidden;isolation:isolate}
+.nyx-bg-squares::before,.nyx-bg-squares::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(var(--nyx-border) 1px,transparent 1px),linear-gradient(90deg,var(--nyx-border) 1px,transparent 1px);
+  background-size:var(--nyx-bg-cell,48px) var(--nyx-bg-cell,48px)}
+.nyx-bg-squares::before{opacity:.3}
+.nyx-bg-squares::after{opacity:.9;
+  background-image:linear-gradient(color-mix(in srgb,var(--nyx-accent) 85%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--nyx-accent) 85%,transparent) 1px,transparent 1px);
+  -webkit-mask-image:radial-gradient(circle 170px at var(--nyx-mx,-300px) var(--nyx-my,-300px),#000,transparent 70%);
+          mask-image:radial-gradient(circle 170px at var(--nyx-mx,-300px) var(--nyx-my,-300px),#000,transparent 70%)}
+
+/* — drifting starfield — */
+.nyx-bg-stars{position:relative;overflow:hidden;isolation:isolate}
+.nyx-bg-stars::before,.nyx-bg-stars::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-repeat:repeat}
+.nyx-bg-stars::before{opacity:.6;background-size:280px 280px;animation:nyx-bg-drift 70s linear infinite;
+  background-image:radial-gradient(1.5px 1.5px at 20% 30%,#fff,transparent),radial-gradient(1.5px 1.5px at 70% 62%,#fff,transparent),radial-gradient(1px 1px at 42% 82%,#fff,transparent),radial-gradient(1px 1px at 88% 16%,#fff,transparent),radial-gradient(1.5px 1.5px at 55% 46%,#fff,transparent)}
+.nyx-bg-stars::after{opacity:.5;background-size:160px 160px;animation:nyx-bg-drift 110s linear infinite reverse;
+  background-image:radial-gradient(1px 1px at 12% 24%,var(--nyx-accent),transparent),radial-gradient(1px 1px at 64% 38%,var(--nyx-accent-2),transparent),radial-gradient(1px 1px at 36% 70%,#fff,transparent),radial-gradient(1px 1px at 82% 84%,var(--nyx-accent),transparent)}
+@keyframes nyx-bg-drift{to{background-position:0 -1120px}}
