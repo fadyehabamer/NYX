@@ -407,6 +407,19 @@
     });
   }
 
+  /* ---------- range slider fill (.nyx-slider) ---------- */
+  function sliderFill(s) {
+    var min = parseFloat(s.min) || 0, max = parseFloat(s.max);
+    if (isNaN(max)) max = 100;
+    var v = parseFloat(s.value); if (isNaN(v)) v = min;
+    s.style.setProperty('--nyx-slider', max > min ? ((v - min) / (max - min)) * 100 : 0);
+  }
+  function initSlider(root) { $$('.nyx-slider', root).forEach(sliderFill); }
+  doc.addEventListener('input', function (e) {
+    var s = e.target.closest && e.target.closest('.nyx-slider');
+    if (s) sliderFill(s);
+  });
+
   /* ---------- Arabic-Indic numerals (MENA) ---------- */
   var AR_DIGITS = '٠١٢٣٤٥٦٧٨٩';
   function toArabicNumerals(value) {
@@ -646,6 +659,7 @@
     $$('.nyx-table-sortable', root).forEach(initSortable);
     initReveal(root);
     initSquares(root);
+    initSlider(root);
     initNumerals(root);
     initHierarchy(root);
     initPrayerTimes(root);

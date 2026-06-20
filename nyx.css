@@ -249,6 +249,11 @@ body.nyx ::-webkit-scrollbar-thumb{background:var(--nyx-surface-2);border-radius
 .nyx-search:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 18%,transparent),var(--nyx-glow)}
 .nyx-search input{flex:1;background:transparent;border:none;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-sm)}
 .nyx-search .nyx-search-icon{color:var(--nyx-text-muted)}
+/* grouped inputs: only the :focus-within wrapper shows the ring — never the inner control */
+.nyx-input-group .nyx-input,.nyx-input-group input,.nyx-input-group .nyx-select,
+.nyx-search input,.nyx-phone input,.nyx-phone select,
+.nyx-input-group .nyx-input:focus,.nyx-input-group input:focus,.nyx-input-group .nyx-select:focus,
+.nyx-search input:focus,.nyx-phone input:focus,.nyx-phone select:focus{border:0;outline:0;box-shadow:none}
 
 .nyx-toggle{position:relative;display:inline-flex;align-items:center;cursor:pointer}
 .nyx-toggle input{position:absolute;opacity:0;width:0;height:0}
@@ -277,9 +282,9 @@ body.nyx ::-webkit-scrollbar-thumb{background:var(--nyx-surface-2);border-radius
 
 /* floating label */
 .nyx-float{position:relative}
-.nyx-float > .nyx-input{padding-top:18px;padding-bottom:6px}
-.nyx-float > label{position:absolute;top:50%;inset-inline-start:14px;transform:translateY(-50%);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);pointer-events:none;transition:all .15s var(--nyx-ease)}
-.nyx-float > .nyx-input:focus + label,.nyx-float > .nyx-input:not(:placeholder-shown) + label{top:13px;transform:translateY(0);font-size:var(--nyx-fs-xs);color:var(--nyx-accent)}
+.nyx-float > .nyx-input{padding-top:23px;padding-bottom:7px}
+.nyx-float > label{position:absolute;top:50%;inset-inline-start:15px;transform:translateY(-50%);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);pointer-events:none;transition:top .15s var(--nyx-ease),font-size .15s var(--nyx-ease),color .15s var(--nyx-ease);transform-origin:inline-start}
+.nyx-float > .nyx-input:focus + label,.nyx-float > .nyx-input:not(:placeholder-shown) + label{top:7px;transform:translateY(0);font-size:var(--nyx-fs-xs);color:var(--nyx-accent)}
 
 /* validation states — add .is-valid / .is-invalid, or wrap a form in
    .nyx-was-validated to drive feedback from the browser's :valid/:invalid */
@@ -325,6 +330,15 @@ body.nyx ::-webkit-scrollbar-thumb{background:var(--nyx-surface-2);border-radius
 .nyx-pagination button{min-width:36px;height:36px;border:1px solid var(--nyx-border);background:var(--nyx-surface);color:var(--nyx-text-muted);border-radius:var(--nyx-radius);cursor:pointer;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);transition:all .2s var(--nyx-ease)}
 .nyx-pagination button:hover{border-color:var(--nyx-accent);color:var(--nyx-text)}
 .nyx-pagination button.active{background:var(--nyx-accent);border-color:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+.nyx-pagination button:disabled{opacity:.4;cursor:not-allowed}
+.nyx-pagination .nyx-page-gap{min-width:36px;text-align:center;color:var(--nyx-text-muted)}
+/* variants */
+.nyx-pagination.rounded button{border-radius:var(--nyx-radius-full)}
+.nyx-pagination.ghost button{border-color:transparent;background:transparent}
+.nyx-pagination.ghost button:hover{background:var(--nyx-surface-2)}
+.nyx-pagination.ghost button.active{background:color-mix(in srgb,var(--nyx-accent) 16%,transparent);border-color:transparent;color:var(--nyx-accent);box-shadow:none}
+.nyx-pagination.sm button{min-width:30px;height:30px;font-size:var(--nyx-fs-xs)}
+.nyx-pagination-info{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
 /* dropdown */
 .nyx-dropdown{position:relative;display:inline-flex}
 .nyx-dropdown-menu{position:absolute;top:calc(100% + 8px);inset-inline-start:0;z-index:120;min-width:184px;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);padding:6px;display:none}
@@ -402,6 +416,15 @@ body.nyx ::-webkit-scrollbar-thumb{background:var(--nyx-surface-2);border-radius
 .nyx-table tbody tr:last-child td{border-bottom:none}
 .nyx-table-sortable th{cursor:pointer;user-select:none}
 .nyx-table-sortable th::after{content:"↕";margin-inline-start:6px;opacity:.4;font-size:11px}
+/* variants */
+.nyx-table.striped tbody tr:nth-child(even){background:color-mix(in srgb,var(--nyx-surface-2) 60%,transparent)}
+.nyx-table.bordered th,.nyx-table.bordered td{border-inline-end:1px solid var(--nyx-border)}
+.nyx-table.bordered th:last-child,.nyx-table.bordered td:last-child{border-inline-end:0}
+.nyx-table.compact th,.nyx-table.compact td{padding:7px 12px}
+.nyx-table.borderless,.nyx-table.borderless th,.nyx-table.borderless td{border:0}
+.nyx-table tbody tr.selected{background:color-mix(in srgb,var(--nyx-accent) 12%,transparent)}
+.nyx-table-wrap{overflow-x:auto;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg)}
+.nyx-table-wrap > .nyx-table{border:0;border-radius:0}
 .nyx-data-grid{font-size:var(--nyx-fs-xs);font-family:var(--nyx-font-mono);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);overflow:auto}
 .nyx-data-grid table{width:100%;border-collapse:collapse}
 .nyx-data-grid th,.nyx-data-grid td{padding:6px 10px;border:1px solid var(--nyx-border);white-space:nowrap}
@@ -443,7 +466,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-tooltip:hover .nyx-tip.right{transform:translateY(-50%)}
 .nyx-popover{position:relative;display:inline-flex}
 .nyx-popover .nyx-pop{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);z-index:120;min-width:200px;padding:var(--nyx-s4);background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);font-size:var(--nyx-fs-sm);display:none}
-.nyx-popover.open .nyx-pop{display:block;animation:nyx-fade .2s var(--nyx-ease)}
+.nyx-popover.open .nyx-pop{display:block;animation:nyx-fade-in .2s var(--nyx-ease)}
 .nyx-popover .nyx-pop::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:var(--nyx-surface-2);border-right:1px solid var(--nyx-border);border-bottom:1px solid var(--nyx-border);margin-top:-5px}
 
 /* collapse + accordion */
@@ -467,6 +490,10 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-carousel-dots{position:absolute;bottom:12px;inset-inline:0;display:flex;justify-content:center;gap:6px;z-index:2}
 .nyx-carousel-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(255,255,255,.45);cursor:pointer;padding:0;transition:all .2s var(--nyx-ease)}
 .nyx-carousel-dots button.active{background:#fff;box-shadow:var(--nyx-glow);width:20px;border-radius:var(--nyx-radius-full)}
+/* slide content shouldn't add its own frame on top of the carousel border */
+.nyx-carousel .nyx-slide > .nyx-spotlight{border:0;border-radius:0}
+.nyx-carousel.flat{border:0}
+.nyx-carousel.flat .nyx-carousel-ctrl .nyx-btn{box-shadow:var(--nyx-shadow-lg)}
 
 /* ============================================================
    10. SIGNATURE ELEMENTS
@@ -512,7 +539,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-gradient-border > *{background:var(--nyx-surface);border-radius:calc(var(--nyx-radius-lg) - 1px);padding:var(--nyx-s5)}
 @keyframes nyx-gb{to{background-position:200% 0}}
 
-.nyx-avatar{width:40px;height:40px;border-radius:50%;display:inline-grid;place-items:center;position:relative;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));color:#fff;font-weight:600;font-size:var(--nyx-fs-sm);font-family:var(--nyx-font-display);border:2px solid var(--nyx-surface);flex-shrink:0}
+.nyx-avatar{width:40px;height:40px;border-radius:50%;display:inline-grid;place-items:center;line-height:1;text-align:center;position:relative;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));color:#fff;font-weight:600;font-size:var(--nyx-fs-sm);font-family:var(--nyx-font-display);border:2px solid var(--nyx-surface);flex-shrink:0;overflow:hidden}
 .nyx-avatar.online::after{content:"";position:absolute;inset-inline-end:-1px;bottom:-1px;width:11px;height:11px;border-radius:50%;background:var(--nyx-accent-2);border:2px solid var(--nyx-bg)}
 .nyx-avatar-group{display:inline-flex}
 .nyx-avatar-group .nyx-avatar{margin-inline-start:-12px;transition:transform .2s var(--nyx-ease)}
@@ -576,9 +603,10 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-tag-input input{flex:1;min-width:120px;border:none;background:transparent;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-sm);padding:4px}
 
 /* split button */
-.nyx-btn-split{display:inline-flex}
+.nyx-btn-split{display:inline-flex;align-items:stretch}
 .nyx-btn-split > .nyx-btn:first-child{border-start-end-radius:0;border-end-end-radius:0}
-.nyx-btn-split > .nyx-dropdown > .nyx-btn{border-start-start-radius:0;border-end-start-radius:0;border-inline-start:1px solid rgba(255,255,255,.18);padding-inline:10px}
+.nyx-btn-split > .nyx-dropdown{display:flex}
+.nyx-btn-split > .nyx-dropdown > .nyx-btn{border-start-start-radius:0;border-end-start-radius:0;border-inline-start:1px solid rgba(255,255,255,.22);padding-inline:10px}
 
 /* toolbar */
 .nyx-toolbar{display:flex;align-items:center;gap:var(--nyx-s2);flex-wrap:wrap;padding:8px;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius)}
@@ -1060,6 +1088,87 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-tok-kw{color:#ff5fa2}
 .nyx-tok-fn{color:#56b6ff}
 .nyx-tok-num{color:#f59e0b}
+
+/* ============================================================
+   23. BLOCKS (v1.7) — chat, slider, steps, testimonial, pricing, kanban, notifications
+   ============================================================ */
+/* Accent-driven, RTL-safe (logical properties), reduced-motion aware. */
+
+/* — chat / message bubbles — */
+.nyx-chat{display:flex;flex-direction:column;gap:var(--nyx-s3)}
+.nyx-bubble{max-width:75%;padding:10px 14px;border-radius:var(--nyx-radius-lg);font-size:var(--nyx-fs-sm);line-height:1.55;border:1px solid var(--nyx-border);background:var(--nyx-surface);align-self:flex-start;border-start-start-radius:4px}
+.nyx-bubble.sent{align-self:flex-end;color:#fff;border:0;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));box-shadow:var(--nyx-glow);border-start-start-radius:var(--nyx-radius-lg);border-start-end-radius:4px}
+.nyx-bubble-meta{display:block;margin-top:5px;font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-mono)}
+.nyx-bubble.sent .nyx-bubble-meta{color:rgba(255,255,255,.82)}
+.nyx-typing{display:inline-flex;gap:4px;align-items:center;padding:13px 15px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);border-start-start-radius:4px;background:var(--nyx-surface);align-self:flex-start}
+.nyx-typing i{width:7px;height:7px;border-radius:50%;background:var(--nyx-text-muted);animation:nyx-typing 1.2s var(--nyx-ease) infinite}
+.nyx-typing i:nth-child(2){animation-delay:.2s}
+.nyx-typing i:nth-child(3){animation-delay:.4s}
+@keyframes nyx-typing{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+
+/* — range slider (set --nyx-slider:0–100 or let nyx.js fill it) — */
+.nyx-slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:var(--nyx-radius-full);outline:none;cursor:pointer;
+  background:linear-gradient(to right,var(--nyx-accent) calc(var(--nyx-slider,50)*1%),var(--nyx-surface-2) calc(var(--nyx-slider,50)*1%))}
+[dir="rtl"] .nyx-slider{background:linear-gradient(to left,var(--nyx-accent) calc(var(--nyx-slider,50)*1%),var(--nyx-surface-2) calc(var(--nyx-slider,50)*1%))}
+.nyx-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid var(--nyx-accent);box-shadow:var(--nyx-glow);cursor:pointer;transition:transform .15s var(--nyx-ease)}
+.nyx-slider::-webkit-slider-thumb:hover{transform:scale(1.15)}
+.nyx-slider::-moz-range-thumb{width:18px;height:18px;border:2px solid var(--nyx-accent);border-radius:50%;background:#fff;box-shadow:var(--nyx-glow);cursor:pointer}
+.nyx-slider:focus-visible{box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 35%,transparent)}
+
+/* — dual-handle range (min / max); nyx.js sets --nyx-lo / --nyx-hi — */
+.nyx-range{position:relative;height:34px;display:flex;align-items:center}
+.nyx-range .nyx-range-track{position:absolute;inset-inline:0;height:6px;border-radius:var(--nyx-radius-full);background:var(--nyx-surface-2)}
+.nyx-range .nyx-range-fill{position:absolute;height:6px;border-radius:var(--nyx-radius-full);background:linear-gradient(90deg,var(--nyx-accent),var(--nyx-accent-2));inset-inline-start:calc(var(--nyx-lo,0)*1%);inset-inline-end:calc((100 - var(--nyx-hi,100))*1%)}
+.nyx-range input[type="range"]{position:absolute;inset-inline:0;width:100%;margin:0;height:6px;background:none;pointer-events:none;-webkit-appearance:none;appearance:none}
+.nyx-range input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;pointer-events:auto;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid var(--nyx-accent);box-shadow:var(--nyx-glow);cursor:pointer;transition:transform .15s var(--nyx-ease)}
+.nyx-range input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+.nyx-range input[type="range"]::-moz-range-thumb{pointer-events:auto;width:18px;height:18px;border:2px solid var(--nyx-accent);border-radius:50%;background:#fff;box-shadow:var(--nyx-glow);cursor:pointer}
+
+/* — testimonial / quote card — */
+.nyx-testimonial{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface);padding:var(--nyx-s5)}
+.nyx-testimonial .nyx-quote{font-size:var(--nyx-fs-lg);line-height:1.6;color:var(--nyx-text)}
+.nyx-testimonial .nyx-quote::before{content:"\201C";font-family:var(--nyx-font-display);font-size:2.4em;line-height:0;color:var(--nyx-accent);margin-inline-end:.08em;vertical-align:-.35em}
+.nyx-testimonial .nyx-cite{display:flex;align-items:center;gap:12px;margin-top:var(--nyx-s4)}
+.nyx-testimonial .nyx-cite b{display:block;font-weight:600}
+.nyx-testimonial .nyx-cite span{display:block;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+
+/* — pricing table — */
+.nyx-pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--nyx-s4);align-items:start}
+.nyx-price-card{position:relative;display:flex;flex-direction:column;gap:var(--nyx-s4);padding:var(--nyx-s6) var(--nyx-s5);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface);transition:transform .2s var(--nyx-ease),border-color .2s var(--nyx-ease)}
+.nyx-price-card.featured{border-color:color-mix(in srgb,var(--nyx-accent) 60%,transparent);box-shadow:var(--nyx-glow),var(--nyx-shadow-lg);transform:scale(1.03)}
+.nyx-price-name{font-weight:600;color:var(--nyx-text-muted)}
+.nyx-price{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-3xl);line-height:1}
+.nyx-price small{font-size:var(--nyx-fs-sm);font-weight:500;color:var(--nyx-text-muted)}
+.nyx-price-card.featured .nyx-price{background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.nyx-price-tag{position:absolute;top:0;inset-inline-end:var(--nyx-s5);transform:translateY(-50%)}
+.nyx-price-feat{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--nyx-s3)}
+.nyx-price-feat li{display:flex;align-items:flex-start;gap:9px;font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted)}
+.nyx-price-feat li::before{content:"\2713";color:var(--nyx-accent-2);font-weight:700;flex:none}
+
+/* — kanban board — */
+.nyx-kanban{display:flex;gap:var(--nyx-s4);overflow-x:auto;padding-bottom:var(--nyx-s2)}
+.nyx-kanban-col{flex:0 0 280px;display:flex;flex-direction:column;gap:var(--nyx-s3);padding:var(--nyx-s4);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface)}
+.nyx-kanban-col > h4{display:flex;align-items:center;justify-content:space-between;font-size:var(--nyx-fs-sm);font-weight:600;color:var(--nyx-text-muted)}
+.nyx-kanban-card{padding:var(--nyx-s3) var(--nyx-s4);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);background:var(--nyx-surface-2);cursor:grab;transition:transform .15s var(--nyx-ease),border-color .2s var(--nyx-ease)}
+.nyx-kanban-card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--nyx-accent) 45%,transparent)}
+
+/* — notifications feed — */
+.nyx-notif{display:flex;flex-direction:column}
+.nyx-notif-item{display:flex;align-items:flex-start;gap:var(--nyx-s3);padding:var(--nyx-s3) var(--nyx-s4);border-bottom:1px solid var(--nyx-border);transition:background .2s var(--nyx-ease)}
+.nyx-notif-item:last-child{border-bottom:0}
+.nyx-notif-item:hover{background:var(--nyx-surface-2)}
+.nyx-notif-item.unread{background:color-mix(in srgb,var(--nyx-accent) 7%,transparent)}
+.nyx-notif-ico{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--nyx-accent) 13%,transparent);color:var(--nyx-accent)}
+.nyx-notif-body{flex:1;min-width:0}
+.nyx-notif-body p{margin:0;font-size:var(--nyx-fs-sm);line-height:1.5}
+.nyx-notif-time{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-mono);margin-top:3px}
+.nyx-notif-item.unread .nyx-notif-body::after{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--nyx-accent);margin-inline-start:6px;vertical-align:middle}
+
+@media(max-width:780px){
+  .nyx-pricing{grid-template-columns:1fr}
+  .nyx-price-card.featured{transform:none}
+  .nyx-bubble{max-width:88%}
+}
 
 /* ============================================================
    RTL — flips for physical properties not covered by logical CSS

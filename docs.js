@@ -1062,6 +1062,65 @@
       ]
     },
 
+    /* ===== BLOCKS (v1.7) ===== */
+    {
+      id: 'chat', group: 'Components', title: 'Chat bubbles', added: 'v1.7',
+      summary: 'Message bubbles for chat & AI UIs — received and sent variants, timestamps and a typing indicator. RTL-aware (sent bubbles flip to the correct side automatically).',
+      sections: [
+        { title: 'Conversation', demo: '<div class="nyx-chat" style="max-width:440px"><div class="nyx-bubble">How do I start with Nyx?<span class="nyx-bubble-meta">10:02</span></div><div class="nyx-bubble sent">Add two files and you are live ✨<span class="nyx-bubble-meta">10:03</span></div><div class="nyx-typing"><i></i><i></i><i></i></div></div>' }
+      ],
+      classes: [['nyx-chat', 'Vertical stack.'], ['nyx-bubble (+.sent)', 'Received / sent bubble.'], ['nyx-bubble-meta', 'Timestamp line.'], ['nyx-typing', 'Animated typing indicator (3 dots).']]
+    },
+    {
+      id: 'slider', group: 'Components', title: 'Range slider', added: 'v1.7',
+      summary: 'A styled range input with an accent-filled track and a glowing thumb. The runtime fills the track from the value/min/max and updates it live on drag.',
+      sections: [
+        { title: 'Slider', demo: '<input type="range" class="nyx-slider" min="0" max="100" value="65" aria-label="Volume">' },
+        { title: 'Markup', lang: 'html', code: '<input type="range" class="nyx-slider" min="0" max="100" value="65">\n<!-- nyx.js fills the track; or set it statically with style="--nyx-slider:65" -->' }
+      ],
+      classes: [['nyx-slider', 'Styled range input; runtime sets --nyx-slider (0–100) for the fill.']]
+    },
+    {
+      id: 'steps', group: 'Components', title: 'Steps / wizard', added: 'v1.7',
+      summary: 'A horizontal step indicator for checkout and onboarding flows. Auto-numbered; mark steps .done (check) or .current (glowing).',
+      sections: [
+        { title: 'Flow', demo: '<div class="nyx-steps"><div class="nyx-step done">Cart</div><div class="nyx-step done">Shipping</div><div class="nyx-step current">Payment</div><div class="nyx-step">Review</div></div>' }
+      ],
+      classes: [['nyx-steps', 'Step rail (auto-numbers via counters).'], ['nyx-step (+.done / .current)', 'A step; done shows a check, current glows.']]
+    },
+    {
+      id: 'testimonial', group: 'Components', title: 'Testimonial', added: 'v1.7',
+      summary: 'A quote card with a decorative quote mark, author avatar + role, and an optional rating.',
+      sections: [
+        { title: 'Quote', demo: '<div class="nyx-testimonial" style="max-width:520px"><p class="nyx-quote">Nyx let us ship a polished, RTL-ready dashboard in a single weekend.</p><div class="nyx-cite"><span class="nyx-avatar">L</span><div><b>Layla H.</b><span>Frontend lead</span></div><span style="margin-inline-start:auto;color:var(--nyx-warning)">★★★★★</span></div></div>' }
+      ],
+      classes: [['nyx-testimonial', 'Quote card.'], ['nyx-quote', 'Quote text (adds a decorative “).'], ['nyx-cite', 'Author row (avatar + name + role).']]
+    },
+    {
+      id: 'pricing', group: 'Components', title: 'Pricing table', added: 'v1.7',
+      summary: 'Tiered pricing cards with a highlighted .featured tier, gradient price, check-marked feature lists and a corner badge.',
+      sections: [
+        { title: 'Tiers', demo: '<div class="nyx-pricing"><div class="nyx-price-card"><div class="nyx-price-name">Starter</div><div class="nyx-price">$0<small>/mo</small></div><ul class="nyx-price-feat"><li>Up to 3 projects</li><li>Community support</li></ul><a class="nyx-btn nyx-btn-secondary">Choose</a></div><div class="nyx-price-card featured"><span class="nyx-price-tag nyx-badge nyx-badge-info">Popular</span><div class="nyx-price-name">Pro</div><div class="nyx-price">$19<small>/mo</small></div><ul class="nyx-price-feat"><li>Unlimited projects</li><li>Priority support</li><li>Advanced analytics</li></ul><a class="nyx-btn nyx-btn-primary">Choose</a></div><div class="nyx-price-card"><div class="nyx-price-name">Team</div><div class="nyx-price">$49<small>/mo</small></div><ul class="nyx-price-feat"><li>SSO &amp; roles</li><li>Audit log</li></ul><a class="nyx-btn nyx-btn-secondary">Choose</a></div></div>' }
+      ],
+      classes: [['nyx-pricing', 'Responsive tier grid.'], ['nyx-price-card (+.featured)', 'A tier; featured is highlighted + scaled.'], ['nyx-price', 'Amount (gradient on featured).'], ['nyx-price-name / -feat / -tag', 'Tier name, feature list, corner badge.']]
+    },
+    {
+      id: 'kanban', group: 'Components', title: 'Kanban board', added: 'v1.7',
+      summary: 'Horizontally-scrolling columns of cards for boards and pipelines. RTL flips the column order automatically.',
+      sections: [
+        { title: 'Board', demo: '<div class="nyx-kanban"><div class="nyx-kanban-col"><h4>To do <span class="nyx-badge">2</span></h4><div class="nyx-kanban-card">Design tokens</div><div class="nyx-kanban-card">RTL audit</div></div><div class="nyx-kanban-col"><h4>In progress <span class="nyx-badge">1</span></h4><div class="nyx-kanban-card">Charts module</div></div><div class="nyx-kanban-col"><h4>Done <span class="nyx-badge">1</span></h4><div class="nyx-kanban-card">Backgrounds</div></div></div>' }
+      ],
+      classes: [['nyx-kanban', 'Scrollable column row.'], ['nyx-kanban-col', 'A column (header + cards).'], ['nyx-kanban-card', 'A draggable-looking card.']]
+    },
+    {
+      id: 'notifications', group: 'Components', title: 'Notifications', added: 'v1.7',
+      summary: 'A notification / activity feed — icon, message, timestamp, and an .unread state with an accent tint and dot.',
+      sections: [
+        { title: 'Feed', demo: '<div class="nyx-notif nyx-card" style="max-width:460px;padding:0;overflow:hidden"><div class="nyx-notif-item unread"><span class="nyx-notif-ico">✦</span><div class="nyx-notif-body"><p>New sign-up from <b>Cairo</b></p><div class="nyx-notif-time">2m ago</div></div></div><div class="nyx-notif-item"><span class="nyx-notif-ico">↑</span><div class="nyx-notif-body"><p>MRR is up 12% this week</p><div class="nyx-notif-time">1h ago</div></div></div></div>' }
+      ],
+      classes: [['nyx-notif', 'Feed wrapper.'], ['nyx-notif-item (+.unread)', 'A row; unread is tinted with a dot.'], ['nyx-notif-ico / -body / -time', 'Icon, message, timestamp.']]
+    },
+
     /* ===== REGIONAL (MENA) ===== */
     {
       id: 'prayer-times', group: 'Regional', title: 'Prayer times', added: 'v1.4',
