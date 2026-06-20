@@ -14,7 +14,7 @@ var fs = require('fs');
 var path = require('path');
 var zlib = require('zlib');
 
-var VERSION = '1.6.0';
+var VERSION = require('./package.json').version;   // single source of truth
 var SRC = path.join(__dirname, 'nyx.css');
 var JSSRC = path.join(__dirname, 'nyx.js');
 var OUT = path.join(__dirname, 'components');
@@ -46,7 +46,7 @@ var NAMES = {
   1: 'layout', 2: 'typography', 3: 'buttons', 4: 'cards', 5: 'forms',
   6: 'navigation', 7: 'feedback', 8: 'data', 9: 'overlays', 10: 'signature', 11: 'extras', 12: 'motion', 13: 'utilities',
   14: 'hierarchy', 15: 'regional', 16: 'forms-plus', 17: 'overlays-plus', 18: 'commerce', 19: 'regional-plus',
-  20: 'backgrounds'
+  20: 'backgrounds', 21: 'charts', 22: 'code'
 };
 
 /* collect the big ==== banners (sections 1..11 + RTL) */
@@ -95,6 +95,11 @@ fs.copyFileSync(SRC, path.join(OUT, 'nyx.bundle.css'));
 /* ---- minified distribution (project root, for npm/CDN) ---- */
 var minCss = '/*! Nyx v' + VERSION + ' · MIT · the first CSS library built for Arabic developers */\n' + minifyCss(css) + '\n';
 var jsRaw = fs.readFileSync(JSSRC, 'utf8');
+/* keep nyx.js in sync with package.json: header banner + the runtime version field */
+var jsSynced = jsRaw
+  .replace(/(Nyx — runtime · v)[\d.]+/, '$1' + VERSION)
+  .replace(/(version:\s*')[\d.]+(')/, '$1' + VERSION + '$2');
+if (jsSynced !== jsRaw) { fs.writeFileSync(JSSRC, jsSynced); jsRaw = jsSynced; console.log('Synced nyx.js version -> ' + VERSION); }
 var minJs = '/*! Nyx v' + VERSION + ' · MIT */\n' + minifyJs(jsRaw);
 fs.writeFileSync(path.join(__dirname, 'nyx.min.css'), minCss);
 fs.writeFileSync(path.join(__dirname, 'nyx.min.js'), minJs);

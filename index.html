@@ -36,9 +36,8 @@
   .sec-eyebrow{margin-bottom:var(--nyx-s3)}
   /* ---- hero ---- */
   .hero{text-align:center;padding-top:var(--nyx-s7);padding-bottom:var(--nyx-s7)}
-  /* full-bleed grid backdrop — reuses .nyx-bg-grid, widened past the container */
-  .hero.nyx-bg-grid{overflow:visible}
-  .hero.nyx-bg-grid::before{inset:-120px -50vw 0;opacity:.35;
+  /* grid backdrop reuses .nyx-bg-grid; clipped to the section so it never overflows */
+  .hero.nyx-bg-grid::before{opacity:.35;
     -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000,transparent 75%);
     mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000,transparent 75%)}
   .hero h1{max-width:15ch;margin-inline:auto;line-height:1.02}
@@ -79,16 +78,7 @@
   .logo-cloud .lbl{text-align:center;font-size:var(--nyx-fs-xs);text-transform:uppercase;letter-spacing:.14em;color:var(--nyx-text-muted);font-family:var(--nyx-font-mono);margin-bottom:var(--nyx-s5)}
   .nyx-marquee .nyx-track span{display:inline-flex;align-items:center;gap:10px;font-size:var(--nyx-fs-lg)}
   .nyx-marquee .nyx-track .ico{width:23px;height:23px;opacity:.85}
-  /* ---- code window ---- */
-  pre{margin:0;background:#070810;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);padding:var(--nyx-s4);overflow-x:auto}
-  pre code{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);line-height:1.7;color:#c8cce0;display:block}
-  .t-tag{color:#6c63ff}.t-attr{color:#00d4aa}.t-str{color:#ffb020}.t-cmt{color:#4b5061}
-  .code-window{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;background:#070810;box-shadow:var(--nyx-shadow-lg)}
-  .code-window .cw-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--nyx-border);background:var(--nyx-surface)}
-  .code-window .cw-bar i{width:11px;height:11px;border-radius:50%;display:inline-block}
-  .code-window .cw-bar .r{background:#ff5f57}.code-window .cw-bar .y{background:#febc2e}.code-window .cw-bar .g{background:#28c840}
-  .code-window .cw-bar em{margin-inline-start:auto;font-style:normal;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
-  .code-window pre{border:0;border-radius:0;box-shadow:none}
+  /* ---- code window now uses .nyx-code-block (framework) ---- */
   .install-pts{list-style:none;margin:var(--nyx-s4) 0 0;padding:0;display:flex;flex-direction:column;gap:var(--nyx-s3)}
   .install-pts li{display:flex;align-items:flex-start;gap:10px;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
   .install-pts .ico{color:var(--nyx-accent-2);margin-top:1px}
@@ -133,7 +123,14 @@
   .foot a:hover{color:var(--nyx-text)}
   .foot-brand p{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);max-width:32ch;margin-top:var(--nyx-s3)}
   .foot-bottom{border-top:1px solid var(--nyx-border);padding-block:var(--nyx-s4);text-align:center;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+  /* ---- v1.7 effects showcase ---- */
+  .bg-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--nyx-s4)}
+  .bg-tile{position:relative;min-height:118px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);display:grid;place-items:center}
+  .bg-tile .lbl{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);background:var(--nyx-surface);border:1px solid var(--nyx-border);padding:3px 10px;border-radius:var(--nyx-radius-full)}
+  .chart-card{height:100%}
+  .chart-card h3{margin:0}
   @media(max-width:780px){
+    .bg-gallery{grid-template-columns:repeat(2,1fr)}
     .lp-comp{grid-template-columns:1fr}.hide-sm{display:none}section.lp{padding-block:var(--nyx-s7)}.nyx-display{font-size:var(--nyx-fs-2xl)}
     .lp-bento{grid-template-columns:1fr}.b6,.b4,.b3,.b2{grid-column:auto}
     .stats{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr;gap:var(--nyx-s4)}.foot-brand{grid-column:1/-1}
@@ -185,12 +182,13 @@
 <nav class="nyx-navbar">
   <div class="nyx-flex nyx-items-center nyx-gap-4">
     <a class="lp-logo" href="index.html"><span class="mark">N</span><span><span class="pre">nyx</span>·Nyx</span></a>
-    <span class="nyx-badge nyx-badge-info hide-sm">v1.6.0</span>
+    <span class="nyx-badge nyx-badge-info hide-sm">v1.7.0</span>
   </div>
   <div class="nyx-flex nyx-items-center nyx-gap-4">
     <div class="lp-links hide-sm">
       <a href="#features">Features</a>
       <a href="#components">Components</a>
+      <a href="#effects">Effects</a>
       <div class="nyx-dropdown">
         <a href="#" data-nyx-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Templates ▾</a>
         <div class="nyx-dropdown-menu">
@@ -214,9 +212,9 @@
 
   <!-- ===================== HERO ===================== -->
   <section class="hero nyx-bg-grid">
-    <span class="hero-eyebrow nyx-anim-up"><span class="dot"></span> The first CSS library built for <b>Arabic developers</b></span>
-    <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1" style="margin-top:var(--nyx-s5)">Interfaces with<span class="l2 nyx-gradient-text animated">Luminous Depth</span></h1>
-    <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2" style="margin-top:var(--nyx-s5)">A dark-mode-native component framework where every element feels lit from within — full RTL, Arabic fonts, a light theme, and zero dependencies.</p>
+    <span class="hero-eyebrow nyx-anim-up"><span class="dot"></span> Premium UI for the <b>Arabic SaaS era</b></span>
+    <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1" style="margin-top:var(--nyx-s5)">Ship premium SaaS UI<span class="l2 nyx-gradient-text animated">in minutes, not weeks.</span></h1>
+    <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2" style="margin-top:var(--nyx-s5)">Nyx is a premium, dark-mode-native design system for Arabic SaaS — animated gradients, luminous components and full RTL, with zero dependencies.</p>
     <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta nyx-anim-up nyx-anim-delay-3" style="margin-top:var(--nyx-s6)">
       <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.html#/installation">Get started</a>
       <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs.html">Browse components</a>
@@ -278,16 +276,16 @@
         </div>
       </div>
       <div class="nyx-col-7" data-nyx-reveal>
-        <div class="code-window"><div class="cw-bar"><i class="r"></i><i class="y"></i><i class="g"></i><em>index.html</em></div>
-        <pre><code><span class="t-cmt">&lt;!-- 1. the framework --&gt;</span>
-<span class="t-tag">&lt;link</span> <span class="t-attr">rel</span>=<span class="t-str">"stylesheet"</span> <span class="t-attr">href</span>=<span class="t-str">"nyx.css"</span><span class="t-tag">&gt;</span>
+        <div class="nyx-code-block"><div class="nyx-code-bar"><span class="nyx-dot r"></span><span class="nyx-dot y"></span><span class="nyx-dot g"></span><span class="nyx-code-name">index.html</span><button class="nyx-code-copy" data-nyx-copy aria-label="Copy code"><svg class="ico ico-sm"><use href="#i-copy"/></svg></button></div>
+        <pre><code><span class="nyx-tok-comment">&lt;!-- 1. the framework --&gt;</span>
+<span class="nyx-tok-tag">&lt;link</span> <span class="nyx-tok-attr">rel</span>=<span class="nyx-tok-str">"stylesheet"</span> <span class="nyx-tok-attr">href</span>=<span class="nyx-tok-str">"nyx.css"</span><span class="nyx-tok-tag">&gt;</span>
 
-<span class="t-cmt">&lt;!-- 2. opt the body in --&gt;</span>
-<span class="t-tag">&lt;body</span> <span class="t-attr">class</span>=<span class="t-str">"nyx nyx-reset"</span><span class="t-tag">&gt;</span>
-  <span class="t-tag">&lt;button</span> <span class="t-attr">class</span>=<span class="t-str">"nyx-btn nyx-btn-primary"</span><span class="t-tag">&gt;</span>Hello<span class="t-tag">&lt;/button&gt;</span>
+<span class="nyx-tok-comment">&lt;!-- 2. opt the body in --&gt;</span>
+<span class="nyx-tok-tag">&lt;body</span> <span class="nyx-tok-attr">class</span>=<span class="nyx-tok-str">"nyx nyx-reset"</span><span class="nyx-tok-tag">&gt;</span>
+  <span class="nyx-tok-tag">&lt;button</span> <span class="nyx-tok-attr">class</span>=<span class="nyx-tok-str">"nyx-btn nyx-btn-primary"</span><span class="nyx-tok-tag">&gt;</span>Hello<span class="nyx-tok-tag">&lt;/button&gt;</span>
 
-<span class="t-cmt">&lt;!-- 3. the runtime --&gt;</span>
-<span class="t-tag">&lt;script</span> <span class="t-attr">src</span>=<span class="t-str">"nyx.js"</span><span class="t-tag">&gt;&lt;/script&gt;</span></code></pre></div>
+<span class="nyx-tok-comment">&lt;!-- 3. the runtime --&gt;</span>
+<span class="nyx-tok-tag">&lt;script</span> <span class="nyx-tok-attr">src</span>=<span class="nyx-tok-str">"nyx.js"</span><span class="nyx-tok-tag">&gt;&lt;/script&gt;</span></code></pre></div>
       </div>
     </div>
   </section>
@@ -355,7 +353,7 @@
   <!-- ===================== COMPONENTS PREVIEW ===================== -->
   <section class="lp" id="components">
     <div class="lp-section-head">
-      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> 40+ components</span>
+      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> 50+ components</span>
       <h2 class="nyx-h1" style="margin-top:var(--nyx-s3)">Everything you need to ship</h2>
       <p class="nyx-muted" style="margin-top:var(--nyx-s2)">Each component has its own page with usage, live examples and a class reference. Jump in:</p>
     </div>
@@ -372,11 +370,61 @@
     </div>
   </section>
 
+  <!-- ===================== EFFECTS / DATA SHOWCASE (v1.7) ===================== -->
+  <section class="lp" id="effects">
+    <div class="lp-section-head">
+      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> New in v1.7</span>
+      <h2 class="nyx-h1" style="margin-top:var(--nyx-s3)">Backgrounds, charts &amp; code — in the box</h2>
+      <p class="nyx-muted" style="margin-top:var(--nyx-s2)">Ambient backdrops, zero-dependency data viz and a copy-ready code block — all accent-driven, RTL-safe and reduced-motion aware.</p>
+    </div>
+
+    <div class="bg-gallery" data-nyx-reveal>
+      <div class="nyx-bg-grid bg-tile"><span class="lbl">grid</span></div>
+      <div class="nyx-bg-dots bg-tile"><span class="lbl">dots</span></div>
+      <div class="nyx-bg-mesh bg-tile"><span class="lbl">mesh</span></div>
+      <div class="nyx-bg-gradient animated bg-tile"><span class="lbl">gradient</span></div>
+      <div class="nyx-bg-beams animated bg-tile"><span class="lbl">beams</span></div>
+      <div class="nyx-bg-squares bg-tile"><span class="lbl">squares · hover</span></div>
+      <div class="nyx-bg-stars bg-tile"><span class="lbl">stars</span></div>
+      <div class="nyx-bg-mesh nyx-bg-noise bg-tile"><span class="lbl">mesh + noise</span></div>
+    </div>
+
+    <div class="nyx-grid" style="margin-top:var(--nyx-s4)">
+      <div class="nyx-col-7" data-nyx-reveal>
+        <div class="nyx-card chart-card">
+          <div class="nyx-flex nyx-justify-between nyx-items-center"><h3 class="nyx-h4">Weekly active users</h3><span class="nyx-badge nyx-badge-success">▲ 18%</span></div>
+          <div class="nyx-chart-bars" style="--nyx-chart-h:150px;margin-top:var(--nyx-s5)">
+            <div class="nyx-bar" style="--nyx-bar:42" data-label="Mon" data-val="42"></div>
+            <div class="nyx-bar" style="--nyx-bar:63" data-label="Tue" data-val="63"></div>
+            <div class="nyx-bar alt" style="--nyx-bar:55" data-label="Wed" data-val="55"></div>
+            <div class="nyx-bar" style="--nyx-bar:78" data-label="Thu" data-val="78"></div>
+            <div class="nyx-bar" style="--nyx-bar:90" data-label="Fri" data-val="90"></div>
+            <div class="nyx-bar muted" style="--nyx-bar:48" data-label="Sat" data-val="48"></div>
+            <div class="nyx-bar muted" style="--nyx-bar:51" data-label="Sun" data-val="51"></div>
+          </div>
+        </div>
+      </div>
+      <div class="nyx-col-5" data-nyx-reveal>
+        <div class="nyx-card chart-card">
+          <h3 class="nyx-h4">Traffic sources</h3>
+          <div class="nyx-flex nyx-gap-5 nyx-items-center" style="margin-top:var(--nyx-s5)">
+            <div class="nyx-donut"><div class="nyx-chart-donut" style="background:conic-gradient(var(--nyx-accent) 0 62%,var(--nyx-accent-2) 62% 84%,var(--nyx-surface-2) 84%)"></div><span class="nyx-donut-val">62%</span></div>
+            <div class="nyx-chart-legend" style="flex-direction:column;align-items:flex-start;gap:var(--nyx-s2)">
+              <span class="nyx-legend">Direct · 62%</span>
+              <span class="nyx-legend" style="--nyx-legend-c:var(--nyx-accent-2)">Referral · 22%</span>
+              <span class="nyx-legend" style="--nyx-legend-c:var(--nyx-surface-2)">Other · 16%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== CLOSING CTA ===================== -->
   <section class="lp" id="cta">
     <div class="cta-band" data-nyx-reveal>
       <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> Ready when you are</span>
-      <h2 class="nyx-bigtype nyx-bigtype-sm" style="margin-top:var(--nyx-s4)">Start building <span class="nyx-gradient-text animated">in the dark.</span></h2>
+      <h2 class="nyx-bigtype nyx-bigtype-sm" style="margin-top:var(--nyx-s4)">Build something <span class="nyx-gradient-text animated">premium &amp; luminous.</span></h2>
       <p class="nyx-lead nyx-muted" style="max-width:520px;margin:var(--nyx-s4) auto 0">Zero setup, zero dependencies. Drop in two files and ship a luminous, RTL-ready interface today.</p>
       <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta" style="margin-top:var(--nyx-s6)">
         <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.html#/installation">Get started</a>

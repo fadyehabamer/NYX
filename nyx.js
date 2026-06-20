@@ -1,5 +1,5 @@
 /*!
- * Nyx — runtime · v1.6.0 · MIT License
+ * Nyx — runtime · v1.7.0 · MIT License
  * Zero dependencies. UMD: window.Nyx (or CommonJS export).
  *
  * Declarative API (no JS to write):
@@ -236,7 +236,33 @@
   }
 
   /* ---------- delegated clicks ---------- */
+  /* ---------- copy-to-clipboard (data-nyx-copy) ---------- */
+  function fallbackCopy(text) {
+    var ta = doc.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; ta.style.pointerEvents = 'none';
+    doc.body.appendChild(ta); ta.focus(); ta.select();
+    try { doc.execCommand('copy'); } catch (e) {}
+    doc.body.removeChild(ta);
+  }
+  function copyCode(btn) {
+    var sel = btn.getAttribute('data-nyx-copy');
+    var src = sel ? el(sel) : btn.closest('.nyx-code-block');
+    if (!src) return;
+    var codeEl = src.matches && src.matches('code') ? src : (src.querySelector('code') || src);
+    var text = (codeEl.innerText || codeEl.textContent || '').replace(/\n+$/, '');
+    function done() {
+      btn.classList.add('copied'); toast('Copied ✓', 'success');
+      setTimeout(function () { btn.classList.remove('copied'); }, 1500);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+    } else { fallbackCopy(text); done(); }
+  }
+
   doc.addEventListener('click', function (e) {
+    var copyBtn = e.target.closest('[data-nyx-copy]');
+    if (copyBtn) { e.preventDefault(); copyCode(copyBtn); return; }
+
     var toggle = e.target.closest('[data-nyx-toggle]');
     if (toggle) {
       var kind = toggle.getAttribute('data-nyx-toggle');
@@ -649,7 +675,7 @@
   else init();
 
   return {
-    version: '1.6.0',
+    version: '1.7.0',
     init: init, toast: toast,
     openModal: openModal, openDrawer: openDrawer, close: close, closeAll: closeAll,
     togglePopover: togglePopover, openCommandPalette: openCommandPalette, closeCommandPalette: closeCommandPalette,

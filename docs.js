@@ -1025,6 +1025,43 @@
       ]
     },
 
+    /* ===== CHARTS ===== */
+    {
+      id: 'charts', group: 'Components', title: 'Charts', added: 'v1.7',
+      summary: 'Zero-dependency data viz. Bars are pure CSS — set --nyx-bar:0–100 on each bar. Line & area charts style an author-supplied <svg> (same approach as the meter). Donut & pie are just a conic-gradient you set inline. Everything is accent-driven and reduced-motion safe.',
+      sections: [
+        { title: 'Bar chart', text: 'Set --nyx-bar (0–100) per bar; add data-label and data-val (the value shows on hover). Use .alt for a second accent and .muted to de-emphasise.', demo: '<div class="nyx-chart-bars" style="--nyx-chart-h:170px"><div class="nyx-bar" style="--nyx-bar:48" data-label="Mon" data-val="48"></div><div class="nyx-bar" style="--nyx-bar:72" data-label="Tue" data-val="72"></div><div class="nyx-bar alt" style="--nyx-bar:61" data-label="Wed" data-val="61"></div><div class="nyx-bar" style="--nyx-bar:88" data-label="Thu" data-val="88"></div><div class="nyx-bar" style="--nyx-bar:54" data-label="Fri" data-val="54"></div><div class="nyx-bar muted" style="--nyx-bar:33" data-label="Sat" data-val="33"></div><div class="nyx-bar muted" style="--nyx-bar:40" data-label="Sun" data-val="40"></div></div>' },
+        { title: 'Line & area', text: 'Style a hand-authored <svg>: .nyx-line for the stroke, .nyx-area for the fill (give it a linearGradient with id nyxArea), .nyx-dot for points, .nyx-grid for guides.', demo: '<svg class="nyx-chart-line" viewBox="0 0 320 140" role="img" aria-label="Weekly trend"><defs><linearGradient id="nyxArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c63ff" stop-opacity="0.35"/><stop offset="1" stop-color="#6c63ff" stop-opacity="0"/></linearGradient></defs><line class="nyx-grid" x1="0" y1="35" x2="320" y2="35"/><line class="nyx-grid" x1="0" y1="70" x2="320" y2="70"/><line class="nyx-grid" x1="0" y1="105" x2="320" y2="105"/><polygon class="nyx-area" points="10,140 10,110 60,70 110,90 160,40 210,75 260,30 310,55 310,140"/><polyline class="nyx-line" points="10,110 60,70 110,90 160,40 210,75 260,30 310,55"/><circle class="nyx-dot" cx="10" cy="110" r="3.5"/><circle class="nyx-dot" cx="60" cy="70" r="3.5"/><circle class="nyx-dot" cx="110" cy="90" r="3.5"/><circle class="nyx-dot" cx="160" cy="40" r="3.5"/><circle class="nyx-dot" cx="210" cy="75" r="3.5"/><circle class="nyx-dot" cx="260" cy="30" r="3.5"/><circle class="nyx-dot" cx="310" cy="55" r="3.5"/></svg>' },
+        { title: 'Donut, pie & legend', text: 'Set the slices as an inline conic-gradient. Wrap a donut in .nyx-donut to center a value. Legends colour each dot with --nyx-legend-c.', demo: '<div class="nyx-flex nyx-gap-5 nyx-items-center nyx-wrap"><div class="nyx-donut"><div class="nyx-chart-donut" style="background:conic-gradient(var(--nyx-accent) 0 62%,var(--nyx-accent-2) 62% 84%,var(--nyx-surface-2) 84%)"></div><span class="nyx-donut-val">62%</span></div><div class="nyx-chart-pie" style="background:conic-gradient(var(--nyx-accent) 0 45%,var(--nyx-accent-2) 45% 72%,var(--nyx-warning) 72% 88%,var(--nyx-surface-2) 88%)"></div><div class="nyx-chart-legend"><span class="nyx-legend">Direct</span><span class="nyx-legend" style="--nyx-legend-c:var(--nyx-accent-2)">Referral</span><span class="nyx-legend" style="--nyx-legend-c:var(--nyx-warning)">Social</span><span class="nyx-legend" style="--nyx-legend-c:var(--nyx-surface-2)">Other</span></div></div>' },
+        { title: 'Bar markup', lang: 'html', code: '<div class="nyx-chart-bars" style="--nyx-chart-h:170px">\n  <div class="nyx-bar"     style="--nyx-bar:72" data-label="Tue" data-val="72"></div>\n  <div class="nyx-bar alt" style="--nyx-bar:61" data-label="Wed" data-val="61"></div>\n  <div class="nyx-bar muted" style="--nyx-bar:33" data-label="Sat" data-val="33"></div>\n</div>\n\n<!-- donut: a conic-gradient + a centered value -->\n<div class="nyx-donut">\n  <div class="nyx-chart-donut"\n       style="background:conic-gradient(var(--nyx-accent) 0 62%,var(--nyx-surface-2) 62%)"></div>\n  <span class="nyx-donut-val">62%</span>\n</div>' }
+      ],
+      classes: [
+        ['nyx-chart-bars', 'Bar-chart track; size with --nyx-chart-h, gap with --nyx-bar-gap.'],
+        ['nyx-bar', 'A bar — set --nyx-bar:0–100; data-label / data-val. +.alt / .muted.'],
+        ['nyx-chart-line', 'Styles an <svg>: .nyx-line / .nyx-area / .nyx-dot / .nyx-grid.'],
+        ['nyx-chart-donut / -pie', 'Conic-gradient ring / pie (set background inline; --nyx-pie-size, --nyx-donut-w).'],
+        ['nyx-donut + .nyx-donut-val', 'Center a value label inside a donut.'],
+        ['nyx-chart-legend > .nyx-legend', 'Legend; colour each with --nyx-legend-c.']
+      ]
+    },
+
+    /* ===== CODE BLOCK ===== */
+    {
+      id: 'code-block', group: 'Components', title: 'Code block', added: 'v1.7',
+      summary: 'A titled code window with traffic-light dots, a filename, syntax tokens and a one-tap copy button. Wrap snippets in nyx-tok-* spans; the tag / attr / str / comment colours follow the accent so your code samples retheme too.',
+      sections: [
+        { title: 'With copy button', text: 'The copy button uses data-nyx-copy — the runtime copies the block and toasts. Click it.', demo: '<div class="nyx-code-block"><div class="nyx-code-bar"><span class="nyx-dot r"></span><span class="nyx-dot y"></span><span class="nyx-dot g"></span><span class="nyx-code-name">button.html</span><button class="nyx-code-copy" data-nyx-copy aria-label="Copy code" style="width:auto;padding:0 10px;font-size:11px;font-family:var(--nyx-font-mono)">copy</button></div><pre><code><span class="nyx-tok-comment">&lt;!-- a primary button --&gt;</span>\n<span class="nyx-tok-tag">&lt;button</span> <span class="nyx-tok-attr">class</span>=<span class="nyx-tok-str">"nyx-btn nyx-btn-primary"</span><span class="nyx-tok-tag">&gt;</span>Save<span class="nyx-tok-tag">&lt;/button&gt;</span></code></pre></div>' },
+        { title: 'Markup', lang: 'html', code: '<div class="nyx-code-block">\n  <div class="nyx-code-bar">\n    <span class="nyx-dot r"></span><span class="nyx-dot y"></span><span class="nyx-dot g"></span>\n    <span class="nyx-code-name">index.html</span>\n    <button class="nyx-code-copy" data-nyx-copy aria-label="Copy">Copy</button>\n  </div>\n  <pre><code><!-- wrap text in nyx-tok-tag / -attr / -str / -comment / -kw / -fn / -num -->\n  </code></pre>\n</div>' },
+        { title: 'Copy a different target', lang: 'html', code: '<!-- no value = copy this block; or point at any element -->\n<button class="nyx-btn nyx-btn-ghost" data-nyx-copy="#snippet">Copy snippet</button>' }
+      ],
+      classes: [
+        ['nyx-code-block', 'Code window container.'],
+        ['nyx-code-bar + .nyx-dot(.r/.y/.g) + .nyx-code-name', 'Title bar: traffic lights + filename.'],
+        ['nyx-code-copy [data-nyx-copy]', 'Copy button (empty = this block; or data-nyx-copy="#sel").'],
+        ['nyx-tok-tag / -attr / -str / -comment / -kw / -fn / -num', 'Syntax tokens; tag/attr/str/comment follow the accent.']
+      ]
+    },
+
     /* ===== REGIONAL (MENA) ===== */
     {
       id: 'prayer-times', group: 'Regional', title: 'Prayer times', added: 'v1.4',

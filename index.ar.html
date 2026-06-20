@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="dark">
+<html lang="ar" dir="rtl" data-theme="dark" data-font="thmanyah">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,10 +7,12 @@
 <meta name="description" content="نيكس: أوّل مكتبة مكوّنات CSS/JS مبنية للمطوّرين العرب، بدعم RTL كامل وخطوط عربية وطابع العمق المضيء." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Aref+Ruqaa:wght@400;700&family=Lalezar&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="fonts/thmanyah.css" />
 <link rel="stylesheet" href="nyx.css" />
 <style>
   html{scroll-behavior:smooth;scroll-padding-top:80px}
+  /* Thmanyah typeface is enabled via data-font="thmanyah" on <html> (see fonts/thmanyah.css) */
   /* ---- icon system ---- */
   .ico{width:24px;height:24px;display:inline-block;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
   .ico-sm{width:18px;height:18px}
@@ -36,10 +38,9 @@
   .hero-eyebrow b{color:var(--nyx-text);font-weight:700}
   .sec-eyebrow{margin-bottom:var(--nyx-s3)}
   /* ---- hero ---- */
-  .hero{position:relative;text-align:center;padding-top:var(--nyx-s7);padding-bottom:var(--nyx-s7);isolation:isolate}
-  .hero::before{content:"";position:absolute;inset:-120px -50vw 0;z-index:-1;pointer-events:none;
-    background-image:linear-gradient(var(--nyx-border) 1px,transparent 1px),linear-gradient(90deg,var(--nyx-border) 1px,transparent 1px);
-    background-size:56px 56px;opacity:.35;
+  .hero{text-align:center;padding-top:var(--nyx-s7);padding-bottom:var(--nyx-s7)}
+  /* grid backdrop reuses .nyx-bg-grid; clipped to the section so it never overflows */
+  .hero.nyx-bg-grid::before{opacity:.35;
     -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000,transparent 75%);
     mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000,transparent 75%)}
   .hero h1{max-width:16ch;margin-inline:auto}
@@ -133,7 +134,14 @@
   .foot a:hover{color:var(--nyx-text)}
   .foot-brand p{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);max-width:34ch;margin-top:var(--nyx-s3)}
   .foot-bottom{border-top:1px solid var(--nyx-border);padding-block:var(--nyx-s4);text-align:center;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+  /* ---- v1.7 effects showcase ---- */
+  .bg-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--nyx-s4)}
+  .bg-tile{position:relative;min-height:118px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);display:grid;place-items:center}
+  .bg-tile .lbl{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);background:var(--nyx-surface);border:1px solid var(--nyx-border);padding:3px 10px;border-radius:var(--nyx-radius-full)}
+  .chart-card{height:100%}
+  .chart-card h3{margin:0}
   @media(max-width:780px){
+    .bg-gallery{grid-template-columns:repeat(2,1fr)}
     .lp-comp{grid-template-columns:1fr}.hide-sm{display:none}section.lp{padding-block:var(--nyx-s7)}
     .lp-bento{grid-template-columns:1fr}.b6,.b4,.b3,.b2{grid-column:auto}
     .stats{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr;gap:var(--nyx-s4)}.foot-brand{grid-column:1/-1}
@@ -185,12 +193,13 @@
 <nav class="nyx-navbar">
   <div class="nyx-flex nyx-items-center nyx-gap-4">
     <a class="lp-logo" href="index.ar.html"><span class="mark">N</span><span><span class="pre">nyx</span>·نيكس</span></a>
-    <span class="nyx-badge nyx-badge-info hide-sm">v1.6.0</span>
+    <span class="nyx-badge nyx-badge-info hide-sm">v1.7.0</span>
   </div>
   <div class="nyx-flex nyx-items-center nyx-gap-4">
     <div class="lp-links hide-sm">
       <a href="#features">المزايا</a>
       <a href="#components">المكوّنات</a>
+      <a href="#effects">التأثيرات</a>
       <div class="nyx-dropdown">
         <a href="#" data-nyx-toggle="dropdown" aria-haspopup="true" aria-expanded="false">القوالب ▾</a>
         <div class="nyx-dropdown-menu">
@@ -198,6 +207,7 @@
           <a class="nyx-dropdown-item" href="examples/checkout.html"><svg class="ico ico-sm"><use href="#i-cart"/></svg> الدفع</a>
           <a class="nyx-dropdown-item" href="examples/pricing.html"><svg class="ico ico-sm"><use href="#i-creditcard"/></svg> الأسعار</a>
           <a class="nyx-dropdown-item" href="examples/auth.html"><svg class="ico ico-sm"><use href="#i-lock"/></svg> الدخول</a>
+          <a class="nyx-dropdown-item" href="examples/article.ar.html"><svg class="ico ico-sm"><use href="#i-form"/></svg> مقال <span class="nyx-badge nyx-badge-info">ثمانية</span></a>
         </div>
       </div>
       <a href="docs.ar.html">التوثيق</a>
@@ -212,10 +222,10 @@
 <div class="nyx-container">
 
   <!-- ===================== HERO ===================== -->
-  <section class="hero">
-    <span class="hero-eyebrow nyx-anim-up"><span class="dot"></span> أوّل مكتبة CSS مبنية <b>للمطوّرين العرب</b></span>
-    <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1" style="margin-top:var(--nyx-s5)">ابنِ واجهات<span class="l2 nyx-gradient-text animated">بعمقٍ مضيء</span></h1>
-    <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2" style="margin-top:var(--nyx-s5)">مكتبة مكوّنات عصريّة، كلّ عنصر فيها يبدو مُضاءً من الداخل — بدعم RTL كامل وخطوط عربية أنيقة، وسمة فاتحة، وبلا أيّ اعتماديات.</p>
+  <section class="hero nyx-bg-grid">
+    <span class="hero-eyebrow nyx-anim-up"><span class="dot"></span> واجهات فاخرة لعصر الـ <b>SaaS العربي</b></span>
+    <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1" style="margin-top:var(--nyx-s5)">أطلِق واجهات SaaS فاخرة<span class="l2 nyx-gradient-text animated">في دقائق، لا أسابيع.</span></h1>
+    <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2" style="margin-top:var(--nyx-s5)">نيكس نظام تصميم فاخر داكن المظهر لمنتجات الـ SaaS العربية — تدرّجات متحرّكة، ومكوّنات مضيئة، ودعم RTL كامل، وبلا أيّ اعتماديات.</p>
     <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta nyx-anim-up nyx-anim-delay-3" style="margin-top:var(--nyx-s6)">
       <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.ar.html#/installation">ابدأ الآن</a>
       <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs.ar.html">تصفّح المكوّنات</a>
@@ -371,11 +381,61 @@
     </div>
   </section>
 
+  <!-- ===================== EFFECTS / DATA SHOWCASE (v1.7) ===================== -->
+  <section class="lp" id="effects">
+    <div class="lp-section-head">
+      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> جديد في v1.7</span>
+      <h2 class="nyx-h1" style="margin-top:var(--nyx-s3)">خلفيات ومخططات وشيفرة — جاهزة في الصندوق</h2>
+      <p class="nyx-muted" style="margin-top:var(--nyx-s2)">خلفيات محيطة، ورسوم بيانية بلا أيّ اعتماديات، وكتلة شيفرة تُنسخ بنقرة — جميعها مدفوعة باللون، وتدعم RTL، وتحترم تقليل الحركة.</p>
+    </div>
+
+    <div class="bg-gallery" data-nyx-reveal>
+      <div class="nyx-bg-grid bg-tile"><span class="lbl">grid</span></div>
+      <div class="nyx-bg-dots bg-tile"><span class="lbl">dots</span></div>
+      <div class="nyx-bg-mesh bg-tile"><span class="lbl">mesh</span></div>
+      <div class="nyx-bg-gradient animated bg-tile"><span class="lbl">gradient</span></div>
+      <div class="nyx-bg-beams animated bg-tile"><span class="lbl">beams</span></div>
+      <div class="nyx-bg-squares bg-tile"><span class="lbl">squares · مرّر</span></div>
+      <div class="nyx-bg-stars bg-tile"><span class="lbl">stars</span></div>
+      <div class="nyx-bg-mesh nyx-bg-noise bg-tile"><span class="lbl">mesh + noise</span></div>
+    </div>
+
+    <div class="nyx-grid" style="margin-top:var(--nyx-s4)">
+      <div class="nyx-col-7" data-nyx-reveal>
+        <div class="nyx-card chart-card">
+          <div class="nyx-flex nyx-justify-between nyx-items-center"><h3 class="nyx-h4">المستخدمون النشطون أسبوعياً</h3><span class="nyx-badge nyx-badge-success">▲ ١٨٪</span></div>
+          <div class="nyx-chart-bars" style="--nyx-chart-h:150px;margin-top:var(--nyx-s5)">
+            <div class="nyx-bar" style="--nyx-bar:42" data-label="أحد" data-val="٤٢"></div>
+            <div class="nyx-bar" style="--nyx-bar:63" data-label="إثن" data-val="٦٣"></div>
+            <div class="nyx-bar alt" style="--nyx-bar:55" data-label="ثلا" data-val="٥٥"></div>
+            <div class="nyx-bar" style="--nyx-bar:78" data-label="أرب" data-val="٧٨"></div>
+            <div class="nyx-bar" style="--nyx-bar:90" data-label="خمي" data-val="٩٠"></div>
+            <div class="nyx-bar muted" style="--nyx-bar:48" data-label="جمع" data-val="٤٨"></div>
+            <div class="nyx-bar muted" style="--nyx-bar:51" data-label="سبت" data-val="٥١"></div>
+          </div>
+        </div>
+      </div>
+      <div class="nyx-col-5" data-nyx-reveal>
+        <div class="nyx-card chart-card">
+          <h3 class="nyx-h4">مصادر الزيارات</h3>
+          <div class="nyx-flex nyx-gap-5 nyx-items-center" style="margin-top:var(--nyx-s5)">
+            <div class="nyx-donut"><div class="nyx-chart-donut" style="background:conic-gradient(var(--nyx-accent) 0 62%,var(--nyx-accent-2) 62% 84%,var(--nyx-surface-2) 84%)"></div><span class="nyx-donut-val">٦٢٪</span></div>
+            <div class="nyx-chart-legend" style="flex-direction:column;align-items:flex-start;gap:var(--nyx-s2)">
+              <span class="nyx-legend">مباشر · ٦٢٪</span>
+              <span class="nyx-legend" style="--nyx-legend-c:var(--nyx-accent-2)">إحالة · ٢٢٪</span>
+              <span class="nyx-legend" style="--nyx-legend-c:var(--nyx-surface-2)">أخرى · ١٦٪</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== CLOSING CTA ===================== -->
   <section class="lp" id="cta">
     <div class="cta-band" data-nyx-reveal>
       <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> جاهزون متى استعددت</span>
-      <h2 class="nyx-bigtype nyx-bigtype-sm" style="margin-top:var(--nyx-s4)">ابدأ البناء <span class="nyx-gradient-text animated">في العتمة.</span></h2>
+      <h2 class="nyx-bigtype nyx-bigtype-sm" style="margin-top:var(--nyx-s4)">ابنِ شيئاً <span class="nyx-gradient-text animated">فاخراً ومضيئاً.</span></h2>
       <p class="nyx-lead nyx-muted" style="max-width:540px;margin:var(--nyx-s4) auto 0">بلا إعداد وبلا اعتماديات. أضِف ملفّين فقط وأطلق واجهة مضيئة جاهزة للعربية اليوم.</p>
       <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta" style="margin-top:var(--nyx-s6)">
         <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.ar.html#/installation">ابدأ الآن</a>

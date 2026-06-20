@@ -1,0 +1,25 @@
+/*! Nyx · code.css · v1.7.0 · MIT
+ * The code module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   22. CODE BLOCK (v1.7) — titled code window + syntax tokens + copy
+   ============================================================ */
+.nyx-code-block{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;background:#070810;box-shadow:var(--nyx-shadow-lg)}
+.nyx-code-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--nyx-border);background:var(--nyx-surface)}
+.nyx-code-bar .nyx-dot{width:11px;height:11px;border-radius:50%;background:var(--nyx-border)}
+.nyx-code-bar .nyx-dot.r{background:#ff5f57}.nyx-code-bar .nyx-dot.y{background:#febc2e}.nyx-code-bar .nyx-dot.g{background:#28c840}
+.nyx-code-name{margin-inline-start:8px;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
+.nyx-code-copy{margin-inline-start:auto;display:grid;place-items:center;width:30px;height:30px;border-radius:var(--nyx-radius-sm);background:transparent;border:1px solid transparent;color:var(--nyx-text-muted);cursor:pointer;transition:color .2s var(--nyx-ease),background .2s var(--nyx-ease),border-color .2s var(--nyx-ease)}
+.nyx-code-copy:hover{color:var(--nyx-text);background:var(--nyx-surface-2);border-color:var(--nyx-border)}
+.nyx-code-copy.copied{color:var(--nyx-accent-2);border-color:color-mix(in srgb,var(--nyx-accent-2) 45%,transparent)}
+.nyx-code-block pre{margin:0;padding:var(--nyx-s4);overflow-x:auto;background:#070810;border:0;border-radius:0}
+.nyx-code-block code{display:block;white-space:pre;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);line-height:1.7;color:#c8cce0}
+/* syntax tokens — tag/attr/str/comment follow the accent so code retheme too */
+.nyx-tok-tag{color:var(--nyx-accent)}
+.nyx-tok-attr{color:var(--nyx-accent-2)}
+.nyx-tok-str{color:var(--nyx-warning)}
+.nyx-tok-comment{color:var(--nyx-text-muted);font-style:italic}
+.nyx-tok-kw{color:#ff5fa2}
+.nyx-tok-fn{color:#56b6ff}
+.nyx-tok-num{color:#f59e0b}

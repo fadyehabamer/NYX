@@ -996,6 +996,72 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 @keyframes nyx-bg-drift{to{background-position:0 -1120px}}
 
 /* ============================================================
+   21. CHARTS (v1.7) — zero-dep CSS + SVG data viz
+   ============================================================ */
+/* Bars are pure CSS — set --nyx-bar:0–100 per bar, add data-label/data-val.
+   Line & area charts style an author-supplied <svg> (like .nyx-meter).
+   Donut & pie are a conic-gradient you set inline. Accent-driven; the
+   rise animation is dropped under prefers-reduced-motion. */
+
+/* — bar chart — */
+.nyx-chart-bars{position:relative;display:flex;align-items:flex-end;gap:var(--nyx-bar-gap,10px);height:var(--nyx-chart-h,170px);margin-bottom:28px}
+.nyx-chart-bars::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(to top,var(--nyx-border) 0 1px,transparent 1px 25%);opacity:.6}
+.nyx-bar{position:relative;z-index:1;flex:1;min-width:8px;height:calc(var(--nyx-bar,0)*1%);min-height:3px;border-radius:7px 7px 0 0;transform-origin:bottom;
+  background:linear-gradient(180deg,var(--nyx-accent),color-mix(in srgb,var(--nyx-accent-2) 85%,var(--nyx-accent)));
+  box-shadow:0 0 16px color-mix(in srgb,var(--nyx-accent) 30%,transparent);
+  animation:nyx-bar-rise .6s var(--nyx-ease) both;transition:filter .2s var(--nyx-ease)}
+.nyx-bar:hover{filter:brightness(1.15)}
+.nyx-bar.alt{background:linear-gradient(180deg,var(--nyx-accent-2),color-mix(in srgb,var(--nyx-accent) 70%,var(--nyx-accent-2)));box-shadow:0 0 16px color-mix(in srgb,var(--nyx-accent-2) 30%,transparent)}
+.nyx-bar.muted{background:var(--nyx-surface-2);box-shadow:none}
+.nyx-bar[data-label]::after{content:attr(data-label);position:absolute;top:100%;left:0;right:0;margin-top:8px;text-align:center;font-size:var(--nyx-fs-xs);font-family:var(--nyx-font-mono);color:var(--nyx-text-muted);white-space:nowrap}
+.nyx-bar[data-val]::before{content:attr(data-val);position:absolute;bottom:100%;left:50%;margin-bottom:7px;transform:translateX(-50%) translateY(4px);padding:3px 8px;border-radius:var(--nyx-radius-sm);background:var(--nyx-surface-2);border:1px solid var(--nyx-border);font-size:var(--nyx-fs-xs);font-family:var(--nyx-font-mono);color:var(--nyx-text);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s var(--nyx-ease),transform .2s var(--nyx-ease)}
+.nyx-bar:hover[data-val]::before{opacity:1;transform:translateX(-50%) translateY(0)}
+@keyframes nyx-bar-rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+
+/* — line / area chart (style an author-supplied <svg>) — */
+.nyx-chart-line{display:block;width:100%;height:auto;overflow:visible}
+.nyx-chart-line .nyx-grid{stroke:var(--nyx-border);stroke-width:1;opacity:.6}
+.nyx-chart-line .nyx-area{fill:url(#nyxArea);opacity:.85}
+.nyx-chart-line .nyx-line{fill:none;stroke:var(--nyx-accent);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px color-mix(in srgb,var(--nyx-accent) 50%,transparent))}
+.nyx-chart-line .nyx-line.alt{stroke:var(--nyx-accent-2);filter:drop-shadow(0 0 6px color-mix(in srgb,var(--nyx-accent-2) 50%,transparent))}
+.nyx-chart-line .nyx-dot{fill:var(--nyx-bg);stroke:var(--nyx-accent);stroke-width:2.5}
+
+/* — donut & pie (set background:conic-gradient(...) inline) — */
+.nyx-donut{position:relative;display:inline-grid;place-items:center}
+.nyx-donut-val{position:absolute;font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-xl);background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.nyx-chart-pie{width:var(--nyx-pie-size,150px);aspect-ratio:1;border-radius:50%;box-shadow:var(--nyx-shadow-sm)}
+.nyx-chart-donut{width:var(--nyx-pie-size,150px);aspect-ratio:1;border-radius:50%;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - var(--nyx-donut-w,24px)),#000 calc(100% - var(--nyx-donut-w,24px)));
+          mask:radial-gradient(farthest-side,transparent calc(100% - var(--nyx-donut-w,24px)),#000 calc(100% - var(--nyx-donut-w,24px)))}
+
+/* — legend (set --nyx-legend-c per item) — */
+.nyx-chart-legend{display:flex;flex-wrap:wrap;align-items:center;gap:var(--nyx-s3) var(--nyx-s4)}
+.nyx-chart-legend .nyx-legend{display:inline-flex;align-items:center;gap:7px;font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted)}
+.nyx-chart-legend .nyx-legend::before{content:"";width:11px;height:11px;border-radius:3px;background:var(--nyx-legend-c,var(--nyx-accent))}
+
+/* ============================================================
+   22. CODE BLOCK (v1.7) — titled code window + syntax tokens + copy
+   ============================================================ */
+.nyx-code-block{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;background:#070810;box-shadow:var(--nyx-shadow-lg)}
+.nyx-code-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--nyx-border);background:var(--nyx-surface)}
+.nyx-code-bar .nyx-dot{width:11px;height:11px;border-radius:50%;background:var(--nyx-border)}
+.nyx-code-bar .nyx-dot.r{background:#ff5f57}.nyx-code-bar .nyx-dot.y{background:#febc2e}.nyx-code-bar .nyx-dot.g{background:#28c840}
+.nyx-code-name{margin-inline-start:8px;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
+.nyx-code-copy{margin-inline-start:auto;display:grid;place-items:center;width:30px;height:30px;border-radius:var(--nyx-radius-sm);background:transparent;border:1px solid transparent;color:var(--nyx-text-muted);cursor:pointer;transition:color .2s var(--nyx-ease),background .2s var(--nyx-ease),border-color .2s var(--nyx-ease)}
+.nyx-code-copy:hover{color:var(--nyx-text);background:var(--nyx-surface-2);border-color:var(--nyx-border)}
+.nyx-code-copy.copied{color:var(--nyx-accent-2);border-color:color-mix(in srgb,var(--nyx-accent-2) 45%,transparent)}
+.nyx-code-block pre{margin:0;padding:var(--nyx-s4);overflow-x:auto;background:#070810;border:0;border-radius:0}
+.nyx-code-block code{display:block;white-space:pre;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);line-height:1.7;color:#c8cce0}
+/* syntax tokens — tag/attr/str/comment follow the accent so code retheme too */
+.nyx-tok-tag{color:var(--nyx-accent)}
+.nyx-tok-attr{color:var(--nyx-accent-2)}
+.nyx-tok-str{color:var(--nyx-warning)}
+.nyx-tok-comment{color:var(--nyx-text-muted);font-style:italic}
+.nyx-tok-kw{color:#ff5fa2}
+.nyx-tok-fn{color:#56b6ff}
+.nyx-tok-num{color:#f59e0b}
+
+/* ============================================================
    RTL — flips for physical properties not covered by logical CSS
    ============================================================ */
 [dir="rtl"]{--nyx-font-body:var(--nyx-font-ar);--nyx-font-display:var(--nyx-font-ar)}

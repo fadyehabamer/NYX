@@ -1,0 +1,40 @@
+/*! Thmanyah typeface — self-hosted @font-face (woff2)
+ * Free Arabic + Latin family by ثمانية (Thmanyah). See Thmanyah-Font-Family/LICENSE.pdf.
+ * Three families: 'Thmanyah Sans' (body), 'Thmanyah Serif Display' (hero/display),
+ * 'Thmanyah Serif Text' (long-form serif). Weights 300/400/500/700/900.
+ * Link this file, then point --nyx-font-ar / --nyx-font-ar-display at the families.
+ */
+
+/* ---- Thmanyah Sans ---- */
+@font-face{font-family:'Thmanyah Sans';font-style:normal;font-weight:300;font-display:swap;src:url('thmanyah/thmanyahsans-Light.woff2') format('woff2')}
+@font-face{font-family:'Thmanyah Sans';font-style:normal;font-weight:400;font-display:swap;src:url('thmanyah/thmanyahsans-Regular.woff2') format('woff2')}
+@font-face{font-family:'Thmanyah Sans';font-style:normal;font-weight:500;font-display:swap;src:url('thmanyah/thmanyahsans-Medium.woff2') format('woff2')}
+@font-face{font-family:'Thmanyah Sans';font-style:normal;font-weight:700;font-display:swap;src:url('thmanyah/thmanyahsans-Bold.woff2') format('woff2')}
+@font-face{font-family:'Thmanyah Sans';font-style:normal;font-weight:900;font-display:swap;src:url('thmanyah/thmanyahsans-Black.woff2') format('woff2')}
+
+/* ---- Thmanyah Serif Display ---- */
+@font-face{font-family:'Thmanyah Serif Display';font-style:normal;font-weight:300;font-display:swap;src:url('thmanyah/thmanyahserifdisplay-Light.woff2') format('woff2')}
+@font-face{font-family:'Thmanyah Serif Display';font-style:normal;font-weight:400;font-display:swap;src:url('thmanyah/thmanyahserifdisplay-Regular.woff2') format('woff2')}
+@font-face{font-family:'Thmanyah Serif Display';font-style:normal;font-weight:500;font-display:swap;src:url('thmanyah/thmanyahserifdisplay-Medium.woff2') format('woff2')}
+@font-face{font-family:'Thmanyah Serif Display';font-style:normal;font-weight:700;font-display:swap;src:url('thmanyah/thmanyahserifdisplay-Bold.woff2') format('woff2')}
+@font-face{font-family:'Thmanyah Serif Display';font-style:normal;font-weight:900;font-display:swap;src:url('thmanyah/thmanyahserifdisplay-Black.woff2') format('woff2')}
+
+/* ---- Thmanyah Serif Text ---- */
+@font-face{font-family:'Thmanyah Serif Text';font-style:normal;font-weight:300;font-display:swap;src:url('thmanyah/thmanyahseriftext-Light.woff2') format('woff2')}
+@font-face{font-family:'Thmanyah Serif Text';font-style:normal;font-weight:400;font-display:swap;src:url('thmanyah/thmanyahseriftext-Regular.woff2') format('woff2')}
+@font-face{font-family:'Thmanyah Serif Text';font-style:normal;font-weight:500;font-display:swap;src:url('thmanyah/thmanyahseriftext-Medium.woff2') format('woff2')}
+@font-face{font-family:'Thmanyah Serif Text';font-style:normal;font-weight:700;font-display:swap;src:url('thmanyah/thmanyahseriftext-Bold.woff2') format('woff2')}
+@font-face{font-family:'Thmanyah Serif Text';font-style:normal;font-weight:900;font-display:swap;src:url('thmanyah/thmanyahseriftext-Black.woff2') format('woff2')}
+
+/* ---- opt-in theme: <html data-font="thmanyah"> re-points the Arabic faces
+   framework-wide (matches the :root[data-accent] convention; higher specificity
+   than the :root token defaults, so order vs nyx.css does not matter). The body
+   uses Thmanyah Sans, the hero/.nyx-bigtype uses Thmanyah Serif Display. Thmanyah
+   fully replaces Aref Ruqaa under this theme — including the .nyx-font-ruqaa
+   utility. Pair .nyx-font-serif-text with Thmanyah Serif Text for long-form. ---- */
+:root[data-font="thmanyah"]{
+  --nyx-font-ar:'Thmanyah Sans','IBM Plex Sans Arabic',system-ui,sans-serif;
+  --nyx-font-ar-display:'Thmanyah Serif Display',serif;
+}
+:root[data-font="thmanyah"] .nyx-font-ruqaa{font-family:'Thmanyah Serif Display',serif}
+.nyx-font-serif-text{font-family:'Thmanyah Serif Text','IBM Plex Sans Arabic',serif}

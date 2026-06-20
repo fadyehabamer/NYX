@@ -67,7 +67,7 @@ window.NYX_I18N = {
     grid: { title: 'الشبكة', summary: 'شبكة CSS من 12 عموداً. استخدم nyx-grid على الحاوية وأصناف nyx-col من 1 إلى 12 على الأبناء.' },
     container: { title: 'الحاوية', summary: 'تتوسّط المحتوى بعرض أقصى 1280 بكسل مع حشو جانبي متجاوب.' },
     /* Content */
-    typography: { title: 'الطباعة', summary: 'خط Plus Jakarta Sans للعناوين وInter للنصّ، ويتحوّل تلقائياً إلى خطّي IBM Plex Sans Arabic وAref Ruqaa في وضع RTL.' },
+    typography: { title: 'الطباعة', summary: 'خط Plus Jakarta Sans للعناوين وInter للنصّ، ويتحوّل تلقائياً إلى خطّ ثمانية (Thmanyah) — Sans للنصّ وSerif Display للعناوين — في وضع RTL.' },
     /* Forms */
     inputs: { title: 'الحقول', summary: 'حقول إدخال داكنة مع توهّج عند التركيز، إضافةً إلى التسميات وتلميحات المساعدة.' },
     validation: { title: 'التحقّق', summary: 'حالات صحّة بأسلوب Bootstrap. أضِف is-valid أو is-invalid إلى الحقل، أو لُفّ النموذج بـ nyx-was-validated ليعتمد على تحقّق المتصفّح الأصلي، ثم ضع رسالة nyx-valid-feedback أو nyx-invalid-feedback المجاورة.' },
@@ -112,7 +112,7 @@ window.NYX_I18N = {
     segmented: { title: 'تحكّم مقسّم' }, rating: { title: 'التقييم' }, 'empty-state': { title: 'حالة فارغة' },
     banner: { title: 'لافتة' }, dropzone: { title: 'منطقة الإسقاط' }, sparkline: { title: 'مخطّط مصغّر' },
     /* Motion */
-    'big-type': { title: 'الخط الكبير', summary: 'طباعة عملاقة للواجهات الرئيسية — اتّجاه الخط الكبير الرائج. يتحوّل في وضع RTL إلى خط Aref Ruqaa العربي الانسيابي (رقعة).' },
+    'big-type': { title: 'الخط الكبير', summary: 'طباعة عملاقة للواجهات الرئيسية — اتّجاه الخط الكبير الرائج. يتحوّل في وضع RTL إلى خطّ ثمانية للعرض (Thmanyah Serif Display).' },
     animations: { title: 'الحركات', summary: 'حركات دخول متدرّجة، وحلقة تعويم، وتدرّج لوني متحرّك، وخلفية شفق دوّارة — تحترم جميعها prefers-reduced-motion.' },
     reveal: { title: 'الكشف عند التمرير', summary: 'أضف data-nyx-reveal لتظهر العناصر بتلاشٍ وارتفاع عند دخولها إطار العرض، ويُهيّئها المُشغّل تلقائياً.' },
     /* Regional (MENA) */

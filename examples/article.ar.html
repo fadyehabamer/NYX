@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark" data-font="thmanyah">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>نيكس · نموذج مقال</title>
+<meta name="description" content="نموذج صفحة مقال عربي بطابع العمق المضيء — يستخدم خط ثمانية للنصوص الطويلة، وخلفيات نيكس، ومكوّناتها." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../fonts/thmanyah.css" />
+<link rel="stylesheet" href="../nyx.css" />
+<style>
+  html{scroll-behavior:smooth}
+  .ico{width:20px;height:20px;display:inline-block;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
+  .ico-sm{width:16px;height:16px}
+  .lp-logo{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-lg);display:flex;align-items:center;gap:9px}
+  .lp-logo .mark{width:28px;height:28px;border-radius:9px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));box-shadow:var(--nyx-glow);display:grid;place-items:center;color:#fff;font-size:14px}
+
+  /* ---- article shell ---- */
+  .art{max-width:740px;margin-inline:auto;padding-block:var(--nyx-s7)}
+  .art-eyebrow{display:flex;align-items:center;gap:var(--nyx-s3);justify-content:center;margin-bottom:var(--nyx-s4)}
+  .art-title{font-family:var(--nyx-font-ar-display);font-weight:700;font-size:clamp(2rem,5vw,3.2rem);line-height:1.3;text-align:center;letter-spacing:0}
+  .art-lead{font-family:'Thmanyah Serif Text',serif;font-size:clamp(1.15rem,2.4vw,1.4rem);line-height:1.9;color:var(--nyx-text-muted);text-align:center;max-width:60ch;margin:var(--nyx-s5) auto 0}
+  .art-byline{display:flex;align-items:center;justify-content:center;gap:var(--nyx-s4);flex-wrap:wrap;margin-top:var(--nyx-s6)}
+  .art-author{display:flex;align-items:center;gap:10px}
+  .art-author b{font-weight:600}
+  .art-author span{display:block;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+  .art-meta{display:flex;align-items:center;gap:var(--nyx-s4);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+  .art-meta .mi{display:inline-flex;align-items:center;gap:6px}
+  .art-cover{height:clamp(220px,38vw,360px);border-radius:var(--nyx-radius-xl);border:1px solid var(--nyx-border);margin-block:var(--nyx-s7);display:grid;place-items:center}
+  .art-cover .tag{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);background:color-mix(in srgb,var(--nyx-bg) 70%,transparent);border:1px solid var(--nyx-border);padding:4px 12px;border-radius:var(--nyx-radius-full);backdrop-filter:blur(6px)}
+
+  /* ---- long-form body in Thmanyah Serif Text ---- */
+  .art-body{font-family:'Thmanyah Serif Text',serif;font-size:1.18rem;line-height:2;color:var(--nyx-text)}
+  .art-body > p{margin-bottom:var(--nyx-s5)}
+  .art-body > p:first-of-type::first-letter{font-family:var(--nyx-font-ar-display);font-size:3.4em;line-height:.8;float:inline-start;margin-inline-end:.12em;margin-top:.06em;color:var(--nyx-accent)}
+  .art-body h2{font-family:var(--nyx-font-ar-display);font-weight:700;font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.4;margin:var(--nyx-s7) 0 var(--nyx-s4)}
+  .art-body ul{margin:0 0 var(--nyx-s5);padding-inline-start:1.4em;display:flex;flex-direction:column;gap:var(--nyx-s2)}
+  .art-body ul li{padding-inline-start:.2em}
+  .art-body ul li::marker{color:var(--nyx-accent-2)}
+  .pullquote{margin:var(--nyx-s7) 0;padding-inline-start:var(--nyx-s5);border-inline-start:3px solid var(--nyx-accent);font-family:var(--nyx-font-ar-display);font-weight:400;font-size:clamp(1.4rem,3vw,1.9rem);line-height:1.6;color:var(--nyx-text)}
+  figure{margin:var(--nyx-s7) 0}
+  figure .fig-img{height:240px;border-radius:var(--nyx-radius-lg);border:1px solid var(--nyx-border)}
+  figcaption{margin-top:var(--nyx-s3);text-align:center;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);font-family:var(--nyx-font-ar)}
+  .art-code{margin:var(--nyx-s7) 0}
+  .art-chart{margin:var(--nyx-s7) 0}
+
+  /* ---- related ---- */
+  .rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--nyx-s4);margin-top:var(--nyx-s5)}
+  .rel-cover{height:120px;border-radius:var(--nyx-radius);border:1px solid var(--nyx-border);margin-bottom:var(--nyx-s3)}
+  .foot-bottom{border-top:1px solid var(--nyx-border);padding-block:var(--nyx-s5);text-align:center;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+  @media(max-width:780px){.rel-grid{grid-template-columns:1fr}.art-meta{display:none}}
+</style>
+</head>
+<body class="nyx nyx-reset">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.6M8.2 13.2l7.6 3.6"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4V3Z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+</defs></svg>
+
+<!-- ===================== NAVBAR ===================== -->
+<nav class="nyx-navbar">
+  <div class="nyx-flex nyx-items-center nyx-gap-4">
+    <a class="lp-logo" href="../index.ar.html"><span class="mark">N</span><span>نيكس</span></a>
+    <span class="nyx-badge nyx-badge-info hide-sm">المجلّة</span>
+  </div>
+  <div class="nyx-flex nyx-items-center nyx-gap-4">
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="تبديل السمة" title="تبديل السمة">◐</button>
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleDir()" aria-label="تبديل الاتجاه" title="LTR / RTL">⇄</button>
+    <a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="../index.ar.html">اشترك</a>
+  </div>
+</nav>
+
+<div class="nyx-container">
+  <article class="art">
+
+    <header>
+      <div class="art-eyebrow">
+        <span class="nyx-chip nyx-chip-accent">تصميم</span>
+        <span class="nyx-badge-dot">مقال</span>
+      </div>
+      <h1 class="art-title">العمق المضيء: كيف تبني واجهات عربية تتنفّس في الظلام</h1>
+      <p class="art-lead">السمة الداكنة لم تعد خياراً ثانوياً، بل لغةً بصريّة قائمة بذاتها. في هذا المقال نفكّك كيف يصنع الضوء النابع من الداخل إحساساً بالعمق، ولماذا تستحقّ الواجهات العربية تصميماً يبدأ من اليمين لا أن يُترجَم إليه.</p>
+
+      <div class="art-byline">
+        <div class="art-author">
+          <span class="nyx-avatar" style="width:42px;height:42px">ن</span>
+          <div><b>نور القحطاني</b><span>محرّرة التصميم</span></div>
+        </div>
+        <div class="art-meta">
+          <span class="mi"><svg class="ico ico-sm"><use href="#i-cal"/></svg> ٢٠ يونيو ٢٠٢٦</span>
+          <span class="mi"><svg class="ico ico-sm"><use href="#i-clock"/></svg> ٨ دقائق قراءة</span>
+        </div>
+        <div class="nyx-flex nyx-gap-2">
+          <button class="nyx-btn nyx-btn-icon nyx-btn-ghost nyx-btn-sm" aria-label="حفظ"><svg class="ico ico-sm"><use href="#i-bookmark"/></svg></button>
+          <button class="nyx-btn nyx-btn-icon nyx-btn-ghost nyx-btn-sm" onclick="Nyx.toast('تم نسخ الرابط ✓','success')" aria-label="مشاركة"><svg class="ico ico-sm"><use href="#i-share"/></svg></button>
+        </div>
+      </div>
+    </header>
+
+    <!-- cover art via a Nyx background, no external image -->
+    <div class="art-cover nyx-bg-mesh nyx-bg-noise"><span class="tag">العمق المضيء · Luminous Depth</span></div>
+
+    <div class="art-body">
+      <p>حين نفتح تطبيقاً ليلاً، لا نريد شاشةً تصرخ في وجوهنا بالأبيض الناصع. نريد سطحاً هادئاً تنبثق منه العناصر المهمّة كأنّها مضاءة من الداخل. هذه هي الفكرة التي يقوم عليها «العمق المضيء»: بدل أن نُسقط الظلال على خلفيةٍ فاتحة، نجعل الضوء نفسه هو بطل المشهد على قماشةٍ داكنة.</p>
+
+      <p>المبدأ بسيط لكنّه دقيق. كلّ عنصرٍ تفاعليّ يحمل وهجاً خفيفاً بلون العلامة، والأسطح تتراكب بشفافيّةٍ زجاجيّة، والحدود رفيعة بما يكفي لتُلمَّح لا أن تُفرَض. النتيجة واجهةٌ تشعر بالعمق دون أن تثقل على العين.</p>
+
+      <h2>لماذا تبدأ من اليمين؟</h2>
+      <p>كثير من أنظمة التصميم تُبنى للّاتينية أوّلاً ثم «تُعكَس» للعربية. المشكلة أنّ العكس الآليّ لا يكفي: تباعد الحروف يكسر اتّصال الكلمة، والخطوط المصمّمة للّاتينية تبدو غريبة في سياقٍ عربيّ. حين تبدأ من اليمين، تصبح هذه القرارات جزءاً من الأساس لا ترقيعاً لاحقاً.</p>
+
+      <ul>
+        <li>استخدم الخصائص المنطقية (<span class="nyx-code" dir="ltr">margin-inline</span>) بدل الفيزيائية ليعكس التخطيط نفسه تلقائياً.</li>
+        <li>لا تضع <span class="nyx-code" dir="ltr">letter-spacing</span> على النصّ العربيّ أبداً — فهو يقطع تواصل الحروف.</li>
+        <li>اختر خطّاً عربيّاً أصيلاً للعناوين، وآخر واضحاً للنصوص الطويلة.</li>
+      </ul>
+
+      <blockquote class="pullquote">التصميم الجيّد للعربية لا يُترجَم، بل يُولَد من اليمين.</blockquote>
+
+      <p>هذه الصفحة نفسها مكتوبة بخطّ «ثمانية»: العناوين بنسخة العرض، وهذه الفقرات بنسخة النصّ المصمّمة للقراءة الطويلة. لاحظ كيف يرتاح النظر مع ارتفاع السطر الواسع والمقاس المريح.</p>
+
+      <figure>
+        <div class="fig-img nyx-bg-grid"></div>
+        <figcaption>شبكةٌ خفيفة كخلفية — أحد ثمانية تأثيرات خلفية تأتي جاهزة في نيكس.</figcaption>
+      </figure>
+
+      <h2>القياس قبل التحسين</h2>
+      <p>قبل أن نلمس الألوان أو الحركة، نقيس. الرسوم البيانية لا تحتاج مكتباتٍ ثقيلة؛ يكفي القليل من الـ CSS لإظهار اتّجاهٍ واضح:</p>
+
+      <div class="art-chart">
+        <div class="nyx-card">
+          <div class="nyx-flex nyx-justify-between nyx-items-center"><h3 class="nyx-h4" style="margin:0">القرّاء أسبوعياً</h3><span class="nyx-badge nyx-badge-success">▲ ١٢٪</span></div>
+          <div class="nyx-chart-bars" style="--nyx-chart-h:140px;margin-top:var(--nyx-s5)">
+            <div class="nyx-bar" style="--nyx-bar:38" data-label="أحد" data-val="٣٨"></div>
+            <div class="nyx-bar" style="--nyx-bar:52" data-label="إثن" data-val="٥٢"></div>
+            <div class="nyx-bar alt" style="--nyx-bar:47" data-label="ثلا" data-val="٤٧"></div>
+            <div class="nyx-bar" style="--nyx-bar:71" data-label="أرب" data-val="٧١"></div>
+            <div class="nyx-bar" style="--nyx-bar:84" data-label="خمي" data-val="٨٤"></div>
+            <div class="nyx-bar muted" style="--nyx-bar:44" data-label="جمع" data-val="٤٤"></div>
+            <div class="nyx-bar muted" style="--nyx-bar:49" data-label="سبت" data-val="٤٩"></div>
+          </div>
+        </div>
+      </div>
+
+      <p>وحين نريد توثيق طريقة، نعرضها في كتلة شيفرةٍ مرتّبة — والشيفرة بطبيعتها تُقرأ من اليسار:</p>
+
+      <div class="art-code">
+        <div class="nyx-code-block">
+          <div class="nyx-code-bar"><span class="nyx-dot r"></span><span class="nyx-dot y"></span><span class="nyx-dot g"></span><span class="nyx-code-name">index.html</span><button class="nyx-code-copy" data-nyx-copy aria-label="نسخ" style="width:auto;padding:0 10px;font-size:11px;font-family:var(--nyx-font-mono)">نسخ</button></div>
+          <pre dir="ltr"><code><span class="nyx-tok-comment">&lt;!-- خلفية مضيئة جاهزة --&gt;</span>
+<span class="nyx-tok-tag">&lt;section</span> <span class="nyx-tok-attr">class</span>=<span class="nyx-tok-str">"nyx-bg-mesh"</span><span class="nyx-tok-tag">&gt;</span>
+  <span class="nyx-tok-tag">&lt;h1</span> <span class="nyx-tok-attr">class</span>=<span class="nyx-tok-str">"nyx-bigtype"</span><span class="nyx-tok-tag">&gt;</span>مضاءٌ من الداخل<span class="nyx-tok-tag">&lt;/h1&gt;</span>
+<span class="nyx-tok-tag">&lt;/section&gt;</span></code></pre>
+        </div>
+      </div>
+
+      <div class="nyx-alert nyx-alert-info" style="margin-block:var(--nyx-s6)">
+        <span class="nyx-alert-icon">ℹ️</span>
+        <div>هذه الصفحة نموذجٌ كامل من نيكس — فعّلت خطّ «ثمانية» عبر <span class="nyx-code" dir="ltr">data-font="thmanyah"</span> على عنصر <span class="nyx-code" dir="ltr">&lt;html&gt;</span> فحسب.</div>
+      </div>
+
+      <p>الخلاصة أنّ الأدوات موجودة: خلفيات، ورسوم، وخطوط، ومكوّنات تدعم RTL من جذورها. ما يتبقّى هو الذوق — أن نعرف متى نُضيء، ومتى نترك الظلام يتنفّس.</p>
+    </div>
+
+    <div class="nyx-divider">اقرأ أيضاً</div>
+
+    <section>
+      <div class="rel-grid">
+        <a href="#"><div class="nyx-card nyx-card-interactive"><div class="rel-cover nyx-bg-gradient"></div><h3 class="nyx-h4">نظام الألوان الرمزي</h3><p class="nyx-caption">كيف يعيد متغيّرٌ واحد تلوين الواجهة بأكملها.</p></div></a>
+        <a href="#"><div class="nyx-card nyx-card-interactive"><div class="rel-cover nyx-bg-dots"></div><h3 class="nyx-h4">الحركة المتزنة</h3><p class="nyx-caption">رسوم دخولٍ تحترم تفضيل تقليل الحركة.</p></div></a>
+        <a href="#"><div class="nyx-card nyx-card-interactive"><div class="rel-cover nyx-bg-beams"></div><h3 class="nyx-h4">الزجاج والعمق</h3><p class="nyx-caption">طبقاتٌ شفّافة تمنح الإحساس بالبُعد.</p></div></a>
+      </div>
+      <div class="nyx-flex nyx-justify-center" style="margin-top:var(--nyx-s6)">
+        <a class="nyx-btn nyx-btn-secondary" href="../index.ar.html">عُد إلى الرئيسية <svg class="ico ico-sm"><use href="#i-arrow"/></svg></a>
+      </div>
+    </section>
+
+  </article>
+</div>
+
+<footer>
+  <div class="nyx-container">
+    <div class="foot-bottom">صُنع بـ <span class="nyx-gradient-text" style="font-weight:700">نيكس</span> · الخطّ من <b>ثمانية</b> · رخصة MIT.</div>
+  </div>
+</footer>
+
+<script src="../nyx.js"></script>
+</body>
+</html>
