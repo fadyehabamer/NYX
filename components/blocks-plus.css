@@ -1,0 +1,111 @@
+/*! Nyx · blocks-plus.css · v1.7.0 · MIT
+ * The blocks-plus module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   24. BLOCKS+ (v1.8) — gauge · ring · heatmap · stats · skeletons · nav · overlays · media · hijri
+   ============================================================ */
+/* Accent-driven, RTL-safe (logical properties), reduced-motion aware. */
+
+/* — semicircle gauge (set --nyx-gauge:0–100) — */
+.nyx-gauge{position:relative;width:var(--nyx-gauge-size,170px);height:calc(var(--nyx-gauge-size,170px) / 2);overflow:hidden}
+.nyx-gauge::before{content:"";position:absolute;left:0;top:0;width:100%;height:200%;border-radius:50%;
+  background:conic-gradient(from 270deg,var(--nyx-accent) 0deg,var(--nyx-accent-2) calc(var(--nyx-gauge,0)*1.8deg),var(--nyx-surface-2) calc(var(--nyx-gauge,0)*1.8deg),var(--nyx-surface-2) 180deg,transparent 180deg)}
+.nyx-gauge::after{content:"";position:absolute;left:18%;top:36%;width:64%;height:128%;border-radius:50%;background:var(--nyx-bg)}
+.nyx-gauge-val{position:absolute;inset-inline:0;bottom:3px;text-align:center;font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-lg);z-index:1}
+
+/* — circular progress ring (CSS-only; set --nyx-ring:0–100) — */
+.nyx-progress-ring{position:relative;display:inline-grid;place-items:center;width:var(--nyx-ring-size,120px);aspect-ratio:1;border-radius:50%;
+  background:conic-gradient(from 0deg,var(--nyx-accent),var(--nyx-accent-2) calc(var(--nyx-ring,0)*1%),var(--nyx-surface-2) 0)}
+.nyx-progress-ring::before{content:"";position:absolute;inset:var(--nyx-ring-w,13px);border-radius:50%;background:var(--nyx-bg)}
+.nyx-progress-ring > *{position:relative;font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-xl)}
+
+/* — contribution heatmap (7 rows = days; columns = weeks) — */
+.nyx-heatmap{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:4px}
+.nyx-heatmap i{width:13px;height:13px;border-radius:3px;background:var(--nyx-surface-2);display:block}
+.nyx-heatmap i[data-l="1"]{background:color-mix(in srgb,var(--nyx-accent) 28%,var(--nyx-surface-2))}
+.nyx-heatmap i[data-l="2"]{background:color-mix(in srgb,var(--nyx-accent) 52%,var(--nyx-surface-2))}
+.nyx-heatmap i[data-l="3"]{background:color-mix(in srgb,var(--nyx-accent) 78%,var(--nyx-surface-2))}
+.nyx-heatmap i[data-l="4"]{background:var(--nyx-accent);box-shadow:0 0 8px color-mix(in srgb,var(--nyx-accent) 50%,transparent)}
+.nyx-heatmap-legend{display:inline-flex;align-items:center;gap:5px;font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
+.nyx-heatmap-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;background:var(--nyx-surface-2)}
+
+/* — trend stat card (number + delta + sparkline slot) — */
+.nyx-stat-card{display:flex;flex-direction:column;gap:var(--nyx-s2);padding:var(--nyx-s4) var(--nyx-s5);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface)}
+.nyx-stat-card .nyx-stat-top{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--nyx-s3)}
+.nyx-stat-card .nyx-stat-label{font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted)}
+.nyx-stat-card .nyx-stat-num{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-2xl);line-height:1.1;font-variant-numeric:tabular-nums}
+.nyx-stat-delta{display:inline-flex;align-items:center;gap:4px;font-size:var(--nyx-fs-xs);font-weight:700;padding:3px 9px;border-radius:var(--nyx-radius-full);white-space:nowrap}
+.nyx-stat-delta.up{color:var(--nyx-accent-2);background:color-mix(in srgb,var(--nyx-accent-2) 15%,transparent)}
+.nyx-stat-delta.down{color:var(--nyx-danger);background:color-mix(in srgb,var(--nyx-danger) 15%,transparent)}
+
+/* — description list (term | value) — */
+.nyx-dl{display:grid;grid-template-columns:auto 1fr;gap:var(--nyx-s2) var(--nyx-s5);margin:0}
+.nyx-dl dt{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+.nyx-dl dd{margin:0;color:var(--nyx-text);font-size:var(--nyx-fs-sm)}
+.nyx-dl.divided dt,.nyx-dl.divided dd{padding-block:var(--nyx-s3);border-bottom:1px solid var(--nyx-border)}
+
+/* — skeleton presets (compose with .nyx-skeleton shimmer base) — */
+.nyx-skeleton-text{height:.72em;border-radius:var(--nyx-radius-sm)}
+.nyx-skeleton-text.w-40{width:40%}.nyx-skeleton-text.w-60{width:60%}.nyx-skeleton-text.w-80{width:80%}
+.nyx-skeleton-circle{flex:none;width:44px;height:44px;border-radius:50%}
+.nyx-skeleton-media{height:150px;border-radius:var(--nyx-radius)}
+.nyx-skeleton-card{display:flex;flex-direction:column;gap:var(--nyx-s3);padding:var(--nyx-s4);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface)}
+.nyx-skeleton-row{display:flex;align-items:center;gap:var(--nyx-s3)}
+.nyx-skeleton-lines{flex:1;display:flex;flex-direction:column;gap:9px}
+
+/* — bottom navigation (mobile tab bar) — */
+.nyx-bottom-nav{display:flex;align-items:stretch;gap:2px;padding:6px;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);box-shadow:var(--nyx-shadow)}
+.nyx-bottom-nav a,.nyx-bottom-nav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px 4px;border:0;background:none;color:var(--nyx-text-muted);font-family:inherit;font-size:var(--nyx-fs-xs);text-decoration:none;border-radius:var(--nyx-radius);cursor:pointer;transition:color .2s var(--nyx-ease),background .2s var(--nyx-ease)}
+.nyx-bottom-nav .ico{font-size:18px;line-height:1}
+.nyx-bottom-nav a:hover,.nyx-bottom-nav button:hover{color:var(--nyx-text)}
+.nyx-bottom-nav a.active,.nyx-bottom-nav button.active{color:var(--nyx-accent);background:color-mix(in srgb,var(--nyx-accent) 12%,transparent)}
+.nyx-bottom-nav.fixed{position:fixed;inset-inline:0;bottom:0;z-index:90;border-radius:0;border-inline:0}
+
+/* — mega menu (hover/focus panel) — */
+.nyx-megamenu{position:relative;display:inline-flex}
+.nyx-megamenu-panel{position:absolute;top:calc(100% + 10px);inset-inline-start:0;z-index:120;min-width:min(620px,92vw);padding:var(--nyx-s5);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);box-shadow:var(--nyx-shadow-lg);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--nyx-s5);opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .2s var(--nyx-ease),transform .2s var(--nyx-ease),visibility .2s}
+.nyx-megamenu:hover .nyx-megamenu-panel,.nyx-megamenu:focus-within .nyx-megamenu-panel{opacity:1;visibility:visible;transform:none}
+.nyx-megamenu-col h5{font-size:var(--nyx-fs-xs);text-transform:uppercase;letter-spacing:.08em;color:var(--nyx-text-muted);margin:0 0 var(--nyx-s2)}
+.nyx-megamenu-col a{display:flex;align-items:center;gap:8px;padding:6px 0;color:var(--nyx-text);text-decoration:none;font-size:var(--nyx-fs-sm)}
+.nyx-megamenu-col a:hover{color:var(--nyx-accent)}
+
+/* — snackbar (bottom action toast; Nyx.snackbar) — */
+.nyx-snackbar-wrap{position:fixed;inset-inline:0;bottom:20px;z-index:200;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none}
+.nyx-snackbar{pointer-events:auto;display:flex;align-items:center;gap:var(--nyx-s4);min-width:280px;max-width:min(520px,92vw);padding:12px 14px;padding-inline-start:18px;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);font-size:var(--nyx-fs-sm);color:var(--nyx-text);animation:nyx-snackbar-in .25s var(--nyx-ease)}
+.nyx-snackbar-msg{flex:1}
+.nyx-snackbar-action{background:none;border:0;color:var(--nyx-accent);font-weight:700;font-family:inherit;font-size:var(--nyx-fs-sm);cursor:pointer;padding:5px 9px;border-radius:var(--nyx-radius-sm)}
+.nyx-snackbar-action:hover{background:color-mix(in srgb,var(--nyx-accent) 14%,transparent)}
+.nyx-snackbar.nyx-out{animation:nyx-snackbar-out .25s var(--nyx-ease) forwards}
+@keyframes nyx-snackbar-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes nyx-snackbar-out{to{opacity:0;transform:translateY(16px)}}
+
+/* — confirm dialog (Nyx.confirm → Promise<boolean>; reuses .nyx-modal) — */
+.nyx-confirm-box{width:min(420px,100%)}
+.nyx-confirm-box .nyx-confirm-actions{display:flex;justify-content:flex-end;gap:var(--nyx-s3);margin-top:var(--nyx-s5)}
+
+/* — before/after image compare (drag the handle; JS sets --nyx-pos) — */
+.nyx-compare{position:relative;overflow:hidden;border-radius:var(--nyx-radius-lg);border:1px solid var(--nyx-border);user-select:none;touch-action:none;--nyx-pos:50}
+.nyx-compare img{display:block;width:100%;pointer-events:none}
+.nyx-compare .nyx-compare-after{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 calc((100 - var(--nyx-pos))*1%) 0 0)}
+.nyx-compare .nyx-compare-handle{position:absolute;top:0;bottom:0;left:calc(var(--nyx-pos)*1%);width:2px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.25);transform:translateX(-50%);cursor:ew-resize}
+.nyx-compare .nyx-compare-handle::after{content:"⇆";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:var(--nyx-accent);color:#fff;display:grid;place-items:center;font-size:15px;box-shadow:var(--nyx-glow)}
+
+/* — image gallery + lightbox (Nyx wires .nyx-gallery) — */
+.nyx-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:var(--nyx-s3)}
+.nyx-gallery img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--nyx-radius);cursor:zoom-in;transition:transform .2s var(--nyx-ease),box-shadow .2s var(--nyx-ease)}
+.nyx-gallery img:hover{transform:scale(1.03);box-shadow:var(--nyx-shadow)}
+.nyx-lightbox{position:fixed;inset:0;z-index:200;display:none;place-items:center;padding:var(--nyx-s5);background:rgba(0,0,0,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.nyx-lightbox.open{display:grid;animation:nyx-fade-in .2s var(--nyx-ease)}
+.nyx-lightbox img{max-width:92vw;max-height:84vh;border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg)}
+.nyx-lightbox button{position:absolute;background:var(--nyx-glass);border:1px solid var(--nyx-glass-border);color:#fff;width:46px;height:46px;border-radius:50%;cursor:pointer;display:grid;place-items:center;font-size:20px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.nyx-lightbox .nyx-lightbox-close{top:18px;inset-inline-end:18px}
+.nyx-lightbox .nyx-lightbox-prev{inset-inline-start:18px;top:50%;transform:translateY(-50%)}
+.nyx-lightbox .nyx-lightbox-next{inset-inline-end:18px;top:50%;transform:translateY(-50%)}
+
+/* — video facade (poster → embed on click; JS wires .nyx-video[data-embed]) — */
+.nyx-video{position:relative;overflow:hidden;border-radius:var(--nyx-radius-lg);cursor:pointer;background:var(--nyx-surface-2)}
+.nyx-video img,.nyx-video iframe{display:block;width:100%;border:0}
+.nyx-video .nyx-video-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:68px;border-radius:50%;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.3);color:#fff;display:grid;place-items:center;font-size:22px;transition:transform .2s var(--nyx-ease),background .2s var(--nyx-ease)}
+.nyx-video:hover .nyx-video-play{transform:translate(-50%,-50%) scale(1.08);background:var(--nyx-accent)}
+.nyx-video.playing .nyx-video-play{display:none}

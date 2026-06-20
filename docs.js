@@ -1060,6 +1060,9 @@
         { title: 'Bar chart', text: 'Set --nyx-bar (0–100) per bar; add data-label and data-val (the value shows on hover). Use .alt for a second accent and .muted to de-emphasise.', demo: '<div class="nyx-chart-bars" style="--nyx-chart-h:170px"><div class="nyx-bar" style="--nyx-bar:48" data-label="Mon" data-val="48"></div><div class="nyx-bar" style="--nyx-bar:72" data-label="Tue" data-val="72"></div><div class="nyx-bar alt" style="--nyx-bar:61" data-label="Wed" data-val="61"></div><div class="nyx-bar" style="--nyx-bar:88" data-label="Thu" data-val="88"></div><div class="nyx-bar" style="--nyx-bar:54" data-label="Fri" data-val="54"></div><div class="nyx-bar muted" style="--nyx-bar:33" data-label="Sat" data-val="33"></div><div class="nyx-bar muted" style="--nyx-bar:40" data-label="Sun" data-val="40"></div></div>' },
         { title: 'Line & area', text: 'Style a hand-authored <svg>: .nyx-line for the stroke, .nyx-area for the fill (give it a linearGradient with id nyxArea), .nyx-dot for points, .nyx-grid for guides.', demo: '<svg class="nyx-chart-line" viewBox="0 0 320 140" role="img" aria-label="Weekly trend"><defs><linearGradient id="nyxArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c63ff" stop-opacity="0.35"/><stop offset="1" stop-color="#6c63ff" stop-opacity="0"/></linearGradient></defs><line class="nyx-grid" x1="0" y1="35" x2="320" y2="35"/><line class="nyx-grid" x1="0" y1="70" x2="320" y2="70"/><line class="nyx-grid" x1="0" y1="105" x2="320" y2="105"/><polygon class="nyx-area" points="10,140 10,110 60,70 110,90 160,40 210,75 260,30 310,55 310,140"/><polyline class="nyx-line" points="10,110 60,70 110,90 160,40 210,75 260,30 310,55"/><circle class="nyx-dot" cx="10" cy="110" r="3.5"/><circle class="nyx-dot" cx="60" cy="70" r="3.5"/><circle class="nyx-dot" cx="110" cy="90" r="3.5"/><circle class="nyx-dot" cx="160" cy="40" r="3.5"/><circle class="nyx-dot" cx="210" cy="75" r="3.5"/><circle class="nyx-dot" cx="260" cy="30" r="3.5"/><circle class="nyx-dot" cx="310" cy="55" r="3.5"/></svg>' },
         { title: 'Donut, pie & legend', text: 'Set the slices as an inline conic-gradient. Wrap a donut in .nyx-donut to center a value. Legends colour each dot with --nyx-legend-c.', demo: '<div class="nyx-flex nyx-gap-5 nyx-items-center nyx-wrap"><div class="nyx-donut"><div class="nyx-chart-donut" style="background:conic-gradient(var(--nyx-accent) 0 62%,var(--nyx-accent-2) 62% 84%,var(--nyx-surface-2) 84%)"></div><span class="nyx-donut-val">62%</span></div><div class="nyx-chart-pie" style="background:conic-gradient(var(--nyx-accent) 0 45%,var(--nyx-accent-2) 45% 72%,var(--nyx-warning) 72% 88%,var(--nyx-surface-2) 88%)"></div><div class="nyx-chart-legend"><span class="nyx-legend">Direct</span><span class="nyx-legend" style="--nyx-legend-c:var(--nyx-accent-2)">Referral</span><span class="nyx-legend" style="--nyx-legend-c:var(--nyx-warning)">Social</span><span class="nyx-legend" style="--nyx-legend-c:var(--nyx-surface-2)">Other</span></div></div>' },
+        { title: 'Semicircle gauge', text: 'Set --nyx-gauge (0–100); size with --nyx-gauge-size.', demo: '<div class="nyx-flex nyx-gap-6 nyx-items-end nyx-wrap"><div class="nyx-gauge" style="--nyx-gauge:68"><span class="nyx-gauge-val">68%</span></div><div class="nyx-gauge" style="--nyx-gauge:91;--nyx-gauge-size:140px"><span class="nyx-gauge-val">91</span></div></div>' },
+        { title: 'Radial meter (SVG)', text: 'A full ring from a hand-authored <svg> with a gradient stroke (id nyxMeterGrad). The value = (circumference − dashoffset) / circumference.', demo: '<div class="nyx-meter" style="width:128px;height:128px"><svg viewBox="0 0 120 120" width="128" height="128"><defs><linearGradient id="nyxMeterGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6c63ff"/><stop offset="1" stop-color="#00d4aa"/></linearGradient></defs><circle class="nyx-meter-track" cx="60" cy="60" r="52"/><circle class="nyx-meter-fill" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="92"/></svg><span class="nyx-meter-val">72%</span></div>' },
+        { title: 'Sparkline', text: 'A tiny inline trend — set each span height inline. Great inside stat cards and tables.', demo: '<span class="nyx-sparkline"><span style="height:40%"></span><span style="height:65%"></span><span style="height:50%"></span><span style="height:80%"></span><span style="height:60%"></span><span style="height:95%"></span><span style="height:72%"></span><span style="height:88%"></span></span>' },
         { title: 'Bar markup', lang: 'html', code: '<div class="nyx-chart-bars" style="--nyx-chart-h:170px">\n  <div class="nyx-bar"     style="--nyx-bar:72" data-label="Tue" data-val="72"></div>\n  <div class="nyx-bar alt" style="--nyx-bar:61" data-label="Wed" data-val="61"></div>\n  <div class="nyx-bar muted" style="--nyx-bar:33" data-label="Sat" data-val="33"></div>\n</div>\n\n<!-- donut: a conic-gradient + a centered value -->\n<div class="nyx-donut">\n  <div class="nyx-chart-donut"\n       style="background:conic-gradient(var(--nyx-accent) 0 62%,var(--nyx-surface-2) 62%)"></div>\n  <span class="nyx-donut-val">62%</span>\n</div>' }
       ],
       classes: [
@@ -1068,7 +1071,10 @@
         ['nyx-chart-line', 'Styles an <svg>: .nyx-line / .nyx-area / .nyx-dot / .nyx-grid.'],
         ['nyx-chart-donut / -pie', 'Conic-gradient ring / pie (set background inline; --nyx-pie-size, --nyx-donut-w).'],
         ['nyx-donut + .nyx-donut-val', 'Center a value label inside a donut.'],
-        ['nyx-chart-legend > .nyx-legend', 'Legend; colour each with --nyx-legend-c.']
+        ['nyx-chart-legend > .nyx-legend', 'Legend; colour each with --nyx-legend-c.'],
+        ['nyx-gauge + .nyx-gauge-val', 'Semicircle gauge; set --nyx-gauge 0–100.'],
+        ['nyx-meter (SVG)', 'Radial ring; gradient stroke via nyxMeterGrad.'],
+        ['nyx-sparkline', 'Inline micro bar-trend (heights set inline).']
       ]
     },
 
@@ -1146,6 +1152,113 @@
         { title: 'Feed', demo: '<div class="nyx-notif nyx-card" style="max-width:460px;padding:0;overflow:hidden"><div class="nyx-notif-item unread"><span class="nyx-notif-ico">✦</span><div class="nyx-notif-body"><p>New sign-up from <b>Cairo</b></p><div class="nyx-notif-time">2m ago</div></div></div><div class="nyx-notif-item"><span class="nyx-notif-ico">↑</span><div class="nyx-notif-body"><p>MRR is up 12% this week</p><div class="nyx-notif-time">1h ago</div></div></div></div>' }
       ],
       classes: [['nyx-notif', 'Feed wrapper.'], ['nyx-notif-item (+.unread)', 'A row; unread is tinted with a dot.'], ['nyx-notif-ico / -body / -time', 'Icon, message, timestamp.']]
+    },
+
+    /* ===== NEW IN v1.8 ===== */
+    {
+      id: 'progress-ring', group: 'Components', title: 'Progress ring', added: 'v1.8',
+      summary: 'A circular progress indicator from a single conic-gradient — set --nyx-ring (0–100), --nyx-ring-size and --nyx-ring-w. No SVG. For an SVG ring with a gradient stroke, see the radial meter on the Charts page.',
+      sections: [
+        { title: 'Rings', demo: '<div class="nyx-flex nyx-gap-5 nyx-items-center nyx-wrap"><div class="nyx-progress-ring" style="--nyx-ring:72"><span>72%</span></div><div class="nyx-progress-ring" style="--nyx-ring:40;--nyx-ring-size:96px"><span class="nyx-text-lg">40%</span></div><div class="nyx-progress-ring" style="--nyx-ring:100;--nyx-ring-size:72px;--nyx-ring-w:9px"><span class="nyx-text-accent-2">✓</span></div></div>' }
+      ],
+      classes: [['nyx-progress-ring', 'Conic ring; set --nyx-ring 0–100.'], ['--nyx-ring-size / --nyx-ring-w', 'Diameter / track thickness.']]
+    },
+    {
+      id: 'heatmap', group: 'Components', title: 'Heatmap', added: 'v1.8',
+      summary: 'A GitHub-style contribution graph — 7 rows (days) by however many columns (weeks) you add. Each cell takes data-l="0–4" for intensity; every level derives from --nyx-accent so it retones with the theme.',
+      sections: [
+        { title: 'Activity', demo: '<div class="nyx-stack nyx-gap-3"><div class="nyx-heatmap">' + [2,0,1,3,4,1,0,1,2,4,2,0,3,1,0,1,1,4,3,2,0,3,2,0,1,4,1,2,1,0,3,2,1,4,0,2,4,1,0,2,3,1,0,1,2,3,1,0,4,4,2,1,3,0,1,2,1,3,2,0,4,1,0,2,0,1,4,2,3,1].map(function (l) { return '<i data-l="' + l + '"></i>'; }).join('') + '</div><div class="nyx-heatmap-legend">Less <i></i><i style="background:color-mix(in srgb,var(--nyx-accent) 28%,var(--nyx-surface-2))"></i><i style="background:color-mix(in srgb,var(--nyx-accent) 52%,var(--nyx-surface-2))"></i><i style="background:color-mix(in srgb,var(--nyx-accent) 78%,var(--nyx-surface-2))"></i><i style="background:var(--nyx-accent)"></i> More</div></div>', code: '<div class="nyx-heatmap">\n  <!-- 7 cells per column = one week; data-l is 0–4 -->\n  <i data-l="0"></i><i data-l="2"></i><i data-l="4"></i> …\n</div>' }
+      ],
+      classes: [['nyx-heatmap', '7-row grid; columns flow automatically.'], ['i[data-l="0..4"]', 'A day cell; data-l sets intensity.'], ['nyx-heatmap-legend', 'Less → More swatch row.']]
+    },
+    {
+      id: 'stat-card', group: 'Components', title: 'Stat card', added: 'v1.8',
+      summary: 'A KPI tile with a big tabular number, an up/down delta pill and an optional sparkline.',
+      sections: [
+        { title: 'Metrics', demo: '<div class="nyx-flex nyx-gap-4 nyx-wrap"><div class="nyx-stat-card" style="flex:1 1 220px"><div class="nyx-stat-top"><span class="nyx-stat-label">Revenue</span><span class="nyx-stat-delta up">▲ 12.4%</span></div><div class="nyx-stat-num">$48,250</div><span class="nyx-sparkline"><span style="height:40%"></span><span style="height:55%"></span><span style="height:48%"></span><span style="height:70%"></span><span style="height:62%"></span><span style="height:85%"></span><span style="height:78%"></span><span style="height:96%"></span></span></div><div class="nyx-stat-card" style="flex:1 1 220px"><div class="nyx-stat-top"><span class="nyx-stat-label">Churn</span><span class="nyx-stat-delta down">▼ 0.6%</span></div><div class="nyx-stat-num">1.8%</div><span class="nyx-sparkline"><span style="height:90%"></span><span style="height:80%"></span><span style="height:85%"></span><span style="height:60%"></span><span style="height:65%"></span><span style="height:45%"></span><span style="height:50%"></span><span style="height:38%"></span></span></div></div>' }
+      ],
+      classes: [['nyx-stat-card', 'KPI tile (header + number + sparkline).'], ['nyx-stat-num', 'Big tabular figure.'], ['nyx-stat-delta (+.up / .down)', 'Trend pill.']]
+    },
+    {
+      id: 'description-list', group: 'Components', title: 'Description list', added: 'v1.8',
+      summary: 'A two-column term/value list (dl/dt/dd) for spec sheets, profiles and order summaries. Add .divided for ruled rows.',
+      sections: [
+        { title: 'Details', demo: '<dl class="nyx-dl divided" style="max-width:420px"><dt>Plan</dt><dd>Enterprise</dd><dt>Seats</dt><dd>240</dd><dt>Renews</dt><dd>12 Mar 2027</dd><dt>Owner</dt><dd>layla@example.com</dd></dl>' }
+      ],
+      classes: [['nyx-dl', 'Grid of dt (term) + dd (value).'], ['.divided', 'Adds a rule under each row.']]
+    },
+    {
+      id: 'skeleton', group: 'Components', title: 'Skeleton', added: 'v1.8',
+      summary: 'Shimmering placeholders for loading states. Compose the .nyx-skeleton shimmer with shape helpers, or use the ready-made card and list presets.',
+      sections: [
+        { title: 'Card', demo: '<div class="nyx-skeleton-card" style="max-width:300px"><div class="nyx-skeleton nyx-skeleton-media"></div><div class="nyx-skeleton nyx-skeleton-text w-60"></div><div class="nyx-skeleton nyx-skeleton-text"></div><div class="nyx-skeleton nyx-skeleton-text w-80"></div></div>' },
+        { title: 'List rows', demo: '<div class="nyx-stack nyx-gap-4" style="max-width:340px"><div class="nyx-skeleton-row"><div class="nyx-skeleton nyx-skeleton-circle"></div><div class="nyx-skeleton-lines"><div class="nyx-skeleton nyx-skeleton-text w-60"></div><div class="nyx-skeleton nyx-skeleton-text w-40"></div></div></div><div class="nyx-skeleton-row"><div class="nyx-skeleton nyx-skeleton-circle"></div><div class="nyx-skeleton-lines"><div class="nyx-skeleton nyx-skeleton-text w-80"></div><div class="nyx-skeleton nyx-skeleton-text w-40"></div></div></div></div>' }
+      ],
+      classes: [['nyx-skeleton', 'The shimmer base (combine with a shape).'], ['nyx-skeleton-text (+.w-40 / 60 / 80)', 'Text line at a width.'], ['nyx-skeleton-circle / -media', 'Avatar dot / image block.'], ['nyx-skeleton-card / -row / -lines', 'Card and list-row scaffolds.']]
+    },
+    {
+      id: 'bottom-nav', group: 'Components', title: 'Bottom navigation', added: 'v1.8',
+      summary: 'A mobile tab bar — icon over label, with an active state. Add .fixed to pin it to the bottom of the viewport (it mirrors in RTL automatically).',
+      sections: [
+        { title: 'Tab bar', demo: '<nav class="nyx-bottom-nav" style="max-width:380px"><a href="#/bottom-nav" class="active"><span class="ico">🏠</span> Home</a><a href="#/bottom-nav"><span class="ico">🔍</span> Search</a><a href="#/bottom-nav"><span class="ico">🔔</span> Alerts</a><a href="#/bottom-nav"><span class="ico">👤</span> Profile</a></nav>' }
+      ],
+      classes: [['nyx-bottom-nav', 'Flex tab bar; .fixed pins it to the bottom.'], ['a / button (+.active)', 'A destination; .active is accented.'], ['.ico', 'The icon line above the label.']]
+    },
+    {
+      id: 'mega-menu', group: 'Components', title: 'Mega menu', added: 'v1.8',
+      summary: 'A wide multi-column dropdown panel that opens on hover or keyboard focus — for grouping a lot of navigation in one place.',
+      sections: [
+        { title: 'Products menu', demo: '<div class="nyx-megamenu"><button class="nyx-btn nyx-btn-glass">Products ▾</button><div class="nyx-megamenu-panel"><div class="nyx-megamenu-col"><h5>Build</h5><a href="#/mega-menu">Components</a><a href="#/mega-menu">Templates</a><a href="#/mega-menu">Icons</a></div><div class="nyx-megamenu-col"><h5>Learn</h5><a href="#/mega-menu">Docs</a><a href="#/mega-menu">Guides</a><a href="#/mega-menu">Changelog</a></div><div class="nyx-megamenu-col"><h5>Company</h5><a href="#/mega-menu">About</a><a href="#/mega-menu">Blog</a><a href="#/mega-menu">Careers</a></div></div></div>' }
+      ],
+      classes: [['nyx-megamenu', 'Hover / focus wrapper.'], ['nyx-megamenu-panel', 'The dropdown grid panel.'], ['nyx-megamenu-col + h5', 'A column with a heading.']]
+    },
+    {
+      id: 'snackbar', group: 'Components', title: 'Snackbar', added: 'v1.8',
+      summary: 'A brief bottom-centered message with an optional action button — call Nyx.snackbar(message, options). Auto-dismisses unless you pass duration: 0.',
+      sections: [
+        { title: 'Show one', demo: '<div class="nyx-flex nyx-gap-3 nyx-wrap"><button class="nyx-btn nyx-btn-primary" onclick="Nyx.snackbar(&#39;Message sent.&#39;)">Simple</button><button class="nyx-btn nyx-btn-secondary" onclick="Nyx.snackbar(&#39;Conversation archived.&#39;,{action:&#39;Undo&#39;,onAction:function(){Nyx.toast(&#39;Restored&#39;,&#39;success&#39;)}})">With action</button></div>', lang: 'js', code: "Nyx.snackbar('Conversation archived.', {\n  action: 'Undo',\n  onAction: () => restore(),\n  duration: 4500   // ms; 0 = sticky\n});" }
+      ],
+      classes: [['Nyx.snackbar(msg, opts)', 'Imperative API: { action, onAction, duration }.'], ['nyx-snackbar', 'The element (styling hook).']]
+    },
+    {
+      id: 'confirm', group: 'Components', title: 'Confirm dialog', added: 'v1.8',
+      summary: 'A promise-based confirmation modal — Nyx.confirm(message, options) resolves to true or false. Esc or an outside click counts as cancel.',
+      sections: [
+        { title: 'Ask first', demo: '<div class="nyx-flex nyx-gap-3 nyx-wrap"><button class="nyx-btn nyx-btn-primary" onclick="Nyx.confirm(&#39;Publish these changes now?&#39;,{title:&#39;Publish&#39;}).then(function(ok){Nyx.toast(ok?&#39;Published&#39;:&#39;Cancelled&#39;,ok?&#39;success&#39;:&#39;info&#39;)})">Publish…</button><button class="nyx-btn nyx-btn-glass" onclick="Nyx.confirm(&#39;Delete this project? This cannot be undone.&#39;,{title:&#39;Delete project&#39;,danger:true,confirmText:&#39;Delete&#39;}).then(function(ok){if(ok)Nyx.toast(&#39;Deleted&#39;,&#39;danger&#39;)})">Delete…</button></div>', lang: 'js', code: "const ok = await Nyx.confirm('Delete this project?', {\n  title: 'Delete project',\n  danger: true,\n  confirmText: 'Delete'\n});\nif (ok) remove();" }
+      ],
+      classes: [['Nyx.confirm(msg, opts)', 'Returns Promise<boolean>: { title, confirmText, cancelText, danger }.']]
+    },
+    {
+      id: 'compare', group: 'Components', title: 'Before / after', added: 'v1.8',
+      summary: 'Drag the handle to wipe between two stacked images — great for edits, retouching and theme comparisons. The runtime wires the pointer drag.',
+      sections: [
+        { title: 'Drag the slider', demo: '<div class="nyx-compare" style="max-width:420px"><img class="nyx-compare-before" alt="before" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22420%22 height=%22260%22%3E%3Crect width=%22420%22 height=%22260%22 fill=%22%231a1a2e%22/%3E%3Ctext x=%2250%25%22 y=%2252%25%22 fill=%22%23888%22 font-family=%22sans-serif%22 font-size=%2228%22 text-anchor=%22middle%22%3EBefore%3C/text%3E%3C/svg%3E"><img class="nyx-compare-after" alt="after" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22420%22 height=%22260%22%3E%3Crect width=%22420%22 height=%22260%22 fill=%22%236c63ff%22/%3E%3Ctext x=%2250%25%22 y=%2252%25%22 fill=%22%23fff%22 font-family=%22sans-serif%22 font-size=%2228%22 text-anchor=%22middle%22%3EAfter%3C/text%3E%3C/svg%3E"><div class="nyx-compare-handle"></div></div>' }
+      ],
+      classes: [['nyx-compare', 'Wrapper of two images + a handle.'], ['nyx-compare-after', 'Top image, clipped to the slider.'], ['nyx-compare-handle', 'The draggable divider.']]
+    },
+    {
+      id: 'lightbox', group: 'Components', title: 'Lightbox gallery', added: 'v1.8',
+      summary: 'A thumbnail grid that opens a fullscreen viewer on click — arrow keys or the on-screen controls step through, Esc or a backdrop click closes. Use data-full on each thumb for a higher-res source.',
+      sections: [
+        { title: 'Click a thumb', demo: '<div class="nyx-gallery" style="max-width:380px">' + ['%236c63ff','%2300d4aa','%23f5a623','%23e2406b','%231a1a2e','%233ad6c5'].map(function (c, i) { return '<img alt="image ' + (i + 1) + '" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22240%22%3E%3Crect width=%22240%22 height=%22240%22 fill=%22' + c + '%22/%3E%3C/svg%3E">'; }).join('') + '</div>', code: '<div class="nyx-gallery">\n  <img src="thumb1.jpg" data-full="full1.jpg" alt="">\n  <img src="thumb2.jpg" data-full="full2.jpg" alt="">\n</div>' }
+      ],
+      classes: [['nyx-gallery', 'Responsive thumb grid (runtime opens the lightbox).'], ['img[data-full]', 'Optional high-res source for the viewer.']]
+    },
+    {
+      id: 'video', group: 'Components', title: 'Video facade', added: 'v1.8',
+      summary: 'A poster with a play button that swaps in the real iframe only on click — keeps pages fast by deferring the embed. Put the embed URL in data-embed.',
+      sections: [
+        { title: 'Click to play', demo: '<div class="nyx-video" data-embed="https://www.youtube.com/embed/aqz-KE-bpKQ" style="max-width:480px"><img alt="video poster" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22480%22 height=%22270%22%3E%3Crect width=%22480%22 height=%22270%22 fill=%22%231a1a2e%22/%3E%3Ctext x=%2250%25%22 y=%2252%25%22 fill=%22%23888%22 font-family=%22sans-serif%22 font-size=%2222%22 text-anchor=%22middle%22%3EPoster%3C/text%3E%3C/svg%3E"><button class="nyx-video-play" aria-label="play">▶</button></div>', code: '<div class="nyx-video" data-embed="https://www.youtube.com/embed/VIDEO_ID">\n  <img src="poster.jpg" alt="">\n  <button class="nyx-video-play" aria-label="play">▶</button>\n</div>' }
+      ],
+      classes: [['nyx-video[data-embed]', 'Facade; the embed URL loads on click.'], ['nyx-video-play', 'The play-button overlay.']]
+    },
+    {
+      id: 'hijri-calendar', group: 'Regional', title: 'Hijri calendar', added: 'v1.8',
+      summary: 'A full Islamic (Umm al-Qura) month grid — add data-nyx-calendar="hijri" and the runtime computes the month with Intl, pages with ‹ ›, marks today, and localises month names + numerals to Arabic under dir="rtl".',
+      sections: [
+        { title: 'Hijri month', demo: '<div class="nyx-calendar" data-nyx-calendar="hijri"></div>' }
+      ],
+      classes: [['data-nyx-calendar="hijri"', 'Live Umm al-Qura month (runtime-rendered).'], ['data-nyx-calendar', 'No value = a Gregorian month instead.']]
     },
 
     /* ===== REGIONAL (MENA) ===== */

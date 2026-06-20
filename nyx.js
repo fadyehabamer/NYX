@@ -141,6 +141,61 @@
     return t;
   }
 
+  /* ---------- snackbar (bottom action toast) ---------- */
+  function snackbarWrap() {
+    var w = $('.nyx-snackbar-wrap');
+    if (!w) { w = doc.createElement('div'); w.className = 'nyx-snackbar-wrap'; w.setAttribute('aria-live', 'polite'); doc.body.appendChild(w); }
+    return w;
+  }
+  function snackbar(message, opts) {
+    opts = opts || {};
+    var s = doc.createElement('div'); s.className = 'nyx-snackbar'; s.setAttribute('role', 'status');
+    var msg = doc.createElement('span'); msg.className = 'nyx-snackbar-msg'; msg.textContent = message; s.appendChild(msg);
+    var timer;
+    function dismiss() { clearTimeout(timer); s.classList.add('nyx-out'); s.addEventListener('animationend', function () { s.remove(); }); }
+    if (opts.action) {
+      var b = doc.createElement('button'); b.type = 'button'; b.className = 'nyx-snackbar-action'; b.textContent = opts.action;
+      b.addEventListener('click', function () { if (opts.onAction) opts.onAction(); dismiss(); });
+      s.appendChild(b);
+    }
+    snackbarWrap().appendChild(s);
+    if (opts.duration !== 0) timer = setTimeout(dismiss, opts.duration || 4500);
+    s.dismiss = dismiss;
+    return s;
+  }
+
+  /* ---------- confirm dialog → Promise<boolean> ---------- */
+  function htmlEsc(s) { var d = doc.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+  function confirmDialog(message, opts) {
+    opts = opts || {};
+    return new Promise(function (resolve) {
+      var modal = doc.createElement('div'); modal.className = 'nyx-modal open';
+      modal.innerHTML = '<div class="nyx-modal-box nyx-confirm-box">' +
+        (opts.title ? '<h3 class="nyx-h3" style="margin-bottom:8px">' + htmlEsc(opts.title) + '</h3>' : '') +
+        '<p class="nyx-body nyx-muted">' + htmlEsc(message) + '</p>' +
+        '<div class="nyx-confirm-actions">' +
+        '<button class="nyx-btn nyx-btn-glass" data-act="cancel">' + htmlEsc(opts.cancelText || 'Cancel') + '</button>' +
+        '<button class="nyx-btn nyx-btn-primary" data-act="ok"' + (opts.danger ? ' style="background:linear-gradient(120deg,var(--nyx-danger),color-mix(in srgb,var(--nyx-danger) 65%,#000))"' : '') + '>' + htmlEsc(opts.confirmText || 'Confirm') + '</button>' +
+        '</div></div>';
+      doc.body.appendChild(modal);
+      var bd = backdrop(); bd.classList.add('open'); lockScroll(true);
+      function done(val) {
+        modal.classList.remove('open');
+        if (!$('.nyx-modal.open')) bd.classList.remove('open');
+        lockScroll(false); doc.removeEventListener('keydown', onKey);
+        setTimeout(function () { modal.remove(); }, 250);
+        resolve(val);
+      }
+      function onKey(e) { if (e.key === 'Escape') done(false); }
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) { done(false); return; }
+        var a = e.target.closest('[data-act]'); if (a) done(a.getAttribute('data-act') === 'ok');
+      });
+      doc.addEventListener('keydown', onKey);
+      var f = modal.querySelector('[data-act="ok"]'); if (f) setTimeout(function () { f.focus(); }, 60);
+    });
+  }
+
   /* ---------- tabs / pills ---------- */
   function activateTab(btn) {
     var group = btn.closest('[data-nyx-tabs]'); if (!group) return;
@@ -558,6 +613,7 @@
   function initCalendar(root) {
     $$('.nyx-calendar[data-nyx-calendar]', root).filter(function (c) { return !c._nyxCal; }).forEach(function (cal) {
       cal._nyxCal = true;
+      if (cal.getAttribute('data-nyx-calendar') === 'hijri') { initHijri(cal); return; }
       var now = new Date();
       var st = { y: now.getFullYear(), m: now.getMonth(), sel: null, today: { y: now.getFullYear(), m: now.getMonth(), d: now.getDate() } };
       function render() { cal.innerHTML = calMonthHtml(st.y, st.m, st.sel, st.today); }
@@ -576,6 +632,60 @@
           cal.dispatchEvent(new CustomEvent('nyx:date', { bubbles: true, detail: st.sel }));
         }
       });
+    });
+  }
+
+  /* ---------- Hijri (Umm al-Qura) calendar — data-nyx-calendar="hijri" ---------- */
+  function hijriParts(d, loc) {
+    var f = new Intl.DateTimeFormat(loc + '-u-ca-islamic-umalqura', { day: 'numeric', month: 'numeric', year: 'numeric' });
+    var o = {}; f.formatToParts(d).forEach(function (p) { if (p.type !== 'literal') o[p.type] = parseInt(p.value, 10); });
+    return o;                              // { day, month, year }
+  }
+  function hijriMonth(anchor, loc) {
+    var hp = hijriParts(anchor, loc);
+    var day1 = new Date(anchor); day1.setDate(day1.getDate() - (hp.day - 1));   // Gregorian date of Hijri day 1
+    var days = [], cur = new Date(day1), guard = 0;
+    while (guard++ < 32) {
+      var p = hijriParts(cur, loc);
+      if (p.month !== hp.month || p.year !== hp.year) break;
+      days.push({ hd: p.day, greg: new Date(cur) });
+      cur.setDate(cur.getDate() + 1);
+    }
+    return { day1: day1, days: days };
+  }
+  function initHijri(cal) {
+    var ar = docEl.getAttribute('dir') === 'rtl' || (docEl.getAttribute('lang') || '').indexOf('ar') === 0;
+    var loc = ar ? 'ar' : 'en';
+    var anchor = new Date(), today = new Date();
+    function eq(g, t) { return g.getFullYear() === t.getFullYear() && g.getMonth() === t.getMonth() && g.getDate() === t.getDate(); }
+    function render() {
+      var m, head;
+      try {
+        m = hijriMonth(anchor, loc);
+        head = new Intl.DateTimeFormat(loc + '-u-ca-islamic-umalqura', { month: 'long', year: 'numeric' }).format(m.day1);
+      } catch (e) { cal.innerHTML = '<div class="nyx-caption nyx-muted" style="padding:12px">Hijri calendar not supported in this browser.</div>'; return; }
+      var dows = ar ? ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س'] : DOW;
+      var h = '<div class="nyx-calendar-head"><button data-cal="prev" aria-label="previous month">‹</button><span>' + head + '</span><button data-cal="next" aria-label="next month">›</button></div><div class="nyx-calendar-grid">';
+      dows.forEach(function (d) { h += '<span class="dow">' + d + '</span>'; });
+      for (var i = 0; i < m.day1.getDay(); i++) h += '<span></span>';
+      m.days.forEach(function (day) {
+        var t = eq(day.greg, today) ? ' today' : '';
+        var label = ar ? toArabicNumerals(day.hd) : day.hd;
+        h += '<span class="day' + t + '" data-day="' + day.hd + '" title="' + day.greg.toLocaleDateString() + '">' + label + '</span>';
+      });
+      cal.innerHTML = h + '</div>';
+    }
+    render();
+    cal.addEventListener('click', function (e) {
+      var nav = e.target.closest('[data-cal]');
+      if (nav) {
+        var m = hijriMonth(anchor, loc);
+        if (nav.getAttribute('data-cal') === 'next') { anchor = new Date(m.days[m.days.length - 1].greg); anchor.setDate(anchor.getDate() + 1); }
+        else { anchor = new Date(m.day1); anchor.setDate(anchor.getDate() - 1); }
+        render(); return;
+      }
+      var day = e.target.closest('.day[data-day]');
+      if (day) { $$('.day.selected', cal).forEach(function (x) { x.classList.remove('selected'); }); day.classList.add('selected'); }
     });
   }
 
@@ -639,6 +749,76 @@
         else col.insertBefore(dragging, after);
       });
       board.addEventListener('drop', function (e) { if (dragging) e.preventDefault(); });
+    });
+  }
+
+  /* ---------- before/after image compare ---------- */
+  function initCompare(root) {
+    $$('.nyx-compare', root).filter(function (c) { return !c._nyxCmp; }).forEach(function (c) {
+      c._nyxCmp = true;
+      var dragging = false;
+      function setPos(x) { var r = c.getBoundingClientRect(); c.style.setProperty('--nyx-pos', Math.max(0, Math.min(100, ((x - r.left) / r.width) * 100))); }
+      c.addEventListener('pointerdown', function (e) { dragging = true; setPos(e.clientX); e.preventDefault(); });
+      window.addEventListener('pointermove', function (e) { if (dragging) setPos(e.clientX); }, { passive: true });
+      window.addEventListener('pointerup', function () { dragging = false; });
+    });
+  }
+
+  /* ---------- image gallery + lightbox ---------- */
+  var _lightbox = null;
+  function lightboxEl() {
+    if (_lightbox) return _lightbox;
+    _lightbox = doc.createElement('div');
+    _lightbox.className = 'nyx-lightbox';
+    _lightbox.innerHTML = '<button class="nyx-lightbox-close" aria-label="close">✕</button><button class="nyx-lightbox-prev" aria-label="previous">‹</button><img alt=""><button class="nyx-lightbox-next" aria-label="next">›</button>';
+    doc.body.appendChild(_lightbox);
+    _lightbox._imgs = []; _lightbox._i = 0;
+    var img = _lightbox.querySelector('img');
+    function show(i) { var a = _lightbox._imgs; if (!a.length) return; _lightbox._i = (i + a.length) % a.length; img.src = a[_lightbox._i]; }
+    function hide() { _lightbox.classList.remove('open'); lockScroll(false); }
+    _lightbox._show = show;
+    _lightbox.querySelector('.nyx-lightbox-close').addEventListener('click', hide);
+    _lightbox.querySelector('.nyx-lightbox-prev').addEventListener('click', function (e) { e.stopPropagation(); show(_lightbox._i - 1); });
+    _lightbox.querySelector('.nyx-lightbox-next').addEventListener('click', function (e) { e.stopPropagation(); show(_lightbox._i + 1); });
+    _lightbox.addEventListener('click', function (e) { if (e.target === _lightbox) hide(); });
+    doc.addEventListener('keydown', function (e) {
+      if (!_lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') hide();
+      else if (e.key === 'ArrowRight') show(_lightbox._i + 1);
+      else if (e.key === 'ArrowLeft') show(_lightbox._i - 1);
+    });
+    return _lightbox;
+  }
+  function initLightbox(root) {
+    $$('.nyx-gallery', root).filter(function (g) { return !g._nyxLb; }).forEach(function (g) {
+      g._nyxLb = true;
+      g.addEventListener('click', function (e) {
+        var img = e.target.closest('img'); if (!img) return;
+        var imgs = $$('img', g);
+        var lb = lightboxEl();
+        lb._imgs = imgs.map(function (im) { return im.getAttribute('data-full') || im.src; });
+        lb._show(imgs.indexOf(img));
+        lb.classList.add('open'); lockScroll(true);
+      });
+    });
+  }
+
+  /* ---------- video facade (poster → embedded iframe on click) ---------- */
+  function initVideoFacade(root) {
+    $$('.nyx-video[data-embed]', root).filter(function (v) { return !v._nyxVid; }).forEach(function (v) {
+      v._nyxVid = true;
+      v.addEventListener('click', function () {
+        if (v.classList.contains('playing')) return;
+        var url = v.getAttribute('data-embed'), sep = url.indexOf('?') > -1 ? '&' : '?';
+        var h = v.offsetHeight, ifr = doc.createElement('iframe');
+        ifr.src = url + sep + 'autoplay=1';
+        ifr.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+        ifr.setAttribute('allowfullscreen', '');
+        ifr.style.cssText = 'position:absolute;inset:0;width:100%;height:100%';
+        v.style.height = h + 'px';
+        var poster = v.querySelector('img'); if (poster) poster.style.display = 'none';
+        v.classList.add('playing'); v.appendChild(ifr);
+      });
     });
   }
 
@@ -765,6 +945,9 @@
     initRange(root);
     initKanban(root);
     initCalendar(root);
+    initCompare(root);
+    initLightbox(root);
+    initVideoFacade(root);
     initNumerals(root);
     initHierarchy(root);
     initPrayerTimes(root);
@@ -799,6 +982,7 @@
     openModal: openModal, openDrawer: openDrawer, close: close, closeAll: closeAll,
     togglePopover: togglePopover, openCommandPalette: openCommandPalette, closeCommandPalette: closeCommandPalette,
     setTheme: setTheme, toggleTheme: toggleTheme, setDir: setDir, toggleDir: toggleDir, setAccent: setAccent,
-    toArabicNumerals: toArabicNumerals, progress: progress
+    toArabicNumerals: toArabicNumerals, progress: progress,
+    snackbar: snackbar, confirm: confirmDialog
   };
 });
