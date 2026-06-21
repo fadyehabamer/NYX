@@ -1199,7 +1199,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-code-name{margin-inline-start:8px;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
 .nyx-code-copy{margin-inline-start:auto;display:grid;place-items:center;width:30px;height:30px;border-radius:var(--nyx-radius-sm);background:transparent;border:1px solid transparent;color:var(--nyx-text-muted);cursor:pointer;transition:color .2s var(--nyx-ease),background .2s var(--nyx-ease),border-color .2s var(--nyx-ease)}
 .nyx-code-copy:hover{color:var(--nyx-text);background:var(--nyx-surface-2);border-color:var(--nyx-border)}
-.nyx-code-copy.copied{color:var(--nyx-accent-2);border-color:color-mix(in srgb,var(--nyx-accent-2) 45%,transparent)}
+.nyx-code-copy.copied{color:var(--nyx-accent-2);border-color:color-mix(in srgb,var(--nyx-accent-2) 45%,transparent);background:color-mix(in srgb,var(--nyx-accent-2) 10%,transparent);width:auto;padding:0 8px}
 .nyx-code-block pre{margin:0;padding:var(--nyx-s4);overflow-x:auto;background:#070810;border:0;border-radius:0}
 .nyx-code-block code{display:block;white-space:pre;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);line-height:1.7;color:#c8cce0}
 /* syntax tokens — tag/attr/str/comment follow the accent so code retheme too */

@@ -46,6 +46,7 @@ html{scroll-behavior:smooth}
 .docs-code pre code{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);line-height:1.7;color:#c8cce0;display:block;white-space:pre}
 .docs-code .copy{position:absolute;top:10px;inset-inline-end:10px;z-index:2;opacity:.7;transition:opacity .15s}
 .docs-code:hover .copy{opacity:1}
+.docs-code .copy.copied{color:var(--nyx-accent-2) !important;border-color:color-mix(in srgb,var(--nyx-accent-2) 40%,transparent) !important;background:color-mix(in srgb,var(--nyx-accent-2) 12%,transparent) !important;opacity:1 !important}
 .t-tag{color:#6c63ff}.t-attr{color:#00d4aa}.t-str{color:#ffb020}.t-cmt{color:#4b5061}.t-key{color:#ff4d6a}
 
 /* class reference table */

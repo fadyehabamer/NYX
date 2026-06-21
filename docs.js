@@ -1730,7 +1730,18 @@
   document.addEventListener('click', function (e) {
     var c = e.target.closest('[data-copy]'); if (!c) return;
     var code = c.parentElement.querySelector('code');
-    if (code && navigator.clipboard) navigator.clipboard.writeText(code.innerText).then(function () { Nyx.toast('Copied to clipboard', 'success', 1500); });
+    if (code && navigator.clipboard) {
+      navigator.clipboard.writeText(code.innerText).then(function () {
+        var isRtl = document.documentElement.getAttribute('dir') === 'rtl';
+        Nyx.toast(isRtl ? 'تم نسخ الرمز' : 'Copied to clipboard', 'success', 1500);
+        c.classList.add('copied');
+        c.innerHTML = '✓';
+        setTimeout(function () {
+          c.classList.remove('copied');
+          c.innerHTML = '⧉';
+        }, 1500);
+      });
+    }
   });
 
   /* ---------- router ---------- */
