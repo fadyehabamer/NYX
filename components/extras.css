@@ -1,9 +1,9 @@
-/*! Nyx · extras.css · v1.7.0 · MIT
+/*! Nyx · extras.css · v1.0.0 · MIT
  * The extras module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
 /* ============================================================
-   11. MORE COMPONENTS (v1.2)
+   11. MORE COMPONENTS (v1.0)
    ============================================================ */
 /* stepper (number input) */
 .nyx-stepper{display:inline-flex;align-items:stretch;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);overflow:hidden;background:var(--nyx-surface)}
@@ -56,6 +56,10 @@
 .nyx-calendar-grid .day.muted{color:var(--nyx-text-muted);opacity:.4}
 .nyx-calendar-grid .day.today{border:1px solid var(--nyx-accent);color:var(--nyx-accent)}
 .nyx-calendar-grid .day.selected{background:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+.nyx-calendar-grid .day.disabled{opacity:.3;cursor:not-allowed}
+.nyx-calendar-foot{display:flex;gap:var(--nyx-s2);justify-content:flex-end;margin-top:var(--nyx-s3);padding-top:var(--nyx-s3);border-top:1px solid var(--nyx-border)}
+.nyx-calendar-foot button{background:none;border:0;color:var(--nyx-accent);font-family:var(--nyx-font-body);font-size:var(--nyx-fs-sm);font-weight:600;cursor:pointer;padding:4px 10px;border-radius:var(--nyx-radius-sm);transition:background .15s var(--nyx-ease)}
+.nyx-calendar-foot button:hover{background:var(--nyx-glass)}
 
 /* file item */
 .nyx-file{display:flex;align-items:center;gap:var(--nyx-s3);padding:12px 14px;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius)}

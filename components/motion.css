@@ -1,9 +1,9 @@
-/*! Nyx · motion.css · v1.7.0 · MIT
+/*! Nyx · motion.css · v1.0.0 · MIT
  * The motion module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
 /* ============================================================
-   12. BIG TYPE & MOTION (v1.3)
+   12. BIG TYPE & MOTION (v1.0)
    ============================================================ */
 /* oversized hero type — the big-typography trend */
 .nyx-bigtype{font-family:var(--nyx-font-display);font-weight:800;font-size:clamp(46px,11vw,132px);line-height:.92;letter-spacing:-.04em;margin:0}
@@ -50,6 +50,37 @@
 /* pulse glow */
 .nyx-anim-pulse-glow{animation:nyx-pulse-glow 2s infinite alternate}
 @keyframes nyx-pulse-glow{0%{box-shadow:0 0 4px color-mix(in srgb,var(--nyx-accent) 15%,transparent)}100%{box-shadow:0 0 16px color-mix(in srgb,var(--nyx-accent) 45%,transparent)}}
+
+/* hover effects (transition-based) */
+.nyx-hover-lift{transition:transform .25s var(--nyx-ease),box-shadow .25s var(--nyx-ease)}.nyx-hover-lift:hover{transform:translateY(-4px);box-shadow:var(--nyx-shadow-lg)}
+.nyx-hover-grow{transition:transform .25s var(--nyx-ease)}.nyx-hover-grow:hover{transform:scale(1.04)}
+.nyx-hover-shrink{transition:transform .25s var(--nyx-ease)}.nyx-hover-shrink:hover{transform:scale(.96)}
+.nyx-hover-rotate{transition:transform .3s var(--nyx-ease)}.nyx-hover-rotate:hover{transform:rotate(3deg)}
+.nyx-hover-glow{transition:box-shadow .25s var(--nyx-ease)}.nyx-hover-glow:hover{box-shadow:var(--nyx-glow)}
+/* animated underline link */
+.nyx-anim-underline{position:relative;text-decoration:none}
+.nyx-anim-underline::after{content:"";position:absolute;inset-inline-start:0;bottom:-2px;width:100%;height:2px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .3s var(--nyx-ease)}
+.nyx-anim-underline:hover::after,.nyx-anim-underline:focus-visible::after{transform:scaleX(1);transform-origin:left}
+/* attention seekers */
+.nyx-anim-bounce{animation:nyx-bounce 1s var(--nyx-ease) infinite}
+@keyframes nyx-bounce{0%,100%{transform:translateY(0)}25%{transform:translateY(-12px)}50%{transform:translateY(0)}75%{transform:translateY(-5px)}}
+.nyx-anim-shake{animation:nyx-shake .5s var(--nyx-ease)}
+@keyframes nyx-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.nyx-anim-wiggle{animation:nyx-wiggle .6s var(--nyx-ease) infinite}
+@keyframes nyx-wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-4deg)}75%{transform:rotate(4deg)}}
+.nyx-anim-heartbeat{animation:nyx-heartbeat 1.4s var(--nyx-ease) infinite}
+@keyframes nyx-heartbeat{0%,100%{transform:scale(1)}10%,30%{transform:scale(1.12)}20%{transform:scale(1)}}
+.nyx-anim-spin-slow{animation:nyx-spin 6s linear infinite}
+/* ping / pulse ring */
+.nyx-anim-ping{position:relative}
+.nyx-anim-ping::before{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 0 color-mix(in srgb,var(--nyx-accent) 55%,transparent);animation:nyx-ping 1.5s var(--nyx-ease) infinite}
+@keyframes nyx-ping{to{box-shadow:0 0 0 12px transparent}}
+/* Ken Burns slow image zoom */
+.nyx-anim-kenburns{animation:nyx-kenburns 14s var(--nyx-ease) infinite alternate}
+@keyframes nyx-kenburns{from{transform:scale(1)}to{transform:scale(1.12) translate(-2%,-1%)}}
+/* blur-in reveal */
+.nyx-anim-blur{animation:nyx-blur-in .7s var(--nyx-ease) both}
+@keyframes nyx-blur-in{from{opacity:0;filter:blur(12px)}to{opacity:1;filter:blur(0)}}
 
 /* animated gradient text */
 .nyx-gradient-text.animated{background-size:200% auto;animation:nyx-text-shine 4s linear infinite}

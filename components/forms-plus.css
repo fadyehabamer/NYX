@@ -1,9 +1,9 @@
-/*! Nyx · forms-plus.css · v1.7.0 · MIT
+/*! Nyx · forms-plus.css · v1.0.0 · MIT
  * The forms-plus module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
 /* ============================================================
-   16. FORMS+ (v1.5) — combobox, multi-select, phone, date picker
+   16. FORMS+ (v1.0) — combobox, multi-select, phone, date picker
    ============================================================ */
 /* combobox / autocomplete */
 .nyx-combobox{position:relative}

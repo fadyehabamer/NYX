@@ -1,9 +1,9 @@
-/*! Nyx · commerce.css · v1.7.0 · MIT
+/*! Nyx · commerce.css · v1.0.0 · MIT
  * The commerce module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
 /* ============================================================
-   18. COMMERCE (v1.5) — product, cart, order, coupon, payment, address
+   18. COMMERCE (v1.0) — product, cart, order, coupon, payment, address
    ============================================================ */
 .nyx-product{display:flex;flex-direction:column;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;transition:all .2s var(--nyx-ease)}
 .nyx-product:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--nyx-accent) 50%,transparent);box-shadow:var(--nyx-glow),var(--nyx-shadow-lg)}

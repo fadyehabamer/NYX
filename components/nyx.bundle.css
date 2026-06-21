@@ -1,6 +1,6 @@
 /*!
  * Nyx — The Design System for Modern SaaS
- * v1.6.0 · MIT License
+ * v1.0.0 · MIT License
  * Luminous Depth: every element lit from within.
  *
  * Usage:   <link rel="stylesheet" href="nyx.css">
@@ -109,6 +109,20 @@ body.nyx ::-webkit-scrollbar-thumb{background:var(--nyx-surface-2);border-radius
 .nyx-gap-1{gap:var(--nyx-s1)}.nyx-gap-2{gap:var(--nyx-s2)}.nyx-gap-3{gap:var(--nyx-s3)}
 .nyx-gap-4{gap:var(--nyx-s4)}.nyx-gap-5{gap:var(--nyx-s5)}.nyx-gap-6{gap:var(--nyx-s6)}
 .nyx-stack{display:flex;flex-direction:column;gap:var(--nyx-s4)}
+/* — flex & grid utilities (v1.0) — */
+.nyx-flex-row{flex-direction:row}.nyx-flex-row-reverse{flex-direction:row-reverse}.nyx-flex-col-reverse{flex-direction:column-reverse}
+.nyx-nowrap{flex-wrap:nowrap}.nyx-wrap-reverse{flex-wrap:wrap-reverse}
+.nyx-justify-start{justify-content:flex-start}.nyx-justify-end{justify-content:flex-end}.nyx-justify-around{justify-content:space-around}.nyx-justify-evenly{justify-content:space-evenly}
+.nyx-items-end{align-items:flex-end}.nyx-items-stretch{align-items:stretch}.nyx-items-baseline{align-items:baseline}
+.nyx-content-start{align-content:flex-start}.nyx-content-center{align-content:center}.nyx-content-between{align-content:space-between}.nyx-content-around{align-content:space-around}.nyx-content-end{align-content:flex-end}
+.nyx-self-auto{align-self:auto}.nyx-self-start{align-self:flex-start}.nyx-self-center{align-self:center}.nyx-self-end{align-self:flex-end}.nyx-self-stretch{align-self:stretch}
+.nyx-flex-1{flex:1 1 0%}.nyx-flex-auto{flex:1 1 auto}.nyx-flex-initial{flex:0 1 auto}.nyx-flex-none{flex:none}
+.nyx-grow-0{flex-grow:0}.nyx-shrink{flex-shrink:1}.nyx-shrink-0{flex-shrink:0}
+.nyx-gap-0{gap:0}.nyx-gap-x-2{column-gap:var(--nyx-s2)}.nyx-gap-x-3{column-gap:var(--nyx-s3)}.nyx-gap-x-4{column-gap:var(--nyx-s4)}.nyx-gap-y-2{row-gap:var(--nyx-s2)}.nyx-gap-y-3{row-gap:var(--nyx-s3)}.nyx-gap-y-4{row-gap:var(--nyx-s4)}
+.nyx-order-first{order:-9999}.nyx-order-last{order:9999}.nyx-order-none{order:0}.nyx-order-1{order:1}.nyx-order-2{order:2}.nyx-order-3{order:3}.nyx-order-4{order:4}.nyx-order-5{order:5}
+.nyx-grid-cols-1{display:grid;grid-template-columns:repeat(1,minmax(0,1fr))}.nyx-grid-cols-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.nyx-grid-cols-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.nyx-grid-cols-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.nyx-grid-cols-5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}.nyx-grid-cols-6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.nyx-grid-auto{display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--nyx-grid-min,220px),1fr))}
+.nyx-col-span-full{grid-column:1/-1}.nyx-place-center{place-items:center}.nyx-place-between{place-content:space-between}
 .nyx-divider{display:flex;align-items:center;gap:var(--nyx-s3);color:var(--nyx-text-muted);
   font-size:var(--nyx-fs-xs);text-transform:uppercase;letter-spacing:.08em;margin:var(--nyx-s5) 0}
 .nyx-divider::before,.nyx-divider::after{content:"";flex:1;height:1px;background:var(--nyx-border)}
@@ -485,6 +499,15 @@ body.nyx .nyx-phone select:focus-visible {
 .nyx-toast-success{border-inline-start-color:var(--nyx-accent-2)}
 .nyx-toast-warning{border-inline-start-color:var(--nyx-warning)}
 .nyx-toast-danger{border-inline-start-color:var(--nyx-danger)}
+.nyx-toast-body{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.nyx-toast-title{font-weight:700}
+.nyx-toast-action{margin-inline-start:auto;background:none;border:0;color:var(--nyx-accent);font-weight:600;font-size:var(--nyx-fs-sm);cursor:pointer;padding:2px 8px;border-radius:var(--nyx-radius-sm);white-space:nowrap;flex:0 0 auto}
+.nyx-toast-action:hover{background:var(--nyx-glass)}
+.nyx-toast-close{background:none;border:0;color:var(--nyx-text-muted);cursor:pointer;font-size:13px;line-height:1;padding:2px 4px;border-radius:var(--nyx-radius-sm);flex:0 0 auto}
+.nyx-toast-close:hover{color:var(--nyx-text);background:var(--nyx-glass)}
+.nyx-toast-wrap[data-pos^="top"]{top:var(--nyx-s5);bottom:auto}
+.nyx-toast-wrap[data-pos$="left"]{inset-inline-start:var(--nyx-s5);inset-inline-end:auto}
+.nyx-toast-wrap[data-pos$="center"]{inset-inline-start:50%;inset-inline-end:auto;transform:translateX(-50%);align-items:center}
 @keyframes nyx-toast-in{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
 @keyframes nyx-toast-out{to{opacity:0;transform:translateX(40px)}}
 
@@ -566,6 +589,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 
 /* carousel */
 .nyx-carousel{position:relative;border-radius:var(--nyx-radius-lg);overflow:hidden;border:1px solid var(--nyx-border)}
+.nyx-carousel:focus-visible{outline:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--nyx-accent) 40%,transparent)}
 .nyx-slide{display:none}
 .nyx-slide.active{display:block;animation:nyx-fade .4s var(--nyx-ease)}
 .nyx-carousel-ctrl{position:absolute;top:50%;transform:translateY(-50%);z-index:2}
@@ -675,7 +699,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-dropzone .nyx-dz-icon{font-size:28px}
 
 /* ============================================================
-   11. MORE COMPONENTS (v1.2)
+   11. MORE COMPONENTS (v1.0)
    ============================================================ */
 /* stepper (number input) */
 .nyx-stepper{display:inline-flex;align-items:stretch;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);overflow:hidden;background:var(--nyx-surface)}
@@ -728,6 +752,10 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-calendar-grid .day.muted{color:var(--nyx-text-muted);opacity:.4}
 .nyx-calendar-grid .day.today{border:1px solid var(--nyx-accent);color:var(--nyx-accent)}
 .nyx-calendar-grid .day.selected{background:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+.nyx-calendar-grid .day.disabled{opacity:.3;cursor:not-allowed}
+.nyx-calendar-foot{display:flex;gap:var(--nyx-s2);justify-content:flex-end;margin-top:var(--nyx-s3);padding-top:var(--nyx-s3);border-top:1px solid var(--nyx-border)}
+.nyx-calendar-foot button{background:none;border:0;color:var(--nyx-accent);font-family:var(--nyx-font-body);font-size:var(--nyx-fs-sm);font-weight:600;cursor:pointer;padding:4px 10px;border-radius:var(--nyx-radius-sm);transition:background .15s var(--nyx-ease)}
+.nyx-calendar-foot button:hover{background:var(--nyx-glass)}
 
 /* file item */
 .nyx-file{display:flex;align-items:center;gap:var(--nyx-s3);padding:12px 14px;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius)}
@@ -741,7 +769,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-sparkline span{width:6px;background:linear-gradient(180deg,var(--nyx-accent),var(--nyx-accent-2));border-radius:2px;opacity:.85}
 
 /* ============================================================
-   12. BIG TYPE & MOTION (v1.3)
+   12. BIG TYPE & MOTION (v1.0)
    ============================================================ */
 /* oversized hero type — the big-typography trend */
 .nyx-bigtype{font-family:var(--nyx-font-display);font-weight:800;font-size:clamp(46px,11vw,132px);line-height:.92;letter-spacing:-.04em;margin:0}
@@ -789,6 +817,37 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-anim-pulse-glow{animation:nyx-pulse-glow 2s infinite alternate}
 @keyframes nyx-pulse-glow{0%{box-shadow:0 0 4px color-mix(in srgb,var(--nyx-accent) 15%,transparent)}100%{box-shadow:0 0 16px color-mix(in srgb,var(--nyx-accent) 45%,transparent)}}
 
+/* hover effects (transition-based) */
+.nyx-hover-lift{transition:transform .25s var(--nyx-ease),box-shadow .25s var(--nyx-ease)}.nyx-hover-lift:hover{transform:translateY(-4px);box-shadow:var(--nyx-shadow-lg)}
+.nyx-hover-grow{transition:transform .25s var(--nyx-ease)}.nyx-hover-grow:hover{transform:scale(1.04)}
+.nyx-hover-shrink{transition:transform .25s var(--nyx-ease)}.nyx-hover-shrink:hover{transform:scale(.96)}
+.nyx-hover-rotate{transition:transform .3s var(--nyx-ease)}.nyx-hover-rotate:hover{transform:rotate(3deg)}
+.nyx-hover-glow{transition:box-shadow .25s var(--nyx-ease)}.nyx-hover-glow:hover{box-shadow:var(--nyx-glow)}
+/* animated underline link */
+.nyx-anim-underline{position:relative;text-decoration:none}
+.nyx-anim-underline::after{content:"";position:absolute;inset-inline-start:0;bottom:-2px;width:100%;height:2px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .3s var(--nyx-ease)}
+.nyx-anim-underline:hover::after,.nyx-anim-underline:focus-visible::after{transform:scaleX(1);transform-origin:left}
+/* attention seekers */
+.nyx-anim-bounce{animation:nyx-bounce 1s var(--nyx-ease) infinite}
+@keyframes nyx-bounce{0%,100%{transform:translateY(0)}25%{transform:translateY(-12px)}50%{transform:translateY(0)}75%{transform:translateY(-5px)}}
+.nyx-anim-shake{animation:nyx-shake .5s var(--nyx-ease)}
+@keyframes nyx-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.nyx-anim-wiggle{animation:nyx-wiggle .6s var(--nyx-ease) infinite}
+@keyframes nyx-wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-4deg)}75%{transform:rotate(4deg)}}
+.nyx-anim-heartbeat{animation:nyx-heartbeat 1.4s var(--nyx-ease) infinite}
+@keyframes nyx-heartbeat{0%,100%{transform:scale(1)}10%,30%{transform:scale(1.12)}20%{transform:scale(1)}}
+.nyx-anim-spin-slow{animation:nyx-spin 6s linear infinite}
+/* ping / pulse ring */
+.nyx-anim-ping{position:relative}
+.nyx-anim-ping::before{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 0 color-mix(in srgb,var(--nyx-accent) 55%,transparent);animation:nyx-ping 1.5s var(--nyx-ease) infinite}
+@keyframes nyx-ping{to{box-shadow:0 0 0 12px transparent}}
+/* Ken Burns slow image zoom */
+.nyx-anim-kenburns{animation:nyx-kenburns 14s var(--nyx-ease) infinite alternate}
+@keyframes nyx-kenburns{from{transform:scale(1)}to{transform:scale(1.12) translate(-2%,-1%)}}
+/* blur-in reveal */
+.nyx-anim-blur{animation:nyx-blur-in .7s var(--nyx-ease) both}
+@keyframes nyx-blur-in{from{opacity:0;filter:blur(12px)}to{opacity:1;filter:blur(0)}}
+
 /* animated gradient text */
 .nyx-gradient-text.animated{background-size:200% auto;animation:nyx-text-shine 4s linear infinite}
 @keyframes nyx-text-shine{to{background-position:200% center}}
@@ -800,7 +859,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 @keyframes nyx-aurora-rot{to{transform:rotate(360deg)}}
 
 /* ============================================================
-   13. UTILITIES & HELPERS (v1.3)
+   13. UTILITIES & HELPERS (v1.0)
    ============================================================ */
 /* spacing — 0..6 maps to the 4px scale; sides: t b s(start) e(end) */
 .nyx-m-0{margin:0}.nyx-mt-0{margin-top:0}.nyx-mb-0{margin-bottom:0}.nyx-ms-0{margin-inline-start:0}.nyx-me-0{margin-inline-end:0}
@@ -866,7 +925,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-clearfix::after{content:"";display:block;clear:both}
 
 /* ============================================================
-   14. HIERARCHY (v1.4) — file/org trees, vertical + horizontal
+   14. HIERARCHY (v1.0) — file/org trees, vertical + horizontal
    ============================================================ */
 /* vertical indented tree with elbow connectors */
 .nyx-hierarchy{font-size:var(--nyx-fs-sm)}
@@ -898,7 +957,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-hierarchy-cols .nyx-hitem .chev{margin-inline-start:auto;opacity:.55;font-size:11px}
 
 /* ============================================================
-   15. REGIONAL — built for MENA (v1.4)
+   15. REGIONAL — built for MENA (v1.0)
    ============================================================ */
 /* prayer times — five daily prayers, highlight the next one */
 .nyx-prayer-times{display:flex;gap:var(--nyx-s2);flex-wrap:wrap}
@@ -914,22 +973,16 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-datepair .greg{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-mono)}
 .nyx-datepair.inline{flex-direction:row;align-items:baseline;gap:8px}
 
-/* price + currency (use any symbol: ﷼ د.إ ج.م د.ك …) */
+/* price amount (.amt/.cur/.per) — undocumented utility kept for the pricing/checkout/dashboard examples */
 .nyx-price{display:inline-flex;align-items:baseline;gap:5px;font-family:var(--nyx-font-display);color:var(--nyx-text)}
 .nyx-price .amt{font-weight:800;font-size:var(--nyx-fs-xl);line-height:1}
-.nyx-price .cur{font-size:.72em;color:var(--nyx-text-muted);font-family:var(--nyx-font-body)}
-.nyx-price .per{font-size:.7em;color:var(--nyx-text-muted);font-family:var(--nyx-font-body);align-self:flex-end}
+.nyx-price .cur{font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted);font-family:var(--nyx-font-body)}
+.nyx-price .per{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-body);align-self:flex-end}
 .nyx-price.lg .amt{font-size:var(--nyx-fs-3xl)}
 .nyx-price del{color:var(--nyx-text-muted);font-weight:400;font-size:.7em}
 
-/* bilingual label — Arabic over Latin (or inline) */
-.nyx-bilingual{display:inline-flex;flex-direction:column;line-height:1.25}
-.nyx-bilingual .ar{font-family:var(--nyx-font-ar);font-weight:600}
-.nyx-bilingual .en{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-body);letter-spacing:.01em}
-.nyx-bilingual.inline{flex-direction:row;align-items:baseline;gap:8px}
-
 /* ============================================================
-   16. FORMS+ (v1.5) — combobox, multi-select, phone, date picker
+   16. FORMS+ (v1.0) — combobox, multi-select, phone, date picker
    ============================================================ */
 /* combobox / autocomplete */
 .nyx-combobox{position:relative}
@@ -976,7 +1029,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-calendar-grid .day.event::after{content:"";position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--nyx-accent-2)}
 
 /* ============================================================
-   17. OVERLAYS+ (v1.5) — sheet, FAB, back-to-top, top progress, context menu
+   17. OVERLAYS+ (v1.0) — sheet, FAB, back-to-top, top progress, context menu
    ============================================================ */
 /* bottom sheet */
 .nyx-sheet{position:fixed;inset-inline:0;bottom:0;z-index:160;background:var(--nyx-surface);border-top:1px solid var(--nyx-border);border-start-start-radius:var(--nyx-radius-xl);border-start-end-radius:var(--nyx-radius-xl);box-shadow:var(--nyx-shadow-lg);padding:var(--nyx-s5);max-height:85vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s var(--nyx-ease)}
@@ -1007,7 +1060,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-context-menu.open{display:block;animation:nyx-fade .12s var(--nyx-ease)}
 
 /* ============================================================
-   18. COMMERCE (v1.5) — product, cart, order, coupon, payment, address
+   18. COMMERCE (v1.0) — product, cart, order, coupon, payment, address
    ============================================================ */
 .nyx-product{display:flex;flex-direction:column;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;transition:all .2s var(--nyx-ease)}
 .nyx-product:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--nyx-accent) 50%,transparent);box-shadow:var(--nyx-glow),var(--nyx-shadow-lg)}
@@ -1042,7 +1095,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-address-icon{font-size:20px;color:var(--nyx-accent)}
 
 /* ============================================================
-   19. REGIONAL+ (v1.5) — countdown, zakat, qibla, delivery tracking
+   19. REGIONAL+ (v1.0) — countdown, zakat, qibla, delivery tracking
    ============================================================ */
 /* countdown (Iftar / Suhoor / sale) */
 .nyx-countdown{display:inline-flex;gap:var(--nyx-s2);align-items:center}
@@ -1079,7 +1132,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-delivery .nyx-dtime{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-mono)}
 
 /* ============================================================
-   20. BACKGROUNDS (v1.7) — ambient gradient, grid & interactive layers
+   20. BACKGROUNDS (v1.0) — ambient gradient, grid & interactive layers
    ============================================================ */
 /* Each paints a decorative ::before/::after behind its content in an
    isolated stacking context (z-index:-1) — drop a class on any section,
@@ -1163,7 +1216,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 @keyframes nyx-bg-drift{to{background-position:0 -1120px}}
 
 /* ============================================================
-   21. CHARTS (v1.7) — zero-dep CSS + SVG data viz
+   21. CHARTS (v1.0) — zero-dep CSS + SVG data viz
    ============================================================ */
 /* Bars are pure CSS — set --nyx-bar:0–100 per bar, add data-label/data-val.
    Line & area charts style an author-supplied <svg> (like .nyx-meter).
@@ -1207,7 +1260,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-chart-legend .nyx-legend::before{content:"";width:11px;height:11px;border-radius:3px;background:var(--nyx-legend-c,var(--nyx-accent))}
 
 /* ============================================================
-   22. CODE BLOCK (v1.7) — titled code window + syntax tokens + copy
+   22. CODE BLOCK (v1.0) — titled code window + syntax tokens + copy
    ============================================================ */
 .nyx-code-block{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;background:#070810;box-shadow:var(--nyx-shadow-lg)}
 .nyx-code-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--nyx-border);background:var(--nyx-surface)}
@@ -1229,7 +1282,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-tok-num{color:#f59e0b}
 
 /* ============================================================
-   23. BLOCKS (v1.7) — chat, slider, steps, testimonial, pricing, kanban, notifications
+   23. BLOCKS (v1.0) — chat, slider, steps, testimonial, pricing, kanban, notifications
    ============================================================ */
 /* Accent-driven, RTL-safe (logical properties), reduced-motion aware. */
 
@@ -1325,7 +1378,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 }
 
 /* ============================================================
-   24. BLOCKS+ (v1.8) — gauge · ring · heatmap · stats · skeletons · nav · overlays · media · hijri
+   24. BLOCKS+ (v1.0) — gauge · ring · heatmap · stats · skeletons · nav · overlays · media · hijri
    ============================================================ */
 /* Accent-driven, RTL-safe (logical properties), reduced-motion aware. */
 

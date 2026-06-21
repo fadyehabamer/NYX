@@ -1,4 +1,4 @@
-/*! Nyx · feedback.css · v1.7.0 · MIT
+/*! Nyx · feedback.css · v1.0.0 · MIT
  * The feedback module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -50,5 +50,14 @@
 .nyx-toast-success{border-inline-start-color:var(--nyx-accent-2)}
 .nyx-toast-warning{border-inline-start-color:var(--nyx-warning)}
 .nyx-toast-danger{border-inline-start-color:var(--nyx-danger)}
+.nyx-toast-body{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.nyx-toast-title{font-weight:700}
+.nyx-toast-action{margin-inline-start:auto;background:none;border:0;color:var(--nyx-accent);font-weight:600;font-size:var(--nyx-fs-sm);cursor:pointer;padding:2px 8px;border-radius:var(--nyx-radius-sm);white-space:nowrap;flex:0 0 auto}
+.nyx-toast-action:hover{background:var(--nyx-glass)}
+.nyx-toast-close{background:none;border:0;color:var(--nyx-text-muted);cursor:pointer;font-size:13px;line-height:1;padding:2px 4px;border-radius:var(--nyx-radius-sm);flex:0 0 auto}
+.nyx-toast-close:hover{color:var(--nyx-text);background:var(--nyx-glass)}
+.nyx-toast-wrap[data-pos^="top"]{top:var(--nyx-s5);bottom:auto}
+.nyx-toast-wrap[data-pos$="left"]{inset-inline-start:var(--nyx-s5);inset-inline-end:auto}
+.nyx-toast-wrap[data-pos$="center"]{inset-inline-start:50%;inset-inline-end:auto;transform:translateX(-50%);align-items:center}
 @keyframes nyx-toast-in{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
 @keyframes nyx-toast-out{to{opacity:0;transform:translateX(40px)}}

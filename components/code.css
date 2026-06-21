@@ -1,9 +1,9 @@
-/*! Nyx · code.css · v1.7.0 · MIT
+/*! Nyx · code.css · v1.0.0 · MIT
  * The code module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
 /* ============================================================
-   22. CODE BLOCK (v1.7) — titled code window + syntax tokens + copy
+   22. CODE BLOCK (v1.0) — titled code window + syntax tokens + copy
    ============================================================ */
 .nyx-code-block{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;background:#070810;box-shadow:var(--nyx-shadow-lg)}
 .nyx-code-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--nyx-border);background:var(--nyx-surface)}

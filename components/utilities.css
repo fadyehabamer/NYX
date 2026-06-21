@@ -1,9 +1,9 @@
-/*! Nyx · utilities.css · v1.7.0 · MIT
+/*! Nyx · utilities.css · v1.0.0 · MIT
  * The utilities module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
 /* ============================================================
-   13. UTILITIES & HELPERS (v1.3)
+   13. UTILITIES & HELPERS (v1.0)
    ============================================================ */
 /* spacing — 0..6 maps to the 4px scale; sides: t b s(start) e(end) */
 .nyx-m-0{margin:0}.nyx-mt-0{margin-top:0}.nyx-mb-0{margin-bottom:0}.nyx-ms-0{margin-inline-start:0}.nyx-me-0{margin-inline-end:0}

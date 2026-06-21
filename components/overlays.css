@@ -1,4 +1,4 @@
-/*! Nyx · overlays.css · v1.7.0 · MIT
+/*! Nyx · overlays.css · v1.0.0 · MIT
  * The overlays module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -45,6 +45,7 @@
 
 /* carousel */
 .nyx-carousel{position:relative;border-radius:var(--nyx-radius-lg);overflow:hidden;border:1px solid var(--nyx-border)}
+.nyx-carousel:focus-visible{outline:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--nyx-accent) 40%,transparent)}
 .nyx-slide{display:none}
 .nyx-slide.active{display:block;animation:nyx-fade .4s var(--nyx-ease)}
 .nyx-carousel-ctrl{position:absolute;top:50%;transform:translateY(-50%);z-index:2}

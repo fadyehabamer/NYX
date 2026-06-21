@@ -1,9 +1,9 @@
-/*! Nyx · regional-plus.css · v1.7.0 · MIT
+/*! Nyx · regional-plus.css · v1.0.0 · MIT
  * The regional-plus module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
 /* ============================================================
-   19. REGIONAL+ (v1.5) — countdown, zakat, qibla, delivery tracking
+   19. REGIONAL+ (v1.0) — countdown, zakat, qibla, delivery tracking
    ============================================================ */
 /* countdown (Iftar / Suhoor / sale) */
 .nyx-countdown{display:inline-flex;gap:var(--nyx-s2);align-items:center}

@@ -1,9 +1,9 @@
-/*! Nyx · overlays-plus.css · v1.7.0 · MIT
+/*! Nyx · overlays-plus.css · v1.0.0 · MIT
  * The overlays-plus module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
 /* ============================================================
-   17. OVERLAYS+ (v1.5) — sheet, FAB, back-to-top, top progress, context menu
+   17. OVERLAYS+ (v1.0) — sheet, FAB, back-to-top, top progress, context menu
    ============================================================ */
 /* bottom sheet */
 .nyx-sheet{position:fixed;inset-inline:0;bottom:0;z-index:160;background:var(--nyx-surface);border-top:1px solid var(--nyx-border);border-start-start-radius:var(--nyx-radius-xl);border-start-end-radius:var(--nyx-radius-xl);box-shadow:var(--nyx-shadow-lg);padding:var(--nyx-s5);max-height:85vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s var(--nyx-ease)}

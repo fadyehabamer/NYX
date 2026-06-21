@@ -1,4 +1,4 @@
-/*! Nyx · layout.css · v1.7.0 · MIT
+/*! Nyx · layout.css · v1.0.0 · MIT
  * The layout module. Requires tokens.css.
  * Bundle: nyx.css   Docs: docs.html
  */
@@ -18,6 +18,20 @@
 .nyx-gap-1{gap:var(--nyx-s1)}.nyx-gap-2{gap:var(--nyx-s2)}.nyx-gap-3{gap:var(--nyx-s3)}
 .nyx-gap-4{gap:var(--nyx-s4)}.nyx-gap-5{gap:var(--nyx-s5)}.nyx-gap-6{gap:var(--nyx-s6)}
 .nyx-stack{display:flex;flex-direction:column;gap:var(--nyx-s4)}
+/* — flex & grid utilities (v1.0) — */
+.nyx-flex-row{flex-direction:row}.nyx-flex-row-reverse{flex-direction:row-reverse}.nyx-flex-col-reverse{flex-direction:column-reverse}
+.nyx-nowrap{flex-wrap:nowrap}.nyx-wrap-reverse{flex-wrap:wrap-reverse}
+.nyx-justify-start{justify-content:flex-start}.nyx-justify-end{justify-content:flex-end}.nyx-justify-around{justify-content:space-around}.nyx-justify-evenly{justify-content:space-evenly}
+.nyx-items-end{align-items:flex-end}.nyx-items-stretch{align-items:stretch}.nyx-items-baseline{align-items:baseline}
+.nyx-content-start{align-content:flex-start}.nyx-content-center{align-content:center}.nyx-content-between{align-content:space-between}.nyx-content-around{align-content:space-around}.nyx-content-end{align-content:flex-end}
+.nyx-self-auto{align-self:auto}.nyx-self-start{align-self:flex-start}.nyx-self-center{align-self:center}.nyx-self-end{align-self:flex-end}.nyx-self-stretch{align-self:stretch}
+.nyx-flex-1{flex:1 1 0%}.nyx-flex-auto{flex:1 1 auto}.nyx-flex-initial{flex:0 1 auto}.nyx-flex-none{flex:none}
+.nyx-grow-0{flex-grow:0}.nyx-shrink{flex-shrink:1}.nyx-shrink-0{flex-shrink:0}
+.nyx-gap-0{gap:0}.nyx-gap-x-2{column-gap:var(--nyx-s2)}.nyx-gap-x-3{column-gap:var(--nyx-s3)}.nyx-gap-x-4{column-gap:var(--nyx-s4)}.nyx-gap-y-2{row-gap:var(--nyx-s2)}.nyx-gap-y-3{row-gap:var(--nyx-s3)}.nyx-gap-y-4{row-gap:var(--nyx-s4)}
+.nyx-order-first{order:-9999}.nyx-order-last{order:9999}.nyx-order-none{order:0}.nyx-order-1{order:1}.nyx-order-2{order:2}.nyx-order-3{order:3}.nyx-order-4{order:4}.nyx-order-5{order:5}
+.nyx-grid-cols-1{display:grid;grid-template-columns:repeat(1,minmax(0,1fr))}.nyx-grid-cols-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.nyx-grid-cols-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.nyx-grid-cols-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.nyx-grid-cols-5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}.nyx-grid-cols-6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.nyx-grid-auto{display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--nyx-grid-min,220px),1fr))}
+.nyx-col-span-full{grid-column:1/-1}.nyx-place-center{place-items:center}.nyx-place-between{place-content:space-between}
 .nyx-divider{display:flex;align-items:center;gap:var(--nyx-s3);color:var(--nyx-text-muted);
   font-size:var(--nyx-fs-xs);text-transform:uppercase;letter-spacing:.08em;margin:var(--nyx-s5) 0}
 .nyx-divider::before,.nyx-divider::after{content:"";flex:1;height:1px;background:var(--nyx-border)}
