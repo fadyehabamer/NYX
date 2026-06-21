@@ -21,14 +21,41 @@
 .nyx-progress-ring > *{position:relative;font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-xl)}
 
 /* — contribution heatmap (7 rows = days; columns = weeks) — */
+.nyx-heatmap-container{display:inline-flex;flex-direction:column;gap:var(--nyx-s2);padding:var(--nyx-s4);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);max-width:100%;box-shadow:var(--nyx-shadow-sm)}
+.nyx-heatmap-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--nyx-s1);gap:var(--nyx-s5)}
+.nyx-heatmap-title{font-size:var(--nyx-fs-sm);font-weight:600;color:var(--nyx-text)}
+.nyx-heatmap-grid-wrapper{display:flex;gap:var(--nyx-s2);align-items:flex-start}
+.nyx-heatmap-weekdays{display:grid;grid-template-rows:repeat(7,13px);gap:4px;font-size:10px;color:var(--nyx-text-muted);line-height:13px;padding-top:20px}
+.nyx-heatmap-body{display:flex;flex-direction:column;gap:4px;overflow-x:auto;padding:4px 4px 12px}
+
+/* Custom scrollbar to match theme */
+.nyx-heatmap-body::-webkit-scrollbar{height:5px}
+.nyx-heatmap-body::-webkit-scrollbar-track{background:transparent}
+.nyx-heatmap-body::-webkit-scrollbar-thumb{background:var(--nyx-border);border-radius:var(--nyx-radius-full)}
+.nyx-heatmap-body::-webkit-scrollbar-thumb:hover{background:var(--nyx-accent)}
+
+.nyx-heatmap-months{display:grid;grid-template-columns:repeat(52,1fr);gap:4px;font-size:10px;color:var(--nyx-text-muted);line-height:1;padding-bottom:6px}
+
 .nyx-heatmap{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:4px}
-.nyx-heatmap i{width:13px;height:13px;border-radius:3px;background:var(--nyx-surface-2);display:block}
+.nyx-heatmap i{width:13px;height:13px;border-radius:3px;background:var(--nyx-surface-2);display:block;transition:transform .12s var(--nyx-ease),box-shadow .12s var(--nyx-ease),opacity .2s var(--nyx-ease),filter .2s var(--nyx-ease);cursor:pointer;position:relative}
+.nyx-heatmap i:hover{transform:scale(1.3);box-shadow:0 0 6px var(--nyx-accent);z-index:10}
 .nyx-heatmap i[data-l="1"]{background:color-mix(in srgb,var(--nyx-accent) 28%,var(--nyx-surface-2))}
 .nyx-heatmap i[data-l="2"]{background:color-mix(in srgb,var(--nyx-accent) 52%,var(--nyx-surface-2))}
 .nyx-heatmap i[data-l="3"]{background:color-mix(in srgb,var(--nyx-accent) 78%,var(--nyx-surface-2))}
 .nyx-heatmap i[data-l="4"]{background:var(--nyx-accent);box-shadow:0 0 8px color-mix(in srgb,var(--nyx-accent) 50%,transparent)}
+.nyx-heatmap i[data-tooltip]::after{content:attr(data-tooltip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%) scale(.85);background:var(--nyx-surface-3,#0b0c14);color:var(--nyx-text,#e3e4e9);padding:4px 8px;border-radius:var(--nyx-radius-sm);border:1px solid var(--nyx-border);font-size:10px;font-family:var(--nyx-font-sans);font-weight:500;white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .12s var(--nyx-ease),transform .12s var(--nyx-ease),visibility .12s;box-shadow:var(--nyx-shadow-md);z-index:100}
+.nyx-heatmap i[data-tooltip]:hover::after{opacity:1;visibility:visible;transform:translateX(-50%) scale(1)}
+
 .nyx-heatmap-legend{display:inline-flex;align-items:center;gap:5px;font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
-.nyx-heatmap-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;background:var(--nyx-surface-2)}
+.nyx-heatmap-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;background:var(--nyx-surface-2);cursor:pointer;transition:transform .1s var(--nyx-ease)}
+.nyx-heatmap-legend i:hover{transform:scale(1.2)}
+
+/* Dim non-matching cells on legend hover */
+.nyx-heatmap-container:has(.nyx-heatmap-legend i[data-l="0"]:hover) .nyx-heatmap i:not([data-l="0"]),
+.nyx-heatmap-container:has(.nyx-heatmap-legend i[data-l="1"]:hover) .nyx-heatmap i:not([data-l="1"]),
+.nyx-heatmap-container:has(.nyx-heatmap-legend i[data-l="2"]:hover) .nyx-heatmap i:not([data-l="2"]),
+.nyx-heatmap-container:has(.nyx-heatmap-legend i[data-l="3"]:hover) .nyx-heatmap i:not([data-l="3"]),
+.nyx-heatmap-container:has(.nyx-heatmap-legend i[data-l="4"]:hover) .nyx-heatmap i:not([data-l="4"]){opacity:.15;filter:grayscale(80%)}
 
 /* — trend stat card (number + delta + sparkline slot) — */
 .nyx-stat-card{display:flex;flex-direction:column;gap:var(--nyx-s2);padding:var(--nyx-s4) var(--nyx-s5);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface)}

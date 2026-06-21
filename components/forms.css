@@ -62,9 +62,9 @@ body.nyx .nyx-phone select:focus-visible {
 
 /* floating label */
 .nyx-float{position:relative}
-.nyx-float > .nyx-input{height:58px;padding:24px 14px 8px}
-.nyx-float > label{position:absolute;top:50%;inset-inline-start:15px;transform:translateY(-50%);transform-origin:inline-start;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);pointer-events:none;transition:transform .16s var(--nyx-ease),color .16s var(--nyx-ease)}
-.nyx-float > .nyx-input:focus + label,.nyx-float > .nyx-input:not(:placeholder-shown) + label{transform:translateY(calc(-50% - 13px)) scale(.82);color:var(--nyx-accent)}
+.nyx-float > .nyx-input{height:52px;padding:22px 14px 6px}
+.nyx-float > label{position:absolute;top:15px;inset-inline-start:14px;transform:none;transform-origin:inline-start;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);pointer-events:none;transition:transform .18s var(--nyx-ease),color .18s var(--nyx-ease)}
+.nyx-float > .nyx-input:focus + label,.nyx-float > .nyx-input:not(:placeholder-shown) + label{transform:translateY(-8px) scale(.8);color:var(--nyx-accent)}
 
 /* validation states — add .is-valid / .is-invalid, or wrap a form in
    .nyx-was-validated to drive feedback from the browser's :valid/:invalid */

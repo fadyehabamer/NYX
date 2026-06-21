@@ -50,7 +50,11 @@ window.NYX_I18N = {
     'CDN — jsDelivr / unpkg': 'شبكة توصيل (CDN)', 'npm': 'npm', 'Bundle — everything': 'الحزمة — كل شيء',
     'Vertical — connected tree': 'عمودي — شجرة موصولة', 'Horizontal — column browser': 'أفقي — متصفّح أعمدة',
     'Today': 'اليوم', 'Stacked': 'متراصّ', 'Inline': 'في سطر', 'Inline + badge': 'في سطر + شارة', 'Amounts': 'مبالغ',
-    'Arabic + Arabic-Indic numerals': 'بالعربية والأرقام العربية-الهندية', 'Arabic-Indic numerals (JS)': 'الأرقام العربية-الهندية (JS)'
+    'Arabic + Arabic-Indic numerals': 'بالعربية والأرقام العربية-الهندية', 'Arabic-Indic numerals (JS)': 'الأرقام العربية-الهندية (JS)',
+    'Labeled Activity Heatmap': 'خريطة حرارية تفاعلية ومسماة',
+    'Entrances (stagger + direction)': 'دخول متدرّج واتجاهي',
+    'Interactive spotlight & sheens': 'مؤثرات حركة تفاعلية',
+    'Looping effects': 'تأثيرات مستمرة'
   },
   pages: {
     /* Getting Started */

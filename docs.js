@@ -645,7 +645,7 @@
       id: 'carousel', group: 'Components', title: 'Carousel', added: 'v1.1',
       summary: 'A slideshow with prev/next controls and clickable indicator dots.',
       sections: [{ title: 'Slides', demo: '<div class="nyx-carousel" data-nyx-carousel><div class="nyx-slide active"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2">Slide one</h3></div></div><div class="nyx-slide"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2 nyx-gradient-text">Slide two</h3></div></div><div class="nyx-slide"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2">Slide three</h3></div></div><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl prev" data-nyx-slide="prev" aria-label="Previous">‹</button><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl next" data-nyx-slide="next" aria-label="Next">›</button><div class="nyx-carousel-dots"><button class="active" data-nyx-slide-to="0" aria-label="Slide 1"></button><button data-nyx-slide-to="1" aria-label="Slide 2"></button><button data-nyx-slide-to="2" aria-label="Slide 3"></button></div></div>' }, { title: 'Flat, with caption', demo: '<div class="nyx-carousel flat" data-nyx-carousel><div class="nyx-slide active"><div style="position:relative;min-height:150px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2))"><div class="nyx-carousel-caption"><h4 class="nyx-h4">Mountains</h4><p class="nyx-caption">A caption band over the slide.</p></div></div></div><div class="nyx-slide"><div style="position:relative;min-height:150px;background:linear-gradient(120deg,var(--nyx-accent-2),var(--nyx-accent))"><div class="nyx-carousel-caption"><h4 class="nyx-h4">Ocean</h4><p class="nyx-caption">Add .flat to drop the outer frame.</p></div></div></div><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl prev" data-nyx-slide="prev" aria-label="Previous">‹</button><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl next" data-nyx-slide="next" aria-label="Next">›</button></div>' }],
-      classes: [['nyx-carousel (+ .flat)', 'Slideshow wrapper; .flat drops the border.'], ['nyx-slide', 'A slide (one has .active).'], ['nyx-carousel-caption', 'Optional gradient caption band over a slide.'], ['data-nyx-slide / data-nyx-slide-to', 'Prev/next controls and indicator dots.']]
+      classes: [['nyx-carousel (+ .flat / .fade)', 'Slideshow wrapper; .flat drops the border, .fade cross-fades slides.'], ['nyx-slide', 'A slide (one has .active).'], ['nyx-carousel-caption', 'Optional gradient caption band over a slide.'], ['data-nyx-slide / data-nyx-slide-to', 'Prev/next controls and indicator dots.']]
     },
     {
       id: 'nav-pills', group: 'Components', title: 'Nav pills', added: 'v1.1',
@@ -1006,13 +1006,24 @@
     },
     {
       id: 'animations', group: 'Motion', title: 'Animations', added: 'v1.3',
-      summary: 'Entrance animations with stagger delays, a floating loop, an animated gradient sweep, and a rotating aurora backdrop for heroes. All honor prefers-reduced-motion.',
+      summary: 'Entrance animations with directional slide-ins, stagger delays, a floating loop, hover tilt/lift, custom-pointer tracking spotlights, sweeps, and a rotating aurora backdrop. All honor prefers-reduced-motion.',
       sections: [
-        { title: 'Entrances (stagger)', demo: '<div class="nyx-flex nyx-gap-3 nyx-wrap"><span class="nyx-badge nyx-anim-up nyx-anim-delay-1">up</span><span class="nyx-badge nyx-anim-fade nyx-anim-delay-2">fade</span><span class="nyx-badge nyx-anim-zoom nyx-anim-delay-3">zoom</span></div>' },
-        { title: 'Float loop', demo: '<div class="nyx-avatar nyx-anim-float">N</div>' },
+        { title: 'Entrances (stagger + direction)', demo: '<div class="nyx-flex nyx-gap-3 nyx-wrap"><span class="nyx-badge nyx-anim-up nyx-anim-delay-1">up</span><span class="nyx-badge nyx-anim-fade nyx-anim-delay-2">fade</span><span class="nyx-badge nyx-anim-zoom nyx-anim-delay-3">zoom</span><span class="nyx-badge nyx-anim-left nyx-anim-delay-4">left</span><span class="nyx-badge nyx-anim-right nyx-anim-delay-4">right</span></div>' },
+        { title: 'Interactive spotlight & sheens', demo: '<div class="nyx-grid"><div class="nyx-col-4"><div class="nyx-card nyx-spotlight-card nyx-p-4 text-center" style="height:100%"><span class="nyx-overline">Spotlight</span><h4 class="nyx-h5 nyx-mt-2">Cursor glow</h4><p class="nyx-muted nyx-fs-sm">Radial accent light tracks your mouse.</p></div></div><div class="nyx-col-4"><div class="nyx-card nyx-glass-flare nyx-p-4 text-center" style="height:100%"><span class="nyx-overline">Glass flare</span><h4 class="nyx-h5 nyx-mt-2">Reflective sheen</h4><p class="nyx-muted nyx-fs-sm">Hover to trigger a sliding metallic light sheen.</p></div></div><div class="nyx-col-4"><div class="nyx-card nyx-hover-lift nyx-p-4 text-center" style="height:100%"><span class="nyx-overline">Hover lift</span><h4 class="nyx-h5 nyx-mt-2">Smooth translation</h4><p class="nyx-muted nyx-fs-sm">Hover to lift and expand shadow depth.</p></div></div></div>' },
+        { title: 'Looping effects', demo: '<div class="nyx-flex nyx-gap-4 nyx-items-center"><div class="nyx-avatar nyx-anim-float">N</div><span class="nyx-badge nyx-badge-success nyx-anim-pulse-glow">pulse glow</span></div>' },
         { title: 'Aurora hero', demo: '<div class="nyx-aurora nyx-card" style="text-align:center;padding:40px"><h3 class="nyx-h2">Animated <span class="nyx-gradient-text animated">aurora</span></h3><p class="nyx-muted">A rotating conic-gradient glow behind your content.</p></div>' }
       ],
-      classes: [['nyx-anim-fade / -up / -zoom', 'One-shot entrance animations.'], ['nyx-anim-delay-1…4', 'Stagger delays.'], ['nyx-anim-float', 'Gentle floating loop.'], ['nyx-aurora', 'Rotating aurora backdrop (wrap content).']]
+      classes: [
+        ['nyx-anim-fade / -up / -zoom', 'One-shot entrance animations.'],
+        ['nyx-anim-left / -right', 'Directional entrances.'],
+        ['nyx-anim-delay-1…4', 'Stagger delays.'],
+        ['nyx-anim-float', 'Gentle floating loop.'],
+        ['nyx-anim-pulse-glow', 'Looping breathing neon glow.'],
+        ['nyx-spotlight-card', 'Interactive radial cursor shine card (pointer-move glow).'],
+        ['nyx-glass-flare', 'Card with a sweeping reflective light flare on hover.'],
+        ['nyx-hover-lift', 'Lifts card and casts a glowing shadow on hover.'],
+        ['nyx-aurora', 'Rotating aurora backdrop (wrap content).']
+      ]
     },
     {
       id: 'reveal', group: 'Motion', title: 'Scroll reveal', added: 'v1.3',
@@ -1165,11 +1176,62 @@
     },
     {
       id: 'heatmap', group: 'Components', title: 'Heatmap', added: 'v1.8',
-      summary: 'A GitHub-style contribution graph — 7 rows (days) by however many columns (weeks) you add. Each cell takes data-l="0–4" for intensity; every level derives from --nyx-accent so it retones with the theme.',
+      summary: 'A GitHub-style contribution graph — 7 rows (days) by 52 columns (weeks). Wrapped in an optional labeled, interactive container with weekday and month titles, hover zoom effects, and zero-dependency CSS tooltips.',
       sections: [
-        { title: 'Activity', demo: '<div class="nyx-stack nyx-gap-3"><div class="nyx-heatmap">' + [2,0,1,3,4,1,0,1,2,4,2,0,3,1,0,1,1,4,3,2,0,3,2,0,1,4,1,2,1,0,3,2,1,4,0,2,4,1,0,2,3,1,0,1,2,3,1,0,4,4,2,1,3,0,1,2,1,3,2,0,4,1,0,2,0,1,4,2,3,1].map(function (l) { return '<i data-l="' + l + '"></i>'; }).join('') + '</div><div class="nyx-heatmap-legend">Less <i></i><i style="background:color-mix(in srgb,var(--nyx-accent) 28%,var(--nyx-surface-2))"></i><i style="background:color-mix(in srgb,var(--nyx-accent) 52%,var(--nyx-surface-2))"></i><i style="background:color-mix(in srgb,var(--nyx-accent) 78%,var(--nyx-surface-2))"></i><i style="background:var(--nyx-accent)"></i> More</div></div>', code: '<div class="nyx-heatmap">\n  <!-- 7 cells per column = one week; data-l is 0–4 -->\n  <i data-l="0"></i><i data-l="2"></i><i data-l="4"></i> …\n</div>' }
+        {
+          title: 'Labeled Activity Heatmap',
+          demo: '<div class="nyx-heatmap-container">' +
+                '  <div class="nyx-heatmap-header">' +
+                '    <div class="nyx-heatmap-title">Contribution History</div>' +
+                '    <div class="nyx-heatmap-legend">' +
+                '      <span>Less</span>' +
+                '      <i data-l="0"></i>' +
+                '      <i data-l="1" style="background:color-mix(in srgb,var(--nyx-accent) 28%,var(--nyx-surface-2))"></i>' +
+                '      <i data-l="2" style="background:color-mix(in srgb,var(--nyx-accent) 52%,var(--nyx-surface-2))"></i>' +
+                '      <i data-l="3" style="background:color-mix(in srgb,var(--nyx-accent) 78%,var(--nyx-surface-2))"></i>' +
+                '      <i data-l="4" style="background:var(--nyx-accent)"></i>' +
+                '      <span>More</span>' +
+                '    </div>' +
+                '  </div>' +
+                '  <div class="nyx-heatmap-grid-wrapper">' +
+                '    <div class="nyx-heatmap-weekdays"><div></div><div>Mon</div><div></div><div>Wed</div><div></div><div>Fri</div><div></div></div>' +
+                '    <div class="nyx-heatmap-body">' +
+                '      <div class="nyx-heatmap-months">' +
+                '        <span style="grid-column: span 4">Jan</span>' +
+                '        <span style="grid-column: span 4">Feb</span>' +
+                '        <span style="grid-column: span 5">Mar</span>' +
+                '        <span style="grid-column: span 4">Apr</span>' +
+                '        <span style="grid-column: span 4">May</span>' +
+                '        <span style="grid-column: span 5">Jun</span>' +
+                '        <span style="grid-column: span 4">Jul</span>' +
+                '        <span style="grid-column: span 4">Aug</span>' +
+                '        <span style="grid-column: span 5">Sep</span>' +
+                '        <span style="grid-column: span 4">Oct</span>' +
+                '        <span style="grid-column: span 4">Nov</span>' +
+                '        <span style="grid-column: span 5">Dec</span>' +
+                '      </div>' +
+                '      <div class="nyx-heatmap">' +
+                (function() {
+                  var cells = [], levels = [2,0,1,3,4,1,0,1,2,4,2,0,3,1,0,1,1,4,3,2,0,3,2,0,1,4,1,2,1,0,3,2,1,4,0,2,4,1,0,2,3,1,0,1,2,3,1,0,4,4,2,1,3,0,1,2,1,3,2,0,4,1,0,2,0,1,4,2,3,1];
+                  for (var i = 0; i < 364; i++) {
+                    var l = levels[i % levels.length];
+                    cells.push('<i data-l="' + l + '" data-tooltip="Day ' + (i+1) + ': ' + (l * 3) + ' contributions"></i>');
+                  }
+                  return cells.join('');
+                })() +
+                '      </div>' +
+                '    </div>' +
+                '  </div>' +
+                '</div>',
+          code: '<div class="nyx-heatmap-container">\n  <div class="nyx-heatmap-header">\n    <div class="nyx-heatmap-title">Contributions</div>\n    <div class="nyx-heatmap-legend">\n      <span>Less</span>\n      <i data-l="0"></i>\n      <i data-l="1"></i>\n      <i data-l="2"></i>\n      <i data-l="3"></i>\n      <i data-l="4"></i>\n      <span>More</span>\n    </div>\n  </div>\n  <div class="nyx-heatmap-grid-wrapper">\n    <div class="nyx-heatmap-weekdays">\n      <div></div><div>Mon</div><div></div><div>Wed</div><div></div><div>Fri</div><div></div>\n    </div>\n    <div class="nyx-heatmap-body">\n      <div class="nyx-heatmap-months">\n        <span style="grid-column: span 4">Jan</span>\n        <span style="grid-column: span 4">Feb</span>\n        <span style="grid-column: span 5">Mar</span> …\n      </div>\n      <div class="nyx-heatmap">\n        <i data-l="2" data-tooltip="Day 1: 6 contributions"></i>\n        <!-- 364 cells (52 weeks) -->\n      </div>\n    </div>\n  </div>\n</div>'
+        }
       ],
-      classes: [['nyx-heatmap', '7-row grid; columns flow automatically.'], ['i[data-l="0..4"]', 'A day cell; data-l sets intensity.'], ['nyx-heatmap-legend', 'Less → More swatch row.']]
+      classes: [
+        ['nyx-heatmap-container', 'Main wrapper; holds title, legend, and grid.'],
+        ['nyx-heatmap-weekdays / -months', 'Skins for labels aligning correctly with rows/columns.'],
+        ['nyx-heatmap', '7-row grid; columns flow automatically.'],
+        ['i[data-tooltip]', 'Add a tooltip description displayed on hover.']
+      ]
     },
     {
       id: 'stat-card', group: 'Components', title: 'Stat card', added: 'v1.8',

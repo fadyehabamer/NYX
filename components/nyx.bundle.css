@@ -333,9 +333,9 @@ body.nyx .nyx-phone select:focus-visible {
 
 /* floating label */
 .nyx-float{position:relative}
-.nyx-float > .nyx-input{height:58px;padding:24px 14px 8px}
-.nyx-float > label{position:absolute;top:50%;inset-inline-start:15px;transform:translateY(-50%);transform-origin:inline-start;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);pointer-events:none;transition:transform .16s var(--nyx-ease),color .16s var(--nyx-ease)}
-.nyx-float > .nyx-input:focus + label,.nyx-float > .nyx-input:not(:placeholder-shown) + label{transform:translateY(calc(-50% - 13px)) scale(.82);color:var(--nyx-accent)}
+.nyx-float > .nyx-input{height:52px;padding:22px 14px 6px}
+.nyx-float > label{position:absolute;top:15px;inset-inline-start:14px;transform:none;transform-origin:inline-start;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);pointer-events:none;transition:transform .18s var(--nyx-ease),color .18s var(--nyx-ease)}
+.nyx-float > .nyx-input:focus + label,.nyx-float > .nyx-input:not(:placeholder-shown) + label{transform:translateY(-8px) scale(.8);color:var(--nyx-accent)}
 
 /* validation states — add .is-valid / .is-invalid, or wrap a form in
    .nyx-was-validated to drive feedback from the browser's :valid/:invalid */
@@ -451,7 +451,8 @@ body.nyx .nyx-phone select:focus-visible {
 .nyx-status-bar .nyx-step{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);position:relative}
 .nyx-status-bar .nyx-step .nyx-step-dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);font-size:var(--nyx-fs-xs);font-family:var(--nyx-font-mono);position:relative;z-index:1}
 /* connector runs dot-center to dot-center, behind the dots (logical → RTL-safe) */
-.nyx-status-bar .nyx-step:not(:last-child)::after{content:"";position:absolute;top:15px;inset-inline-start:calc(50% + 19px);width:calc(100% - 38px);height:2px;background:var(--nyx-border)}
+.nyx-status-bar .nyx-step::after{content:"";position:absolute;top:15px;inset-inline-start:-50%;width:100%;height:2px;background:var(--nyx-border);z-index:0}
+.nyx-status-bar .nyx-step:first-child::after{display:none}
 .nyx-status-bar .nyx-step.done .nyx-step-dot{background:var(--nyx-accent-2);border-color:var(--nyx-accent-2);color:#04130f}
 .nyx-status-bar .nyx-step.done::after{background:var(--nyx-accent-2)}
 .nyx-status-bar .nyx-step.current .nyx-step-dot{background:var(--nyx-accent);border-color:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
@@ -536,11 +537,10 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-tip.right{left:calc(100% + 8px);top:50%;transform:translateY(-50%) translateX(-4px)}
 .nyx-tooltip:hover .nyx-tip.right{transform:translateY(-50%)}
 .nyx-popover{position:relative;display:inline-flex}
-.nyx-popover .nyx-pop{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);z-index:120;min-width:200px;padding:var(--nyx-s4);background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);font-size:var(--nyx-fs-sm);display:none}
+.nyx-popover .nyx-pop{position:absolute;bottom:calc(100% + 12px);inset-inline:0;margin-inline:auto;width:max-content;max-width:min(300px,90vw);z-index:120;padding:var(--nyx-s4);background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);box-shadow:var(--nyx-shadow-lg);font-size:var(--nyx-fs-sm);display:none}
 .nyx-popover.open .nyx-pop{display:block;animation:nyx-pop-in .18s var(--nyx-ease)}
 .nyx-popover .nyx-pop::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:var(--nyx-surface-2);border-right:1px solid var(--nyx-border);border-bottom:1px solid var(--nyx-border);margin-top:-5px}
-/* keep translateX(-50%) on every frame so the panel never drifts off-centre while opening */
-@keyframes nyx-pop-in{from{opacity:0;transform:translateX(-50%) translateY(6px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes nyx-pop-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
 /* collapse + accordion */
 .nyx-collapse{max-height:0;overflow:hidden;transition:max-height .3s var(--nyx-ease)}
@@ -564,7 +564,9 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-carousel-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(255,255,255,.45);cursor:pointer;padding:0;transition:all .2s var(--nyx-ease)}
 .nyx-carousel-dots button.active{background:#fff;box-shadow:var(--nyx-glow);width:20px;border-radius:var(--nyx-radius-full)}
 /* slide content shouldn't add its own frame on top of the carousel border */
-.nyx-carousel .nyx-slide > .nyx-spotlight{border:0;border-radius:0}
+.nyx-carousel .nyx-slide > .nyx-spotlight,
+.nyx-carousel .nyx-slide > .nyx-card,
+.nyx-carousel .nyx-slide > .nyx-product{border:0;border-radius:0;box-shadow:none}
 .nyx-carousel.flat{border:0}
 .nyx-carousel.flat .nyx-carousel-ctrl .nyx-btn{box-shadow:var(--nyx-shadow-lg)}
 /* optional caption band over a slide */
@@ -751,6 +753,30 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 @keyframes nyx-slide-up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 @keyframes nyx-zoom-in{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
 @keyframes nyx-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* directional entrances */
+.nyx-anim-left{animation:nyx-slide-left .6s var(--nyx-ease) both}
+.nyx-anim-right{animation:nyx-slide-right .6s var(--nyx-ease) both}
+@keyframes nyx-slide-left{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+@keyframes nyx-slide-right{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+
+/* glass flare sweep shine */
+.nyx-glass-flare{position:relative;overflow:hidden}
+.nyx-glass-flare::after{content:"";position:absolute;top:0;left:-150%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12) 30%,rgba(255,255,255,.24) 50%,rgba(255,255,255,.12) 70%,transparent);transform:skewX(-25deg);pointer-events:none}
+.nyx-glass-flare:hover::after{left:150%;transition:left .85s cubic-bezier(.16,1,.3,1)}
+
+/* spotlight card hover pointer shine */
+.nyx-spotlight-card{position:relative;overflow:hidden}
+.nyx-spotlight-card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:radial-gradient(600px circle at var(--nyx-mx,-999px) var(--nyx-my,-999px),color-mix(in srgb,var(--nyx-accent) 15%,transparent),transparent 40%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;z-index:2}
+.nyx-spotlight-card::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(400px circle at var(--nyx-mx,-999px) var(--nyx-my,-999px),color-mix(in srgb,var(--nyx-accent) 7%,transparent),transparent 40%);pointer-events:none;z-index:1}
+
+/* hover lift elevation */
+.nyx-hover-lift{transition:transform .3s var(--nyx-ease),box-shadow .3s var(--nyx-ease),border-color .3s var(--nyx-ease)}
+.nyx-hover-lift:hover{transform:translateY(-4px) scale(1.005);border-color:color-mix(in srgb,var(--nyx-accent) 30%,var(--nyx-border));box-shadow:var(--nyx-shadow-lg),0 4px 20px color-mix(in srgb,var(--nyx-accent) 10%,transparent)}
+
+/* pulse glow */
+.nyx-anim-pulse-glow{animation:nyx-pulse-glow 2s infinite alternate}
+@keyframes nyx-pulse-glow{0%{box-shadow:0 0 4px color-mix(in srgb,var(--nyx-accent) 15%,transparent)}100%{box-shadow:0 0 16px color-mix(in srgb,var(--nyx-accent) 45%,transparent)}}
 
 /* animated gradient text */
 .nyx-gradient-text.animated{background-size:200% auto;animation:nyx-text-shine 4s linear infinite}
@@ -1225,7 +1251,8 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-steps{display:flex;align-items:flex-start;width:100%;counter-reset:nyx-step}
 .nyx-steps .nyx-step{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);position:relative;counter-increment:nyx-step}
 .nyx-steps .nyx-step::before{content:counter(nyx-step);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);color:var(--nyx-text-muted);font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);position:relative;z-index:1}
-.nyx-steps .nyx-step:not(:last-child)::after{content:"";position:absolute;top:15px;inset-inline-start:calc(50% + 19px);width:calc(100% - 38px);height:2px;background:var(--nyx-border)}
+.nyx-steps .nyx-step::after{content:"";position:absolute;top:15px;inset-inline-start:-50%;width:100%;height:2px;background:var(--nyx-border);z-index:0}
+.nyx-steps .nyx-step:first-child::after{display:none}
 .nyx-steps .nyx-step.done::before{content:"✓";background:var(--nyx-accent-2);border-color:var(--nyx-accent-2);color:#04130f}
 .nyx-steps .nyx-step.done::after{background:var(--nyx-accent-2)}
 .nyx-steps .nyx-step.current::before{background:var(--nyx-accent);border-color:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
@@ -1299,14 +1326,41 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-progress-ring > *{position:relative;font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-xl)}
 
 /* — contribution heatmap (7 rows = days; columns = weeks) — */
+.nyx-heatmap-container{display:inline-flex;flex-direction:column;gap:var(--nyx-s2);padding:var(--nyx-s4);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);max-width:100%;box-shadow:var(--nyx-shadow-sm)}
+.nyx-heatmap-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--nyx-s1);gap:var(--nyx-s5)}
+.nyx-heatmap-title{font-size:var(--nyx-fs-sm);font-weight:600;color:var(--nyx-text)}
+.nyx-heatmap-grid-wrapper{display:flex;gap:var(--nyx-s2);align-items:flex-start}
+.nyx-heatmap-weekdays{display:grid;grid-template-rows:repeat(7,13px);gap:4px;font-size:10px;color:var(--nyx-text-muted);line-height:13px;padding-top:20px}
+.nyx-heatmap-body{display:flex;flex-direction:column;gap:4px;overflow-x:auto;padding:4px 4px 12px}
+
+/* Custom scrollbar to match theme */
+.nyx-heatmap-body::-webkit-scrollbar{height:5px}
+.nyx-heatmap-body::-webkit-scrollbar-track{background:transparent}
+.nyx-heatmap-body::-webkit-scrollbar-thumb{background:var(--nyx-border);border-radius:var(--nyx-radius-full)}
+.nyx-heatmap-body::-webkit-scrollbar-thumb:hover{background:var(--nyx-accent)}
+
+.nyx-heatmap-months{display:grid;grid-template-columns:repeat(52,1fr);gap:4px;font-size:10px;color:var(--nyx-text-muted);line-height:1;padding-bottom:6px}
+
 .nyx-heatmap{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:4px}
-.nyx-heatmap i{width:13px;height:13px;border-radius:3px;background:var(--nyx-surface-2);display:block}
+.nyx-heatmap i{width:13px;height:13px;border-radius:3px;background:var(--nyx-surface-2);display:block;transition:transform .12s var(--nyx-ease),box-shadow .12s var(--nyx-ease),opacity .2s var(--nyx-ease),filter .2s var(--nyx-ease);cursor:pointer;position:relative}
+.nyx-heatmap i:hover{transform:scale(1.3);box-shadow:0 0 6px var(--nyx-accent);z-index:10}
 .nyx-heatmap i[data-l="1"]{background:color-mix(in srgb,var(--nyx-accent) 28%,var(--nyx-surface-2))}
 .nyx-heatmap i[data-l="2"]{background:color-mix(in srgb,var(--nyx-accent) 52%,var(--nyx-surface-2))}
 .nyx-heatmap i[data-l="3"]{background:color-mix(in srgb,var(--nyx-accent) 78%,var(--nyx-surface-2))}
 .nyx-heatmap i[data-l="4"]{background:var(--nyx-accent);box-shadow:0 0 8px color-mix(in srgb,var(--nyx-accent) 50%,transparent)}
+.nyx-heatmap i[data-tooltip]::after{content:attr(data-tooltip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%) scale(.85);background:var(--nyx-surface-3,#0b0c14);color:var(--nyx-text,#e3e4e9);padding:4px 8px;border-radius:var(--nyx-radius-sm);border:1px solid var(--nyx-border);font-size:10px;font-family:var(--nyx-font-sans);font-weight:500;white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .12s var(--nyx-ease),transform .12s var(--nyx-ease),visibility .12s;box-shadow:var(--nyx-shadow-md);z-index:100}
+.nyx-heatmap i[data-tooltip]:hover::after{opacity:1;visibility:visible;transform:translateX(-50%) scale(1)}
+
 .nyx-heatmap-legend{display:inline-flex;align-items:center;gap:5px;font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
-.nyx-heatmap-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;background:var(--nyx-surface-2)}
+.nyx-heatmap-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;background:var(--nyx-surface-2);cursor:pointer;transition:transform .1s var(--nyx-ease)}
+.nyx-heatmap-legend i:hover{transform:scale(1.2)}
+
+/* Dim non-matching cells on legend hover */
+.nyx-heatmap-container:has(.nyx-heatmap-legend i[data-l="0"]:hover) .nyx-heatmap i:not([data-l="0"]),
+.nyx-heatmap-container:has(.nyx-heatmap-legend i[data-l="1"]:hover) .nyx-heatmap i:not([data-l="1"]),
+.nyx-heatmap-container:has(.nyx-heatmap-legend i[data-l="2"]:hover) .nyx-heatmap i:not([data-l="2"]),
+.nyx-heatmap-container:has(.nyx-heatmap-legend i[data-l="3"]:hover) .nyx-heatmap i:not([data-l="3"]),
+.nyx-heatmap-container:has(.nyx-heatmap-legend i[data-l="4"]:hover) .nyx-heatmap i:not([data-l="4"]){opacity:.15;filter:grayscale(80%)}
 
 /* — trend stat card (number + delta + sparkline slot) — */
 .nyx-stat-card{display:flex;flex-direction:column;gap:var(--nyx-s2);padding:var(--nyx-s4) var(--nyx-s5);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface)}

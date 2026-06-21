@@ -450,9 +450,9 @@
     els.forEach(function (e) { ro.observe(e); });
   }
 
-  /* ---------- interactive hover-lit squares (.nyx-bg-squares) ---------- */
+  /* ---------- interactive hover-lit squares (.nyx-bg-squares) & spotlight cards ---------- */
   function initSquares(root) {
-    $$('.nyx-bg-squares', root).filter(function (e) { return !e._nyxSq; }).forEach(function (e) {
+    $$('.nyx-bg-squares, .nyx-spotlight-card', root).filter(function (e) { return !e._nyxSq; }).forEach(function (e) {
       e._nyxSq = true;
       e.addEventListener('pointermove', function (ev) {
         var r = e.getBoundingClientRect();
@@ -460,8 +460,8 @@
         e.style.setProperty('--nyx-my', (ev.clientY - r.top) + 'px');
       }, { passive: true });
       e.addEventListener('pointerleave', function () {
-        e.style.setProperty('--nyx-mx', '-300px');
-        e.style.setProperty('--nyx-my', '-300px');
+        e.style.setProperty('--nyx-mx', '-999px');
+        e.style.setProperty('--nyx-my', '-999px');
       });
     });
   }
@@ -723,6 +723,12 @@
       var dragging = null;
       function mark() { $$('.nyx-kanban-card', board).forEach(function (c) { c.setAttribute('draggable', 'true'); }); }
       mark();
+      board.addEventListener('mouseover', function (e) {
+        var card = e.target.closest && e.target.closest('.nyx-kanban-card');
+        if (card && card.getAttribute('draggable') !== 'true') {
+          card.setAttribute('draggable', 'true');
+        }
+      });
       function cardAfter(col, y) {
         var cards = $$('.nyx-kanban-card:not(.nyx-dragging)', col), best = null, bestOff = -Infinity;
         cards.forEach(function (c) {
