@@ -59,7 +59,10 @@ window.NYX_I18N = {
     'Labeled Activity Heatmap': 'خريطة حرارية تفاعلية ومسماة',
     'Entrances (stagger + direction)': 'دخول متدرّج واتجاهي',
     'Interactive spotlight & sheens': 'مؤثرات حركة تفاعلية',
-    'Looping effects': 'تأثيرات مستمرة'
+    'Looping effects': 'تأثيرات مستمرة',
+    'Via JavaScript': 'عبر جافاسكربت',
+    'JavaScript Events': 'أحداث جافاسكربت',
+    'JavaScript Validation Helper': 'مساعد التحقق بجافاسكربت'
   },
   pages: {
     /* Getting Started */
