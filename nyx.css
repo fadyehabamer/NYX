@@ -249,6 +249,11 @@ body.nyx ::-webkit-scrollbar-thumb{background:var(--nyx-surface-2);border-radius
 .nyx-btn-group > .nyx-btn:first-child{border-start-start-radius:var(--nyx-radius);border-end-start-radius:var(--nyx-radius)}
 .nyx-btn-group > .nyx-btn:last-child{border-start-end-radius:var(--nyx-radius);border-end-end-radius:var(--nyx-radius)}
 .nyx-btn-group > .nyx-btn:not(:first-child){margin-inline-start:-1px}
+body.nyx .nyx-btn-group > .nyx-btn:focus-visible,
+body.nyx .nyx-btn-split .nyx-btn:focus-visible {
+  z-index: 2;
+  outline-offset: 0;
+}
 /* close button */
 .nyx-close{width:32px;height:32px;border:none;background:var(--nyx-glass);color:var(--nyx-text-muted);border-radius:var(--nyx-radius-sm);cursor:pointer;display:grid;place-items:center;font-size:16px;line-height:1;transition:all .2s var(--nyx-ease)}
 .nyx-close:hover{background:var(--nyx-elev-hover);color:var(--nyx-text)}
@@ -295,6 +300,14 @@ body.nyx ::-webkit-scrollbar-thumb{background:var(--nyx-surface-2);border-radius
 .nyx-search input,.nyx-phone input,.nyx-phone select,
 .nyx-input-group .nyx-input:focus,.nyx-input-group input:focus,.nyx-input-group .nyx-select:focus,
 .nyx-search input:focus,.nyx-phone input:focus,.nyx-phone select:focus{border:0;outline:0;box-shadow:none}
+body.nyx .nyx-input-group input:focus-visible,
+body.nyx .nyx-input-group select:focus-visible,
+body.nyx .nyx-search input:focus-visible,
+body.nyx .nyx-phone input:focus-visible,
+body.nyx .nyx-phone select:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
 
 .nyx-toggle{position:relative;display:inline-flex;align-items:center;cursor:pointer}
 .nyx-toggle input{position:absolute;opacity:0;width:0;height:0}
@@ -907,7 +920,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 /* phone input — dial-code + number */
 .nyx-phone{display:flex;align-items:stretch;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);overflow:hidden;transition:all .2s var(--nyx-ease)}
 .nyx-phone:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 22%,transparent)}
-.nyx-phone select{border:0;background:var(--nyx-surface-2);color:var(--nyx-text);font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);padding:0 10px;outline:none;cursor:pointer;border-inline-end:1px solid var(--nyx-border)}
+.nyx-phone select{border:0;background:var(--nyx-surface-2);color:var(--nyx-text);font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);padding:0 24px 0 10px;outline:none;cursor:pointer;border-inline-end:1px solid var(--nyx-border);appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M2.5 4.5l3.5 3.5 3.5-3.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
 .nyx-phone input{flex:1;border:0;background:transparent;outline:none;color:var(--nyx-text);font-size:var(--nyx-fs-sm);padding:10px 14px}
 
 /* date picker — input + calendar popover */
@@ -1224,7 +1237,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-testimonial .nyx-quote::before{content:"\201C";font-family:var(--nyx-font-display);font-size:2.4em;line-height:0;color:var(--nyx-accent);margin-inline-end:.08em;vertical-align:-.35em}
 .nyx-testimonial .nyx-cite{display:flex;align-items:center;gap:12px;margin-top:var(--nyx-s4)}
 .nyx-testimonial .nyx-cite b{display:block;font-weight:600}
-.nyx-testimonial .nyx-cite span{display:block;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+.nyx-testimonial .nyx-cite div span{display:block;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
 
 /* — pricing table — */
 .nyx-pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--nyx-s4);align-items:start}
@@ -1384,6 +1397,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 [dir="rtl"] .nyx-tracking-tight,[dir="rtl"] .nyx-tracking-wide,[dir="rtl"] .nyx-tracking-wider,[dir="rtl"] .nyx-smallcaps{letter-spacing:normal;font-variant:normal}
 [dir="rtl"] .nyx-dropcap::first-letter{font-family:var(--nyx-font-ar-display)}
 [dir="rtl"] .nyx-select{background-position:left 14px center}
+[dir="rtl"] .nyx-phone select{padding:0 10px 0 24px;background-position:left 8px center}
 [dir="rtl"] .nyx-toast-wrap{animation:none}
 [dir="rtl"] .nyx-toast{animation-name:nyx-toast-in-rtl}
 [dir="rtl"] .nyx-toast.nyx-out{animation-name:nyx-toast-out-rtl}

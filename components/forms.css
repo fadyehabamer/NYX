@@ -29,6 +29,14 @@
 .nyx-search input,.nyx-phone input,.nyx-phone select,
 .nyx-input-group .nyx-input:focus,.nyx-input-group input:focus,.nyx-input-group .nyx-select:focus,
 .nyx-search input:focus,.nyx-phone input:focus,.nyx-phone select:focus{border:0;outline:0;box-shadow:none}
+body.nyx .nyx-input-group input:focus-visible,
+body.nyx .nyx-input-group select:focus-visible,
+body.nyx .nyx-search input:focus-visible,
+body.nyx .nyx-phone input:focus-visible,
+body.nyx .nyx-phone select:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
 
 .nyx-toggle{position:relative;display:inline-flex;align-items:center;cursor:pointer}
 .nyx-toggle input{position:absolute;opacity:0;width:0;height:0}

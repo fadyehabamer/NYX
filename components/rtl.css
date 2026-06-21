@@ -11,6 +11,7 @@
 [dir="rtl"] .nyx-tracking-tight,[dir="rtl"] .nyx-tracking-wide,[dir="rtl"] .nyx-tracking-wider,[dir="rtl"] .nyx-smallcaps{letter-spacing:normal;font-variant:normal}
 [dir="rtl"] .nyx-dropcap::first-letter{font-family:var(--nyx-font-ar-display)}
 [dir="rtl"] .nyx-select{background-position:left 14px center}
+[dir="rtl"] .nyx-phone select{padding:0 10px 0 24px;background-position:left 8px center}
 [dir="rtl"] .nyx-toast-wrap{animation:none}
 [dir="rtl"] .nyx-toast{animation-name:nyx-toast-in-rtl}
 [dir="rtl"] .nyx-toast.nyx-out{animation-name:nyx-toast-out-rtl}

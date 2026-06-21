@@ -54,7 +54,7 @@
 .nyx-testimonial .nyx-quote::before{content:"\201C";font-family:var(--nyx-font-display);font-size:2.4em;line-height:0;color:var(--nyx-accent);margin-inline-end:.08em;vertical-align:-.35em}
 .nyx-testimonial .nyx-cite{display:flex;align-items:center;gap:12px;margin-top:var(--nyx-s4)}
 .nyx-testimonial .nyx-cite b{display:block;font-weight:600}
-.nyx-testimonial .nyx-cite span{display:block;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+.nyx-testimonial .nyx-cite div span{display:block;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
 
 /* — pricing table — */
 .nyx-pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--nyx-s4);align-items:start}

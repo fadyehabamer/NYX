@@ -315,6 +315,10 @@
   }
 
   doc.addEventListener('click', function (e) {
+    if (e.target && e.target.ownerDocument && !e.target.ownerDocument.contains(e.target)) {
+      return;
+    }
+
     var copyBtn = e.target.closest('[data-nyx-copy]');
     if (copyBtn) { e.preventDefault(); copyCode(copyBtn); return; }
 

@@ -54,6 +54,11 @@
 .nyx-btn-group > .nyx-btn:first-child{border-start-start-radius:var(--nyx-radius);border-end-start-radius:var(--nyx-radius)}
 .nyx-btn-group > .nyx-btn:last-child{border-start-end-radius:var(--nyx-radius);border-end-end-radius:var(--nyx-radius)}
 .nyx-btn-group > .nyx-btn:not(:first-child){margin-inline-start:-1px}
+body.nyx .nyx-btn-group > .nyx-btn:focus-visible,
+body.nyx .nyx-btn-split .nyx-btn:focus-visible {
+  z-index: 2;
+  outline-offset: 0;
+}
 /* close button */
 .nyx-close{width:32px;height:32px;border:none;background:var(--nyx-glass);color:var(--nyx-text-muted);border-radius:var(--nyx-radius-sm);cursor:pointer;display:grid;place-items:center;font-size:16px;line-height:1;transition:all .2s var(--nyx-ease)}
 .nyx-close:hover{background:var(--nyx-elev-hover);color:var(--nyx-text)}
