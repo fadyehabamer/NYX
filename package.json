@@ -14,9 +14,16 @@
     "luminous-depth",
     "zero-dependencies"
   ],
-  "homepage": "https://example.com/nyx",
+  "homepage": "https://github.com/fadyehabamer/NYX#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fadyehabamer/NYX.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fadyehabamer/NYX/issues"
+  },
   "license": "MIT",
-  "author": "Nyx",
+  "author": "fadyehabamer",
   "main": "nyx.js",
   "style": "nyx.css",
   "unpkg": "nyx.min.css",
