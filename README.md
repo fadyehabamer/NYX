@@ -1,63 +1,157 @@
-# Nyx
+<div align="center">
 
-**The Design System for Modern SaaS — and the first CSS library built for Arabic developers.** A dark-mode-native CSS/JS component framework with one signature trait — **Luminous Depth**: every interactive element feels lit from within. Ships **dark + light themes**, **prebuilt accent themes** (violet · emerald · rose · amber, retuned via `color-mix()`), full **RTL** support with Arabic fonts (IBM Plex Sans Arabic + Aref Ruqaa), a complete **utilities & helpers** layer, a **responsive 12-column grid**, **form validation** states, **big-type** hero + **animation** utilities, and a per-component documentation site in **English & العربية**. Zero dependencies (except Google Fonts), a tiny vanilla-JS runtime.
+# ◼ NYX
 
-> Think Bootstrap, but opinionated for the SaaS era, dark by default, and bilingual.
+### The dark‑native design system with **Luminous Depth**
 
-**Distribution:** grab the all-in-one bundle (`nyx.css`), the minified build (`nyx.min.css` ~11kb gzip · `nyx.min.js` ~4kb gzip), load it from a CDN (jsDelivr/unpkg), `npm install nyx-css`, or download just the modules you need from `components/` (each requires `components/tokens.css`). Run `node build.js` to regenerate the modules **and** the minified files from the bundle.
+*Every interactive element feels lit from within.*
+A zero‑dependency CSS **+** JS component framework — fully themeable, light **&** dark, with first‑class **RTL** and Arabic typography.
+
+[![npm](https://img.shields.io/npm/v/nyx-css?style=flat-square&color=6c63ff&label=npm)](https://www.npmjs.com/package/nyx-css)
+[![license](https://img.shields.io/npm/l/nyx-css?style=flat-square&color=00d4aa)](LICENSE)
+![zero deps](https://img.shields.io/badge/dependencies-0-6c63ff?style=flat-square)
+![css gzip](https://img.shields.io/badge/CSS-23kb%20gzip-00d4aa?style=flat-square)
+![js gzip](https://img.shields.io/badge/JS-17kb%20gzip-00d4aa?style=flat-square)
+![rtl](https://img.shields.io/badge/RTL-first--class-ffb020?style=flat-square)
+
+**`npm i nyx-css`** &nbsp;·&nbsp; [Documentation](docs.html) &nbsp;·&nbsp; [Components](#-components) &nbsp;·&nbsp; [Theming](#-theming) &nbsp;·&nbsp; [العربية](docs.ar.html)
+
+</div>
 
 ---
 
-## Install
+> **Think Bootstrap — but dark by default, opinionated for the SaaS era, and bilingual.**
+> One signature trait sets it apart: **Luminous Depth**. Glow, glass, and gradient are baked into the tokens, so every surface reads as if backlit.
 
-Nyx ships as two files — a stylesheet and a runtime. Drop them into any page; no build step.
+## ✦ Why Nyx
+
+- 🌑 **Dark‑native, light‑ready** — both themes ship built‑in; flip with one attribute.
+- 🎨 **Themeable to the core** — every value is a `--nyx-*` custom property. Retint the whole system with `color-mix()`; no recompile.
+- 🌍 **RTL & Arabic, first‑class** — logical properties throughout, an RTL layer, and bundled Arabic faces (IBM Plex Sans Arabic + Aref Ruqaa).
+- 🧩 **80+ components** — buttons to command palettes, timelines, carousels, data grids, and signature pieces you won't find elsewhere.
+- ⚡ **Tiny vanilla runtime** — UMD `window.Nyx`, declarative `data-nyx-*`, auto‑inits on load. Most pages need no JS at all.
+- 📦 **À‑la‑carte or all‑in‑one** — ship the full bundle or just the modules you import. Zero dependencies (except Google Fonts).
+
+## ⚡ Quick start
+
+```bash
+npm i nyx-css
+```
+
+…or drop two files into any page — **no build step:**
 
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <!-- fonts (the only external dependency) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
-  <!-- 1. the framework -->
+  <!-- 1 · the framework -->
   <link rel="stylesheet" href="nyx.css">
 </head>
 <body class="nyx nyx-reset">
 
   <button class="nyx-btn nyx-btn-primary">Hello, Nyx</button>
 
-  <!-- 2. the runtime (powers tabs, modals, toasts, scrollspy…) -->
+  <!-- 2 · the runtime (tabs, modals, toasts, scrollspy…) -->
   <script src="nyx.js"></script>
 </body>
 </html>
 ```
 
-Two body classes:
+**From a CDN** (no install — `@1` tracks the latest 1.x):
 
-- **`nyx`** — applies the canvas background, base typography, focus rings, scrollbars. Required.
-- **`nyx-reset`** — opt-in `box-sizing: border-box` + margin/padding reset for descendants. Optional but recommended.
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nyx-css@1/nyx.min.css">
+<script src="https://cdn.jsdelivr.net/npm/nyx-css@1/nyx.min.js"></script>
+```
 
-Open **`index.html`** for the marketing landing page, and **`docs.html`** for the full documentation site — a per-component page with usage, live examples, a class reference, and a search-filterable sidebar.
+Two body classes: **`nyx`** (canvas, base type, focus rings, scrollbars — required) and **`nyx-reset`** (opt‑in `box-sizing: border-box` + reset — recommended).
 
----
+## 🎨 Theming
 
-## Files
+Override any token, anywhere downstream — that's the whole API.
 
-| File | Purpose |
+```css
+:root {
+  --nyx-accent:   #ff5d8f;   /* swap the violet for pink   */
+  --nyx-accent-2: #29e0c4;   /* secondary / success accent */
+  --nyx-radius:   12px;      /* round everything a bit more */
+}
+```
+
+Tokens cover color, the type scale (`--nyx-fs-xs` … `--nyx-fs-3xl`), spacing (`--nyx-s1` … `--nyx-s9`, 4px base), radii, shadows, and the signature `--nyx-glow`. Prebuilt accent themes ship in the box: **violet · emerald · rose · amber**.
+
+### Light & dark · RTL
+
+```html
+<html data-theme="light">   <!-- default is "dark" -->
+<html dir="rtl">            <!-- every component mirrors -->
+```
+```js
+Nyx.toggleTheme();   // flips + persists to localStorage
+Nyx.toggleDir();     // RTL ⇄ LTR
+```
+
+## 🧠 JavaScript
+
+`nyx.js` is UMD (attaches global **`Nyx`**, supports `require`) and auto‑initializes on `DOMContentLoaded`.
+
+**Declarative** — most behaviors need no script:
+
+```html
+<button data-nyx-toggle="modal"   data-nyx-target="#myModal">Open modal</button>
+<button data-nyx-toggle="drawer"  data-nyx-target="#myDrawer">Open drawer</button>
+<button data-nyx-toggle="command">Search (⌘K)</button>
+<nav class="nyx-sidebar" data-nyx-spy>…</nav>           <!-- scrollspy -->
+<table class="nyx-table nyx-table-sortable">…</table>   <!-- click to sort -->
+```
+
+**Imperative:**
+
+| Method | Description |
 | --- | --- |
-| `nyx.css` | The framework: design tokens + every component. The only file consumers strictly need for styling. |
-| `nyx.js` | The runtime: declarative `data-nyx-*` behaviors + an imperative `Nyx.*` API. |
-| `index.html` / `index.ar.html` | Landing page (English / Arabic RTL with big-type hero). |
-| `docs.html` / `docs.ar.html` | Documentation shell — English / Arabic RTL. |
-| `docs.ar.js` | Arabic locale pack (`window.NYX_I18N`); load before `docs.js`. |
-| `components/*.css` | À-la-carte modules generated by `build.js` (each needs `tokens.css`). |
-| `build.js` | Splits `nyx.css` into `components/` + `nyx.bundle.css`. |
-| `docs.js` | Docs engine: a hash router + a component registry. Each entry becomes its own page at `docs.html#/<id>` (e.g. `docs.html#/buttons`). |
-| `docs.css` | Docs-site chrome only (not part of the framework). |
+| `Nyx.toast(message, type, ms)` | Toast. `type`: `info` \| `success` \| `warning` \| `danger`. |
+| `Nyx.openModal(target)` / `openDrawer(target)` | Open an overlay (`'#id'` or element). |
+| `Nyx.close(target)` / `closeAll()` | Close one / all overlays. |
+| `Nyx.openCommandPalette()` | Open the ⌘K palette. |
+| `Nyx.init(root)` | Re‑wire `data-nyx-*` after injecting markup. Idempotent. |
 
-### Documentation site
+```js
+Nyx.toast('Saved ✓', 'success');
+Nyx.openModal('#invite');
+```
 
-`docs.html` is a small single-page app: a hash router renders one component per route from the registry in `docs.js`. To **add or edit a doc page**, add an object to the `PAGES` array in `docs.js` — no new HTML file needed:
+**Keyboard:** `⌘K` / `Ctrl+K` opens the command palette; `Esc` closes any overlay.
+
+## 🧩 Components
+
+> **Layout** `nyx-grid` `nyx-col-*` `nyx-flex` `nyx-stack` `nyx-container` `nyx-divider`
+> **Typography** `nyx-display` `nyx-h1`–`nyx-h6` `nyx-lead` `nyx-gradient-text` `nyx-code`
+> **Buttons** `nyx-btn` + `-primary` `-secondary` `-ghost` `-danger` `-glass` `-glow` `-icon` `-outline-*` · sizes `-sm` `-lg` · `-loading` · `nyx-btn-group`
+> **Cards** `nyx-card` + `-glass` `-gradient` `-interactive` `-stat` `-feature`
+> **Forms** `nyx-input` `nyx-textarea` `nyx-select` `nyx-input-group` `nyx-search` `nyx-toggle` `nyx-checkbox` `nyx-radio` `nyx-range` `nyx-float`
+> **Navigation** `nyx-navbar` `nyx-sidebar` `nyx-breadcrumb` `nyx-tabs` `nyx-nav-pills` `nyx-pagination` `nyx-dropdown` `nyx-command-palette`
+> **Feedback** `nyx-badge` `nyx-alert` `nyx-toast` `nyx-progress` `nyx-skeleton` `nyx-spinner` `nyx-status-bar`
+> **Data** `nyx-table` `nyx-table-sortable` `nyx-data-grid` `nyx-kpi-row` `nyx-list-group`
+> **Overlays** `nyx-modal` `nyx-drawer` `nyx-tooltip` `nyx-popover` `nyx-accordion` `nyx-collapse` `nyx-carousel` `nyx-ratio`
+> **Signature** `nyx-spotlight` `nyx-orbit` `nyx-chip` `nyx-timeline` `nyx-meter` `nyx-gradient-border` `nyx-avatar` `nyx-marquee` `nyx-segment` `nyx-rating` `nyx-empty` `nyx-banner` `nyx-dropzone`
+
+Every component has its own page — with live examples, a class reference, and a search‑filterable sidebar — in **[`docs.html`](docs.html)** (and **[`docs.ar.html`](docs.ar.html)** in Arabic).
+
+## 📁 Project layout
+
+| Path | Purpose |
+| --- | --- |
+| `nyx.css` / `nyx.min.css` | The framework — design tokens + every component (full + minified). |
+| `nyx.js` / `nyx.min.js` | The runtime — declarative `data-nyx-*` + the imperative `Nyx.*` API. |
+| `components/*.css` | À‑la‑carte modules generated by `build.js` (each needs `tokens.css`). |
+| `build.js` | Splits `nyx.css` into `components/` + `nyx.bundle.css`, and minifies. |
+| `index.html` · `index.ar.html` | Marketing landing page (English / Arabic RTL). |
+| `docs.html` · `docs.ar.html` · `docs.js` | Documentation SPA — a hash router renders one component per route from the registry. |
+
+**Adding a doc page** needs no new HTML — just push an object to the `PAGES` array in `docs.js`:
 
 ```js
 {
@@ -68,130 +162,14 @@ Open **`index.html`** for the marketing landing page, and **`docs.html`** for th
 }
 ```
 
-Each section's `demo` string is rendered **both** as the live example and (escaped + highlighted) as its code snippet, so they never drift.
+Each section's `demo` renders **both** as the live example and as its (escaped, highlighted) code snippet — so they never drift.
 
----
+## 🌐 Browser support
 
-## Theming
+Modern evergreen browsers (Chrome · Edge · Firefox · Safari). Uses CSS custom properties, grid, `backdrop-filter`, and `IntersectionObserver`. Respects `prefers-reduced-motion`.
 
-Every value is a CSS custom property on `:root`. Override any `--nyx-*` token — anywhere downstream — to retheme. No recompile.
+## 📜 License
 
-```css
-:root {
-  --nyx-accent:   #ff5d8f;   /* swap the violet for pink   */
-  --nyx-accent-2: #29e0c4;   /* secondary / success accent */
-  --nyx-radius:   12px;      /* round everything a bit more */
-}
-```
+[MIT](LICENSE) © Nyx. The bundled **Thmanyah** Arabic typeface is © [ثمانية (Thmanyah)](https://font.thmanyah.com/) under its own license — see `Thmanyah-Font-Family/LICENSE.pdf`.
 
-Tokens cover color, the type scale (`--nyx-fs-xs` … `--nyx-fs-3xl`), spacing (`--nyx-s1` … `--nyx-s9`, a 4px base), radii, shadows, and the signature `--nyx-glow`.
-
-### Light & dark
-
-Both themes ship built-in. Dark is the default; switch with one attribute on `<html>`, or at runtime:
-
-```html
-<html data-theme="light">   <!-- or "dark" -->
-```
-```js
-Nyx.toggleTheme();   // flips + persists to localStorage
-```
-
-### RTL
-
-Nyx is fully bidirectional via CSS logical properties plus an RTL layer. Set the direction on `<html>` and every component mirrors — drawers, toasts, timelines, tooltips, the select caret, badges:
-
-```html
-<html dir="rtl">
-```
-```js
-Nyx.toggleDir();   // flips + persists to localStorage
-```
-
----
-
-## JavaScript
-
-`nyx.js` is UMD — it attaches a global **`Nyx`** (and supports CommonJS `require`). It auto-initializes on `DOMContentLoaded`. Everything also works declaratively, so most pages need no JS at all.
-
-### Declarative (`data-nyx-*`)
-
-```html
-<!-- Modal / Drawer -->
-<button data-nyx-toggle="modal"  data-nyx-target="#myModal">Open modal</button>
-<button data-nyx-toggle="drawer" data-nyx-target="#myDrawer">Open drawer</button>
-<button data-nyx-dismiss>Close</button>           <!-- closes its overlay -->
-
-<!-- Tabs -->
-<div data-nyx-tabs>
-  <button class="nyx-tab active" data-nyx-tab="a">One</button>
-  <button class="nyx-tab"        data-nyx-tab="b">Two</button>
-</div>
-<div class="nyx-tab-panel active" data-nyx-panel="a">…</div>
-<div class="nyx-tab-panel"        data-nyx-panel="b">…</div>
-
-<!-- Popover (button lives inside .nyx-popover) -->
-<span class="nyx-popover">
-  <button data-nyx-toggle="popover">Toggle</button>
-  <span class="nyx-pop">…</span>
-</span>
-
-<!-- Command palette (also opens with ⌘K / Ctrl+K) -->
-<button data-nyx-toggle="command">Search</button>
-
-<!-- Scrollspy: active link follows scroll -->
-<nav class="nyx-sidebar" data-nyx-spy>
-  <a href="#section-1">Section 1</a>
-  <a href="#section-2">Section 2</a>
-</nav>
-
-<!-- Sortable table: click any header -->
-<table class="nyx-table nyx-table-sortable">…</table>
-```
-
-### Imperative API
-
-| Method | Description |
-| --- | --- |
-| `Nyx.toast(message, type, ms)` | Show a toast. `type`: `info` \| `success` \| `warning` \| `danger`. Default `ms` = 3200. |
-| `Nyx.openModal(target)` | Open a modal (`'#id'` or element). |
-| `Nyx.openDrawer(target)` | Open a drawer. |
-| `Nyx.close(target)` | Close a specific overlay. |
-| `Nyx.closeAll()` | Close every open overlay/palette. |
-| `Nyx.togglePopover(target)` | Toggle a popover. |
-| `Nyx.openCommandPalette()` | Open the command palette. |
-| `Nyx.init(root)` | Re-wire `data-nyx-*` behaviors inside `root` (call after injecting markup). Idempotent. |
-
-```js
-Nyx.toast('Saved ✓', 'success');
-Nyx.openModal('#invite');
-```
-
-**Keyboard:** `⌘K` / `Ctrl+K` opens the command palette; `Esc` closes any open overlay.
-
----
-
-## Component reference
-
-Layout (`nyx-grid`, `nyx-col-*`, `nyx-flex`, `nyx-stack`, `nyx-container`, `nyx-divider`) ·
-Typography (`nyx-display`, `nyx-h1`–`nyx-h6`, `nyx-lead`, `nyx-gradient-text`, `nyx-code`) ·
-Buttons (`nyx-btn` + `-primary` `-secondary` `-ghost` `-danger` `-glass` `-glow` `-icon` `-outline-*`, sizes `-sm` `-lg`, `-loading`, `nyx-btn-group`, `nyx-close`) ·
-Cards (`nyx-card` + `-glass` `-gradient` `-interactive` `-stat` `-feature`) ·
-Forms (`nyx-input`, `nyx-textarea`, `nyx-select`, `nyx-input-group`, `nyx-search`, `nyx-toggle`, `nyx-checkbox`, `nyx-radio`, `nyx-range`, `nyx-float`) ·
-Navigation (`nyx-navbar`, `nyx-sidebar`, `nyx-breadcrumb`, `nyx-tabs`, `nyx-nav-pills`, `nyx-pagination`, `nyx-dropdown`, `nyx-command-palette`) ·
-Feedback (`nyx-badge`, `nyx-badge-dot`, `nyx-alert`, `nyx-toast`, `nyx-progress`, `nyx-skeleton`, `nyx-spinner`, `nyx-status-bar`) ·
-Data (`nyx-table`, `nyx-table-sortable`, `nyx-data-grid`, `nyx-kpi-row`, `nyx-list-group`) ·
-Overlays (`nyx-modal`, `nyx-drawer` / `nyx-drawer-left`, `nyx-tooltip`, `nyx-popover`, `nyx-accordion`, `nyx-collapse`, `nyx-carousel`, `nyx-ratio`) ·
-Signature (`nyx-spotlight`, `nyx-orbit`, `nyx-command`, `nyx-chip`, `nyx-timeline`, `nyx-meter`, `nyx-gradient-border`, `nyx-avatar` / `nyx-avatar-group`, `nyx-notification-dot`, `nyx-marquee`, `nyx-segment`, `nyx-rating`, `nyx-empty`, `nyx-banner`, `nyx-dropzone`).
-
-See `docs.html` for every component on its own page with live examples.
-
----
-
-## Browser support
-
-Modern evergreen browsers (Chrome, Edge, Firefox, Safari). Uses CSS custom properties, grid, `backdrop-filter`, and `IntersectionObserver`. Respects `prefers-reduced-motion`.
-
-## License
-
-MIT.
+<div align="center"><sub>Built with Luminous Depth · dark‑first · bilingual</sub></div>
