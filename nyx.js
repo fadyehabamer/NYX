@@ -1,5 +1,5 @@
 /*!
- * Nyx — runtime · v1.0.0 · MIT License
+ * Nyx — runtime · v1.0.1 · MIT License
  * Zero dependencies. UMD: window.Nyx (or CommonJS export).
  *
  * Declarative API (no JS to write):
@@ -1502,7 +1502,7 @@
   else init();
 
   return {
-    version: '1.0.0',
+    version: '1.0.1',
     init: init, toast: toast,
     openModal: openModal, openDrawer: openDrawer, close: close, closeAll: closeAll,
     togglePopover: togglePopover, openCommandPalette: openCommandPalette, closeCommandPalette: closeCommandPalette,
