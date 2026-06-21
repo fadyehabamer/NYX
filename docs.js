@@ -365,12 +365,13 @@
     },
     {
       id: 'date-picker', group: 'Forms', title: 'Date picker', added: 'v1.5', needsJs: true,
-      summary: 'An input with a calendar popover — navigate months with ‹ ›, click a day to fill the field (YYYY-MM-DD). The runtime builds and wires the calendar.',
+      summary: 'An input with a calendar popover — page months with ‹ › or jump straight to any month/year with the header dropdowns, then click a day to fill the field. Set the input placeholder freely, control the written value with data-format, and bound the year list with data-min-year / data-max-year.',
       sections: [
         { title: 'Pick a date', demo: '<div class="nyx-datepicker" data-nyx-datepicker><input class="nyx-input" placeholder="YYYY-MM-DD" aria-label="date" readonly style="min-width:210px"></div>' },
+        { title: 'Placeholder, format & year range', text: 'The placeholder is just the native input attribute — use any prompt. data-format sets the written value (tokens YYYY · MM · DD); data-min-year / data-max-year bound the header year dropdown (great for birthdays or bookings).', demo: '<div class="nyx-datepicker" data-nyx-datepicker data-format="DD/MM/YYYY" data-min-year="2000" data-max-year="2035"><input class="nyx-input" placeholder="Select a date…" aria-label="date" readonly style="min-width:210px"></div>' },
         { title: 'JavaScript Events', text: 'Listen for selection updates on the underlying input element.', lang: 'js', code: 'const input = document.querySelector(\'.nyx-datepicker input\');\ninput.addEventListener(\'change\', (e) => {\n  console.log(\'Selected date:\', e.target.value);\n});' }
       ],
-      classes: [['data-nyx-datepicker', 'Wrapper; runtime renders the calendar + handles selection.'], ['nyx-datepicker-pop', 'Popover holding the calendar (auto-created if absent).']]
+      classes: [['data-nyx-datepicker', 'Wrapper; runtime renders the calendar + handles selection.'], ['data-format', 'Output pattern for the filled value — tokens YYYY · MM · DD (default YYYY-MM-DD).'], ['data-min-year / data-max-year', 'Bound the header year dropdown (default: today -100 … +10).'], ['placeholder (on input)', 'Native input placeholder — set any prompt text.'], ['nyx-datepicker-pop', 'Popover holding the calendar (auto-created if absent).']]
     },
     {
       id: 'phone', group: 'Forms', title: 'Phone input', added: 'v1.5',
@@ -847,9 +848,9 @@
     },
     {
       id: 'calendar', group: 'Components', title: 'Calendar', added: 'v1.2', needsJs: true,
-      summary: 'A month grid that renders the current month and pages through months with ‹ ›; click a day to select it. Add data-nyx-calendar and the runtime wires it (today + selection states). Leave the attribute off for a static, read-only month.',
+      summary: 'A month grid that renders the current month and pages through months with ‹ › or the header month/year dropdowns; click a day to select it. Add data-nyx-calendar and the runtime wires it (today + selection states), optionally bounding the year list with data-min-year / data-max-year.',
       sections: [
-        { title: 'Interactive month', demo: '<div class="nyx-calendar" data-nyx-calendar><div class="nyx-calendar-head"><button class="nyx-btn nyx-btn-icon nyx-btn-sm nyx-btn-ghost" aria-label="previous month">‹</button><span>June 2026</span><button class="nyx-btn nyx-btn-icon nyx-btn-sm nyx-btn-ghost" aria-label="next month">›</button></div><div class="nyx-calendar-grid"><span class="dow">S</span><span class="dow">M</span><span class="dow">T</span><span class="dow">W</span><span class="dow">T</span><span class="dow">F</span><span class="dow">S</span><span class="day muted">31</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day today">19</span><span class="day">20</span><span class="day">21</span><span class="day selected">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span><span class="day muted">1</span><span class="day muted">2</span><span class="day muted">3</span><span class="day muted">4</span></div></div>' },
+        { title: 'Interactive month', demo: '<div class="nyx-calendar" data-nyx-calendar></div>' },
         { title: 'JavaScript Events', text: 'Listen for selection updates on the calendar container.', lang: 'js', code: 'const cal = document.querySelector(\'[data-nyx-calendar]\');\ncal.addEventListener(\'nyx:date\', (e) => {\n  console.log(\'Selected date:\', e.detail); // e.detail is standard YYYY-MM-DD string\n});' }
       ],
       classes: [['nyx-calendar (+ data-nyx-calendar)', 'Month container; the attribute makes ‹ › paging and day-select live.'], ['nyx-calendar-grid .day', 'Day cell (+ .today / .selected / .muted).']]
