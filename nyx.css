@@ -394,6 +394,25 @@ body.nyx ::-webkit-scrollbar-thumb{background:var(--nyx-surface-2);border-radius
 .nyx-cp-item{display:flex;align-items:center;gap:var(--nyx-s3);padding:10px 12px;border-radius:var(--nyx-radius);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);cursor:pointer}
 .nyx-cp-item:hover,.nyx-cp-item.active{background:color-mix(in srgb,var(--nyx-accent) 12%,transparent);color:var(--nyx-text)}
 
+/* responsive nav & mega-menu */
+.nyx-nav{display:flex;align-items:center;justify-content:space-between;gap:var(--nyx-s4);padding:12px 16px;background:var(--nyx-surface);border-bottom:1px solid var(--nyx-border)}
+.nyx-nav .brand{font-weight:700;font-size:var(--nyx-fs-lg)}
+.nyx-nav .nav-toggle{display:none;background:transparent;border:0;font-size:20px;color:var(--nyx-text);cursor:pointer}
+.nyx-nav .nav-links{display:flex;gap:var(--nyx-s3);align-items:center}
+.nyx-nav .nav-links a{color:var(--nyx-text-muted);text-decoration:none;padding:8px 12px;border-radius:var(--nyx-radius-sm);transition:all .2s var(--nyx-ease)}
+.nyx-nav .nav-links a:focus,.nyx-nav .nav-links a:hover{background:var(--nyx-glass);color:var(--nyx-text)}
+.nyx-mega{position:relative}
+.nyx-mega .mega-panel{display:none;position:absolute;inset-inline-start:0;top:100%;background:var(--nyx-surface);box-shadow:var(--nyx-shadow-lg);padding:var(--nyx-s4);border-radius:var(--nyx-radius-lg);min-width:320px;z-index:80;border:1px solid var(--nyx-border)}
+.nyx-mega:focus-within .mega-panel,.nyx-mega:hover .mega-panel{display:block;animation:nyx-fade .15s var(--nyx-ease)}
+@media (max-width: 820px){
+  .nyx-nav{padding:8px 12px}
+  .nyx-nav .nav-toggle{display:inline-flex;align-items:center;justify-content:center}
+  .nyx-nav .nav-links{position:absolute;top:100%;inset-inline-start:0;inset-inline-end:0;background:var(--nyx-surface);flex-direction:column;gap:0;padding:8px 16px;border-bottom:1px solid var(--nyx-border);box-shadow:var(--nyx-shadow-lg);display:none;z-index:70}
+  .nyx-nav .nav-links a{width:100%;display:block}
+  .nyx-nav[data-open="true"] .nav-links{display:flex;animation:nyx-fade .2s var(--nyx-ease)}
+  .nyx-mega .mega-panel{position:static;box-shadow:none;border-radius:0;padding-inline-start:0;border:none;margin-top:8px}
+}
+
 /* ============================================================
    7. FEEDBACK & STATUS
    ============================================================ */
@@ -1384,3 +1403,17 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
 }
+
+/* ============================================================
+   25. MEDIA
+   ============================================================ */
+/* responsive image component */
+.nyx-image{display:inline-block;position:relative;overflow:hidden;background:var(--nyx-surface-2);border-radius:var(--nyx-radius-lg)}
+.nyx-image img{display:block;width:100%;height:auto;max-width:100%;object-fit:cover;transition:opacity .3s var(--nyx-ease)}
+.nyx-image--ratio-16-9{aspect-ratio:16 / 9}
+.nyx-image--ratio-1-1{aspect-ratio:1 / 1}
+.nyx-image--ratio-4-3{aspect-ratio:4 / 3}
+.nyx-image__placeholder{position:absolute;inset:0;display:block;background:linear-gradient(90deg,color-mix(in srgb,var(--nyx-accent) 4%,transparent) 0%,color-mix(in srgb,var(--nyx-accent) 1%,transparent) 100%);animation:nyx-pulse 2s infinite ease-in-out}
+.nyx-image[data-loaded="false"] img{opacity:0;visibility:hidden}
+.nyx-image[data-loaded="true"] .nyx-image__placeholder{display:none}
+@keyframes nyx-pulse{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6}}

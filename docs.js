@@ -1197,6 +1197,22 @@
       classes: [['nyx-skeleton', 'The shimmer base (combine with a shape).'], ['nyx-skeleton-text (+.w-40 / 60 / 80)', 'Text line at a width.'], ['nyx-skeleton-circle / -media', 'Avatar dot / image block.'], ['nyx-skeleton-card / -row / -lines', 'Card and list-row scaffolds.']]
     },
     {
+      id: 'image', group: 'Components', title: 'Image', added: 'v1.8',
+      summary: 'Responsive image component with built-in aspect ratios, lazy loading, and placeholder shimmers until the image loads.',
+      sections: [
+        { title: 'Responsive 16:9', demo: '<div class="nyx-image nyx-image--ratio-16-9" data-loaded="false" style="width: 300px;"><div class="nyx-image__placeholder" aria-hidden="true"></div><img alt="Demo" src="https://picsum.photos/300/168" loading="lazy" decoding="async"></div>' }
+      ],
+      classes: [['nyx-image', 'Image wrapper container.'], ['nyx-image--ratio-16-9', 'Aspect ratio modifier (16-9, 1-1, 4-3).'], ['nyx-image__placeholder', 'Animated placeholder state.'], ['data-loaded="true"', 'Hides the placeholder once the image loads natively.']]
+    },
+    {
+      id: 'responsive-nav', group: 'Components', title: 'Responsive Nav', added: 'v1.8',
+      summary: 'A fully responsive navigation bar with a mobile hamburger toggle and an embedded hover/focus-driven mega menu panel.',
+      sections: [
+        { title: 'Interactive Navbar', demo: '<div style="transform:scale(0.8);transform-origin:top left;width:125%;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius)"><header class="nyx-nav" data-open="false"><div class="brand">Brand</div><button class="nav-toggle" aria-expanded="false">☰</button><nav class="nav-links"><a href="#/">Home</a><div class="nyx-mega"><a href="#/">Products ▾</a><div class="mega-panel"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><a href="#/">Store</a><a href="#/">Docs</a></div></div></div><a href="#/">Contact</a></nav></header></div>' }
+      ],
+      classes: [['nyx-nav', 'The main navbar wrapper.'], ['.nav-toggle', 'Mobile hamburger button.'], ['.nav-links', 'The inline or dropdown links container.'], ['nyx-mega', 'Wrapper for a mega menu.'], ['.mega-panel', 'The mega dropdown pane.']]
+    },
+    {
       id: 'bottom-nav', group: 'Components', title: 'Bottom navigation', added: 'v1.8',
       summary: 'A mobile tab bar — icon over label, with an active state. Add .fixed to pin it to the bottom of the viewport (it mirrors in RTL automatically).',
       sections: [

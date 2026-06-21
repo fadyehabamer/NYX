@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Responsive Nav — NYX Example</title>
+  <link rel="stylesheet" href="../nyx.css">
+  <style>body{font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0}</style>
+</head>
+<body>
+  <header class="nyx-nav" id="site-nav" data-open="false">
+    <div class="brand">NYX</div>
+    <button class="nav-toggle" aria-controls="main-menu" aria-expanded="false" id="navToggle">☰<span class="sr-only">قائمة التنقل</span></button>
+    <nav class="nav-links" id="main-menu">
+      <a href="#">الرئيسية</a>
+      <div class="nyx-mega">
+        <a href="#">المنتجات ▾</a>
+        <div class="mega-panel" role="menu" aria-label="منتجات">
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;min-width:260px">
+            <a href="#">قالب 1</a>
+            <a href="#">قالب 2</a>
+            <a href="#">قالب 3</a>
+            <a href="#">قالب 4</a>
+          </div>
+        </div>
+      </div>
+      <a href="#">الأسعار</a>
+      <a href="#">الدعم</a>
+    </nav>
+  </header>
+
+  <main style="padding:1rem">
+    <h1>مثال قائمة متجاوبة</h1>
+    <p>اضغط زر القائمة في الشاشات الصغيرة أو حرّك المؤشر لفتح الـ mega menu.</p>
+  </main>
+
+  <script src="../nyx.js"></script>
+</body>
+</html>

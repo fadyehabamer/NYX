@@ -934,6 +934,49 @@
     });
   }
 
+  /* images */
+  function initImage(root) {
+    $$('.nyx-image[data-loaded="false"] img', root).forEach(function(img) {
+      var wrap = img.closest('.nyx-image');
+      if (!wrap) return;
+      function onL() { wrap.setAttribute('data-loaded', 'true'); }
+      if (img.complete) { onL(); return; }
+      if ('loading' in HTMLImageElement.prototype) {
+        img.addEventListener('load', onL);
+      } else {
+        if (window.IntersectionObserver) {
+          var io = new IntersectionObserver(function(es, ob) {
+            es.forEach(function(e) { if (e.isIntersecting) { img.src = img.src; ob.disconnect(); } });
+          });
+          io.observe(img);
+        }
+        img.addEventListener('load', onL);
+      }
+    });
+  }
+  /* nav */
+  function initNav(root) {
+    $$('.nyx-nav .nav-toggle', root).forEach(function(btn) {
+      if (btn._nyxNavInit) return;
+      btn._nyxNavInit = true;
+      var nav = btn.closest('.nyx-nav');
+      if (!nav) return;
+      var menu = nav.querySelector('.nav-links');
+      btn.addEventListener('click', function() {
+        var open = nav.getAttribute('data-open') === 'true';
+        nav.setAttribute('data-open', !open ? 'true' : 'false');
+        btn.setAttribute('aria-expanded', !open ? 'true' : 'false');
+        if (!open && menu) { var a = menu.querySelector('a'); if(a) a.focus(); }
+      });
+      nav.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          nav.setAttribute('data-open', 'false');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.focus();
+        }
+      });
+    });
+  }
   /* ---------- init (idempotent) ---------- */
   function init(root) {
     root = root || doc;
@@ -957,6 +1000,8 @@
     initCountdown(root);
     initZakat(root);
     initQibla(root);
+    initImage(root);
+    initNav(root);
     initTabs(root);
     syncBackTop();
   }

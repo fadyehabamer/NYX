@@ -1,0 +1,17 @@
+/*! Nyx · media.css · v1.7.0 · MIT
+ * The media module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs.html
+ */
+/* ============================================================
+   25. MEDIA
+   ============================================================ */
+/* responsive image component */
+.nyx-image{display:inline-block;position:relative;overflow:hidden;background:var(--nyx-surface-2);border-radius:var(--nyx-radius-lg)}
+.nyx-image img{display:block;width:100%;height:auto;max-width:100%;object-fit:cover;transition:opacity .3s var(--nyx-ease)}
+.nyx-image--ratio-16-9{aspect-ratio:16 / 9}
+.nyx-image--ratio-1-1{aspect-ratio:1 / 1}
+.nyx-image--ratio-4-3{aspect-ratio:4 / 3}
+.nyx-image__placeholder{position:absolute;inset:0;display:block;background:linear-gradient(90deg,color-mix(in srgb,var(--nyx-accent) 4%,transparent) 0%,color-mix(in srgb,var(--nyx-accent) 1%,transparent) 100%);animation:nyx-pulse 2s infinite ease-in-out}
+.nyx-image[data-loaded="false"] img{opacity:0;visibility:hidden}
+.nyx-image[data-loaded="true"] .nyx-image__placeholder{display:none}
+@keyframes nyx-pulse{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6}}
