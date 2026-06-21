@@ -96,8 +96,8 @@
       summary: 'Grab the whole framework as one bundle, load the minified build from a CDN, install from npm, or download just the component files you need — every à-la-carte file requires tokens.css for its CSS variables.',
       sections: [
         { title: 'Bundle — everything', lang: 'html', code: '<!-- one file, every component -->\n<link rel="stylesheet" href="nyx.css">\n<script src="nyx.js"></script>' },
-        { title: 'CDN — jsDelivr / unpkg', text: 'No install — load the minified build straight from a CDN (swap nyx-ui for your published package name; @1 tracks the latest 1.x).', lang: 'html', code: '<!-- jsDelivr -->\n<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nyx-ui@1/nyx.min.css">\n<script src="https://cdn.jsdelivr.net/npm/nyx-ui@1/nyx.min.js"></script>\n\n<!-- unpkg -->\n<link rel="stylesheet" href="https://unpkg.com/nyx-ui@1/nyx.min.css">' },
-        { title: 'npm', text: 'Published with an exports map, so you can import the full bundle, the minified build, or individual modules.', lang: 'bash', code: 'npm install nyx-ui' },
+        { title: 'CDN — jsDelivr / unpkg', text: 'No install — load the minified build straight from a CDN — @1 tracks the latest 1.x.', lang: 'html', code: '<!-- jsDelivr -->\n<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nyx-css@1/nyx.min.css">\n<script src="https://cdn.jsdelivr.net/npm/nyx-css@1/nyx.min.js"></script>\n\n<!-- unpkg -->\n<link rel="stylesheet" href="https://unpkg.com/nyx-css@1/nyx.min.css">' },
+        { title: 'npm', text: 'Published with an exports map, so you can import the full bundle, the minified build, or individual modules.', lang: 'bash', code: 'npm install nyx-css' },
         { title: 'À la carte — pick modules', lang: 'html', code: '<!-- tokens.css is always required -->\n<link rel="stylesheet" href="components/tokens.css">\n<link rel="stylesheet" href="components/base.css">\n<link rel="stylesheet" href="components/buttons.css">\n<link rel="stylesheet" href="components/cards.css">' },
         {
           title: 'Files', nocode: true, demo:
@@ -198,13 +198,13 @@
       id: 'frameworks', group: 'Getting Started', title: 'React · Vue · Angular', added: 'v1.0',
       summary: 'Nyx is framework-agnostic — it is just a stylesheet plus a tiny runtime. Import the CSS once, use the classes in your markup, and call Nyx.init() after components mount so declarative data-nyx-* behaviors wire up on freshly-rendered DOM. For imperative calls (toasts, modals) call the global Nyx.',
       sections: [
-        { title: 'React', lang: 'jsx', code: "// main.jsx — import the stylesheet once\nimport 'nyx-ui/nyx.css';\nimport 'nyx-ui/nyx.js';   // attaches window.Nyx\n\nfunction Page() {\n  useEffect(() => { window.Nyx.init(); }, []);   // wire data-nyx-* after mount\n  return (\n    <div className=\"nyx-card\">\n      <button className=\"nyx-btn nyx-btn-primary\"\n        onClick={() => window.Nyx.toast('Saved ✓', 'success')}>Save</button>\n    </div>\n  );\n}" },
-        { title: 'Vue', lang: 'js', code: "// main.js\nimport 'nyx-ui/nyx.css';\nimport 'nyx-ui/nyx.js';\n\n// in a component\nimport { onMounted } from 'vue';\nonMounted(() => Nyx.init());\n\n// template:  <button class=\"nyx-btn nyx-btn-primary\" @click=\"Nyx.toast('Hi')\">Go</button>" },
-        { title: 'Angular', lang: 'ts', code: "// angular.json → styles: [\"node_modules/nyx-ui/nyx.css\"]\n// add nyx.js to scripts, or import it in main.ts\ndeclare const Nyx: any;\n\n@Component({ /* … */ })\nexport class CardComponent implements AfterViewInit {\n  ngAfterViewInit() { Nyx.init(); }   // re-wire after the view renders\n  save() { Nyx.toast('Saved ✓', 'success'); }\n}" },
+        { title: 'React', lang: 'jsx', code: "// main.jsx — import the stylesheet once\nimport 'nyx-css/nyx.css';\nimport 'nyx-css/nyx.js';   // attaches window.Nyx\n\nfunction Page() {\n  useEffect(() => { window.Nyx.init(); }, []);   // wire data-nyx-* after mount\n  return (\n    <div className=\"nyx-card\">\n      <button className=\"nyx-btn nyx-btn-primary\"\n        onClick={() => window.Nyx.toast('Saved ✓', 'success')}>Save</button>\n    </div>\n  );\n}" },
+        { title: 'Vue', lang: 'js', code: "// main.js\nimport 'nyx-css/nyx.css';\nimport 'nyx-css/nyx.js';\n\n// in a component\nimport { onMounted } from 'vue';\nonMounted(() => Nyx.init());\n\n// template:  <button class=\"nyx-btn nyx-btn-primary\" @click=\"Nyx.toast('Hi')\">Go</button>" },
+        { title: 'Angular', lang: 'ts', code: "// angular.json → styles: [\"node_modules/nyx-css/nyx.css\"]\n// add nyx.js to scripts, or import it in main.ts\ndeclare const Nyx: any;\n\n@Component({ /* … */ })\nexport class CardComponent implements AfterViewInit {\n  ngAfterViewInit() { Nyx.init(); }   // re-wire after the view renders\n  save() { Nyx.toast('Saved ✓', 'success'); }\n}" },
         { title: 'Notes', text: 'Nyx.init(root) is idempotent and accepts a container, so re-run it (or scope it) whenever you inject markup — after a route change, a list render, or a modal mount. For SSR (Next/Nuxt), guard the runtime: it touches window/document, so import nyx.js in a client-only effect (useEffect / onMounted / afterNextRender). The CSS is safe to import on the server.' }
       ],
       classes: [
-        ['import \"nyx-ui/nyx.css\"', 'Load the stylesheet once at the app root.'],
+        ['import \"nyx-css/nyx.css\"', 'Load the stylesheet once at the app root.'],
         ['Nyx.init(root?)', 'Wire data-nyx-* after mount/render. Idempotent; scope with a root.'],
         ['window.Nyx.*', 'Imperative API (toast, openModal, progress…) from anywhere.'],
         ['SSR', 'Import nyx.js in a client-only effect; CSS is server-safe.']

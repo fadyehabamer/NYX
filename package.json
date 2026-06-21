@@ -1,7 +1,7 @@
 {
-  "name": "nyx-ui",
+  "name": "nyx-css",
   "version": "1.0.0",
-  "description": "Dark-mode-native CSS/JS component framework with Luminous Depth — full RTL & Arabic support. The first CSS library built for Arabic developers.",
+  "description": "A zero-dependency CSS & JS component framework with Luminous Depth — light & dark themes, fully themeable via CSS variables, with first-class RTL and Arabic typography.",
   "keywords": [
     "css",
     "ui",
