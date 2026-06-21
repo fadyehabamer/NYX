@@ -238,6 +238,11 @@ body.nyx ::-webkit-scrollbar-thumb{background:var(--nyx-surface-2);border-radius
 .nyx-btn-loading{color:transparent !important;pointer-events:none}
 .nyx-btn-loading::after{content:"";position:absolute;width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:nyx-spin .7s linear infinite}
 .nyx-btn-glow{background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));color:#fff;animation:nyx-pulse 2.4s var(--nyx-ease) infinite}
+/* Gradient buttons sit on a 1px transparent border. The `background:` shorthand above resets
+   background-origin to padding-box, so the gradient's edge color leaks into that border as a
+   seam on the edge. Re-assert border-box (after the shorthands) so the fill covers the whole box.
+   Must stay a separate longhand — folding it into the shorthand would be reset again by overrides. */
+.nyx-btn-primary,.nyx-btn-danger,.nyx-btn-glow{background-origin:border-box}
 .nyx-btn-glow:hover{transform:translateY(-1px)}
 @keyframes nyx-spin{to{transform:rotate(360deg)}}
 @keyframes nyx-pulse{
@@ -1487,10 +1492,10 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-image--ratio-16-9{aspect-ratio:16 / 9}
 .nyx-image--ratio-1-1{aspect-ratio:1 / 1}
 .nyx-image--ratio-4-3{aspect-ratio:4 / 3}
-.nyx-image__placeholder{position:absolute;inset:0;display:block;background:linear-gradient(90deg,color-mix(in srgb,var(--nyx-accent) 4%,transparent) 0%,color-mix(in srgb,var(--nyx-accent) 1%,transparent) 100%);animation:nyx-pulse 2s infinite ease-in-out}
+.nyx-image__placeholder{position:absolute;inset:0;display:block;background:linear-gradient(90deg,color-mix(in srgb,var(--nyx-accent) 4%,transparent) 0%,color-mix(in srgb,var(--nyx-accent) 1%,transparent) 100%);animation:nyx-skeleton-pulse 2s infinite ease-in-out}
 .nyx-image[data-loaded="false"] img{opacity:0;visibility:hidden}
 .nyx-image[data-loaded="true"] .nyx-image__placeholder{display:none}
-@keyframes nyx-pulse{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6}}
+@keyframes nyx-skeleton-pulse{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6}}
 
 /* ============================================================
    26. ENHANCEMENTS

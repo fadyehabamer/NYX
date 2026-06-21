@@ -11,7 +11,7 @@
 .nyx-image--ratio-16-9{aspect-ratio:16 / 9}
 .nyx-image--ratio-1-1{aspect-ratio:1 / 1}
 .nyx-image--ratio-4-3{aspect-ratio:4 / 3}
-.nyx-image__placeholder{position:absolute;inset:0;display:block;background:linear-gradient(90deg,color-mix(in srgb,var(--nyx-accent) 4%,transparent) 0%,color-mix(in srgb,var(--nyx-accent) 1%,transparent) 100%);animation:nyx-pulse 2s infinite ease-in-out}
+.nyx-image__placeholder{position:absolute;inset:0;display:block;background:linear-gradient(90deg,color-mix(in srgb,var(--nyx-accent) 4%,transparent) 0%,color-mix(in srgb,var(--nyx-accent) 1%,transparent) 100%);animation:nyx-skeleton-pulse 2s infinite ease-in-out}
 .nyx-image[data-loaded="false"] img{opacity:0;visibility:hidden}
 .nyx-image[data-loaded="true"] .nyx-image__placeholder{display:none}
-@keyframes nyx-pulse{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6}}
+@keyframes nyx-skeleton-pulse{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6}}

@@ -14,7 +14,10 @@ html{scroll-behavior:smooth}
 .docs-grid{display:grid;grid-template-columns:248px minmax(0,1fr) 200px;gap:var(--nyx-s7);max-width:1380px;margin-inline:auto;padding:0 var(--nyx-s5)}
 
 /* left sidebar */
-.docs-side{position:sticky;top:72px;height:calc(100vh - 72px);overflow-y:auto;padding:var(--nyx-s5) 0;scrollbar-width:thin}
+/* GUARD: these sticky rails scroll (overflow-y:auto), which forces overflow-x to clip too.
+   Any focusable control inside (e.g. the .nyx-search filter) renders a ~24px focus glow —
+   keep inline padding (never 0) so the glow/ring isn't sliced at the rail edge. */
+.docs-side{position:sticky;top:72px;height:calc(100vh - 72px);overflow-y:auto;overflow-x:clip;padding:var(--nyx-s5) var(--nyx-s4);scrollbar-width:thin}
 .docs-side .filter{margin-bottom:var(--nyx-s4)}
 .docs-group{margin-bottom:var(--nyx-s5)}
 .docs-group > .label{display:flex;align-items:center;gap:8px;font-family:var(--nyx-font-display);font-weight:700;font-size:var(--nyx-fs-sm);color:var(--nyx-text);margin:0 0 var(--nyx-s2) 10px}
@@ -65,7 +68,7 @@ html{scroll-behavior:smooth}
 .docs-pager .ttl{font-family:var(--nyx-font-display);font-weight:600;color:var(--nyx-text)}
 
 /* right "On this page" */
-.docs-toc{position:sticky;top:72px;height:calc(100vh - 72px);overflow-y:auto;padding:var(--nyx-s7) 0;font-size:var(--nyx-fs-sm)}
+.docs-toc{position:sticky;top:72px;height:calc(100vh - 72px);overflow-y:auto;overflow-x:clip;padding:var(--nyx-s7) var(--nyx-s3);font-size:var(--nyx-fs-sm)}
 .docs-toc .toc-title{font-family:var(--nyx-font-display);font-weight:700;font-size:var(--nyx-fs-xs);text-transform:uppercase;letter-spacing:.1em;color:var(--nyx-text-muted);margin-bottom:var(--nyx-s3)}
 .docs-toc a{display:block;padding-block:4px;padding-inline-start:12px;color:var(--nyx-text-muted);border-inline-start:2px solid var(--nyx-border);transition:all .15s var(--nyx-ease)}
 .docs-toc a:hover{color:var(--nyx-text)}
