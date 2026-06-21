@@ -5,6 +5,16 @@ All notable changes to **Nyx** are documented here. The format follows
 [Semantic Versioning](https://semver.org/). `package.json` is the single source
 of truth for the version; `node build.js` stamps it into every artifact.
 
+## [1.0.2] — 2026-06-21
+
+### Fixed
+- **npm package `exports` map.** The `"."` entry listed the `style` condition
+  before `default`, so CSS-aware resolvers (e.g. bundlephobia) resolved the
+  main entry to `nyx.css` and tried to parse it as JavaScript — failing the
+  build. `"."` now resolves unconditionally to `./nyx.js`; CSS stays reachable
+  via the top-level `style` field and the `./css` subpath. Also exposed
+  `./package.json` so tooling can read it without `ERR_PACKAGE_PATH_NOT_EXPORTED`.
+
 ## [1.7.0] — 2026-06-20
 
 ### Added

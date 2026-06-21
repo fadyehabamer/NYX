@@ -1,6 +1,6 @@
 {
   "name": "nyx-css",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A zero-dependency CSS & JS component framework with Luminous Depth — light & dark themes, fully themeable via CSS variables, with first-class RTL and Arabic typography.",
   "keywords": [
     "css",
@@ -34,15 +34,13 @@
     "nyx.min.js"
   ],
   "exports": {
-    ".": {
-      "style": "./nyx.css",
-      "default": "./nyx.js"
-    },
+    ".": "./nyx.js",
     "./css": "./nyx.css",
     "./css/min": "./nyx.min.css",
     "./js": "./nyx.js",
     "./js/min": "./nyx.min.js",
-    "./components/*": "./components/*"
+    "./components/*": "./components/*",
+    "./package.json": "./package.json"
   },
   "files": [
     "nyx.css",
