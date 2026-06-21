@@ -76,15 +76,24 @@
     m.classList.add('open');
     lockScroll(true);
     var f = focusables(m); if (f.length) setTimeout(function () { f[0].focus(); }, 60);
+    var type = m.classList.contains('nyx-drawer') ? 'drawer' : (m.classList.contains('nyx-sheet') ? 'sheet' : 'modal');
+    m.dispatchEvent(new CustomEvent('nyx:' + type + '-show', { bubbles: true }));
   }
   var openDrawer = openModal;
 
   function close(target) {
-    var t = el(target); if (t) t.classList.remove('open');
+    var t = el(target); if (!t) return;
+    t.classList.remove('open');
+    var type = t.classList.contains('nyx-drawer') ? 'drawer' : (t.classList.contains('nyx-sheet') ? 'sheet' : 'modal');
+    t.dispatchEvent(new CustomEvent('nyx:' + type + '-hide', { bubbles: true }));
     if (!currentOverlay()) { if (_backdrop) _backdrop.classList.remove('open'); lockScroll(false); releaseFocus(); }
   }
   function closeAll() {
-    $$('.nyx-modal.open, .nyx-drawer.open, .nyx-sheet.open').forEach(function (n) { n.classList.remove('open'); });
+    $$('.nyx-modal.open, .nyx-drawer.open, .nyx-sheet.open').forEach(function (n) {
+      n.classList.remove('open');
+      var type = n.classList.contains('nyx-drawer') ? 'drawer' : (n.classList.contains('nyx-sheet') ? 'sheet' : 'modal');
+      n.dispatchEvent(new CustomEvent('nyx:' + type + '-hide', { bubbles: true }));
+    });
     if (_backdrop) _backdrop.classList.remove('open');
     closeCommandPalette();
     lockScroll(false);
@@ -92,12 +101,26 @@
   }
 
   /* ---------- popover ---------- */
-  function togglePopover(node) {
+  function togglePopover(node, forceState) {
     var p = el(node); if (!p) return;
     if (!p.classList.contains('nyx-popover')) p = p.closest('.nyx-popover');
-    var willOpen = p && !p.classList.contains('open');
-    $$('.nyx-popover.open').forEach(function (o) { o.classList.remove('open'); });
-    if (p) p.classList.toggle('open', willOpen);
+    if (!p) return;
+    var willOpen = forceState !== undefined ? forceState : !p.classList.contains('open');
+    if (willOpen) {
+      $$('.nyx-popover.open').forEach(function (o) {
+        if (o !== p) {
+          o.classList.remove('open');
+          o.dispatchEvent(new CustomEvent('nyx:popover-hide', { bubbles: true }));
+        }
+      });
+      p.classList.add('open');
+      p.dispatchEvent(new CustomEvent('nyx:popover-show', { bubbles: true }));
+    } else {
+      if (p.classList.contains('open')) {
+        p.classList.remove('open');
+        p.dispatchEvent(new CustomEvent('nyx:popover-hide', { bubbles: true }));
+      }
+    }
   }
 
   /* ---------- dropdown ---------- */
@@ -112,9 +135,13 @@
     if (!_lastFocus) _lastFocus = doc.activeElement;
     cp.classList.add('open'); lockScroll(true);
     var inp = cp.querySelector('input'); if (inp) setTimeout(function () { inp.focus(); }, 60);
+    cp.dispatchEvent(new CustomEvent('nyx:palette-show', { bubbles: true }));
   }
   function closeCommandPalette() {
-    var cp = paletteEl(); if (cp) cp.classList.remove('open');
+    var cp = paletteEl(); if (cp && cp.classList.contains('open')) {
+      cp.classList.remove('open');
+      cp.dispatchEvent(new CustomEvent('nyx:palette-hide', { bubbles: true }));
+    }
     if (!currentOverlay()) { lockScroll(false); releaseFocus(); }
   }
 
@@ -201,6 +228,7 @@
     var group = btn.closest('[data-nyx-tabs]'); if (!group) return;
     var key = btn.getAttribute('data-nyx-tab');
     var scope = group.parentElement || doc;
+    var activePanel = null;
     $$('[data-nyx-tab]', group).forEach(function (b) {
       var on = b === btn;
       b.classList.toggle('active', on);
@@ -208,8 +236,13 @@
       b.setAttribute('tabindex', on ? '0' : '-1');
     });
     $$('[data-nyx-panel]', scope).forEach(function (p) {
-      p.classList.toggle('active', p.getAttribute('data-nyx-panel') === key);
+      var show = p.getAttribute('data-nyx-panel') === key;
+      p.classList.toggle('active', show);
+      if (show) activePanel = p;
     });
+    if (activePanel) {
+      activePanel.dispatchEvent(new CustomEvent('nyx:tab-show', { bubbles: true, detail: { tab: btn, panel: activePanel } }));
+    }
   }
 
   /* ---------- collapse / accordion ---------- */
@@ -218,11 +251,15 @@
     var willOpen = !t.classList.contains('open');
     var acc = trigger.closest('[data-nyx-accordion]');
     if (acc && willOpen) {
-      $$('.nyx-collapse.open', acc).forEach(function (c) { c.classList.remove('open'); });
+      $$('.nyx-collapse.open', acc).forEach(function (c) {
+        c.classList.remove('open');
+        c.dispatchEvent(new CustomEvent('nyx:collapse-hide', { bubbles: true }));
+      });
       $$('[data-nyx-toggle="collapse"].active', acc).forEach(function (h) { h.classList.remove('active'); });
     }
     t.classList.toggle('open', willOpen);
     trigger.classList.toggle('active', willOpen);
+    t.dispatchEvent(new CustomEvent(willOpen ? 'nyx:collapse-show' : 'nyx:collapse-hide', { bubbles: true }));
   }
 
   /* ---------- carousel ---------- */
@@ -235,8 +272,12 @@
   }
   function carouselSet(car, i, slides) {
     slides = slides || $$('.nyx-slide', car);
+    var oldActive = slides.findIndex(function (s) { return s.classList.contains('active'); });
     slides.forEach(function (s, n) { s.classList.toggle('active', n === i); });
     $$('.nyx-carousel-dots button', car).forEach(function (d, n) { d.classList.toggle('active', n === i); });
+    if (oldActive !== i) {
+      car.dispatchEvent(new CustomEvent('nyx:slide', { bubbles: true, detail: { index: i, from: oldActive } }));
+    }
   }
 
   /* ---------- stepper ---------- */
@@ -335,7 +376,11 @@
       if (kind === 'dropdown') {
         e.preventDefault();
         var dd = toggle.closest('.nyx-dropdown'), willOpen = dd && !dd.classList.contains('open');
-        closeDropdowns(); if (dd) dd.classList.toggle('open', willOpen);
+        closeDropdowns(dd);
+        if (dd) {
+          dd.classList.toggle('open', willOpen);
+          dd.dispatchEvent(new CustomEvent(willOpen ? 'nyx:dropdown-show' : 'nyx:dropdown-hide', { bubbles: true }));
+        }
         if (willOpen) { var fi = dd.querySelector('.nyx-dropdown-item'); if (fi) setTimeout(function () { fi.focus(); }, 20); }
         return;
       }
@@ -345,7 +390,12 @@
     var step = e.target.closest('[data-nyx-step]');
     if (step) { stepperAdjust(step); return; }
     var tagX = e.target.closest('.nyx-tag-input .nyx-chip-x');
-    if (tagX) { var ch = tagX.closest('.nyx-chip'); if (ch) ch.remove(); return; }
+    if (tagX) {
+      var ch = tagX.closest('.nyx-chip'), ti = tagX.closest('.nyx-tag-input');
+      if (ch) ch.remove();
+      if (ti) ti.dispatchEvent(new Event('change', { bubbles: true }));
+      return;
+    }
 
     var tab = e.target.closest('[data-nyx-tab]');
     if (tab) { e.preventDefault(); activateTab(tab); return; }
@@ -368,7 +418,7 @@
     if (e.target.closest('.nyx-to-top')) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
 
     if (e.target.closest('.nyx-dropdown-item')) { closeDropdowns(); return; }
-    if (!e.target.closest('.nyx-popover')) $$('.nyx-popover.open').forEach(function (o) { o.classList.remove('open'); });
+    if (!e.target.closest('.nyx-popover')) $$('.nyx-popover.open').forEach(function (o) { togglePopover(o, false); });
     if (!e.target.closest('.nyx-dropdown')) closeDropdowns();
     if (!e.target.closest('.nyx-combobox')) $$('.nyx-combobox.open').forEach(function (o) { o.classList.remove('open'); });
     if (!e.target.closest('.nyx-multiselect')) $$('.nyx-multiselect.open').forEach(function (o) { o.classList.remove('open'); });
@@ -414,7 +464,8 @@
     }
     if (e.key === 'Escape') {
       closeAll(); closeDropdowns();
-      $$('.nyx-popover.open, .nyx-combobox.open, .nyx-multiselect.open, .nyx-datepicker.open, .nyx-fab.open, .nyx-context-menu.open').forEach(function (o) { o.classList.remove('open'); });
+      $$('.nyx-popover.open').forEach(function (o) { togglePopover(o, false); });
+      $$('.nyx-combobox.open, .nyx-multiselect.open, .nyx-datepicker.open, .nyx-fab.open, .nyx-context-menu.open').forEach(function (o) { o.classList.remove('open'); });
     }
   });
 
@@ -436,6 +487,7 @@
       chip.appendChild(doc.createTextNode(val + ' '));
       var x = doc.createElement('span'); x.className = 'nyx-chip-x'; x.setAttribute('role', 'button'); x.setAttribute('aria-label', 'remove'); x.textContent = '×';
       chip.appendChild(x); ti.insertBefore(chip, e.target); e.target.value = '';
+      ti.dispatchEvent(new Event('change', { bubbles: true }));
     }
   });
 
@@ -550,10 +602,15 @@
       function toggle(o) {
         var on = o.classList.toggle('selected'); o.setAttribute('aria-selected', on ? 'true' : 'false');
         if (on) addChip(valOf(o), o.textContent.trim()); else removeVal(valOf(o));
+        m.dispatchEvent(new Event('change', { bubbles: true }));
       }
       control.addEventListener('click', function (e) {
         var x = e.target.closest('.nyx-chip-x');
-        if (x) { removeVal(x.closest('.nyx-chip').getAttribute('data-val')); return; }
+        if (x) {
+          removeVal(x.closest('.nyx-chip').getAttribute('data-val'));
+          m.dispatchEvent(new Event('change', { bubbles: true }));
+          return;
+        }
         m.classList.add('open'); if (input) input.focus();
       });
       if (menu) menu.addEventListener('mousedown', function (e) {
@@ -561,7 +618,11 @@
       });
       if (input) input.addEventListener('keydown', function (e) {
         if (e.key === 'Backspace' && !input.value) {
-          var chips = $$('.nyx-chip', control); if (chips.length) removeVal(chips[chips.length - 1].getAttribute('data-val'));
+          var chips = $$('.nyx-chip', control);
+          if (chips.length) {
+            removeVal(chips[chips.length - 1].getAttribute('data-val'));
+            m.dispatchEvent(new Event('change', { bubbles: true }));
+          }
         } else if (e.key === 'Escape') { m.classList.remove('open'); }
         else if (e.key === 'ArrowDown') { e.preventDefault(); m.classList.add('open'); var f = menu && menu.querySelector('.nyx-multiselect-opt'); if (f) f.scrollIntoView({ block: 'nearest' }); }
       });

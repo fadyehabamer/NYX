@@ -18,9 +18,11 @@ html{scroll-behavior:smooth}
 .docs-side .filter{margin-bottom:var(--nyx-s4)}
 .docs-group{margin-bottom:var(--nyx-s5)}
 .docs-group > .label{display:flex;align-items:center;gap:8px;font-family:var(--nyx-font-display);font-weight:700;font-size:var(--nyx-fs-sm);color:var(--nyx-text);margin:0 0 var(--nyx-s2) 10px}
-.docs-group a{display:block;padding:6px 10px;border-radius:var(--nyx-radius-sm);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);transition:all .15s var(--nyx-ease);border-inline-start:2px solid transparent;line-height:1.4}
+.docs-group a{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-radius:var(--nyx-radius-sm);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);transition:all .15s var(--nyx-ease);border-inline-start:2px solid transparent;line-height:1.4}
 .docs-group a:hover{color:var(--nyx-text);background:var(--nyx-glass)}
 .docs-group a.active{color:var(--nyx-text);background:rgba(108,99,255,.12);border-inline-start-color:var(--nyx-accent);font-weight:500}
+.docs-badge-js {font-size: 8px; padding: 1px 4px; background: color-mix(in srgb, var(--nyx-accent) 15%, transparent); color: var(--nyx-accent); border: 1px solid color-mix(in srgb, var(--nyx-accent) 30%, transparent); border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; line-height: 1;}
+.docs-badge-css {font-size: 8px; padding: 1px 4px; background: rgba(255, 255, 255, 0.05); color: var(--nyx-text-muted); border: 1px solid var(--nyx-border); border-radius: 4px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; line-height: 1;}
 .docs-empty{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);padding:0 10px}
 
 /* center content */

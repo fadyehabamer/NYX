@@ -11,6 +11,11 @@ window.NYX_I18N = {
     jsApi: 'واجهة جافاسكربت',
     thClass: 'الصنف / الرمز',
     thDesc: 'الوصف',
+    thMethod: 'الدالة / الحدث',
+    JS: 'جافاسكربت',
+    CSS: 'أنماط',
+    markupOnly: 'ترميز فقط',
+    markupJs: 'ترميز + جافاسكربت',
     prev: 'السابق',
     next: 'التالي',
     onThisPage: 'في هذه الصفحة'

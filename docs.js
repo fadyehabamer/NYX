@@ -8,6 +8,7 @@
   /* ---------- helpers ---------- */
   function escHtml(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
+  function isComponent(p) { return p.group !== 'Getting Started' && p.group !== 'Customize' && p.group !== 'Examples'; }
 
   function hl(src, lang) {
     var e = escHtml(src);
@@ -325,11 +326,12 @@
       classes: [['nyx-input / nyx-textarea / nyx-select', 'Form fields.'], ['nyx-label', 'Field label.'], ['nyx-form-hint', 'Helper text below a field.']]
     },
     {
-      id: 'validation', group: 'Forms', title: 'Validation', added: 'v1.4',
+      id: 'validation', group: 'Forms', title: 'Validation', added: 'v1.4', needsJs: true,
       summary: 'Bootstrap-style validity states. Add .is-valid / .is-invalid to a field, or wrap a form in .nyx-was-validated to drive it from the browser’s native :valid/:invalid — then place a sibling .nyx-valid-feedback / .nyx-invalid-feedback message.',
       sections: [
         { title: 'Valid & invalid', demo: '<div class="nyx-stack"><div><label class="nyx-label">Email</label><input class="nyx-input is-valid" value="you@company.com" aria-label="Email"><div class="nyx-valid-feedback">Looks good.</div></div><div><label class="nyx-label">Password</label><input class="nyx-input is-invalid" type="password" value="123" aria-label="Password"><div class="nyx-invalid-feedback">Use at least 8 characters.</div></div><div><label class="nyx-label">Plan</label><select class="nyx-select is-invalid" aria-label="Plan"><option>Choose…</option></select><div class="nyx-invalid-feedback">Please pick a plan.</div></div></div>' },
-        { title: 'Whole form — native constraints', text: 'Wrap a form in .nyx-was-validated and feedback shows automatically from the browser’s constraint validation — no per-field classes needed.', lang: 'html', code: '<form class="nyx-was-validated">\n  <input class="nyx-input" type="email" required>\n  <div class="nyx-invalid-feedback">Enter a valid email.</div>\n</form>' }
+        { title: 'Whole form — native constraints', text: 'Wrap a form in .nyx-was-validated and feedback shows automatically from the browser’s constraint validation — no per-field classes needed.', lang: 'html', code: '<form class="nyx-was-validated">\n  <input class="nyx-input" type="email" required>\n  <div class="nyx-invalid-feedback">Enter a valid email.</div>\n</form>' },
+        { title: 'JavaScript Validation Helper', text: 'Enable custom logic on form submission using native checkValidity() and the .nyx-was-validated class.', lang: 'js', code: 'const form = document.querySelector(\'form\');\nform.addEventListener(\'submit\', (e) => {\n  if (!form.checkValidity()) {\n    e.preventDefault();\n    e.stopPropagation();\n  }\n  form.classList.add(\'nyx-was-validated\');\n});' }
       ],
       classes: [
         ['is-valid / is-invalid', 'Validity state on an input / textarea / select.'],
@@ -339,26 +341,29 @@
       ]
     },
     {
-      id: 'combobox', group: 'Forms', title: 'Combobox', added: 'v1.5',
+      id: 'combobox', group: 'Forms', title: 'Combobox', added: 'v1.5', needsJs: true,
       summary: 'An autocomplete input that filters a list as you type — type to narrow, click to choose, closes on outside click.',
       sections: [
-        { title: 'Filter as you type', demo: '<div class="nyx-combobox" style="max-width:320px"><input class="nyx-input" placeholder="Search a country…" aria-label="country"><div class="nyx-combobox-menu"><div class="nyx-combobox-opt">Saudi Arabia</div><div class="nyx-combobox-opt">United Arab Emirates</div><div class="nyx-combobox-opt">Egypt</div><div class="nyx-combobox-opt">Qatar</div><div class="nyx-combobox-opt">Kuwait</div><div class="nyx-combobox-opt">Bahrain</div><div class="nyx-combobox-opt">Oman</div><div class="nyx-combobox-empty">No matches</div></div></div>' }
+        { title: 'Filter as you type', demo: '<div class="nyx-combobox" style="max-width:320px"><input class="nyx-input" placeholder="Search a country…" aria-label="country"><div class="nyx-combobox-menu"><div class="nyx-combobox-opt">Saudi Arabia</div><div class="nyx-combobox-opt">United Arab Emirates</div><div class="nyx-combobox-opt">Egypt</div><div class="nyx-combobox-opt">Qatar</div><div class="nyx-combobox-opt">Kuwait</div><div class="nyx-combobox-opt">Bahrain</div><div class="nyx-combobox-opt">Oman</div><div class="nyx-combobox-empty">No matches</div></div></div>' },
+        { title: 'JavaScript Events', text: 'Listen for selection changes on the underlying input element.', lang: 'js', code: 'const input = document.querySelector(\'.nyx-combobox input\');\ninput.addEventListener(\'change\', (e) => {\n  console.log(\'Selected country:\', e.target.value);\n});' }
       ],
       classes: [['nyx-combobox', 'Wrapper (an input + .nyx-combobox-menu).'], ['nyx-combobox-opt', 'An option, filtered live by the typed text.'], ['nyx-combobox-empty', 'Shown when nothing matches.']]
     },
     {
-      id: 'multi-select', group: 'Forms', title: 'Multi-select', added: 'v1.5',
+      id: 'multi-select', group: 'Forms', title: 'Multi-select', added: 'v1.5', needsJs: true,
       summary: 'Pick several values as removable chips. Click the control to open, tick options, remove a chip with its ×.',
       sections: [
-        { title: 'Tokens', demo: '<div class="nyx-multiselect" style="max-width:360px"><div class="nyx-multiselect-control"><input placeholder="Add teams…" aria-label="teams"></div><div class="nyx-multiselect-menu"><div class="nyx-multiselect-opt">Design</div><div class="nyx-multiselect-opt">Engineering</div><div class="nyx-multiselect-opt">Marketing</div><div class="nyx-multiselect-opt">Sales</div><div class="nyx-multiselect-opt">Support</div></div></div>' }
+        { title: 'Tokens', demo: '<div class="nyx-multiselect" style="max-width:360px"><div class="nyx-multiselect-control"><input placeholder="Add teams…" aria-label="teams"></div><div class="nyx-multiselect-menu"><div class="nyx-multiselect-opt">Design</div><div class="nyx-multiselect-opt">Engineering</div><div class="nyx-multiselect-opt">Marketing</div><div class="nyx-multiselect-opt">Sales</div><div class="nyx-multiselect-opt">Support</div></div></div>' },
+        { title: 'JavaScript Events', text: 'Listen for selection updates on the multiselect container. The value can be queried dynamically from the chips.', lang: 'js', code: 'const el = document.querySelector(\'.nyx-multiselect\');\nel.addEventListener(\'change\', () => {\n  const selected = Array.from(el.querySelectorAll(\'.nyx-chip\')).map(c => c.getAttribute(\'data-val\'));\n  console.log(\'Selected teams:\', selected);\n});' }
       ],
       classes: [['nyx-multiselect', 'Wrapper.'], ['nyx-multiselect-control', 'The chips + input box.'], ['nyx-multiselect-opt', 'A checkable option (toggles a chip).']]
     },
     {
-      id: 'date-picker', group: 'Forms', title: 'Date picker', added: 'v1.5',
+      id: 'date-picker', group: 'Forms', title: 'Date picker', added: 'v1.5', needsJs: true,
       summary: 'An input with a calendar popover — navigate months with ‹ ›, click a day to fill the field (YYYY-MM-DD). The runtime builds and wires the calendar.',
       sections: [
-        { title: 'Pick a date', demo: '<div class="nyx-datepicker" data-nyx-datepicker><input class="nyx-input" placeholder="YYYY-MM-DD" aria-label="date" readonly style="min-width:210px"></div>' }
+        { title: 'Pick a date', demo: '<div class="nyx-datepicker" data-nyx-datepicker><input class="nyx-input" placeholder="YYYY-MM-DD" aria-label="date" readonly style="min-width:210px"></div>' },
+        { title: 'JavaScript Events', text: 'Listen for selection updates on the underlying input element.', lang: 'js', code: 'const input = document.querySelector(\'.nyx-datepicker input\');\ninput.addEventListener(\'change\', (e) => {\n  console.log(\'Selected date:\', e.target.value);\n});' }
       ],
       classes: [['data-nyx-datepicker', 'Wrapper; runtime renders the calendar + handles selection.'], ['nyx-datepicker-pop', 'Popover holding the calendar (auto-created if absent).']]
     },
@@ -396,7 +401,7 @@
     },
 
     {
-      id: 'range', group: 'Forms', title: 'Range', added: 'v1.1',
+      id: 'range', group: 'Forms', title: 'Range', added: 'v1.1', needsJs: true,
       summary: 'A dual-handle range for picking a min and a max. The runtime keeps the lower value as the start handle, paints the selected segment, and (optionally) writes the live value to a sibling .nyx-range-out.',
       sections: [{ title: 'Min / max', demo: '<div style="max-width:340px"><div class="nyx-range"><div class="nyx-range-track"></div><div class="nyx-range-fill"></div><input type="range" min="0" max="100" value="25" aria-label="minimum"><input type="range" min="0" max="100" value="75" aria-label="maximum"></div><div style="display:flex;justify-content:space-between;margin-top:6px"><span class="nyx-caption">Selected range</span><span class="nyx-range-out nyx-caption">25 – 75</span></div></div>' }],
       classes: [['nyx-range', 'Dual-handle wrapper: two input[type=range] + .nyx-range-track + .nyx-range-fill.'], ['nyx-range-fill', 'Selected segment (driven by --nyx-lo / --nyx-hi the runtime sets).'], ['nyx-range-out', 'Optional sibling showing the live “lo – hi” value.']]
@@ -409,13 +414,13 @@
     },
 
     {
-      id: 'stepper', group: 'Forms', title: 'Stepper', added: 'v1.2',
+      id: 'stepper', group: 'Forms', title: 'Stepper', added: 'v1.2', needsJs: true,
       summary: 'A number input flanked by increment / decrement buttons. Respects min and max.',
       sections: [{ title: 'Quantity', demo: '<div class="nyx-stepper"><button data-nyx-step="dec" aria-label="decrease">−</button><input type="text" value="1" min="0" max="99" aria-label="Quantity"><button data-nyx-step="inc" aria-label="increase">+</button></div>' }],
       classes: [['nyx-stepper', 'Wrapper (input between two buttons).'], ['data-nyx-step="inc|dec"', 'Step buttons; honor input min/max.']]
     },
     {
-      id: 'otp', group: 'Forms', title: 'OTP input', added: 'v1.2',
+      id: 'otp', group: 'Forms', title: 'OTP input', added: 'v1.2', needsJs: true,
       summary: 'A one-time-code / PIN entry that auto-advances as you type and steps back on delete.',
       sections: [
         { title: 'Four digits', demo: '<div class="nyx-otp"><input maxlength="1" inputmode="numeric" aria-label="digit 1"><input maxlength="1" inputmode="numeric" aria-label="digit 2"><input maxlength="1" inputmode="numeric" aria-label="digit 3"><input maxlength="1" inputmode="numeric" aria-label="digit 4"></div>' },
@@ -424,9 +429,12 @@
       classes: [['nyx-otp', 'Wrapper of single-character inputs (auto-advance via the runtime).'], ['otp-input-kit', 'External package for advanced OTP (paste, masking, variable length): fadyehabamer.github.io/otp-input-kit.']]
     },
     {
-      id: 'tag-input', group: 'Forms', title: 'Tag input', added: 'v1.2',
+      id: 'tag-input', group: 'Forms', title: 'Tag input', added: 'v1.2', needsJs: true,
       summary: 'Type and press Enter to add a chip; click × to remove. Great for labels and recipients.',
-      sections: [{ title: 'Tags', demo: '<div class="nyx-tag-input"><span class="nyx-chip">design <span class="nyx-chip-x" role="button" aria-label="remove">×</span></span><span class="nyx-chip">react <span class="nyx-chip-x" role="button" aria-label="remove">×</span></span><input placeholder="Add tag + Enter" aria-label="Add tag"></div>' }],
+      sections: [
+        { title: 'Tags', demo: '<div class="nyx-tag-input"><span class="nyx-chip">design <span class="nyx-chip-x" role="button" aria-label="remove">×</span></span><span class="nyx-chip">react <span class="nyx-chip-x" role="button" aria-label="remove">×</span></span><input placeholder="Add tag + Enter" aria-label="Add tag"></div>' },
+        { title: 'JavaScript Events', text: 'Listen for selection updates on the tag-input container.', lang: 'js', code: 'const el = document.querySelector(\'.nyx-tag-input\');\nel.addEventListener(\'change\', () => {\n  const tags = Array.from(el.querySelectorAll(\'.nyx-chip\')).map(c => c.textContent.replace(/\\s*×\\s*/, \'\').trim());\n  console.log(\'Tags updated:\', tags);\n});' }
+      ],
       classes: [['nyx-tag-input', 'Wrapper of .nyx-chip tags + a text input.'], ['Enter / ×', 'Add / remove a tag (runtime).']]
     },
 
@@ -529,12 +537,17 @@
       classes: [['nyx-breadcrumb', 'Trail wrapper.'], ['nyx-sep', 'Separator glyph.']]
     },
     {
-      id: 'tabs', group: 'Components', title: 'Tabs',
+      id: 'tabs', group: 'Components', title: 'Tabs', needsJs: true,
       summary: 'Underline tabs with a glowing indicator. Add data-nyx-tabs to the wrapper — the runtime handles switching.',
       sections: [
-        { title: 'Switchable', demo: '<div><div class="nyx-tabs" data-nyx-tabs><button class="nyx-tab active" data-nyx-tab="a">Overview</button><button class="nyx-tab" data-nyx-tab="b">Usage</button><button class="nyx-tab" data-nyx-tab="c">API</button></div><div class="nyx-tab-panel active" data-nyx-panel="a">Overview panel.</div><div class="nyx-tab-panel" data-nyx-panel="b">Usage panel.</div><div class="nyx-tab-panel" data-nyx-panel="c">API panel.</div></div>' }
+        { title: 'Switchable', demo: '<div><div class="nyx-tabs" data-nyx-tabs><button class="nyx-tab active" data-nyx-tab="a">Overview</button><button class="nyx-tab" data-nyx-tab="b">Usage</button><button class="nyx-tab" data-nyx-tab="c">API</button></div><div class="nyx-tab-panel active" data-nyx-panel="a">Overview panel.</div><div class="nyx-tab-panel" data-nyx-panel="b">Usage panel.</div><div class="nyx-tab-panel" data-nyx-panel="c">API panel.</div></div>' },
+        { title: 'JavaScript Events', text: 'Listen for active tab changes on the panel elements.', lang: 'js', code: 'document.addEventListener(\'nyx:tab-show\', (e) => {\n  console.log(\'Active tab:\', e.detail.tab);\n  console.log(\'Active panel:\', e.detail.panel);\n});' }
       ],
-      classes: [['data-nyx-tabs', 'Wrapper that activates switching.'], ['nyx-tab + data-nyx-tab', 'A tab button → key.'], ['nyx-tab-panel + data-nyx-panel', 'Panel for a key.']]
+      classes: [['data-nyx-tabs', 'Wrapper that activates switching.'], ['nyx-tab + data-nyx-tab', 'A tab button → key.'], ['nyx-tab-panel + data-nyx-panel', 'Panel for a key.']],
+      js: [
+        ['Tab click', 'Programmatic tab activation by executing click() on any [data-nyx-tab] button element.'],
+        ['Event: nyx:tab-show', 'Dispatched on the shown .nyx-tab-panel. detail: { tab, panel }']
+      ]
     },
     {
       id: 'pagination', group: 'Components', title: 'Pagination',
@@ -548,12 +561,19 @@
       classes: [['nyx-pagination', 'Wrapper around <button> pages.'], ['button.active / :disabled', 'Current / disabled page.'], ['.rounded / .ghost / .sm', 'Pill, borderless and compact variants.'], ['nyx-page-gap / nyx-pagination-info', 'Ellipsis gap and a “page X of Y” label.']]
     },
     {
-      id: 'command-palette', group: 'Components', title: 'Command palette',
+      id: 'command-palette', group: 'Components', title: 'Command palette', needsJs: true,
       summary: 'A fullscreen ⌘K search overlay. Trigger it with a data attribute or the keyboard; items can jump to targets.',
       sections: [
-        { title: 'Open it', demo: '<button class="nyx-btn nyx-btn-secondary" data-nyx-toggle="command">Open ⌘K palette</button>', code: '<button data-nyx-toggle="command">Open</button>\n\n<div class="nyx-command-palette" id="commandPalette">\n  <div class="nyx-cp-box"> … items with data-nyx-target … </div>\n</div>' }
+        { title: 'Open it', demo: '<button class="nyx-btn nyx-btn-secondary" data-nyx-toggle="command">Open ⌘K palette</button>', code: '<button data-nyx-toggle="command">Open</button>\n\n<div class="nyx-command-palette" id="commandPalette">\n  <div class="nyx-cp-box"> … items with data-nyx-target … </div>\n</div>' },
+        { title: 'Via JavaScript', text: 'Manage the command palette state programmatically or listen for show/hide events.', lang: 'js', code: '// Open palette\nNyx.openCommandPalette();\n\n// Close palette\nNyx.closeCommandPalette();\n\n// Listen for events\nconst cp = document.querySelector(\'.nyx-command-palette\');\nif (cp) {\n  cp.addEventListener(\'nyx:palette-show\', () => console.log(\'Command palette opened\'));\n  cp.addEventListener(\'nyx:palette-hide\', () => console.log(\'Command palette closed\'));\n}' }
       ],
-      classes: [['nyx-command-palette', 'Fullscreen overlay (one per page).'], ['data-nyx-toggle="command"', 'Open trigger (⌘K also works).'], ['nyx-cp-item + data-nyx-target', 'Result row → scrolls to target.']]
+      classes: [['nyx-command-palette', 'Fullscreen overlay (one per page).'], ['data-nyx-toggle="command"', 'Open trigger (⌘K also works).'], ['nyx-cp-item + data-nyx-target', 'Result row → scrolls to target.']],
+      js: [
+        ['Nyx.openCommandPalette()', 'Open the command palette.'],
+        ['Nyx.closeCommandPalette()', 'Close the command palette.'],
+        ['Event: nyx:palette-show', 'Dispatched when the palette opens.'],
+        ['Event: nyx:palette-hide', 'Dispatched when the palette closes.']
+      ]
     },
     {
       id: 'tables', group: 'Components', title: 'Tables & Data',
@@ -567,20 +587,35 @@
       classes: [['nyx-table', 'Styled table.'], ['.striped / .bordered / .compact / .borderless', 'Row stripes, cell borders, dense padding, no borders.'], ['tr.selected', 'Highlighted row.'], ['nyx-table-sortable', 'Click-to-sort headers (runtime).'], ['nyx-table-wrap', 'Scroll container for wide tables.'], ['nyx-kpi-row', '4-up responsive stat grid.']]
     },
     {
-      id: 'modal', group: 'Components', title: 'Modal',
+      id: 'modal', group: 'Components', title: 'Modal', needsJs: true,
       summary: 'A centered dialog over a blurred backdrop. Open/close declaratively; Esc and backdrop-click dismiss.',
       sections: [
-        { title: 'Open it', demo: '<button class="nyx-btn nyx-btn-primary" data-nyx-toggle="modal" data-nyx-target="#docModal">Open modal</button>', code: '<button data-nyx-toggle="modal" data-nyx-target="#m">Open</button>\n\n<div class="nyx-modal" id="m">\n  <div class="nyx-modal-box">\n    … <button data-nyx-dismiss>Close</button>\n  </div>\n</div>' }
+        { title: 'Open it', demo: '<button class="nyx-btn nyx-btn-primary" data-nyx-toggle="modal" data-nyx-target="#docModal">Open modal</button>', code: '<button data-nyx-toggle="modal" data-nyx-target="#m">Open</button>\n\n<div class="nyx-modal" id="m">\n  <div class="nyx-modal-box">\n    … <button data-nyx-dismiss>Close</button>\n  </div>\n</div>' },
+        { title: 'Via JavaScript', text: 'Open/close modals programmatically or hook into their show and hide events.', lang: 'js', code: '// Open a modal\nNyx.openModal(\'#myModal\');\n\n// Close a modal\nNyx.close(\'#myModal\');\n\n// Close all open overlays\nNyx.closeAll();\n\n// Listen for events\nconst m = document.getElementById(\'myModal\');\nm.addEventListener(\'nyx:modal-show\', () => console.log(\'Modal shown\'));\nm.addEventListener(\'nyx:modal-hide\', () => console.log(\'Modal hidden\'));' }
       ],
-      classes: [['nyx-modal', 'Dialog wrapper (place at end of <body>).'], ['nyx-modal-box', 'The panel.'], ['data-nyx-toggle="modal" / data-nyx-dismiss', 'Open / close triggers.']]
+      classes: [['nyx-modal', 'Dialog wrapper (place at end of <body>).'], ['nyx-modal-box', 'The panel.'], ['data-nyx-toggle="modal" / data-nyx-dismiss', 'Open / close triggers.']],
+      js: [
+        ['Nyx.openModal(target)', 'Open a modal by selector or element.'],
+        ['Nyx.close(target)', 'Close a modal by selector or element.'],
+        ['Nyx.closeAll()', 'Close all active overlays.'],
+        ['Event: nyx:modal-show', 'Dispatched when the modal opens.'],
+        ['Event: nyx:modal-hide', 'Dispatched when the modal closes.']
+      ]
     },
     {
-      id: 'drawer', group: 'Components', title: 'Drawer',
+      id: 'drawer', group: 'Components', title: 'Drawer', needsJs: true,
       summary: 'A right-side slide-in panel sharing the modal backdrop and dismiss mechanics.',
       sections: [
-        { title: 'Open it', demo: '<div class="nyx-flex nyx-gap-3 nyx-wrap"><button class="nyx-btn nyx-btn-secondary" data-nyx-toggle="drawer" data-nyx-target="#docDrawer">From the end</button><button class="nyx-btn nyx-btn-glass" data-nyx-toggle="drawer" data-nyx-target="#docDrawerLeft">From the start</button></div>', code: '<button data-nyx-toggle="drawer" data-nyx-target="#d">Open</button>\n\n<aside class="nyx-drawer" id="d"> … </aside>\n<aside class="nyx-drawer nyx-drawer-left" id="d2"> … </aside>' }
+        { title: 'Open it', demo: '<div class="nyx-flex nyx-gap-3 nyx-wrap"><button class="nyx-btn nyx-btn-secondary" data-nyx-toggle="drawer" data-nyx-target="#docDrawer">From the end</button><button class="nyx-btn nyx-btn-glass" data-nyx-toggle="drawer" data-nyx-target="#docDrawerLeft">From the start</button></div>', code: '<button data-nyx-toggle="drawer" data-nyx-target="#d">Open</button>\n\n<aside class="nyx-drawer" id="d"> … </aside>\n<aside class="nyx-drawer nyx-drawer-left" id="d2"> … </aside>' },
+        { title: 'Via JavaScript', text: 'Interact with drawers programmatically or handle show and hide transitions.', lang: 'js', code: '// Open a drawer\nNyx.openDrawer(\'#myDrawer\');\n\n// Close a drawer\nNyx.close(\'#myDrawer\');\n\n// Listen for events\nconst d = document.getElementById(\'myDrawer\');\nd.addEventListener(\'nyx:drawer-show\', () => console.log(\'Drawer shown\'));\nd.addEventListener(\'nyx:drawer-hide\', () => console.log(\'Drawer hidden\'));' }
       ],
-      classes: [['nyx-drawer', 'Slide-in panel (from the end edge).'], ['nyx-drawer-left', 'Slide-in from the start edge (offcanvas).'], ['data-nyx-toggle="drawer"', 'Open trigger.']]
+      classes: [['nyx-drawer', 'Slide-in panel (from the end edge).'], ['nyx-drawer-left', 'Slide-in from the start edge (offcanvas).'], ['data-nyx-toggle="drawer"', 'Open trigger.']],
+      js: [
+        ['Nyx.openDrawer(target)', 'Open a drawer panel by selector or element.'],
+        ['Nyx.close(target)', 'Close a drawer panel by selector or element.'],
+        ['Event: nyx:drawer-show', 'Dispatched when the drawer opens.'],
+        ['Event: nyx:drawer-hide', 'Dispatched when the drawer closes.']
+      ]
     },
     {
       id: 'tooltips', group: 'Components', title: 'Tooltips',
@@ -591,12 +626,18 @@
       classes: [['nyx-tooltip', 'Hover target wrapper.'], ['nyx-tip top/right/bottom/left', 'Tooltip + placement.']]
     },
     {
-      id: 'popovers', group: 'Components', title: 'Popovers',
+      id: 'popovers', group: 'Components', title: 'Popovers', needsJs: true,
       summary: 'A click-toggled floating panel with an arrow, for richer content than a tooltip.',
       sections: [
-        { title: 'Toggle', demo: '<span class="nyx-popover"><button class="nyx-btn nyx-btn-glass" data-nyx-toggle="popover">Popover</button><span class="nyx-pop"><strong>Title</strong><p class="nyx-caption" style="margin-top:6px">Rich floating content with an arrow.</p></span></span>' }
+        { title: 'Toggle', demo: '<span class="nyx-popover"><button class="nyx-btn nyx-btn-glass" data-nyx-toggle="popover">Popover</button><span class="nyx-pop"><strong>Title</strong><p class="nyx-caption" style="margin-top:6px">Rich floating content with an arrow.</p></span></span>' },
+        { title: 'Via JavaScript', text: 'Toggle popovers programmatically or listen for show/hide events.', lang: 'js', code: '// Toggle a popover\nNyx.togglePopover(\'#myPopover\');\n\n// Listen for events\nconst p = document.querySelector(\'.nyx-popover\');\np.addEventListener(\'nyx:popover-show\', () => console.log(\'Popover shown\'));\np.addEventListener(\'nyx:popover-hide\', () => console.log(\'Popover hidden\'));' }
       ],
-      classes: [['nyx-popover', 'Wrapper.'], ['nyx-pop', 'The floating panel.'], ['data-nyx-toggle="popover"', 'Toggle trigger.']]
+      classes: [['nyx-popover', 'Wrapper.'], ['nyx-pop', 'The floating panel.'], ['data-nyx-toggle="popover"', 'Toggle trigger.']],
+      js: [
+        ['Nyx.togglePopover(node, forceState)', 'Toggle a popover. Optionally pass a boolean to force show/hide.'],
+        ['Event: nyx:popover-show', 'Dispatched when the popover opens.'],
+        ['Event: nyx:popover-hide', 'Dispatched when the popover closes.']
+      ]
     },
 
     {
@@ -606,21 +647,27 @@
       classes: [['nyx-btn-group', 'Flex wrapper that fuses child .nyx-btn edges.']]
     },
     {
-      id: 'dropdown', group: 'Components', title: 'Dropdown', added: 'v1.1',
+      id: 'dropdown', group: 'Components', title: 'Dropdown', added: 'v1.1', needsJs: true,
       summary: 'A toggleable menu of actions. Opens on click; closes on outside-click or Esc.',
-      sections: [{ title: 'Menu', demo: '<div class="nyx-dropdown"><button class="nyx-btn nyx-btn-primary" data-nyx-toggle="dropdown">Actions ▾</button><div class="nyx-dropdown-menu"><button class="nyx-dropdown-item">✏️ Edit</button><button class="nyx-dropdown-item">📋 Duplicate</button><div class="nyx-dropdown-divider"></div><button class="nyx-dropdown-item">🗑️ Delete</button></div></div>' }],
+      sections: [
+        { title: 'Menu', demo: '<div class="nyx-dropdown"><button class="nyx-btn nyx-btn-primary" data-nyx-toggle="dropdown">Actions ▾</button><div class="nyx-dropdown-menu"><button class="nyx-dropdown-item">✏️ Edit</button><button class="nyx-dropdown-item">📋 Duplicate</button><div class="nyx-dropdown-divider"></div><button class="nyx-dropdown-item">🗑️ Delete</button></div></div>' },
+        { title: 'JavaScript Events', text: 'Listen for dropdown open and close events on the dropdown wrapper.', lang: 'js', code: 'const dd = document.querySelector(\'.nyx-dropdown\');\ndd.addEventListener(\'nyx:dropdown-show\', () => console.log(\'Dropdown opened\'));\ndd.addEventListener(\'nyx:dropdown-hide\', () => console.log(\'Dropdown closed\'));' }
+      ],
       classes: [['nyx-dropdown', 'Wrapper.'], ['data-nyx-toggle="dropdown"', 'Toggle trigger.'], ['nyx-dropdown-menu / -item / -divider', 'Menu, item, separator.']]
     },
     {
-      id: 'accordion', group: 'Components', title: 'Accordion', added: 'v1.1',
+      id: 'accordion', group: 'Components', title: 'Accordion', added: 'v1.1', needsJs: true,
       summary: 'Stacked collapsible panels. Add data-nyx-accordion to keep only one open at a time.',
       sections: [{ title: 'Single-open', demo: '<div class="nyx-accordion" data-nyx-accordion><div class="nyx-accordion-item"><button class="nyx-accordion-head active" data-nyx-toggle="collapse" data-nyx-target="#ac1">What is Nyx?</button><div class="nyx-collapse open" id="ac1"><div class="nyx-accordion-body">A dark-mode-native component framework with Luminous Depth.</div></div></div><div class="nyx-accordion-item"><button class="nyx-accordion-head" data-nyx-toggle="collapse" data-nyx-target="#ac2">Does it support RTL?</button><div class="nyx-collapse" id="ac2"><div class="nyx-accordion-body">Yes — set dir="rtl" on the html element and everything mirrors.</div></div></div></div>' }],
       classes: [['nyx-accordion + data-nyx-accordion', 'Single-open wrapper.'], ['nyx-accordion-head', 'Toggle (uses data-nyx-toggle="collapse").'], ['nyx-collapse / nyx-accordion-body', 'Animated panel + content.']]
     },
     {
-      id: 'collapse', group: 'Components', title: 'Collapse', added: 'v1.1',
+      id: 'collapse', group: 'Components', title: 'Collapse', added: 'v1.1', needsJs: true,
       summary: 'Toggle the visibility of any region with a smooth height transition.',
-      sections: [{ title: 'Toggle', demo: '<button class="nyx-btn nyx-btn-secondary" data-nyx-toggle="collapse" data-nyx-target="#col1">Toggle content</button><div class="nyx-collapse" id="col1"><div class="nyx-card" style="margin-top:12px">Now you see me. This region animates its height open and closed.</div></div>' }],
+      sections: [
+        { title: 'Toggle', demo: '<button class="nyx-btn nyx-btn-secondary" data-nyx-toggle="collapse" data-nyx-target="#col1">Toggle content</button><div class="nyx-collapse" id="col1"><div class="nyx-card" style="margin-top:12px">Now you see me. This region animates its height open and closed.</div></div>' },
+        { title: 'JavaScript Events', text: 'Listen for collapse transitions on the collapsible element.', lang: 'js', code: 'const c = document.getElementById(\'col1\');\nc.addEventListener(\'nyx:collapse-show\', () => console.log(\'Collapse shown\'));\nc.addEventListener(\'nyx:collapse-hide\', () => console.log(\'Collapse hidden\'));' }
+      ],
       classes: [['data-nyx-toggle="collapse" + data-nyx-target', 'Trigger → target.'], ['nyx-collapse', 'Animatable region (toggles .open).']]
     },
     {
@@ -642,10 +689,17 @@
       classes: [['nyx-close', 'Square close button (pair with data-nyx-dismiss in overlays).']]
     },
     {
-      id: 'carousel', group: 'Components', title: 'Carousel', added: 'v1.1',
+      id: 'carousel', group: 'Components', title: 'Carousel', added: 'v1.1', needsJs: true,
       summary: 'A slideshow with prev/next controls and clickable indicator dots.',
-      sections: [{ title: 'Slides', demo: '<div class="nyx-carousel" data-nyx-carousel><div class="nyx-slide active"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2">Slide one</h3></div></div><div class="nyx-slide"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2 nyx-gradient-text">Slide two</h3></div></div><div class="nyx-slide"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2">Slide three</h3></div></div><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl prev" data-nyx-slide="prev" aria-label="Previous">‹</button><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl next" data-nyx-slide="next" aria-label="Next">›</button><div class="nyx-carousel-dots"><button class="active" data-nyx-slide-to="0" aria-label="Slide 1"></button><button data-nyx-slide-to="1" aria-label="Slide 2"></button><button data-nyx-slide-to="2" aria-label="Slide 3"></button></div></div>' }, { title: 'Flat, with caption', demo: '<div class="nyx-carousel flat" data-nyx-carousel><div class="nyx-slide active"><div style="position:relative;min-height:150px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2))"><div class="nyx-carousel-caption"><h4 class="nyx-h4">Mountains</h4><p class="nyx-caption">A caption band over the slide.</p></div></div></div><div class="nyx-slide"><div style="position:relative;min-height:150px;background:linear-gradient(120deg,var(--nyx-accent-2),var(--nyx-accent))"><div class="nyx-carousel-caption"><h4 class="nyx-h4">Ocean</h4><p class="nyx-caption">Add .flat to drop the outer frame.</p></div></div></div><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl prev" data-nyx-slide="prev" aria-label="Previous">‹</button><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl next" data-nyx-slide="next" aria-label="Next">›</button></div>' }],
-      classes: [['nyx-carousel (+ .flat / .fade)', 'Slideshow wrapper; .flat drops the border, .fade cross-fades slides.'], ['nyx-slide', 'A slide (one has .active).'], ['nyx-carousel-caption', 'Optional gradient caption band over a slide.'], ['data-nyx-slide / data-nyx-slide-to', 'Prev/next controls and indicator dots.']]
+      sections: [
+        { title: 'Slides', demo: '<div class="nyx-carousel" data-nyx-carousel><div class="nyx-slide active"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2">Slide one</h3></div></div><div class="nyx-slide"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2 nyx-gradient-text">Slide two</h3></div></div><div class="nyx-slide"><div class="nyx-spotlight" style="padding:44px 24px"><h3 class="nyx-h2">Slide three</h3></div></div><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl prev" data-nyx-slide="prev" aria-label="Previous">‹</button><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl next" data-nyx-slide="next" aria-label="Next">›</button><div class="nyx-carousel-dots"><button class="active" data-nyx-slide-to="0" aria-label="Slide 1"></button><button data-nyx-slide-to="1" aria-label="Slide 2"></button><button data-nyx-slide-to="2" aria-label="Slide 3"></button></div></div>' },
+        { title: 'Flat, with caption', demo: '<div class="nyx-carousel flat" data-nyx-carousel><div class="nyx-slide active"><div style="position:relative;min-height:150px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2))"><div class="nyx-carousel-caption"><h4 class="nyx-h4">Mountains</h4><p class="nyx-caption">A caption band over the slide.</p></div></div></div><div class="nyx-slide"><div style="position:relative;min-height:150px;background:linear-gradient(120deg,var(--nyx-accent-2),var(--nyx-accent))"><div class="nyx-carousel-caption"><h4 class="nyx-h4">Ocean</h4><p class="nyx-caption">Add .flat to drop the outer frame.</p></div></div></div><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl prev" data-nyx-slide="prev" aria-label="Previous">‹</button><button class="nyx-btn nyx-btn-icon nyx-btn-glass nyx-carousel-ctrl next" data-nyx-slide="next" aria-label="Next">›</button></div>' },
+        { title: 'JavaScript Events', text: 'Listen for slide transitions on the carousel element.', lang: 'js', code: 'const c = document.querySelector(\'.nyx-carousel\');\nc.addEventListener(\'nyx:slide\', (e) => {\n  console.log(\'Active slide index:\', e.detail.index);\n  console.log(\'Previous slide index:\', e.detail.from);\n});' }
+      ],
+      classes: [['nyx-carousel (+ .flat / .fade)', 'Slideshow wrapper; .flat drops the border, .fade cross-fades slides.'], ['nyx-slide', 'A slide (one has .active).'], ['nyx-carousel-caption', 'Optional gradient caption band over a slide.'], ['data-nyx-slide / data-nyx-slide-to', 'Prev/next controls and indicator dots.']],
+      js: [
+        ['Event: nyx:slide', 'Dispatched on the carousel element when slide changes. detail: { index, from }']
+      ]
     },
     {
       id: 'nav-pills', group: 'Components', title: 'Nav pills', added: 'v1.1',
@@ -724,12 +778,19 @@
       ]
     },
     {
-      id: 'bottom-sheet', group: 'Components', title: 'Bottom sheet', added: 'v1.5',
+      id: 'bottom-sheet', group: 'Components', title: 'Bottom sheet', added: 'v1.5', needsJs: true,
       summary: 'A panel that slides up from the bottom — the mobile-native alternative to a modal. Opens with data-nyx-toggle="sheet"; closes on backdrop, Esc, or data-nyx-dismiss.',
       sections: [
-        { title: 'Open it', demo: '<button class="nyx-btn nyx-btn-primary" data-nyx-toggle="sheet" data-nyx-target="#docSheet">Open bottom sheet</button>' }
+        { title: 'Open it', demo: '<button class="nyx-btn nyx-btn-primary" data-nyx-toggle="sheet" data-nyx-target="#docSheet">Open bottom sheet</button>' },
+        { title: 'Via JavaScript', text: 'Open/close bottom sheets programmatically or listen for show/hide events.', lang: 'js', code: '// Open a sheet\nNyx.openModal(\'#mySheet\');\n\n// Close a sheet\nNyx.close(\'#mySheet\');\n\n// Listen for events\nconst s = document.getElementById(\'mySheet\');\ns.addEventListener(\'nyx:sheet-show\', () => console.log(\'Sheet shown\'));\ns.addEventListener(\'nyx:sheet-hide\', () => console.log(\'Sheet hidden\'));' }
       ],
-      classes: [['nyx-sheet', 'The sheet panel (add a .nyx-sheet-grip handle).'], ['data-nyx-toggle="sheet"', 'Opens the targeted sheet (+ data-nyx-target).']]
+      classes: [['nyx-sheet', 'The sheet panel (add a .nyx-sheet-grip handle).'], ['data-nyx-toggle="sheet"', 'Opens the targeted sheet (+ data-nyx-target).']],
+      js: [
+        ['Nyx.openModal(target)', 'Open a bottom sheet by selector or element.'],
+        ['Nyx.close(target)', 'Close a bottom sheet by selector or element.'],
+        ['Event: nyx:sheet-show', 'Dispatched when the sheet opens.'],
+        ['Event: nyx:sheet-hide', 'Dispatched when the sheet closes.']
+      ]
     },
     {
       id: 'fab', group: 'Components', title: 'FAB + speed dial', added: 'v1.5',
@@ -740,7 +801,7 @@
       classes: [['nyx-fab', 'Container (fixed by default).'], ['nyx-fab-btn', 'The main button; rotates when open.'], ['nyx-fab-actions / nyx-fab-action', 'Speed-dial list / one labelled action.']]
     },
     {
-      id: 'back-to-top', group: 'Components', title: 'Back to top', added: 'v1.5',
+      id: 'back-to-top', group: 'Components', title: 'Back to top', added: 'v1.5', needsJs: true,
       summary: 'A button that appears after you scroll down and smooth-scrolls back to the top. Drop one anywhere; the runtime shows/hides it on scroll. (Shown inline here.)',
       sections: [
         { title: 'Button', demo: '<button class="nyx-to-top show" style="position:relative;inset:auto" aria-label="Back to top">↑</button>' }
@@ -748,31 +809,40 @@
       classes: [['nyx-to-top', 'Fixed button; runtime toggles .show past 320px scroll and scrolls to top on click.']]
     },
     {
-      id: 'top-progress', group: 'Components', title: 'Top progress bar', added: 'v1.5',
+      id: 'top-progress', group: 'Components', title: 'Top progress bar', added: 'v1.5', needsJs: true,
       summary: 'A thin page-load progress bar pinned to the top — NProgress-style. Drive it imperatively for route changes, fetches or uploads.',
       sections: [
         { title: 'Simulate a load', demo: '<button class="nyx-btn nyx-btn-secondary" onclick="Nyx.progress.start();setTimeout(function(){Nyx.progress.done()},1300)">Run progress</button>', lang: 'js', code: "Nyx.progress.start();   // trickles toward the top\n// …after your fetch / route change\nNyx.progress.done();    // fills to 100% and fades" }
       ],
-      classes: [['Nyx.progress.start()', 'Show the bar and trickle forward.'], ['Nyx.progress.set(n)', 'Set the width to n%.'], ['Nyx.progress.done()', 'Complete and fade out.']]
+      classes: [['Nyx.progress.start()', 'Show the bar and trickle forward.'], ['Nyx.progress.set(n)', 'Set the width to n%.'], ['Nyx.progress.done()', 'Complete and fade out.']],
+      js: [
+        ['Nyx.progress.start()', 'Show the progress bar and trickle forward.'],
+        ['Nyx.progress.set(n)', 'Set the progress manually to percentage n (0-100).'],
+        ['Nyx.progress.done()', 'Complete the progress bar (slides to 100%) and fades out.']
+      ]
     },
     {
-      id: 'context-menu', group: 'Components', title: 'Context menu', added: 'v1.5',
+      id: 'context-menu', group: 'Components', title: 'Context menu', added: 'v1.5', needsJs: true,
       summary: 'A right-click menu positioned at the cursor. Add data-nyx-contextmenu="#id" to any element; closes on outside click or Esc.',
       sections: [
-        { title: 'Right-click the card', demo: '<div data-nyx-contextmenu="#docCtx" class="nyx-card" style="text-align:center;padding:28px;cursor:context-menu">Right-click anywhere here</div><div class="nyx-context-menu" id="docCtx"><button class="nyx-dropdown-item">✎ Rename</button><button class="nyx-dropdown-item">⧉ Duplicate</button><div class="nyx-dropdown-divider"></div><button class="nyx-dropdown-item">🗑 Delete</button></div>' }
+        { title: 'Right-click the card', demo: '<div data-nyx-contextmenu="#docCtx" class="nyx-card" style="text-align:center;padding:28px;cursor:context-menu">Right-click anywhere here</div><div class="nyx-context-menu" id="docCtx"><button class="nyx-dropdown-item">✎ Rename</button><button class="nyx-dropdown-item">⧉ Duplicate</button><div class="nyx-dropdown-divider"></div><button class="nyx-dropdown-item">🗑 Delete</button></div>' },
+        { title: 'JavaScript Events', text: 'Listen for dropdown open/close events on context menus (which are sub-types of dropdowns).', lang: 'js', code: 'const menu = document.getElementById(\'docCtx\');\nmenu.addEventListener(\'nyx:dropdown-show\', () => console.log(\'Context menu opened\'));\nmenu.addEventListener(\'nyx:dropdown-hide\', () => console.log(\'Context menu closed\'));' }
       ],
       classes: [['data-nyx-contextmenu="#id"', 'On any element: right-click opens that menu at the cursor.'], ['nyx-context-menu', 'The menu (reuses .nyx-dropdown-item rows).']]
     },
     {
-      id: 'vertical-tabs', group: 'Components', title: 'Vertical tabs', added: 'v1.2',
+      id: 'vertical-tabs', group: 'Components', title: 'Vertical tabs', added: 'v1.2', needsJs: true,
       summary: 'The tabs component laid out vertically — the same data-nyx-tabs wiring.',
       sections: [{ title: 'Side tabs', demo: '<div class="nyx-tabs-vertical"><div class="nyx-tabs" data-nyx-tabs><button class="nyx-tab active" data-nyx-tab="vt1">Profile</button><button class="nyx-tab" data-nyx-tab="vt2">Account</button><button class="nyx-tab" data-nyx-tab="vt3">Billing</button></div><div style="flex:1"><div class="nyx-tab-panel active" data-nyx-panel="vt1">Profile settings.</div><div class="nyx-tab-panel" data-nyx-panel="vt2">Account settings.</div><div class="nyx-tab-panel" data-nyx-panel="vt3">Billing settings.</div></div></div>' }],
       classes: [['nyx-tabs-vertical', 'Vertical layout wrapper around .nyx-tabs + panels.']]
     },
     {
-      id: 'calendar', group: 'Components', title: 'Calendar', added: 'v1.2',
+      id: 'calendar', group: 'Components', title: 'Calendar', added: 'v1.2', needsJs: true,
       summary: 'A month grid that renders the current month and pages through months with ‹ ›; click a day to select it. Add data-nyx-calendar and the runtime wires it (today + selection states). Leave the attribute off for a static, read-only month.',
-      sections: [{ title: 'Interactive month', demo: '<div class="nyx-calendar" data-nyx-calendar><div class="nyx-calendar-head"><button class="nyx-btn nyx-btn-icon nyx-btn-sm nyx-btn-ghost" aria-label="previous month">‹</button><span>June 2026</span><button class="nyx-btn nyx-btn-icon nyx-btn-sm nyx-btn-ghost" aria-label="next month">›</button></div><div class="nyx-calendar-grid"><span class="dow">S</span><span class="dow">M</span><span class="dow">T</span><span class="dow">W</span><span class="dow">T</span><span class="dow">F</span><span class="dow">S</span><span class="day muted">31</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day today">19</span><span class="day">20</span><span class="day">21</span><span class="day selected">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span><span class="day muted">1</span><span class="day muted">2</span><span class="day muted">3</span><span class="day muted">4</span></div></div>' }],
+      sections: [
+        { title: 'Interactive month', demo: '<div class="nyx-calendar" data-nyx-calendar><div class="nyx-calendar-head"><button class="nyx-btn nyx-btn-icon nyx-btn-sm nyx-btn-ghost" aria-label="previous month">‹</button><span>June 2026</span><button class="nyx-btn nyx-btn-icon nyx-btn-sm nyx-btn-ghost" aria-label="next month">›</button></div><div class="nyx-calendar-grid"><span class="dow">S</span><span class="dow">M</span><span class="dow">T</span><span class="dow">W</span><span class="dow">T</span><span class="dow">F</span><span class="dow">S</span><span class="day muted">31</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day today">19</span><span class="day">20</span><span class="day">21</span><span class="day selected">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span><span class="day muted">1</span><span class="day muted">2</span><span class="day muted">3</span><span class="day muted">4</span></div></div>' },
+        { title: 'JavaScript Events', text: 'Listen for selection updates on the calendar container.', lang: 'js', code: 'const cal = document.querySelector(\'[data-nyx-calendar]\');\ncal.addEventListener(\'nyx:date\', (e) => {\n  console.log(\'Selected date:\', e.detail); // e.detail is standard YYYY-MM-DD string\n});' }
+      ],
       classes: [['nyx-calendar (+ data-nyx-calendar)', 'Month container; the attribute makes ‹ › paging and day-select live.'], ['nyx-calendar-grid .day', 'Day cell (+ .today / .selected / .muted).']]
     },
     {
@@ -1149,12 +1219,16 @@
       classes: [['nyx-pricing', 'Responsive tier grid.'], ['nyx-price-card (+.featured)', 'A tier; featured is highlighted + scaled.'], ['nyx-price', 'Amount (gradient on featured).'], ['nyx-price-name / -feat / -tag', 'Tier name, feature list, corner badge.']]
     },
     {
-      id: 'kanban', group: 'Components', title: 'Kanban board', added: 'v1.7',
+      id: 'kanban', group: 'Components', title: 'Kanban board', added: 'v1.7', needsJs: true,
       summary: 'Horizontally-scrolling columns of cards for boards and pipelines. Cards are drag-and-drop — reorder within a column or move across columns (the runtime wires it). RTL flips the column order automatically.',
       sections: [
-        { title: 'Board', demo: '<div class="nyx-kanban"><div class="nyx-kanban-col"><h4>To do <span class="nyx-badge">2</span></h4><div class="nyx-kanban-card">Design tokens</div><div class="nyx-kanban-card">RTL audit</div></div><div class="nyx-kanban-col"><h4>In progress <span class="nyx-badge">1</span></h4><div class="nyx-kanban-card">Charts module</div></div><div class="nyx-kanban-col"><h4>Done <span class="nyx-badge">1</span></h4><div class="nyx-kanban-card">Backgrounds</div></div></div>' }
+        { title: 'Board', demo: '<div class="nyx-kanban"><div class="nyx-kanban-col"><h4>To do <span class="nyx-badge">2</span></h4><div class="nyx-kanban-card">Design tokens</div><div class="nyx-kanban-card">RTL audit</div></div><div class="nyx-kanban-col"><h4>In progress <span class="nyx-badge">1</span></h4><div class="nyx-kanban-card">Charts module</div></div><div class="nyx-kanban-col"><h4>Done <span class="nyx-badge">1</span></h4><div class="nyx-kanban-card">Backgrounds</div></div></div>' },
+        { title: 'JavaScript Events', text: 'Listen for cards being moved / reordered on the board.', lang: 'js', code: 'document.addEventListener(\'nyx:kanban-move\', (e) => {\n  console.log(\'Card moved:\', e.target);\n  console.log(\'New column:\', e.target.parentElement);\n});' }
       ],
-      classes: [['nyx-kanban', 'Scrollable column row (runtime enables drag-and-drop).'], ['nyx-kanban-col', 'A column (header + cards); highlights as a drop target.'], ['nyx-kanban-card', 'A card you can drag between columns.']]
+      classes: [['nyx-kanban', 'Scrollable column row (runtime enables drag-and-drop).'], ['nyx-kanban-col', 'A column (header + cards); highlights as a drop target.'], ['nyx-kanban-card', 'A card you can drag between columns.']],
+      js: [
+        ['Event: nyx:kanban-move', 'Dispatched on the dragged card element when it is dropped/moved.']
+      ]
     },
     {
       id: 'notifications', group: 'Components', title: 'Notifications', added: 'v1.7',
@@ -1259,20 +1333,26 @@
       classes: [['nyx-skeleton', 'The shimmer base (combine with a shape).'], ['nyx-skeleton-text (+.w-40 / 60 / 80)', 'Text line at a width.'], ['nyx-skeleton-circle / -media', 'Avatar dot / image block.'], ['nyx-skeleton-card / -row / -lines', 'Card and list-row scaffolds.']]
     },
     {
-      id: 'image', group: 'Components', title: 'Image', added: 'v1.8',
+      id: 'image', group: 'Components', title: 'Image', added: 'v1.8', needsJs: true,
       summary: 'Responsive image component with built-in aspect ratios, lazy loading, and placeholder shimmers until the image loads.',
       sections: [
         { title: 'Responsive 16:9', demo: '<div class="nyx-image nyx-image--ratio-16-9" data-loaded="false" style="width: 300px;"><div class="nyx-image__placeholder" aria-hidden="true"></div><img alt="Demo" src="https://picsum.photos/300/168" loading="lazy" decoding="async"></div>' }
       ],
-      classes: [['nyx-image', 'Image wrapper container.'], ['nyx-image--ratio-16-9', 'Aspect ratio modifier (16-9, 1-1, 4-3).'], ['nyx-image__placeholder', 'Animated placeholder state.'], ['data-loaded="true"', 'Hides the placeholder once the image loads natively.']]
+      classes: [['nyx-image', 'Image wrapper container.'], ['nyx-image--ratio-16-9', 'Aspect ratio modifier (16-9, 1-1, 4-3).'], ['nyx-image__placeholder', 'Animated placeholder state.'], ['data-loaded="true"', 'Hides the placeholder once the image loads natively.']],
+      js: [
+        ['Image Load handler', 'The runtime listens to native load events on the inner image, then sets data-loaded="true" on the parent container to dismiss the shimmer.']
+      ]
     },
     {
-      id: 'responsive-nav', group: 'Components', title: 'Responsive Nav', added: 'v1.8',
+      id: 'responsive-nav', group: 'Components', title: 'Responsive Nav', added: 'v1.8', needsJs: true,
       summary: 'A fully responsive navigation bar with a mobile hamburger toggle and an embedded hover/focus-driven mega menu panel.',
       sections: [
         { title: 'Interactive Navbar', demo: '<div style="transform:scale(0.8);transform-origin:top left;width:125%;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius)"><header class="nyx-nav" data-open="false"><div class="brand">Brand</div><button class="nav-toggle" aria-expanded="false">☰</button><nav class="nav-links"><a href="#/">Home</a><div class="nyx-mega"><a href="#/">Products ▾</a><div class="mega-panel"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><a href="#/">Store</a><a href="#/">Docs</a></div></div></div><a href="#/">Contact</a></nav></header></div>' }
       ],
-      classes: [['nyx-nav', 'The main navbar wrapper.'], ['.nav-toggle', 'Mobile hamburger button.'], ['.nav-links', 'The inline or dropdown links container.'], ['nyx-mega', 'Wrapper for a mega menu.'], ['.mega-panel', 'The mega dropdown pane.']]
+      classes: [['nyx-nav', 'The main navbar wrapper.'], ['.nav-toggle', 'Mobile hamburger button.'], ['.nav-links', 'The inline or dropdown links container.'], ['nyx-mega', 'Wrapper for a mega menu.'], ['.mega-panel', 'The mega dropdown pane.']],
+      js: [
+        ['Navbar toggling', 'The runtime wires click triggers on the .nav-toggle button to alternate the header [data-open="true|false"] attribute on mobile screens.']
+      ]
     },
     {
       id: 'bottom-nav', group: 'Components', title: 'Bottom navigation', added: 'v1.8',
@@ -1291,57 +1371,77 @@
       classes: [['nyx-megamenu', 'Hover / focus wrapper.'], ['nyx-megamenu-panel', 'The dropdown grid panel.'], ['nyx-megamenu-col + h5', 'A column with a heading.']]
     },
     {
-      id: 'snackbar', group: 'Components', title: 'Snackbar', added: 'v1.8',
+      id: 'snackbar', group: 'Components', title: 'Snackbar', added: 'v1.8', needsJs: true,
       summary: 'A brief bottom-centered message with an optional action button — call Nyx.snackbar(message, options). Auto-dismisses unless you pass duration: 0.',
       sections: [
         { title: 'Show one', demo: '<div class="nyx-flex nyx-gap-3 nyx-wrap"><button class="nyx-btn nyx-btn-primary" onclick="Nyx.snackbar(&#39;Message sent.&#39;)">Simple</button><button class="nyx-btn nyx-btn-secondary" onclick="Nyx.snackbar(&#39;Conversation archived.&#39;,{action:&#39;Undo&#39;,onAction:function(){Nyx.toast(&#39;Restored&#39;,&#39;success&#39;)}})">With action</button></div>', lang: 'js', code: "Nyx.snackbar('Conversation archived.', {\n  action: 'Undo',\n  onAction: () => restore(),\n  duration: 4500   // ms; 0 = sticky\n});" }
       ],
-      classes: [['Nyx.snackbar(msg, opts)', 'Imperative API: { action, onAction, duration }.'], ['nyx-snackbar', 'The element (styling hook).']]
+      classes: [['Nyx.snackbar(msg, opts)', 'Imperative API: { action, onAction, duration }.'], ['nyx-snackbar', 'The element (styling hook).']],
+      js: [
+        ['Nyx.snackbar(msg, opts)', 'Displays a snackbar message. Options: { action, onAction, duration }. Returns the snackbar DOM element.'],
+        ['snackbar.dismiss()', 'Calling dismiss() on the returned element fades and removes it.']
+      ]
     },
     {
-      id: 'confirm', group: 'Components', title: 'Confirm dialog', added: 'v1.8',
+      id: 'confirm', group: 'Components', title: 'Confirm dialog', added: 'v1.8', needsJs: true,
       summary: 'A promise-based confirmation modal — Nyx.confirm(message, options) resolves to true or false. Esc or an outside click counts as cancel.',
       sections: [
         { title: 'Ask first', demo: '<div class="nyx-flex nyx-gap-3 nyx-wrap"><button class="nyx-btn nyx-btn-primary" onclick="Nyx.confirm(&#39;Publish these changes now?&#39;,{title:&#39;Publish&#39;}).then(function(ok){Nyx.toast(ok?&#39;Published&#39;:&#39;Cancelled&#39;,ok?&#39;success&#39;:&#39;info&#39;)})">Publish…</button><button class="nyx-btn nyx-btn-glass" onclick="Nyx.confirm(&#39;Delete this project? This cannot be undone.&#39;,{title:&#39;Delete project&#39;,danger:true,confirmText:&#39;Delete&#39;}).then(function(ok){if(ok)Nyx.toast(&#39;Deleted&#39;,&#39;danger&#39;)})">Delete…</button></div>', lang: 'js', code: "const ok = await Nyx.confirm('Delete this project?', {\n  title: 'Delete project',\n  danger: true,\n  confirmText: 'Delete'\n});\nif (ok) remove();" }
       ],
-      classes: [['Nyx.confirm(msg, opts)', 'Returns Promise<boolean>: { title, confirmText, cancelText, danger }.']]
+      classes: [['Nyx.confirm(msg, opts)', 'Returns Promise<boolean>: { title, confirmText, cancelText, danger }.']],
+      js: [
+        ['Nyx.confirm(message, options)', 'Renders a confirmation modal dialog. Returns a Promise resolving to true (confirm clicked) or false (cancel/backdrop/Esc). Options: { title, confirmText, cancelText, danger }.']
+      ]
     },
     {
-      id: 'compare', group: 'Components', title: 'Before / after', added: 'v1.8',
+      id: 'compare', group: 'Components', title: 'Before / after', added: 'v1.8', needsJs: true,
       summary: 'Drag the handle to wipe between two stacked images — great for edits, retouching and theme comparisons. The runtime wires the pointer drag.',
       sections: [
         { title: 'Drag the slider', demo: '<div class="nyx-compare" style="max-width:420px"><img class="nyx-compare-before" alt="before" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22420%22 height=%22260%22%3E%3Crect width=%22420%22 height=%22260%22 fill=%22%231a1a2e%22/%3E%3Ctext x=%2250%25%22 y=%2252%25%22 fill=%22%23888%22 font-family=%22sans-serif%22 font-size=%2228%22 text-anchor=%22middle%22%3EBefore%3C/text%3E%3C/svg%3E"><img class="nyx-compare-after" alt="after" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22420%22 height=%22260%22%3E%3Crect width=%22420%22 height=%22260%22 fill=%22%236c63ff%22/%3E%3Ctext x=%2250%25%22 y=%2252%25%22 fill=%22%23fff%22 font-family=%22sans-serif%22 font-size=%2228%22 text-anchor=%22middle%22%3EAfter%3C/text%3E%3C/svg%3E"><div class="nyx-compare-handle"></div></div>' }
       ],
-      classes: [['nyx-compare', 'Wrapper of two images + a handle.'], ['nyx-compare-after', 'Top image, clipped to the slider.'], ['nyx-compare-handle', 'The draggable divider.']]
+      classes: [['nyx-compare', 'Wrapper of two images + a handle.'], ['nyx-compare-after', 'Top image, clipped to the slider.'], ['nyx-compare-handle', 'The draggable divider.']],
+      js: [
+        ['Slider dragging', 'The runtime handles pointermove and pointerdown listeners on the handle divider to calculate the percentage clip-path width dynamically.']
+      ]
     },
     {
-      id: 'lightbox', group: 'Components', title: 'Lightbox gallery', added: 'v1.8',
+      id: 'lightbox', group: 'Components', title: 'Lightbox gallery', added: 'v1.8', needsJs: true,
       summary: 'A thumbnail grid that opens a fullscreen viewer on click — arrow keys or the on-screen controls step through, Esc or a backdrop click closes. Use data-full on each thumb for a higher-res source.',
       sections: [
         { title: 'Click a thumb', demo: '<div class="nyx-gallery" style="max-width:380px">' + ['%236c63ff','%2300d4aa','%23f5a623','%23e2406b','%231a1a2e','%233ad6c5'].map(function (c, i) { return '<img alt="image ' + (i + 1) + '" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22240%22%3E%3Crect width=%22240%22 height=%22240%22 fill=%22' + c + '%22/%3E%3C/svg%3E">'; }).join('') + '</div>', code: '<div class="nyx-gallery">\n  <img src="thumb1.jpg" data-full="full1.jpg" alt="">\n  <img src="thumb2.jpg" data-full="full2.jpg" alt="">\n</div>' }
       ],
-      classes: [['nyx-gallery', 'Responsive thumb grid (runtime opens the lightbox).'], ['img[data-full]', 'Optional high-res source for the viewer.']]
+      classes: [['nyx-gallery', 'Responsive thumb grid (runtime opens the lightbox).'], ['img[data-full]', 'Optional high-res source for the viewer.']],
+      js: [
+        ['Lightbox initialization', 'The runtime dynamically binds click listeners to child images of a .nyx-gallery, building a fullscreen lightbox with carousel navigation (.nyx-lightbox).']
+      ]
     },
     {
-      id: 'video', group: 'Components', title: 'Video facade', added: 'v1.8',
+      id: 'video', group: 'Components', title: 'Video facade', added: 'v1.8', needsJs: true,
       summary: 'A poster with a play button that swaps in the real iframe only on click — keeps pages fast by deferring the embed. Put the embed URL in data-embed.',
       sections: [
         { title: 'Click to play', demo: '<div class="nyx-video" data-embed="https://www.youtube.com/embed/aqz-KE-bpKQ" style="max-width:480px"><img alt="video poster" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22480%22 height=%22270%22%3E%3Crect width=%22480%22 height=%22270%22 fill=%22%231a1a2e%22/%3E%3Ctext x=%2250%25%22 y=%2252%25%22 fill=%22%23888%22 font-family=%22sans-serif%22 font-size=%2222%22 text-anchor=%22middle%22%3EPoster%3C/text%3E%3C/svg%3E"><button class="nyx-video-play" aria-label="play">▶</button></div>', code: '<div class="nyx-video" data-embed="https://www.youtube.com/embed/VIDEO_ID">\n  <img src="poster.jpg" alt="">\n  <button class="nyx-video-play" aria-label="play">▶</button>\n</div>' }
       ],
-      classes: [['nyx-video[data-embed]', 'Facade; the embed URL loads on click.'], ['nyx-video-play', 'The play-button overlay.']]
+      classes: [['nyx-video[data-embed]', 'Facade; the embed URL loads on click.'], ['nyx-video-play', 'The play-button overlay.']],
+      js: [
+        ['Video play loading', 'The runtime listens to click actions on the facade, then builds and injects an <iframe> referencing the data-embed URL to replace the poster.']
+      ]
     },
     {
-      id: 'hijri-calendar', group: 'Regional', title: 'Hijri calendar', added: 'v1.8',
+      id: 'hijri-calendar', group: 'Regional', title: 'Hijri calendar', added: 'v1.8', needsJs: true,
       summary: 'A full Islamic (Umm al-Qura) month grid — add data-nyx-calendar="hijri" and the runtime computes the month with Intl, pages with ‹ ›, marks today, and localises month names + numerals to Arabic under dir="rtl".',
       sections: [
-        { title: 'Hijri month', demo: '<div class="nyx-calendar" data-nyx-calendar="hijri"></div>' }
+        { title: 'Hijri month', demo: '<div class="nyx-calendar" data-nyx-calendar="hijri"></div>' },
+        { title: 'JavaScript Events', text: 'Listen for date selection updates on the Hijri calendar.', lang: 'js', code: 'const cal = document.querySelector(\'[data-nyx-calendar="hijri"]\');\ncal.addEventListener(\'nyx:date\', (e) => {\n  console.log(\'Selected Hijri date:\', e.detail); // e.detail is Gregorian YYYY-MM-DD string of selected cell\n});' }
       ],
-      classes: [['data-nyx-calendar="hijri"', 'Live Umm al-Qura month (runtime-rendered).'], ['data-nyx-calendar', 'No value = a Gregorian month instead.']]
+      classes: [['data-nyx-calendar="hijri"', 'Live Umm al-Qura month (runtime-rendered).'], ['data-nyx-calendar', 'No value = a Gregorian month instead.']],
+      js: [
+        ['Event: nyx:date', 'Dispatched on selection changes. detail: YYYY-MM-DD string']
+      ]
     },
 
     /* ===== REGIONAL (MENA) ===== */
     {
-      id: 'prayer-times', group: 'Regional', title: 'Prayer times', added: 'v1.4',
+      id: 'prayer-times', group: 'Regional', title: 'Prayer times', added: 'v1.4', needsJs: true,
       summary: 'A row of the five daily prayers — add data-nyx-prayers and the runtime reads each data-time and glows whichever prayer is next from the device clock. A staple of MENA apps.',
       sections: [
         {
@@ -1377,17 +1477,20 @@
       classes: [['nyx-price', 'Inline price (.amt + .cur + optional .per).'], ['nyx-price lg', 'Display-size amount.'], ['.per > del', 'Strike-through original price.']]
     },
     {
-      id: 'bilingual', group: 'Regional', title: 'Bilingual label', added: 'v1.4',
+      id: 'bilingual', group: 'Regional', title: 'Bilingual label', added: 'v1.4', needsJs: true,
       summary: 'Pair an Arabic label with its Latin transliteration / English — stacked or inline. The Arabic line uses the Arabic font automatically; great for bilingual menus, nav and product names.',
       sections: [
         { title: 'Stacked', demo: '<div class="nyx-flex nyx-gap-6 nyx-wrap"><span class="nyx-bilingual"><span class="ar">لوحة التحكّم</span><span class="en">Dashboard</span></span><span class="nyx-bilingual"><span class="ar">الفواتير</span><span class="en">Invoices</span></span><span class="nyx-bilingual"><span class="ar">الإعدادات</span><span class="en">Settings</span></span></div>' },
         { title: 'Inline', demo: '<span class="nyx-bilingual inline"><span class="ar">مرحباً</span><span class="en">— Marhaban</span></span>' },
         { title: 'Arabic-Indic numerals (JS)', text: 'Add data-nyx-numerals="arab" to convert 0-9 to ٠-٩ on init, or call Nyx.toArabicNumerals(value) yourself.', demo: '<div class="nyx-flex nyx-gap-5 nyx-wrap nyx-items-center"><span>Order <strong data-nyx-numerals="arab">#10482</strong></span><span class="nyx-badge nyx-badge-success" data-nyx-numerals="arab">2025</span></div>', lang: 'js', code: "Nyx.toArabicNumerals('2025');  // => '٢٠٢٥'" }
       ],
-      classes: [['nyx-bilingual', 'Arabic (.ar) over Latin (.en).'], ['nyx-bilingual inline', 'One-line layout.'], ['data-nyx-numerals="arab"', 'Convert Western digits to Arabic-Indic on init.'], ['Nyx.toArabicNumerals(v)', 'Helper that returns the converted string.']]
+      classes: [['nyx-bilingual', 'Arabic (.ar) over Latin (.en).'], ['nyx-bilingual inline', 'One-line layout.'], ['data-nyx-numerals="arab"', 'Convert Western digits to Arabic-Indic on init.'], ['Nyx.toArabicNumerals(v)', 'Helper that returns the converted string.']],
+      js: [
+        ['Nyx.toArabicNumerals(str)', 'Utility method to translate ASCII digits 0-9 to Arabic-Indic glyphs ٠-٩.']
+      ]
     },
     {
-      id: 'countdown', group: 'Regional', title: 'Countdown', added: 'v1.5',
+      id: 'countdown', group: 'Regional', title: 'Countdown', added: 'v1.5', needsJs: true,
       summary: 'A live HH:MM:SS countdown — perfect for Iftar / Suhoor during Ramadan, or a flash sale. Add data-nyx-countdown="HH:MM" (today, or tomorrow if past) and the runtime ticks it.',
       sections: [
         { title: 'Until Iftar', demo: '<div class="nyx-countdown" data-nyx-countdown="18:42"><div class="unit"><b>00</b><span>hrs</span></div><span class="sep">:</span><div class="unit"><b>00</b><span>min</span></div><span class="sep">:</span><div class="unit"><b>00</b><span>sec</span></div></div>' }
@@ -1395,7 +1498,7 @@
       classes: [['nyx-countdown[data-nyx-countdown]', 'Live countdown to a HH:MM target.'], ['.unit > b / span', 'The number / its label (hrs · min · sec).']]
     },
     {
-      id: 'zakat', group: 'Regional', title: 'Zakat calculator', added: 'v1.5',
+      id: 'zakat', group: 'Regional', title: 'Zakat calculator', added: 'v1.5', needsJs: true,
       summary: 'A live 2.5% calculator (override with data-rate). The amount is a text field with built-in numeric validation (digits + one decimal only); type eligible wealth and the due figure updates instantly.',
       sections: [
         { title: 'Calculate', demo: '<div class="nyx-zakat"><div><label class="nyx-label">Eligible wealth</label><div class="nyx-input-group"><span class="nyx-addon">ر.س</span><input class="nyx-input nyx-zakat-amount" type="text" inputmode="decimal" value="100000" aria-label="wealth"></div></div><div class="nyx-zakat-out"><span class="nyx-muted">Zakat due (2.5%)</span><b><span class="nyx-zakat-result">0</span> ر.س</b></div></div>' }
@@ -1403,7 +1506,7 @@
       classes: [['nyx-zakat', 'Wrapper (data-rate sets the %; default 2.5).'], ['nyx-zakat-amount', 'The amount input (runtime listens).'], ['nyx-zakat-result', 'Where the computed figure is written.']]
     },
     {
-      id: 'qibla', group: 'Regional', title: 'Qibla indicator', added: 'v1.5',
+      id: 'qibla', group: 'Regional', title: 'Qibla indicator', added: 'v1.5', needsJs: true,
       summary: 'A compass dial whose needle points toward the Qibla. Set data-nyx-qibla="degrees" (your computed bearing); pair with the Device Orientation API for a live compass.',
       sections: [
         { title: 'Bearing 119°', demo: '<div class="nyx-qibla" data-nyx-qibla="119"><span class="dir n">N</span><span class="dir e">E</span><span class="dir s">S</span><span class="dir w">W</span><span class="needle"></span><span class="kaaba">🕋</span><span class="hub"></span></div>' }
@@ -1484,7 +1587,15 @@
     var html = '';
     groups.forEach(function (g) {
       html += '<div class="docs-group"><div class="label">' + G(g) + '</div>';
-      seen[g].forEach(function (p) { html += '<a href="#/' + p.id + '" data-id="' + p.id + '">' + L(p, 'title') + '</a>'; });
+      seen[g].forEach(function (p) {
+        var badge = '';
+        if (isComponent(p)) {
+          badge = p.needsJs
+            ? '<span class="docs-badge-js">' + C('JS', 'JS') + '</span>'
+            : '<span class="docs-badge-css">' + C('CSS', 'CSS') + '</span>';
+        }
+        html += '<a href="#/' + p.id + '" data-id="' + p.id + '">' + L(p, 'title') + badge + '</a>';
+      });
       html += '</div>';
     });
     document.getElementById('docsSide').innerHTML =
@@ -1520,7 +1631,9 @@
     var html = '<div class="doc-head"><div><div class="doc-eyebrow">' + G(p.group) + '</div>' +
       '<h1 class="nyx-h1">' + L(p, 'title') + '</h1>' +
       '<p class="nyx-lead nyx-muted">' + L(p, 'summary') + '</p></div>' +
-      '<div class="doc-meta">' + (p.added ? '<span class="nyx-badge nyx-badge-success">' + C('added', 'Added in') + ' ' + p.added + '</span>' : '') +
+      '<div class="doc-meta">' + 
+      (p.added ? '<span class="nyx-badge nyx-badge-success">' + C('added', 'Added in') + ' ' + p.added + '</span>' : '') +
+      (isComponent(p) ? '<span class="nyx-badge ' + (p.needsJs ? 'nyx-badge-glow' : 'nyx-badge-glass') + '">' + C(p.needsJs ? 'markupJs' : 'markupOnly', p.needsJs ? 'Markup + JS' : 'Markup Only') + '</span>' : '') +
       '<a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.css" target="_blank" rel="noopener">' + C('viewSource', 'View source') + '</a></div></div>';
 
     (p.sections || []).forEach(function (s) {
@@ -1544,7 +1657,7 @@
     if (p.js) {
       toc.push({ id: 'js-api', title: C('jsApi', 'JavaScript API') });
       html += '<section class="doc-section" id="js-api"><h2>' + C('jsApi', 'JavaScript API') + ' <a class="anchor" href="#/' + p.id + '">#</a></h2>' +
-        '<table class="docs-table"><thead><tr><th>Method</th><th>Description</th></tr></thead><tbody>' +
+        '<table class="docs-table"><thead><tr><th>' + C('thMethod', 'Method') + '</th><th>' + C('thDesc', 'Description') + '</th></tr></thead><tbody>' +
         p.js.map(function (r) { return '<tr><td><span class="nyx-code">' + escHtml(r[0]) + '</span></td><td>' + r[1] + '</td></tr>'; }).join('') +
         '</tbody></table></section>';
     }
