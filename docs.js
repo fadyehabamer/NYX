@@ -327,9 +327,10 @@
     },
     {
       id: 'validation', group: 'Forms', title: 'Validation', added: 'v1.4', needsJs: true,
-      summary: 'Bootstrap-style validity states. Add .is-valid / .is-invalid to a field, or wrap a form in .nyx-was-validated to drive it from the browser’s native :valid/:invalid — then place a sibling .nyx-valid-feedback / .nyx-invalid-feedback message.',
+      summary: 'Bootstrap-style validity states and password strength metrics. Add .is-valid / .is-invalid to a field, or wrap a form in .nyx-was-validated to drive it from the browser’s native :valid/:invalid — then place a sibling .nyx-valid-feedback / .nyx-invalid-feedback message.',
       sections: [
         { title: 'Valid & invalid', demo: '<div class="nyx-stack"><div><label class="nyx-label">Email</label><input class="nyx-input is-valid" value="you@company.com" aria-label="Email"><div class="nyx-valid-feedback">Looks good.</div></div><div><label class="nyx-label">Password</label><input class="nyx-input is-invalid" type="password" value="123" aria-label="Password"><div class="nyx-invalid-feedback">Use at least 8 characters.</div></div><div><label class="nyx-label">Plan</label><select class="nyx-select is-invalid" aria-label="Plan"><option>Choose…</option></select><div class="nyx-invalid-feedback">Please pick a plan.</div></div></div>' },
+        { title: 'Password Strength Meter', text: 'Wrap the password input in `.nyx-password-wrapper` and add `.nyx-strength-bar > .nyx-strength-fill` and `.nyx-strength-text` to render an automated interactive strength indicator.', demo: '<div class="nyx-password-wrapper" style="max-width:320px"><label class="nyx-label">Interactive Password</label><input class="nyx-input" type="password" placeholder="Type a strong password" aria-label="Password"><div class="nyx-strength-bar"><span class="nyx-strength-fill"></span></div><div class="nyx-strength-text" style="margin-top:4px"></div></div>' },
         { title: 'Whole form — native constraints', text: 'Wrap a form in .nyx-was-validated and feedback shows automatically from the browser’s constraint validation — no per-field classes needed.', lang: 'html', code: '<form class="nyx-was-validated">\n  <input class="nyx-input" type="email" required>\n  <div class="nyx-invalid-feedback">Enter a valid email.</div>\n</form>' },
         { title: 'JavaScript Validation Helper', text: 'Enable custom logic on form submission using native checkValidity() and the .nyx-was-validated class.', lang: 'js', code: 'const form = document.querySelector(\'form\');\nform.addEventListener(\'submit\', (e) => {\n  if (!form.checkValidity()) {\n    e.preventDefault();\n    e.stopPropagation();\n  }\n  form.classList.add(\'nyx-was-validated\');\n});' }
       ],
@@ -337,7 +338,11 @@
         ['is-valid / is-invalid', 'Validity state on an input / textarea / select.'],
         ['nyx-valid-feedback', 'Success message (shows next to .is-valid).'],
         ['nyx-invalid-feedback', 'Error message (shows next to .is-invalid).'],
-        ['nyx-was-validated', 'On a <form>: drives feedback from :valid / :invalid.']
+        ['nyx-was-validated', 'On a <form>: drives feedback from :valid / :invalid.'],
+        ['nyx-password-wrapper', 'Container wrapper for input and strength indicator elements.'],
+        ['nyx-strength-bar', 'Outer strength meter bar.'],
+        ['nyx-strength-fill', 'Inner strength progress fill (width: 0% to 100%, changes class strength-1 to strength-4).'],
+        ['nyx-strength-text', 'Status text description (e.g. Weak, Strong).']
       ]
     },
     {
@@ -516,9 +521,10 @@
       id: 'navbar', group: 'Components', title: 'Navbar',
       summary: 'A sticky top navigation bar with a glass-blur background.',
       sections: [
-        { title: 'Basic', demo: '<div class="nyx-navbar" style="position:static;border-radius:12px"><div class="docs-logo"><span class="mark">N</span> Nyx</div><div class="nyx-flex nyx-gap-3"><button class="nyx-btn nyx-btn-ghost nyx-btn-sm">Docs</button><button class="nyx-btn nyx-btn-primary nyx-btn-sm">Sign in</button></div></div>' }
+        { title: 'Basic', demo: '<div class="nyx-navbar" style="position:static;border-radius:12px"><div class="docs-logo"><span class="mark">N</span> Nyx</div><div class="nyx-flex nyx-gap-3"><button class="nyx-btn nyx-btn-ghost nyx-btn-sm">Docs</button><button class="nyx-btn nyx-btn-primary nyx-btn-sm">Sign in</button></div></div>' },
+        { title: 'Sticky & Shrinking', text: 'Add class `nyx-navbar-sticky` to make the navbar sticky, shrink dynamically upon page scroll, and glow at its bottom border.', demo: '<div class="nyx-navbar nyx-navbar-sticky scrolled" style="position:static;border-radius:12px"><div class="docs-logo"><span class="mark">N</span> Nyx</div><div class="nyx-flex nyx-gap-3"><button class="nyx-btn nyx-btn-ghost nyx-btn-sm">Docs</button><button class="nyx-btn nyx-btn-primary nyx-btn-sm">Sign in</button></div></div>' }
       ],
-      classes: [['nyx-navbar', 'Sticky, blurred, bordered top bar.']]
+      classes: [['nyx-navbar', 'Sticky, blurred, bordered top bar.'], ['nyx-navbar-sticky', 'Sticky navbar that shrinks and glows when page is scrolled.'], ['scrolled', 'State class applied programmatically when scroll position exceeds 40px.']]
     },
     {
       id: 'sidebar', group: 'Components', title: 'Sidebar',
@@ -704,8 +710,11 @@
     {
       id: 'nav-pills', group: 'Components', title: 'Nav pills', added: 'v1.1',
       summary: 'A pill-style nav that drives panels using the same data-nyx-tabs mechanism as tabs.',
-      sections: [{ title: 'Pills', demo: '<div><div class="nyx-nav-pills" data-nyx-tabs><button class="nyx-pill active" data-nyx-tab="p1">All</button><button class="nyx-pill" data-nyx-tab="p2">Active</button><button class="nyx-pill" data-nyx-tab="p3">Archived</button></div><div class="nyx-tab-panel active" data-nyx-panel="p1" style="padding-top:16px">All items.</div><div class="nyx-tab-panel" data-nyx-panel="p2" style="padding-top:16px">Active items.</div><div class="nyx-tab-panel" data-nyx-panel="p3" style="padding-top:16px">Archived items.</div></div>' }],
-      classes: [['nyx-nav-pills + data-nyx-tabs', 'Pill nav wrapper.'], ['nyx-pill + data-nyx-tab', 'A pill → panel key.']]
+      sections: [
+        { title: 'Pills', demo: '<div><div class="nyx-nav-pills" data-nyx-tabs><button class="nyx-pill active" data-nyx-tab="p1">All</button><button class="nyx-pill" data-nyx-tab="p2">Active</button><button class="nyx-pill" data-nyx-tab="p3">Archived</button></div><div class="nyx-tab-panel active" data-nyx-panel="p1" style="padding-top:16px">All items.</div><div class="nyx-tab-panel" data-nyx-panel="p2" style="padding-top:16px">Active items.</div><div class="nyx-tab-panel" data-nyx-panel="p3" style="padding-top:16px">Archived items.</div></div>' },
+        { title: 'Sliding Nav Indicator', text: 'Add `data-nyx-slider-nav` to enable a glassmorphic sliding background highlights capsule that follows hover/click.', demo: '<div><div class="nyx-nav-pills" data-nyx-tabs data-nyx-slider-nav=".nyx-pill"><button class="nyx-pill active" data-nyx-tab="ps1">All</button><button class="nyx-pill" data-nyx-tab="ps2">Active</button><button class="nyx-pill" data-nyx-tab="ps3">Archived</button></div><div class="nyx-tab-panel active" data-nyx-panel="ps1" style="padding-top:16px">All items with sliding.</div><div class="nyx-tab-panel" data-nyx-panel="ps2" style="padding-top:16px">Active items with sliding.</div><div class="nyx-tab-panel" data-nyx-panel="ps3" style="padding-top:16px">Archived items with sliding.</div></div>' }
+      ],
+      classes: [['nyx-nav-pills + data-nyx-tabs', 'Pill nav wrapper.'], ['nyx-pill + data-nyx-tab', 'A pill → panel key.'], ['data-nyx-slider-nav', 'Enables dynamic sliding pill indicator background.']]
     },
     {
       id: 'ratio', group: 'Helpers', title: 'Ratio', added: 'v1.1',
@@ -855,11 +864,13 @@
     /* ===== SIGNATURE ===== */
     {
       id: 'spotlight', group: 'Signature', title: 'Spotlight',
-      summary: 'A hero device: a radial-gradient spotlight glowing from behind the heading. Perfect for SaaS landing heroes.',
+      summary: 'Luminous backdrop glows and dynamic cursor-following spotlight shine effects.',
       sections: [
-        { title: 'Hero', demo: '<div class="nyx-spotlight" style="padding:48px 24px"><span class="nyx-overline">Signature</span><h2 class="nyx-h1" style="margin-top:8px">Lit from <span class="nyx-gradient-text">within</span></h2><p class="nyx-muted" style="margin-top:8px">A glow emanates from behind the content.</p></div>' }
+        { title: 'Hero', demo: '<div class="nyx-spotlight" style="padding:48px 24px"><span class="nyx-overline">Signature</span><h2 class="nyx-h1" style="margin-top:8px">Lit from <span class="nyx-gradient-text">within</span></h2><p class="nyx-muted" style="margin-top:8px">A glow emanates from behind the content.</p></div>' },
+        { title: 'Sibling Spotlight', text: 'Wrap cards or buttons inside `.nyx-spotlight-group`. Hovering over any item dims its siblings, highlighting the hovered item.', demo: '<div class="nyx-spotlight-group nyx-flex nyx-gap-3"><div class="nyx-card nyx-card-interactive" style="flex:1;padding:20px"><h5>Design</h5><p class="nyx-muted">Luminous patterns</p></div><div class="nyx-card nyx-card-interactive" style="flex:1;padding:20px"><h5>Develop</h5><p class="nyx-muted">Zero dependencies</p></div><div class="nyx-card nyx-card-interactive" style="flex:1;padding:20px"><h5>Deploy</h5><p class="nyx-muted">RTL & Localized</p></div></div>' },
+        { title: 'Cursor Spotlight Shine', text: 'Apply `.nyx-shiny-card` or `.nyx-shiny-btn` to make a radial spotlight follow the mouse pointer inside the component bounds.', demo: '<div class="nyx-flex nyx-gap-3"><div class="nyx-card nyx-shiny-card" style="flex:1;padding:24px"><h5 style="margin-bottom:8px">Interactive Glow</h5><p class="nyx-muted">Move your mouse cursor over this card to watch the spotlight follow your pointer.</p></div><button class="nyx-btn nyx-btn-primary nyx-shiny-btn"><span>Hover me & move</span></button></div>' }
       ],
-      classes: [['nyx-spotlight', 'Hero section with radial spotlight + top hairline.']]
+      classes: [['nyx-spotlight', 'Hero section with radial spotlight + top hairline.'], ['nyx-spotlight-group', 'Container that dims sibling elements on hover.'], ['nyx-shiny-card / -btn', 'Card / Button that receives cursor spotlight shine.']]
     },
     {
       id: 'orbit', group: 'Signature', title: 'Orbit',
@@ -935,9 +946,12 @@
     },
     {
       id: 'segmented', group: 'Signature', title: 'Segmented control', added: 'v1.1',
-      summary: 'An iOS-style segmented switch built from radio inputs — pure CSS and keyboard accessible.',
-      sections: [{ title: 'Three up', demo: '<div class="nyx-segment"><label><input type="radio" name="seg1" checked><span>Day</span></label><label><input type="radio" name="seg1"><span>Week</span></label><label><input type="radio" name="seg1"><span>Month</span></label></div>' }],
-      classes: [['nyx-segment', 'Container.'], ['label > input + span', 'Each segment (radio + visible label).']]
+      summary: 'An iOS-style segmented switch built from radio inputs — pure CSS, keyboard accessible, with an optional sliding background capsule.',
+      sections: [
+        { title: 'Three up', demo: '<div class="nyx-segment"><label><input type="radio" name="seg1" checked><span>Day</span></label><label><input type="radio" name="seg1"><span>Week</span></label><label><input type="radio" name="seg1"><span>Month</span></label></div>' },
+        { title: 'Sliding Capsule', text: 'Add `data-nyx-slider-nav` to segmented controls to enable a smooth glassmorphic sliding background selection highlight.', demo: '<div class="nyx-segment" data-nyx-slider-nav="label"><label class="active"><input type="radio" name="seg2" checked><span>Day</span></label><label><input type="radio" name="seg2"><span>Week</span></label><label><input type="radio" name="seg2"><span>Month</span></label></div>' }
+      ],
+      classes: [['nyx-segment', 'Container.'], ['label > input + span', 'Each segment (radio + visible label).'], ['data-nyx-slider-nav', 'Enables dynamic sliding pill indicator background.']]
     },
     {
       id: 'rating', group: 'Signature', title: 'Rating', added: 'v1.1',
@@ -991,9 +1005,12 @@
     },
     {
       id: 'focus-ring', group: 'Helpers', title: 'Focus ring', added: 'v1.3',
-      summary: 'Add the signature glow focus ring to any custom interactive element.',
-      sections: [{ title: 'Focusable', demo: '<div tabindex="0" class="nyx-card nyx-focus-ring" style="max-width:260px;cursor:pointer">Tab to me to see the ring.</div>' }],
-      classes: [['nyx-focus-ring', 'Glow ring on :focus.']]
+      summary: 'Add the signature glow focus ring to any custom interactive element, complete with a keyboard-triggered expanding ripple animation.',
+      sections: [
+        { title: 'Focusable', demo: '<div tabindex="0" class="nyx-card nyx-focus-ring" style="max-width:260px;cursor:pointer">Tab to me to see the ring.</div>' },
+        { title: 'Keyboard Rippling Focus', text: 'All interactive elements in Nyx automatically trigger a one-shot expanding box-shadow ripple keyframe animation upon gaining focus via keyboard navigation (`:focus-visible`).', demo: '<div class="nyx-flex nyx-gap-3"><button class="nyx-btn nyx-btn-primary">Focus via Tab</button><input class="nyx-input" placeholder="Tab to me too" aria-label="Tab target"></div>' }
+      ],
+      classes: [['nyx-focus-ring', 'Glow ring on :focus.'], ['nyx-focus-ripple', 'Expanding shadow keyframe animation triggered on keyboard focus.']]
     },
     {
       id: 'clearfix', group: 'Helpers', title: 'Clearfix', added: 'v1.3',
@@ -1076,11 +1093,18 @@
     },
     {
       id: 'animations', group: 'Motion', title: 'Animations', added: 'v1.3',
-      summary: 'Entrance animations with directional slide-ins, stagger delays, a floating loop, hover tilt/lift, custom-pointer tracking spotlights, sweeps, and a rotating aurora backdrop. All honor prefers-reduced-motion.',
+      summary: 'Entrance animations with directional slide-ins, stagger delays, a floating loop, hover tilt/lift, custom-pointer tracking spotlights, sweeps, a rotating aurora backdrop, magnetic hover pulls, cursor followers, and word cascade reveals.',
       sections: [
         { title: 'Entrances (stagger + direction)', demo: '<div class="nyx-flex nyx-gap-3 nyx-wrap"><span class="nyx-badge nyx-anim-up nyx-anim-delay-1">up</span><span class="nyx-badge nyx-anim-fade nyx-anim-delay-2">fade</span><span class="nyx-badge nyx-anim-zoom nyx-anim-delay-3">zoom</span><span class="nyx-badge nyx-anim-left nyx-anim-delay-4">left</span><span class="nyx-badge nyx-anim-right nyx-anim-delay-4">right</span></div>' },
         { title: 'Interactive spotlight & sheens', demo: '<div class="nyx-grid"><div class="nyx-col-4"><div class="nyx-card nyx-spotlight-card nyx-p-4 text-center" style="height:100%"><span class="nyx-overline">Spotlight</span><h4 class="nyx-h5 nyx-mt-2">Cursor glow</h4><p class="nyx-muted nyx-fs-sm">Radial accent light tracks your mouse.</p></div></div><div class="nyx-col-4"><div class="nyx-card nyx-glass-flare nyx-p-4 text-center" style="height:100%"><span class="nyx-overline">Glass flare</span><h4 class="nyx-h5 nyx-mt-2">Reflective sheen</h4><p class="nyx-muted nyx-fs-sm">Hover to trigger a sliding metallic light sheen.</p></div></div><div class="nyx-col-4"><div class="nyx-card nyx-hover-lift nyx-p-4 text-center" style="height:100%"><span class="nyx-overline">Hover lift</span><h4 class="nyx-h5 nyx-mt-2">Smooth translation</h4><p class="nyx-muted nyx-fs-sm">Hover to lift and expand shadow depth.</p></div></div></div>' },
         { title: 'Looping effects', demo: '<div class="nyx-flex nyx-gap-4 nyx-items-center"><div class="nyx-avatar nyx-anim-float">N</div><span class="nyx-badge nyx-badge-success nyx-anim-pulse-glow">pulse glow</span></div>' },
+        { title: 'Magnetic Hover Pull', text: 'Add class `.nyx-magnetic` to buttons or icons to pull them dynamically toward the user cursor on hover.', demo: '<div class="nyx-flex nyx-gap-4 nyx-items-center"><button class="nyx-btn nyx-btn-icon nyx-btn-primary nyx-magnetic" style="font-size:24px;width:54px;height:54px;border-radius:50%">🚀</button><button class="nyx-btn nyx-btn-secondary nyx-magnetic">Magnetic Button</button></div>' },
+        { title: 'Luminous Cursor Follower', text: 'Create an element with class `.nyx-cursor-follower` inside the body. A soft, trailing accent glow will follow the user pointer across the screen.', demo: '<div class="nyx-card" style="padding:24px;text-align:center"><div class="nyx-cursor-follower"></div><p class="nyx-muted">A cursor follower is active. Move your mouse around to see the soft gradient aura.</p></div>' },
+        { title: 'Cascading Text Reveal', text: 'Wrap words in `<span>` tags inside a container with class `.nyx-anim-cascade` to reveal them sequentially.', demo: '<h3 class="nyx-anim-cascade"><span class="nyx-gradient-text animated">Luminous</span> <span>Depth</span> <span>Bilingual</span> <span>Design</span> <span>System</span></h3>' },
+        { title: '3D Tilt Card', text: 'Add `.nyx-tilt` to any card or panel. The element tilts in perspective towards the cursor. Control intensity with `data-nyx-tilt-strength` (default: 15).', demo: '<div class="nyx-grid"><div class="nyx-col-4"><div class="nyx-card nyx-tilt nyx-p-4" style="text-align:center"><span class="nyx-overline">Tilt me</span><h4 class="nyx-h5 nyx-mt-2">3D Tilt Card</h4><p class="nyx-muted nyx-fs-sm">Move your mouse here — I tilt in perspective.</p></div></div><div class="nyx-col-4"><div class="nyx-card nyx-tilt nyx-p-4" data-nyx-tilt-strength="25" style="text-align:center;background:linear-gradient(135deg,var(--nyx-accent),var(--nyx-accent-2,#7c3aed))"><span class="nyx-overline" style="color:#fff">Strong</span><h4 class="nyx-h5 nyx-mt-2" style="color:#fff">Strength: 25</h4><p class="nyx-fs-sm" style="color:rgba(255,255,255,.8)">Higher tilt intensity.</p></div></div><div class="nyx-col-4"><div class="nyx-card nyx-tilt nyx-glass nyx-p-4" style="text-align:center"><span class="nyx-overline">Glass</span><h4 class="nyx-h5 nyx-mt-2">Glassmorphism</h4><p class="nyx-muted nyx-fs-sm">Combine with .nyx-glass for depth.</p></div></div></div>', jsSnippet: '<div class="nyx-tilt">Default tilt (strength 15)</div>\n<div class="nyx-tilt" data-nyx-tilt-strength="25">Stronger tilt</div>' },
+        { title: 'Animated Counter', text: 'Add `data-nyx-count` to any element and set the target value. When it enters the viewport the runtime counts from 0 with easing. Accepts `data-nyx-prefix`, `data-nyx-suffix`, `data-nyx-decimals`, and `data-nyx-duration` (ms).', demo: '<div class="nyx-grid" style="text-align:center"><div class="nyx-col-3"><div class="nyx-card nyx-p-4"><div class="nyx-h2 nyx-gradient-text" data-nyx-count="98" data-nyx-suffix="%">0%</div><p class="nyx-muted nyx-fs-sm">Uptime</p></div></div><div class="nyx-col-3"><div class="nyx-card nyx-p-4"><div class="nyx-h2" data-nyx-count="12500" data-nyx-suffix="+">0+</div><p class="nyx-muted nyx-fs-sm">Users</p></div></div><div class="nyx-col-3"><div class="nyx-card nyx-p-4"><div class="nyx-h2" data-nyx-count="4.9" data-nyx-decimals="1" data-nyx-suffix="★">0★</div><p class="nyx-muted nyx-fs-sm">Rating</p></div></div><div class="nyx-col-3"><div class="nyx-card nyx-p-4"><div class="nyx-h2" data-nyx-count="360" data-nyx-suffix="°">0°</div><p class="nyx-muted nyx-fs-sm">Coverage</p></div></div></div>', jsSnippet: '<!-- Auto-starts on scroll into view -->\n<span data-nyx-count="12500" data-nyx-suffix="+">0</span>\n\n<!-- With decimal places -->\n<span data-nyx-count="4.75" data-nyx-decimals="2" data-nyx-suffix=" ms">0</span>\n\n<!-- Custom duration: 3 seconds -->\n<span data-nyx-count="1000000" data-nyx-duration="3000">0</span>' },
+        { title: 'Typewriter Effect', text: 'Add `.nyx-typewriter` and set text via `data-nyx-text`. Characters are typed one-by-one at `data-nyx-speed` ms per character (default: 60ms). Add `data-nyx-loop` to repeat endlessly.', demo: '<div class="nyx-flex nyx-flex-col nyx-gap-4" style="padding:8px 0"><h3 class="nyx-h4"><span class="nyx-typewriter" data-nyx-text="Nyx UI — Luminous Depth Design System." data-nyx-loop></span></h3><p class="nyx-muted nyx-fs-sm">Loop enabled — the text re-types every cycle.</p></div>', jsSnippet: '<!-- Starts on scroll-into-view -->\n<span class="nyx-typewriter" data-nyx-text="Hello, World!"></span>\n\n<!-- Loop endlessly -->\n<span class="nyx-typewriter" data-nyx-text="Design. Build. Ship." data-nyx-loop></span>\n\n<!-- 30ms per character = faster -->\n<span class="nyx-typewriter" data-nyx-text="Fast." data-nyx-speed="30"></span>' },
+        { title: 'Glitch Text Effect', text: 'Add `.nyx-glitch` and mirror the visible text in `data-text`. Two pseudo-element layers animated with `clip-path` produce chromatic aberration — a cyberpunk distortion. Pure CSS, no JS required.', demo: '<div class="nyx-flex nyx-flex-col nyx-gap-6 nyx-items-center" style="padding:32px"><h2 class="nyx-h2 nyx-glitch" data-text="NYX UI" style="font-weight:900;letter-spacing:0.05em">NYX UI</h2><p class="nyx-overline nyx-glitch" data-text="SYSTEM ONLINE" style="letter-spacing:0.2em">SYSTEM ONLINE</p></div>', jsSnippet: '<!-- data-text must mirror the visible content exactly -->\n<h1 class="nyx-glitch" data-text="SYSTEM FAULT">SYSTEM FAULT</h1>' },
         { title: 'Aurora hero', demo: '<div class="nyx-aurora nyx-card" style="text-align:center;padding:40px"><h3 class="nyx-h2">Animated <span class="nyx-gradient-text animated">aurora</span></h3><p class="nyx-muted">A rotating conic-gradient glow behind your content.</p></div>' }
       ],
       classes: [
@@ -1092,6 +1116,13 @@
         ['nyx-spotlight-card', 'Interactive radial cursor shine card (pointer-move glow).'],
         ['nyx-glass-flare', 'Card with a sweeping reflective light flare on hover.'],
         ['nyx-hover-lift', 'Lifts card and casts a glowing shadow on hover.'],
+        ['nyx-magnetic', 'Pulls elements dynamically toward the hovered pointer. JS'],
+        ['nyx-cursor-follower', 'Fixed overlay radial glow following the cursor. JS'],
+        ['nyx-anim-cascade', 'Staggered vertical fade-in for wrapped text spans.'],
+        ['nyx-tilt', '3D perspective tilt towards the cursor on hover. JS'],
+        ['data-nyx-count', 'Scroll-triggered eased number counter. JS'],
+        ['nyx-typewriter', 'Character-by-character typing reveal animation. JS'],
+        ['nyx-glitch', 'Cyberpunk clip-path chromatic glitch distortion. CSS only'],
         ['nyx-aurora', 'Rotating aurora backdrop (wrap content).']
       ]
     },
@@ -1562,6 +1593,14 @@
         { title: 'Saved address', demo: '<div class="nyx-address" style="max-width:380px"><span class="nyx-address-icon">📍</span><div><div class="nyx-flex nyx-items-center nyx-gap-2" style="margin-bottom:4px"><strong>Home</strong> <span class="nyx-badge nyx-badge-success">Default</span></div><div class="nyx-muted">King Fahd Rd, Al Olaya<br>Riyadh 12211, Saudi Arabia</div></div></div>' }
       ],
       classes: [['nyx-address', 'Address card (icon + lines).'], ['nyx-address-icon', 'Accent location icon.']]
+    },
+    {
+      id: 'scroll-progress', group: 'Components', title: 'Scroll progress', added: 'v1.8', needsJs: true,
+      summary: 'A thin fixed progress indicator bar at the top of the viewport representing active page scroll depth.',
+      sections: [
+        { title: 'Usage', text: 'Place `.nyx-scroll-progress` directly under `<body>` to display an automatic scroll tracking indicator.', lang: 'html', code: '<div class="nyx-scroll-progress"></div>' }
+      ],
+      classes: [['nyx-scroll-progress', 'Fixed top page scroll progress indicator bar.']]
     }
   ];
 

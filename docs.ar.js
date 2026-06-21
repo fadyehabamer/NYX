@@ -62,7 +62,14 @@ window.NYX_I18N = {
     'Looping effects': 'تأثيرات مستمرة',
     'Via JavaScript': 'عبر جافاسكربت',
     'JavaScript Events': 'أحداث جافاسكربت',
-    'JavaScript Validation Helper': 'مساعد التحقق بجافاسكربت'
+    'JavaScript Validation Helper': 'مساعد التحقق بجافاسكربت',
+    'Sticky & Shrinking': 'مثبت ومتقلص',
+    'Sliding Nav Indicator': 'مؤشر تنقل منزلق',
+    'Cursor Spotlight Shine': 'توهج الضوء تحت مؤشر الماوس',
+    'Keyboard Rippling Focus': 'تركيز لوحة المفاتيح المتموج',
+    'Password Strength Meter': 'مقياس قوة كلمة المرور',
+    'Sliding Capsule': 'كبسولة منزلقة',
+    'Three up': 'ثلاثة خيارات'
   },
   pages: {
     /* Getting Started */
@@ -156,6 +163,7 @@ window.NYX_I18N = {
     address: { title: 'بطاقة العنوان', summary: 'كتلة عنوان محفوظ للدفع — أيقونة وتسمية وأسطر العنوان كاملة.' },
     /* Media & Nav */
     image: { title: 'الصور المتجاوبة', summary: 'مكون الصور المتجاوبة مع دعم للتحميل البطيء (Lazy loading) وعدة نسب أبعاد مع صورة نائبة عند التحميل.' },
-    'responsive-nav': { title: 'قائمة تنقل متجاوبة', summary: 'شريط تنقل متجاوب يدعم الشاشات الذكية ويحتوي على زر للهواتف، وتندمج معه لوحة قائمة ضخمة (Mega Menu).' }
+    'responsive-nav': { title: 'قائمة تنقل متجاوبة', summary: 'شريط تنقل متجاوب يدعم الشاشات الذكية ويحتوي على زر للهواتف، وتندمج معه لوحة قائمة ضخمة (Mega Menu).' },
+    'scroll-progress': { title: 'شريط تقدم التمرير', summary: 'شريط تقدم رفيع ومثبّت أعلى الصفحة يعبر عن عمق التمرير الفعلي للصفحة.' }
   }
 };

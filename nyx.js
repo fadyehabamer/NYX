@@ -909,6 +909,10 @@
   function syncBackTop() {
     var sy = window.scrollY || doc.documentElement.scrollTop;
     $$('.nyx-to-top').forEach(function (b) { b.classList.toggle('show', sy > 320); });
+    var sh = docEl.scrollHeight - docEl.clientHeight;
+    var pct = sh > 0 ? (sy / sh) * 100 : 0;
+    $$('.nyx-scroll-progress').forEach(function (p) { p.style.width = pct + '%'; });
+    $$('.nyx-navbar-sticky').forEach(function (n) { n.classList.toggle('scrolled', sy > 40); });
   }
   var _tb = null, _tbTimer = null;
   function topSpan() { if (!_tb) { _tb = doc.createElement('div'); _tb.className = 'nyx-topbar'; _tb.innerHTML = '<span></span>'; doc.body.appendChild(_tb); } return _tb.firstChild; }
@@ -1060,6 +1064,210 @@
       });
     });
   }
+  /* ---------- dynamic sliding indicator for pills / segmented ---------- */
+  function initSliderNav(root) {
+    $$('[data-nyx-slider-nav]', root).filter(function (nav) { return !nav._nyxSlNav; }).forEach(function (nav) {
+      nav._nyxSlNav = true;
+      var ind = doc.createElement('span'); ind.className = 'nyx-nav-indicator';
+      nav.appendChild(ind);
+
+      function update(target) {
+        if (!target) {
+          ind.style.opacity = '0';
+          return;
+        }
+        ind.style.left = target.offsetLeft + 'px';
+        ind.style.width = target.offsetWidth + 'px';
+        ind.style.top = target.offsetTop + 'px';
+        ind.style.height = target.offsetHeight + 'px';
+        ind.style.opacity = '1';
+      }
+
+      var active = nav.querySelector('.active');
+      if (active) update(active);
+
+      var selector = nav.getAttribute('data-nyx-slider-nav') || '.nyx-tab, .nyx-btn, .nyx-nav-link, a';
+      var items = $$(selector, nav);
+      items.forEach(function (it) {
+        it.addEventListener('mouseenter', function () { update(it); });
+        it.addEventListener('click', function () {
+          setTimeout(function () {
+            active = nav.querySelector('.active') || it;
+            update(active);
+          }, 0);
+        });
+      });
+
+      nav.addEventListener('mouseleave', function () {
+        active = nav.querySelector('.active');
+        update(active);
+      });
+
+      nav.addEventListener('change', function (e) {
+        if (e.target && e.target.matches('input[type="radio"]')) {
+          var label = e.target.closest('label') || e.target.parentElement;
+          if (label) {
+            $$(selector, nav).forEach(function (lbl) { lbl.classList.remove('active'); });
+            label.classList.add('active');
+            update(label);
+          }
+        }
+      });
+    });
+  }
+
+  /* ---------- password strength meter ---------- */
+  function initPasswordStrength(root) {
+    $$('.nyx-password-wrapper', root).filter(function (w) { return !w._nyxPass; }).forEach(function (w) {
+      w._nyxPass = true;
+      var inp = w.querySelector('input[type="password"]');
+      var fill = w.querySelector('.nyx-strength-fill');
+      var txt = w.querySelector('.nyx-strength-text');
+      if (!inp || !fill) return;
+
+      var isRtl = doc.documentElement.getAttribute('dir') === 'rtl';
+      var labels = isRtl
+        ? ['ضعيف جداً', 'ضعيف', 'متوسط', 'قوي', 'قوي جداً']
+        : ['Very Weak', 'Weak', 'Medium', 'Strong', 'Very Strong'];
+
+      inp.addEventListener('input', function () {
+        var val = inp.value;
+        var score = 0;
+        if (val.length >= 8) score++;
+        if (/[A-Z]/.test(val)) score++;
+        if (/[0-9]/.test(val)) score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+
+        fill.className = 'nyx-strength-fill';
+        if (val.length === 0) {
+          fill.style.width = '0%';
+          if (txt) txt.textContent = '';
+          return;
+        }
+
+        fill.classList.add('strength-' + score);
+        if (txt) txt.textContent = labels[score];
+      });
+    });
+  }
+
+  /* ---------- magnetic hover pull ---------- */
+  function initMagnetic(root) {
+    $$('.nyx-magnetic', root).filter(function (m) { return !m._nyxMag; }).forEach(function (m) {
+      m._nyxMag = true;
+      m.addEventListener('mousemove', function (e) {
+        var rect = m.getBoundingClientRect();
+        var cx = rect.left + rect.width / 2;
+        var cy = rect.top + rect.height / 2;
+        var dx = e.clientX - cx;
+        var dy = e.clientY - cy;
+        m.style.transform = 'translate(' + (dx * 0.3).toFixed(1) + 'px, ' + (dy * 0.3).toFixed(1) + 'px)';
+      });
+      m.addEventListener('mouseleave', function () {
+        m.style.transform = 'translate(0, 0)';
+      });
+    });
+  }
+
+  /* ---------- luminous cursor follower ---------- */
+  function initCursorFollower(root) {
+    var fol = doc.querySelector('.nyx-cursor-follower');
+    if (!fol || fol._nyxFol) return;
+    fol._nyxFol = true;
+    doc.addEventListener('mousemove', function (e) {
+      fol.style.left = e.clientX + 'px';
+      fol.style.top = e.clientY + 'px';
+      fol.style.opacity = '1';
+    });
+    doc.addEventListener('mouseleave', function () {
+      fol.style.opacity = '0';
+    });
+  }
+
+  /* ---------- 3D tilt card ---------- */
+  function initTilt(root) {
+    $$('.nyx-tilt', root).filter(function (el) { return !el._nyxTilt; }).forEach(function (el) {
+      el._nyxTilt = true;
+      var strength = parseFloat(el.dataset.nyxTiltStrength) || 15;
+      el.addEventListener('mousemove', function (e) {
+        var rect = el.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width  - 0.5;  /* -0.5 → +0.5 */
+        var y = (e.clientY - rect.top)  / rect.height - 0.5;
+        el.style.transform = 'perspective(800px) rotateX(' + (-y * strength).toFixed(2) + 'deg) rotateY(' + (x * strength).toFixed(2) + 'deg)';
+      });
+      el.addEventListener('mouseleave', function () {
+        el.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+      });
+    });
+  }
+
+  /* ---------- scroll-triggered animated counter ---------- */
+  function initCounter(root) {
+    var els = $$('[data-nyx-count]', root).filter(function (el) { return !el._nyxCount; });
+    if (!els.length) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        io.unobserve(el);
+        el.setAttribute('data-nyx-count-done', '');
+        var target  = parseFloat(el.dataset.nyxCount)  || 0;
+        var suffix  = el.dataset.nyxSuffix  || '';
+        var prefix  = el.dataset.nyxPrefix  || '';
+        var decimals = parseInt(el.dataset.nyxDecimals, 10) || 0;
+        var duration = parseInt(el.dataset.nyxDuration, 10) || 1800;
+        var start = 0;
+        var startTime = null;
+        function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          var progress = Math.min((ts - startTime) / duration, 1);
+          var value = start + easeOut(progress) * (target - start);
+          el.textContent = prefix + value.toFixed(decimals) + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+          else el.textContent = prefix + target.toFixed(decimals) + suffix;
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.3 });
+    els.forEach(function (el) {
+      el._nyxCount = true;
+      el.textContent = el.dataset.nyxPrefix || '' + '0' + (el.dataset.nyxSuffix || '');
+      io.observe(el);
+    });
+  }
+
+  /* ---------- typewriter effect ---------- */
+  function initTypewriter(root) {
+    $$('.nyx-typewriter', root).filter(function (el) { return !el._nyxTW; }).forEach(function (el) {
+      el._nyxTW = true;
+      var text  = el.dataset.nyxText || el.textContent.trim();
+      var speed = parseInt(el.dataset.nyxSpeed, 10) || 60;
+      var loop  = el.hasAttribute('data-nyx-loop');
+      el.textContent = '';
+      var i = 0;
+      function type() {
+        if (i < text.length) {
+          el.textContent += text[i++];
+          setTimeout(type, speed);
+        } else {
+          el.classList.add('nyx-typing-done');
+          if (loop) setTimeout(function () {
+            el.textContent = '';
+            el.classList.remove('nyx-typing-done');
+            i = 0;
+            setTimeout(type, 600);
+          }, 2200);
+        }
+      }
+      /* Start on scroll-into-view */
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { io.disconnect(); type(); }
+      }, { threshold: 0.5 });
+      io.observe(el);
+    });
+  }
+
   /* ---------- init (idempotent) ---------- */
   function init(root) {
     root = root || doc;
@@ -1086,9 +1294,26 @@
     initImage(root);
     initNav(root);
     initTabs(root);
+    initSliderNav(root);
+    initPasswordStrength(root);
+    initMagnetic(root);
+    initCursorFollower(root);
+    initTilt(root);
+    initCounter(root);
+    initTypewriter(root);
     syncBackTop();
   }
   window.addEventListener('scroll', syncBackTop, { passive: true });
+  doc.addEventListener('mousemove', function (e) {
+    var shiny = e.target.closest('.nyx-shiny-btn, .nyx-shiny-card');
+    if (shiny) {
+      var rect = shiny.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      shiny.style.setProperty('--nyx-shiny-x', x + 'px');
+      shiny.style.setProperty('--nyx-shiny-y', y + 'px');
+    }
+  });
   /* right-click context menus */
   doc.addEventListener('contextmenu', function (e) {
     var host = e.target.closest('[data-nyx-contextmenu]'); if (!host) return;

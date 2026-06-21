@@ -88,7 +88,8 @@ body.nyx{
 body.nyx *,body.nyx *::before,body.nyx *::after{box-sizing:border-box}
 body.nyx a{color:inherit;text-decoration:none}
 body.nyx ::selection{background:color-mix(in srgb,var(--nyx-accent) 35%,transparent);color:#fff}
-.nyx-root :focus-visible,body.nyx :focus-visible{outline:2px solid var(--nyx-accent);outline-offset:2px;border-radius:var(--nyx-radius-sm)}
+.nyx-root :focus-visible,body.nyx :focus-visible{outline:2px solid var(--nyx-accent);outline-offset:2px;border-radius:var(--nyx-radius-sm);animation:nyx-focus-ripple 0.4s cubic-bezier(0.1, 0.8, 0.3, 1) forwards}
+@keyframes nyx-focus-ripple{0%{box-shadow:0 0 0 0px color-mix(in srgb,var(--nyx-accent) 60%,transparent)}100%{box-shadow:0 0 0 6px color-mix(in srgb,var(--nyx-accent) 0%,transparent)}}
 body.nyx ::-webkit-scrollbar{width:10px;height:10px}
 body.nyx ::-webkit-scrollbar-thumb{background:var(--nyx-surface-2);border-radius:var(--nyx-radius-full);border:2px solid var(--nyx-bg)}
 
@@ -1485,3 +1486,289 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-image[data-loaded="false"] img{opacity:0;visibility:hidden}
 .nyx-image[data-loaded="true"] .nyx-image__placeholder{display:none}
 @keyframes nyx-pulse{0%{opacity:0.6}50%{opacity:1}100%{opacity:0.6}}
+
+/* ============================================================
+   26. ENHANCEMENTS
+   ============================================================ */
+/* Page Scroll Progress Bar */
+.nyx-scroll-progress {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(to right, var(--nyx-accent), var(--nyx-accent-2));
+  z-index: 9999;
+  transition: width 0.1s ease-out;
+}
+[dir="rtl"] .nyx-scroll-progress {
+  background: linear-gradient(to left, var(--nyx-accent), var(--nyx-accent-2));
+}
+
+/* Sibling Spotlight Effect */
+.nyx-spotlight-group:hover .nyx-card:not(:hover),
+.nyx-spotlight-group:hover .nyx-btn:not(:hover) {
+  opacity: 0.45;
+  filter: grayscale(20%);
+  transition: opacity 0.3s var(--nyx-ease), filter 0.3s var(--nyx-ease);
+}
+.nyx-spotlight-group .nyx-card,
+.nyx-spotlight-group .nyx-btn {
+  transition: opacity 0.3s var(--nyx-ease), filter 0.3s var(--nyx-ease), transform 0.3s var(--nyx-ease), box-shadow 0.3s var(--nyx-ease);
+}
+
+/* Sliding Nav Pill / Segmented Controls Indicator */
+.nyx-nav-indicator {
+  position: absolute;
+  background: var(--nyx-glass);
+  border: 1px solid var(--nyx-border);
+  box-shadow: var(--nyx-glow);
+  border-radius: var(--nyx-radius-sm);
+  z-index: 0;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  opacity: 0;
+}
+.nyx-segmented .nyx-nav-indicator {
+  background: var(--nyx-surface-2);
+  border-radius: var(--nyx-radius-sm);
+}
+/* Ensure tabs/pills sit above the indicator */
+[data-nyx-slider-nav] {
+  position: relative;
+  z-index: 1;
+}
+[data-nyx-slider-nav] > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Cursor-Following Spotlight Shine */
+.nyx-shiny-btn, .nyx-shiny-card {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.nyx-shiny-btn > *, .nyx-shiny-card > * {
+  position: relative;
+  z-index: 2;
+}
+.nyx-shiny-btn::before, .nyx-shiny-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle 80px at var(--nyx-shiny-x, -100%) var(--nyx-shiny-y, -100%),
+    color-mix(in srgb, var(--nyx-accent) 18%, transparent),
+    transparent 100%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s var(--nyx-ease);
+  z-index: 1;
+}
+.nyx-shiny-btn:hover::before, .nyx-shiny-card:hover::before {
+  opacity: 1;
+}
+
+/* Sticky Shrinking Navbar */
+.nyx-navbar-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: padding 0.3s var(--nyx-ease), background 0.3s var(--nyx-ease), border-color 0.3s var(--nyx-ease), box-shadow 0.3s var(--nyx-ease);
+}
+.nyx-navbar-sticky.scrolled {
+  padding-top: var(--nyx-s2);
+  padding-bottom: var(--nyx-s2);
+  background: color-mix(in srgb, var(--nyx-surface) 90%, black);
+  border-bottom-color: var(--nyx-accent);
+  box-shadow: 0 4px 20px -5px color-mix(in srgb, var(--nyx-accent) 25%, transparent);
+}
+
+/* Password Strength Meter */
+.nyx-password-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--nyx-s1);
+}
+.nyx-strength-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--nyx-radius-sm);
+  overflow: hidden;
+  margin-top: 4px;
+}
+.nyx-strength-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s var(--nyx-ease), background 0.3s var(--nyx-ease);
+}
+.nyx-strength-fill.strength-1 {
+  width: 25%;
+  background: #ff5f57;
+  box-shadow: 0 0 8px rgba(255, 95, 87, 0.6);
+}
+.nyx-strength-fill.strength-2 {
+  width: 50%;
+  background: #febc2e;
+  box-shadow: 0 0 8px rgba(254, 188, 46, 0.6);
+}
+.nyx-strength-fill.strength-3 {
+  width: 75%;
+  background: #29b6f6;
+  box-shadow: 0 0 8px rgba(41, 182, 246, 0.6);
+}
+.nyx-strength-fill.strength-4 {
+  width: 100%;
+  background: var(--nyx-accent-2);
+  box-shadow: 0 0 10px var(--nyx-glow-color);
+}
+.nyx-strength-text {
+  font-size: var(--nyx-fs-xs);
+  color: var(--nyx-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Magnetic Hover Effect */
+.nyx-magnetic {
+  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  display: inline-block;
+}
+
+/* Luminous Cursor Follower */
+.nyx-cursor-follower {
+  position: fixed;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--nyx-accent) 8%, transparent) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Staggered Cascading Reveal Animation */
+.nyx-anim-cascade {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+}
+.nyx-anim-cascade span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: nyx-cascade-in 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.nyx-anim-cascade span:nth-child(1) { animation-delay: 0.1s; }
+.nyx-anim-cascade span:nth-child(2) { animation-delay: 0.2s; }
+.nyx-anim-cascade span:nth-child(3) { animation-delay: 0.3s; }
+.nyx-anim-cascade span:nth-child(4) { animation-delay: 0.4s; }
+.nyx-anim-cascade span:nth-child(5) { animation-delay: 0.5s; }
+.nyx-anim-cascade span:nth-child(6) { animation-delay: 0.6s; }
+.nyx-anim-cascade span:nth-child(7) { animation-delay: 0.7s; }
+.nyx-anim-cascade span:nth-child(8) { animation-delay: 0.8s; }
+
+@keyframes nyx-cascade-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   3D Tilt Card (.nyx-tilt)
+   ============================================================ */
+.nyx-tilt {
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(0deg) rotateY(0deg);
+  transition: transform 0.12s linear, box-shadow 0.12s ease;
+  will-change: transform;
+}
+.nyx-tilt .nyx-tilt-layer {
+  transform: translateZ(28px);
+  transition: transform 0.12s linear;
+}
+.nyx-tilt:hover {
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.5), 0 0 40px -10px var(--nyx-glow-color, rgba(124, 58, 237, 0.35));
+}
+
+/* ============================================================
+   Animated Counter (data-nyx-count) — visual wrapper only
+   ============================================================ */
+[data-nyx-count] {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  transition: opacity 0.3s ease;
+}
+[data-nyx-count]:not([data-nyx-count-done]) {
+  opacity: 0.2;
+}
+
+/* ============================================================
+   Typewriter Effect (.nyx-typewriter)
+   ============================================================ */
+.nyx-typewriter {
+  display: inline;
+  overflow: hidden;
+  white-space: nowrap;
+  border-inline-end: 2px solid var(--nyx-accent);
+  animation: nyx-blink 0.85s step-end infinite;
+}
+.nyx-typewriter.nyx-typing-done {
+  animation: nyx-blink 0.85s step-end infinite;
+}
+@keyframes nyx-blink {
+  0%, 100% { border-color: var(--nyx-accent); }
+  50%       { border-color: transparent; }
+}
+
+/* ============================================================
+   Glitch Text Effect (.nyx-glitch)
+   ============================================================ */
+.nyx-glitch {
+  position: relative;
+  display: inline-block;
+}
+.nyx-glitch::before,
+.nyx-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 100% 0);
+  animation: nyx-glitch-clip 3s infinite linear;
+}
+.nyx-glitch::before {
+  left: 2px;
+  color: var(--nyx-accent);
+  mix-blend-mode: screen;
+  animation-delay: 0s;
+}
+.nyx-glitch::after {
+  left: -2px;
+  color: var(--nyx-accent-2, #f43f5e);
+  mix-blend-mode: screen;
+  animation-delay: 0.12s;
+}
+@keyframes nyx-glitch-clip {
+  0%   { clip-path: inset(80% 0 0 0);    transform: translate(0); }
+  5%   { clip-path: inset(40% 0 50% 0);  transform: translate(-3px, 2px); }
+  10%  { clip-path: inset(10% 0 80% 0);  transform: translate(3px, -2px); }
+  15%  { clip-path: inset(60% 0 20% 0);  transform: translate(-2px, 1px); }
+  20%  { clip-path: inset(0% 0 90% 0);   transform: translate(2px, -1px); }
+  25%  { clip-path: inset(100% 0 0 0);   transform: translate(0); }
+  100% { clip-path: inset(100% 0 0 0);   transform: translate(0); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .nyx-tilt { transform: none !important; transition: none; }
+  .nyx-typewriter { animation: none; border-color: var(--nyx-accent); }
+  .nyx-glitch::before, .nyx-glitch::after { animation: none; }
+}
