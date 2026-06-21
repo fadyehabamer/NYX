@@ -216,10 +216,10 @@
         </div>
       </div>
       <a href="docs.ar.html">التوثيق</a>
-      <a href="index.html">EN</a>
     </div>
     <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="تبديل السمة" title="تبديل السمة">◐</button>
-    <a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> <span class="nyx-badge">2.4k</span></a>
+    <a class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-lang" href="index.html" hreflang="en" aria-label="Switch to English" title="English">EN</a>
+    <a class="nyx-btn nyx-btn-glass nyx-btn-sm hide-sm" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> <span class="nyx-badge">2.4k</span></a>
     <a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="docs.ar.html">ابدأ الآن</a>
   </div>
 </nav>
@@ -235,11 +235,12 @@
       <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.ar.html#/installation">ابدأ الآن</a>
       <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs.ar.html">تصفّح المكوّنات</a>
     </div>
-    <div class="nyx-flex nyx-justify-center nyx-anim-up nyx-anim-delay-3">
-      <button class="install-cmd" onclick="Nyx.toast('تم نسخ المقتطف ✓','success')" aria-label="انسخ مقتطف التثبيت">
-        <span class="prompt">$</span><span>أضِف <span class="fn">nyx.css</span> و <span class="fn">nyx.js</span></span>
+    <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap nyx-anim-up nyx-anim-delay-3">
+      <button class="install-cmd" onclick="navigator.clipboard&&navigator.clipboard.writeText('npm install nyx-css');Nyx.toast('تم النسخ: npm install nyx-css ✓','success')" aria-label="انسخ أمر تثبيت npm">
+        <span class="prompt">$</span><span class="fn" dir="ltr">npm install nyx-css</span>
         <span class="cp"><svg class="ico ico-sm"><use href="#i-copy"/></svg></span>
       </button>
+     
     </div>
 
     <div class="hero-orbits nyx-anim-fade nyx-anim-delay-4" aria-hidden="true">

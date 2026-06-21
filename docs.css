@@ -3,6 +3,11 @@
    Depends on nyx.css tokens (--nyx-*).
    ========================================================== */
 html{scroll-behavior:smooth}
+/* Off-canvas overlays (right drawer/sheet) sit translated past the viewport edge when
+   closed, which would extend the document and create a phantom horizontal scroll on every
+   page. Clip the page on the x-axis — `clip` (not `hidden`) leaves overflow-y visible so the
+   sticky sidebar / on-this-page rails keep working. */
+html,body{overflow-x:clip;max-width:100%}
 .docs-logo{display:inline-flex;align-items:center;line-height:0}
 .docs-logo img{height:22px;width:auto;display:block}
 [data-theme="light"] .docs-logo img{filter:invert(1)}
@@ -85,6 +90,14 @@ html{scroll-behavior:smooth}
 @media(max-width:880px){
   .docs-grid{grid-template-columns:1fr;padding-inline:var(--nyx-s4)}
   .docs-menu-btn{display:inline-flex}
+  /* class-reference / JS-API tables have nowrap token columns that exceed a phone's width —
+     let each table scroll on its own axis instead of widening the whole page. */
+  .docs-table{display:block;overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+  /* `.hide-sm` is the responsive utility the navbar uses to drop the inline nav links,
+     command search, version badge, and the "Star" label on mobile. The landing page defines
+     it inline, but the docs pages never did — so the docs navbar overcrowded and clipped.
+     Hide them once the hamburger takes over navigation (matches the docs mobile breakpoint). */
+  .hide-sm{display:none !important}
   .docs-side{position:fixed;top:0;inset-inline-start:0;bottom:0;z-index:170;width:280px;max-width:85vw;background:var(--nyx-surface);border-inline-end:1px solid var(--nyx-border);padding:var(--nyx-s5);transform:translateX(-100%);transition:transform .3s var(--nyx-ease);height:100vh}
   [dir="rtl"] .docs-side{transform:translateX(100%)}
   .docs-side.open{transform:none;box-shadow:var(--nyx-shadow-lg)}

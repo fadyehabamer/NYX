@@ -204,11 +204,10 @@
         </div>
       </div>
       <a href="docs.html">Docs</a>
-      <a href="index.ar.html">العربية</a>
     </div>
     <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
-    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleDir()" aria-label="Toggle text direction (RTL)" title="Toggle RTL">⇄</button>
-    <a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> <span class="hide-sm">Star</span> <span class="nyx-badge">2.4k</span></a>
+    <a class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-lang" href="index.ar.html" hreflang="ar" aria-label="التبديل إلى العربية" title="العربية">العربية</a>
+    <a class="nyx-btn nyx-btn-glass nyx-btn-sm hide-sm" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> <span class="hide-sm">Star</span> <span class="nyx-badge">2.4k</span></a>
     <a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="docs.html">Get started</a>
   </div>
 </nav>
@@ -224,11 +223,12 @@
       <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.html#/installation">Get started</a>
       <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs.html">Browse components</a>
     </div>
-    <div class="nyx-flex nyx-justify-center nyx-anim-up nyx-anim-delay-3">
-      <button class="install-cmd" onclick="Nyx.toast('Snippet copied ✓','success')" aria-label="Copy install snippet">
-        <span class="prompt">$</span><span>include nyx.css + nyx.js</span>
+    <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap nyx-anim-up nyx-anim-delay-3">
+      <button class="install-cmd" onclick="navigator.clipboard&&navigator.clipboard.writeText('npm install nyx-css');Nyx.toast('Copied: npm install nyx-css ✓','success')" aria-label="Copy npm install command">
+        <span class="prompt">$</span><span>npm install nyx-css</span>
         <span class="cp"><svg class="ico ico-sm"><use href="#i-copy"/></svg></span>
       </button>
+      
     </div>
 
     <div class="hero-orbits nyx-anim-fade nyx-anim-delay-4" aria-hidden="true">

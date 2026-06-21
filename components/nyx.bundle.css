@@ -775,7 +775,7 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-bigtype{font-family:var(--nyx-font-display);font-weight:800;font-size:clamp(46px,11vw,132px);line-height:.92;letter-spacing:-.04em;margin:0}
 .nyx-bigtype-sm{font-size:clamp(34px,7vw,72px)}
 .nyx-bigtype .stroke{-webkit-text-stroke:1.5px var(--nyx-accent);color:transparent}
-.nyx-bigtype .nyx-gradient-text{display:inline-block}
+.nyx-bigtype .nyx-gradient-text{display:inline-block;padding-bottom:.18em}
 .nyx-font-ruqaa{font-family:'Aref Ruqaa','Lalezar',serif}
 
 /* scroll-reveal (wire with data-nyx-reveal) */
