@@ -1,6 +1,9 @@
 <div align="center">
 
-# ◼ NYX
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="logo-white.png" />
+  <img src="logo-black.png" alt="NYX" width="300" />
+</picture>
 
 ### The dark‑native design system with **Luminous Depth**
 
