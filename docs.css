@@ -3,9 +3,9 @@
    Depends on nyx.css tokens (--nyx-*).
    ========================================================== */
 html{scroll-behavior:smooth}
-.docs-logo{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-lg);display:flex;align-items:center;gap:8px}
-.docs-logo .mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));box-shadow:var(--nyx-glow);display:grid;place-items:center;color:#fff;font-size:14px}
-.docs-logo .pre{color:var(--nyx-accent)}
+.docs-logo{display:inline-flex;align-items:center;line-height:0}
+.docs-logo img{height:22px;width:auto;display:block}
+[data-theme="light"] .docs-logo img{filter:invert(1)}
 .docs-navlinks{display:flex;align-items:center;gap:var(--nyx-s4);font-size:var(--nyx-fs-sm);font-weight:500}
 .docs-navlinks a{color:var(--nyx-text-muted);transition:color .2s var(--nyx-ease)}
 .docs-navlinks a:hover,.docs-navlinks a.active{color:var(--nyx-text)}

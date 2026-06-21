@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>نيكس — أوّل مكتبة CSS للمطوّرين العرب</title>
 <meta name="description" content="نيكس: أوّل مكتبة مكوّنات CSS/JS مبنية للمطوّرين العرب، بدعم RTL كامل وخطوط عربية وطابع العمق المضيء." />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<meta name="theme-color" content="#0b0b0f" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -18,9 +23,9 @@
   .ico-sm{width:18px;height:18px}
   [dir="rtl"] .ico-flip{transform:scaleX(-1)}
   /* ---- brand / nav ---- */
-  .lp-logo{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-lg);display:flex;align-items:center;gap:9px}
-  .lp-logo .mark{width:28px;height:28px;border-radius:9px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));box-shadow:var(--nyx-glow);display:grid;place-items:center;color:#fff;font-size:14px}
-  .lp-logo .pre{color:var(--nyx-accent)}
+  .lp-logo{display:inline-flex;align-items:center;line-height:0}
+  .lp-logo .lp-wordmark{height:24px;width:auto;display:block}
+  [data-theme="light"] .lp-logo .lp-wordmark{filter:invert(1)}
   .lp-links{display:flex;align-items:center;gap:var(--nyx-s4);font-size:var(--nyx-fs-sm);font-weight:500}
   .lp-links a{color:var(--nyx-text-muted);transition:color .2s var(--nyx-ease)}
   .lp-links a:hover{color:var(--nyx-text)}
@@ -192,7 +197,7 @@
 <!-- ===================== NAVBAR ===================== -->
 <nav class="nyx-navbar">
   <div class="nyx-flex nyx-items-center nyx-gap-4">
-    <a class="lp-logo" href="index.ar.html"><span class="mark">N</span><span><span class="pre">nyx</span>·نيكس</span></a>
+    <a class="lp-logo" href="index.ar.html"><img class="lp-wordmark" src="logo-white.png" alt="نيكس" width="82" height="24" /></a>
     <span class="nyx-badge nyx-badge-info hide-sm">v1.0.0</span>
   </div>
   <div class="nyx-flex nyx-items-center nyx-gap-4">
@@ -223,7 +228,7 @@
 
   <!-- ===================== HERO ===================== -->
   <section class="hero nyx-bg-grid">
-    <span class="hero-eyebrow nyx-anim-up"><span class="dot"></span> واجهات فاخرة لعصر الـ <b>SaaS العربي</b></span>
+    <span class="hero-eyebrow nyx-anim-up"><span class="dot"></span> واجهات فاخرة، <b>مُضيئة من الداخل</b></span>
     <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1" style="margin-top:var(--nyx-s5)">ابنِ واجهات سريعة ومتجاوبة<span class="l2 nyx-gradient-text animated">مع نيكس.</span></h1>
     <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2" style="margin-top:var(--nyx-s5)">مجموعة أدوات أمامية قويّة وقابلة للتوسيع، داكنة المظهر بالكامل. خصّص كل شيء عبر متغيّرات CSS، وركّب شبكات ومكوّنات جاهزة، وأضِف الحياة لواجهاتك عبر نواة JavaScript خفيفة بلا اعتماديات — مع دعم RTL وطباعة عربية أصيلة.</p>
     <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta nyx-anim-up nyx-anim-delay-3" style="margin-top:var(--nyx-s6)">
@@ -450,7 +455,7 @@
   <div class="nyx-container">
     <div class="foot">
       <div class="foot-brand">
-        <a class="lp-logo" href="index.ar.html"><span class="mark">N</span><span><span class="pre">nyx</span>·نيكس</span></a>
+        <a class="lp-logo" href="index.ar.html"><img class="lp-wordmark" src="logo-white.png" alt="نيكس" width="82" height="24" /></a>
         <p>مكتبة المكوّنات داكنة المظهر — أوّل مكتبة CSS مبنية للمطوّرين العرب.</p>
       </div>
       <div>

@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>نيكس · نموذج مقال</title>
 <meta name="description" content="نموذج صفحة مقال عربي بطابع العمق المضيء — يستخدم خط ثمانية للنصوص الطويلة، وخلفيات نيكس، ومكوّناتها." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png" />
+<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+<meta name="theme-color" content="#0b0b0f" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -14,8 +18,9 @@
   html{scroll-behavior:smooth}
   .ico{width:20px;height:20px;display:inline-block;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
   .ico-sm{width:16px;height:16px}
-  .lp-logo{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-lg);display:flex;align-items:center;gap:9px}
-  .lp-logo .mark{width:28px;height:28px;border-radius:9px;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));box-shadow:var(--nyx-glow);display:grid;place-items:center;color:#fff;font-size:14px}
+  .lp-logo{display:inline-flex;align-items:center;line-height:0}
+  .lp-logo .lp-wordmark{height:24px;width:auto;display:block}
+  [data-theme="light"] .lp-logo .lp-wordmark{filter:invert(1)}
 
   /* ---- article shell ---- */
   .art{max-width:740px;margin-inline:auto;padding-block:var(--nyx-s7)}
@@ -66,7 +71,7 @@
 <!-- ===================== NAVBAR ===================== -->
 <nav class="nyx-navbar">
   <div class="nyx-flex nyx-items-center nyx-gap-4">
-    <a class="lp-logo" href="../index.ar.html"><span class="mark">N</span><span>نيكس</span></a>
+    <a class="lp-logo" href="../index.ar.html"><img class="lp-wordmark" src="../logo-white.png" alt="نيكس" width="82" height="24" /></a>
     <span class="nyx-badge nyx-badge-info hide-sm">المجلّة</span>
   </div>
   <div class="nyx-flex nyx-items-center nyx-gap-4">
