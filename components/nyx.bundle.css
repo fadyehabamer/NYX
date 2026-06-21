@@ -1145,10 +1145,10 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 /* — drifting starfield — */
 .nyx-bg-stars{position:relative;overflow:hidden;isolation:isolate}
 .nyx-bg-stars::before,.nyx-bg-stars::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-repeat:repeat}
-.nyx-bg-stars::before{opacity:.6;background-size:280px 280px;animation:nyx-bg-drift 70s linear infinite;
-  background-image:radial-gradient(1.5px 1.5px at 20% 30%,#fff,transparent),radial-gradient(1.5px 1.5px at 70% 62%,#fff,transparent),radial-gradient(1px 1px at 42% 82%,#fff,transparent),radial-gradient(1px 1px at 88% 16%,#fff,transparent),radial-gradient(1.5px 1.5px at 55% 46%,#fff,transparent)}
-.nyx-bg-stars::after{opacity:.5;background-size:160px 160px;animation:nyx-bg-drift 110s linear infinite reverse;
-  background-image:radial-gradient(1px 1px at 12% 24%,var(--nyx-accent),transparent),radial-gradient(1px 1px at 64% 38%,var(--nyx-accent-2),transparent),radial-gradient(1px 1px at 36% 70%,#fff,transparent),radial-gradient(1px 1px at 82% 84%,var(--nyx-accent),transparent)}
+.nyx-bg-stars::before{opacity:.9;background-size:280px 280px;animation:nyx-bg-drift 70s linear infinite;
+  background-image:radial-gradient(1.5px 1.5px at 20% 30%,#fff 0,#fff 60%,transparent),radial-gradient(1.5px 1.5px at 70% 62%,#fff 0,#fff 60%,transparent),radial-gradient(1px 1px at 42% 82%,#fff 0,#fff 60%,transparent),radial-gradient(1px 1px at 88% 16%,#fff 0,#fff 60%,transparent),radial-gradient(1.5px 1.5px at 55% 46%,#fff 0,#fff 60%,transparent),radial-gradient(1px 1px at 8% 68%,#fff 0,#fff 60%,transparent),radial-gradient(1px 1px at 33% 10%,#fff 0,#fff 60%,transparent),radial-gradient(1.5px 1.5px at 92% 52%,#fff 0,#fff 60%,transparent)}
+.nyx-bg-stars::after{opacity:.8;background-size:160px 160px;animation:nyx-bg-drift 110s linear infinite reverse;
+  background-image:radial-gradient(1.5px 1.5px at 12% 24%,var(--nyx-accent) 0,var(--nyx-accent) 60%,transparent),radial-gradient(1.5px 1.5px at 64% 38%,var(--nyx-accent-2) 0,var(--nyx-accent-2) 60%,transparent),radial-gradient(1px 1px at 36% 70%,#fff 0,#fff 60%,transparent),radial-gradient(1.5px 1.5px at 82% 84%,var(--nyx-accent) 0,var(--nyx-accent) 60%,transparent),radial-gradient(1px 1px at 50% 8%,#fff 0,#fff 60%,transparent)}
 @keyframes nyx-bg-drift{to{background-position:0 -1120px}}
 
 /* ============================================================
