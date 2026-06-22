@@ -47,7 +47,7 @@ var NAMES = {
   6: 'navigation', 7: 'feedback', 8: 'data', 9: 'overlays', 10: 'signature', 11: 'extras', 12: 'motion', 13: 'utilities',
   14: 'hierarchy', 15: 'regional', 16: 'forms-plus', 17: 'overlays-plus', 18: 'commerce', 19: 'regional-plus',
   20: 'backgrounds', 21: 'charts', 22: 'code', 23: 'blocks', 24: 'blocks-plus', 25: 'media', 26: 'enhancements',
-  27: 'regional-pro'
+  27: 'regional-pro', 28: 'hijri'
 };
 
 /* collect the big ==== banners (sections 1..11 + RTL) */

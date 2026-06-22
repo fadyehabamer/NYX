@@ -1599,6 +1599,16 @@
       ],
       classes: [['nyx-region-select', 'Wrapper positioning the pin.'], ['nyx-rs-pin', 'Leading location icon (start side).']]
     },
+    {
+      id: 'hijri-convert', group: 'Regional', title: 'Hijri converter', added: 'v1.1', needsJs: true,
+      summary: 'Convert between Hijri and Gregorian dates, both ways. Uses the browser-native Umm al-Qura (official Saudi) calendar via Intl, with a tabular fallback when unavailable — edit either side and the other updates instantly. Also exposes Nyx.toHijri / fromHijri / formatHijri, plus a one-attribute [data-nyx-hijri-today] to print today’s Hijri date anywhere.',
+      sections: [
+        { title: 'Today’s date', text: 'Add data-nyx-hijri-today to any element (optional data-numerals="arab").', demo: '<p style="font-size:var(--nyx-fs-lg)">اليوم: <strong data-nyx-hijri-today data-numerals="arab" style="color:var(--nyx-accent)"></strong></p>' },
+        { title: 'Bidirectional converter', demo: '<div class="nyx-hijri-convert" data-nyx-hijri><div class="nyx-hc-row"><span class="nyx-hc-label">التاريخ الميلادي</span><input type="date" class="nyx-input nyx-hc-greg" aria-label="gregorian"></div><span class="nyx-hc-arrow">⇅</span><div class="nyx-hc-row"><span class="nyx-hc-label">التاريخ الهجري</span><div class="nyx-hc-fields"><input type="number" class="nyx-input nyx-hc-hd" min="1" max="30" aria-label="day"><select class="nyx-select nyx-hc-hm" aria-label="month"></select><input type="number" class="nyx-input nyx-hc-hy" min="1" max="1600" aria-label="year"></div></div><div class="nyx-hc-out" data-hijri-text></div></div>' }
+      ],
+      classes: [['nyx-hijri-convert[data-nyx-hijri]', 'Bidirectional converter widget.'], ['nyx-hc-greg', 'Gregorian date input hook.'], ['nyx-hc-hd / -hm / -hy', 'Hijri day / month-select / year hooks.'], ['[data-hijri-text]', 'Formatted Hijri output target.'], ['[data-nyx-hijri-today]', 'Fills the element with today’s Hijri date.']],
+      js: [['Nyx.toHijri(date | y,m,d)', 'Gregorian → {y, m, d, month}.'], ['Nyx.fromHijri(y,m,d)', 'Hijri → Gregorian Date (UTC).'], ['Nyx.formatHijri(date|obj, {numerals})', 'e.g. "١٥ رمضان ١٤٤٧ هـ".']]
+    },
 
     /* ===== COMMERCE ===== */
     {

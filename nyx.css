@@ -1919,3 +1919,16 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-region-select .nyx-rs-pin{position:absolute;inset-inline-start:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--nyx-accent);font-size:16px;line-height:1}
 .nyx-region-select select{padding-inline-start:38px;background-position:right 14px center}
 [dir="rtl"] .nyx-region-select select{background-position:left 14px center}
+
+/* ============================================================
+   28. HIJRI (v1.1) — Hijri ⇄ Gregorian converter + today's date
+   ============================================================ */
+/* Runtime: Nyx.toHijri / fromHijri / formatHijri. Widget: [data-nyx-hijri].
+   Inline today's date: [data-nyx-hijri-today] (add data-numerals="arab"). */
+.nyx-hijri-convert{display:flex;flex-direction:column;gap:var(--nyx-s3);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface);padding:var(--nyx-s5);max-width:380px}
+.nyx-hc-row{display:flex;flex-direction:column;gap:6px}
+.nyx-hc-label{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-weight:500}
+.nyx-hc-fields{display:grid;grid-template-columns:1fr 2fr 1.4fr;gap:var(--nyx-s2)}
+.nyx-hc-arrow{align-self:center;color:var(--nyx-accent);font-size:18px;line-height:1}
+.nyx-hc-out{margin-top:var(--nyx-s2);padding-top:var(--nyx-s3);border-top:1px solid var(--nyx-border);font-family:var(--nyx-font-display);font-weight:700;font-size:var(--nyx-fs-xl);color:var(--nyx-accent);text-align:center}
+.nyx-hc-out:empty{display:none}
