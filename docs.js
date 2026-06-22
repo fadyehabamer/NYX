@@ -1566,6 +1566,39 @@
       ],
       classes: [['nyx-delivery', 'Vertical tracker.'], ['nyx-dstep done / current', 'A completed / in-progress step.'], ['nyx-ddot / nyx-dtitle / nyx-dtime', 'Step icon / title / timestamp.']]
     },
+    {
+      id: 'id-input', group: 'Regional', title: 'National ID / Iqama', added: 'v1.1', needsJs: true,
+      summary: 'A masked input for the Saudi 10-digit national ID. The runtime keeps it digits-only, caps the length, flags validity, and labels the holder from the first digit — 1 = citizen (مواطن), 2 = resident/Iqama (مقيم). Degrades to a plain numeric field without JS.',
+      sections: [
+        { title: 'Citizen / resident', demo: '<div style="display:flex;flex-direction:column;gap:12px;max-width:360px"><div class="nyx-id-input"><span class="nyx-id-flag">🪪</span><input inputmode="numeric" maxlength="10" placeholder="1xxxxxxxxx" aria-label="national id"><span class="nyx-id-type"></span></div><div class="nyx-id-input"><span class="nyx-id-flag">🪪</span><input inputmode="numeric" maxlength="10" value="2000000007" aria-label="iqama"><span class="nyx-id-type"></span></div></div>' }
+      ],
+      classes: [['nyx-id-input', 'Field wrapper (runtime masks + validates).'], ['nyx-id-flag', 'Leading icon.'], ['nyx-id-type', 'Auto-filled holder label (مواطن / مقيم).'], ['.is-valid / .is-invalid', 'Validity state set by the runtime.']]
+    },
+    {
+      id: 'name-ar', group: 'Regional', title: 'Arabic name (4-part)', added: 'v1.1',
+      summary: 'The four-part Arabic name layout used across MENA government and banking forms — first, father, grandfather, family. Add .triple to drop the grandfather field. Collapses to two columns on mobile.',
+      sections: [
+        { title: 'Four parts', demo: '<div class="nyx-name-ar"><label class="nyx-field"><span>الاسم الأول</span><input class="nyx-input" value="محمد"></label><label class="nyx-field"><span>اسم الأب</span><input class="nyx-input" value="عبدالله"></label><label class="nyx-field"><span>اسم الجد</span><input class="nyx-input" value="إبراهيم"></label><label class="nyx-field"><span>اسم العائلة</span><input class="nyx-input" value="القحطاني"></label></div>' }
+      ],
+      classes: [['nyx-name-ar', 'Responsive 4-column grid.'], ['nyx-name-ar.triple', 'Drops the grandfather field (3 columns).'], ['.nyx-field > span', 'Field label.']]
+    },
+    {
+      id: 'national-address', group: 'Regional', title: 'National address', added: 'v1.1',
+      summary: 'The Saudi National Address (العنوان الوطني) form — building number, secondary number, street, district, city and postal code — plus a highlighted short-code chip. .full spans the grid row; collapses to one column on mobile.',
+      sections: [
+        { title: 'Short code', demo: '<span class="nyx-natl-short">RRRD2929</span>' },
+        { title: 'Full form', demo: '<div class="nyx-national-address"><label class="nyx-field"><span>رقم المبنى</span><input class="nyx-input" inputmode="numeric" value="2929"></label><label class="nyx-field"><span>الرقم الإضافي</span><input class="nyx-input" inputmode="numeric" value="7945"></label><label class="nyx-field full"><span>اسم الشارع</span><input class="nyx-input" value="طريق الملك فهد"></label><label class="nyx-field"><span>الحي</span><input class="nyx-input" value="العليا"></label><label class="nyx-field"><span>المدينة</span><input class="nyx-input" value="الرياض"></label><label class="nyx-field"><span>الرمز البريدي</span><input class="nyx-input" inputmode="numeric" maxlength="5" value="12211"></label></div>' }
+      ],
+      classes: [['nyx-national-address', 'Responsive 2-column address grid.'], ['.nyx-field.full', 'Span the full row.'], ['nyx-natl-short', 'Mono short-code chip.']]
+    },
+    {
+      id: 'region-select', group: 'Regional', title: 'Region select', added: 'v1.1',
+      summary: 'A native select pre-styled with a location pin for picking a Saudi region (or GCC country). The pin sits at the start and the chevron at the end — mirrored automatically in RTL.',
+      sections: [
+        { title: 'Saudi regions', demo: '<div class="nyx-region-select" style="max-width:320px"><span class="nyx-rs-pin">📍</span><select class="nyx-select" aria-label="region"><option>الرياض</option><option>مكة المكرمة</option><option>المدينة المنورة</option><option>القصيم</option><option>المنطقة الشرقية</option><option>عسير</option><option>تبوك</option><option>حائل</option><option>الحدود الشمالية</option><option>جازان</option><option>نجران</option><option>الباحة</option><option>الجوف</option></select></div>' }
+      ],
+      classes: [['nyx-region-select', 'Wrapper positioning the pin.'], ['nyx-rs-pin', 'Leading location icon (start side).']]
+    },
 
     /* ===== COMMERCE ===== */
     {
@@ -1607,6 +1640,23 @@
         { title: 'Saved address', demo: '<div class="nyx-address" style="max-width:380px"><span class="nyx-address-icon">📍</span><div><div class="nyx-flex nyx-items-center nyx-gap-2" style="margin-bottom:4px"><strong>Home</strong> <span class="nyx-badge nyx-badge-success">Default</span></div><div class="nyx-muted">King Fahd Rd, Al Olaya<br>Riyadh 12211, Saudi Arabia</div></div></div>' }
       ],
       classes: [['nyx-address', 'Address card (icon + lines).'], ['nyx-address-icon', 'Accent location icon.']]
+    },
+    {
+      id: 'bnpl', group: 'Commerce', title: 'BNPL (split payments)', added: 'v1.1',
+      summary: 'Buy-now-pay-later widgets in the Tabby / Tamara style — a compact inline badge and a full installment schedule with .paid and .current step states. The provider name is yours; retint with --nyx-accent.',
+      sections: [
+        { title: 'Inline badge', demo: '<span class="nyx-bnpl"><span class="nyx-bnpl-brand">tabby</span> <span>4 payments of <b>99.75 ر.س</b></span></span>' },
+        { title: 'Installment schedule', demo: '<div class="nyx-bnpl-plan" style="max-width:420px"><div class="nyx-bnpl-step paid"><span class="dot">✓</span><span class="amt">99.75</span><span class="when">Today</span></div><div class="nyx-bnpl-step current"><span class="dot">2</span><span class="amt">99.75</span><span class="when">Aug 1</span></div><div class="nyx-bnpl-step"><span class="dot">3</span><span class="amt">99.75</span><span class="when">Sep 1</span></div><div class="nyx-bnpl-step"><span class="dot">4</span><span class="amt">99.75</span><span class="when">Oct 1</span></div></div>' }
+      ],
+      classes: [['nyx-bnpl', 'Inline badge (brand + terms).'], ['nyx-bnpl-plan', 'Installment schedule row.'], ['nyx-bnpl-step.paid / .current', 'A settled / active installment.'], ['.dot / .amt / .when', 'Marker / amount / due label.']]
+    },
+    {
+      id: 'invoice', group: 'Commerce', title: 'Tax e-invoice (ZATCA)', added: 'v1.1',
+      summary: 'A simplified tax invoice (فاتورة ضريبية مبسطة) header in the ZATCA layout — seller, VAT registration number, a QR slot for the e-invoice payload, a meta grid, and totals with a separate 15% VAT line. Drop your generated QR (img/svg) into .nyx-invoice-qr.',
+      sections: [
+        { title: 'Simplified invoice', demo: '<div class="nyx-invoice"><div class="nyx-invoice-head"><div class="nyx-invoice-brand"><b>متجر نون</b><small>VAT 300000000000003</small><span class="nyx-invoice-stamp">فاتورة ضريبية مبسطة</span></div><div class="nyx-invoice-qr">QR</div></div><div class="nyx-invoice-meta"><div class="row"><span class="k">رقم الفاتورة</span><span class="v">INV-2043</span></div><div class="row"><span class="k">التاريخ</span><span class="v">2026-06-22</span></div></div><div class="nyx-invoice-totals"><div class="row"><span>الإجمالي قبل الضريبة</span><span class="v">300.00</span></div><div class="row vat"><span>ضريبة القيمة المضافة (15%)</span><span class="v">45.00</span></div><div class="row grand"><span>الإجمالي</span><span class="v">345.00 ر.س</span></div></div></div>' }
+      ],
+      classes: [['nyx-invoice', 'Invoice card.'], ['nyx-invoice-head / -brand / -stamp', 'Header / seller block / tax-invoice badge.'], ['nyx-invoice-qr', 'QR slot — drop an img/svg in.'], ['nyx-invoice-meta .row (.k/.v)', 'Meta grid rows.'], ['nyx-invoice-totals .row.vat / .grand', 'VAT line / bold total.']]
     },
     {
       id: 'scroll-progress', group: 'Components', title: 'Scroll progress', added: 'v1.0', needsJs: true,

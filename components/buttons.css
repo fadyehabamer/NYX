@@ -3,18 +3,67 @@
  * Bundle: nyx.css   Docs: docs.html
  */
 /* ============================================================
-   3D Tilt Card (.nyx-tilt)
+   3. BUTTONS
    ============================================================ */
-.nyx-tilt {
-  transform-style: preserve-3d;
-  transform: perspective(800px) rotateX(0deg) rotateY(0deg);
-  transition: transform 0.12s linear, box-shadow 0.12s ease;
-  will-change: transform;
+.nyx-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--nyx-s2);
+  font-family:var(--nyx-font-body);font-weight:500;font-size:var(--nyx-fs-sm);
+  padding:10px 18px;border-radius:var(--nyx-radius);border:1px solid transparent;
+  background:var(--nyx-surface-2);color:var(--nyx-text);cursor:pointer;
+  transition:all .2s var(--nyx-ease);white-space:nowrap;user-select:none;position:relative;
 }
-.nyx-tilt .nyx-tilt-layer {
-  transform: translateZ(28px);
-  transition: transform 0.12s linear;
+.nyx-btn:active{transform:translateY(1px)}
+.nyx-btn:disabled,.nyx-btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
+.nyx-btn-primary{background:linear-gradient(120deg,var(--nyx-accent),color-mix(in srgb,var(--nyx-accent) 60%,#ffffff));color:#fff;box-shadow:var(--nyx-shadow-sm)}
+.nyx-btn-primary:hover{box-shadow:var(--nyx-glow),var(--nyx-shadow);transform:translateY(-1px)}
+.nyx-btn-secondary{background:transparent;border-color:var(--nyx-accent-2);color:var(--nyx-accent-2)}
+.nyx-btn-secondary:hover{background:color-mix(in srgb,var(--nyx-accent-2) 10%,transparent);box-shadow:0 0 24px color-mix(in srgb,var(--nyx-accent-2) 25%,transparent)}
+.nyx-btn-ghost{background:transparent;border-color:transparent;color:var(--nyx-text-muted)}
+.nyx-btn-ghost:hover{border-color:var(--nyx-border);color:var(--nyx-text);background:var(--nyx-glass)}
+.nyx-btn-danger{background:linear-gradient(120deg,var(--nyx-danger),#ff6f86);color:#fff}
+.nyx-btn-danger:hover{box-shadow:0 0 24px rgba(255,77,106,.35);transform:translateY(-1px)}
+.nyx-btn-glass{background:var(--nyx-glass);border-color:var(--nyx-glass-border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--nyx-text)}
+.nyx-btn-glass:hover{background:var(--nyx-elev-hover);box-shadow:var(--nyx-shadow)}
+/* outline variants (Bootstrap-style, all colors) */
+.nyx-btn-outline-primary{background:transparent;border-color:var(--nyx-accent);color:var(--nyx-accent)}
+.nyx-btn-outline-primary:hover{background:color-mix(in srgb,var(--nyx-accent) 12%,transparent);box-shadow:var(--nyx-glow)}
+.nyx-btn-outline-success{background:transparent;border-color:var(--nyx-accent-2);color:var(--nyx-accent-2)}
+.nyx-btn-outline-success:hover{background:color-mix(in srgb,var(--nyx-accent-2) 12%,transparent)}
+.nyx-btn-outline-danger{background:transparent;border-color:var(--nyx-danger);color:var(--nyx-danger)}
+.nyx-btn-outline-danger:hover{background:rgba(255,77,106,.12)}
+.nyx-btn-outline-warning{background:transparent;border-color:var(--nyx-warning);color:var(--nyx-warning)}
+.nyx-btn-outline-warning:hover{background:rgba(255,176,32,.12)}
+.nyx-btn-icon{padding:10px;width:40px;height:40px}
+.nyx-btn-sm{padding:6px 12px;font-size:var(--nyx-fs-xs)}
+.nyx-btn-sm.nyx-btn-icon{width:32px;height:32px;padding:6px}
+.nyx-btn-lg{padding:14px 26px;font-size:var(--nyx-fs-base)}
+.nyx-btn-lg.nyx-btn-icon{width:52px;height:52px}
+.nyx-btn-block{display:flex;width:100%}
+.nyx-btn-loading{color:transparent !important;pointer-events:none}
+.nyx-btn-loading::after{content:"";position:absolute;width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:nyx-spin .7s linear infinite}
+.nyx-btn-glow{background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));color:#fff;animation:nyx-pulse 2.4s var(--nyx-ease) infinite}
+/* Gradient buttons sit on a 1px transparent border. The `background:` shorthand above resets
+   background-origin to padding-box, so the gradient's edge color leaks into that border as a
+   seam on the edge. Re-assert border-box (after the shorthands) so the fill covers the whole box.
+   Must stay a separate longhand — folding it into the shorthand would be reset again by overrides. */
+.nyx-btn-primary,.nyx-btn-danger,.nyx-btn-glow{background-origin:border-box}
+.nyx-btn-glow:hover{transform:translateY(-1px)}
+@keyframes nyx-spin{to{transform:rotate(360deg)}}
+@keyframes nyx-pulse{
+  0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--nyx-accent) 0%,transparent),0 0 18px color-mix(in srgb,var(--nyx-accent) 30%,transparent)}
+  50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--nyx-accent) 0%,transparent),0 0 34px color-mix(in srgb,var(--nyx-accent) 55%,transparent)}
 }
-.nyx-tilt:hover {
-  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.5), 0 0 40px -10px var(--nyx-glow-color, rgba(124, 58, 237, 0.35));
+/* button group */
+.nyx-btn-group{display:inline-flex}
+.nyx-btn-group > .nyx-btn{border-radius:0}
+.nyx-btn-group > .nyx-btn:first-child{border-start-start-radius:var(--nyx-radius);border-end-start-radius:var(--nyx-radius)}
+.nyx-btn-group > .nyx-btn:last-child{border-start-end-radius:var(--nyx-radius);border-end-end-radius:var(--nyx-radius)}
+.nyx-btn-group > .nyx-btn:not(:first-child){margin-inline-start:-1px}
+body.nyx .nyx-btn-group > .nyx-btn:focus-visible,
+body.nyx .nyx-btn-split .nyx-btn:focus-visible {
+  z-index: 2;
+  outline-offset: 0;
 }
+/* close button */
+.nyx-close{width:32px;height:32px;border:none;background:var(--nyx-glass);color:var(--nyx-text-muted);border-radius:var(--nyx-radius-sm);cursor:pointer;display:grid;place-items:center;font-size:16px;line-height:1;transition:all .2s var(--nyx-ease)}
+.nyx-close:hover{background:var(--nyx-elev-hover);color:var(--nyx-text)}

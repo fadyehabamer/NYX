@@ -1123,6 +1123,28 @@
     });
   }
 
+  /* ---------- national ID / Iqama input — digits-only mask + KSA validity ---------- */
+  /* Saudi national ID is 10 digits; first digit 1 = citizen (مواطن), 2 = resident/Iqama (مقيم). */
+  function initIdInput(root) {
+    $$('.nyx-id-input', root).filter(function (w) { return !w._nyxId; }).forEach(function (w) {
+      w._nyxId = true;
+      var inp = w.querySelector('input'); if (!inp) return;
+      var tag = w.querySelector('.nyx-id-type');
+      function check(commit) {
+        var d = inp.value.replace(/\D/g, '').slice(0, 10);
+        if (d !== inp.value) inp.value = d;                       // keep digits only, cap at 10
+        var kind = d.charAt(0) === '1' ? 'citizen' : d.charAt(0) === '2' ? 'resident' : '';
+        if (tag) { tag.textContent = kind === 'citizen' ? 'مواطن' : kind === 'resident' ? 'مقيم' : ''; tag.setAttribute('data-kind', kind); }
+        var ok = /^[12]\d{9}$/.test(d);
+        w.classList.toggle('is-valid', ok);
+        w.classList.toggle('is-invalid', !ok && d.length > 0 && (commit || d.length >= 10));
+      }
+      inp.addEventListener('input', function () { check(false); });
+      inp.addEventListener('blur', function () { check(true); });
+      check(false);
+    });
+  }
+
   /* ---------- tabs ARIA (roles + roving tabindex) ---------- */
   function initTabs(root) {
     $$('[data-nyx-tabs]', root).filter(function (g) { return !g._nyxTabs; }).forEach(function (g) {
@@ -1463,6 +1485,7 @@
     initCountdown(root);
     initZakat(root);
     initQibla(root);
+    initIdInput(root);
     initImage(root);
     initNav(root);
     initTabs(root);

@@ -46,7 +46,8 @@ var NAMES = {
   1: 'layout', 2: 'typography', 3: 'buttons', 4: 'cards', 5: 'forms',
   6: 'navigation', 7: 'feedback', 8: 'data', 9: 'overlays', 10: 'signature', 11: 'extras', 12: 'motion', 13: 'utilities',
   14: 'hierarchy', 15: 'regional', 16: 'forms-plus', 17: 'overlays-plus', 18: 'commerce', 19: 'regional-plus',
-  20: 'backgrounds', 21: 'charts', 22: 'code', 23: 'blocks', 24: 'blocks-plus', 25: 'media', 26: 'enhancements'
+  20: 'backgrounds', 21: 'charts', 22: 'code', 23: 'blocks', 24: 'blocks-plus', 25: 'media', 26: 'enhancements',
+  27: 'regional-pro'
 };
 
 /* collect the big ==== banners (sections 1..11 + RTL) */
@@ -80,7 +81,10 @@ written.push(write('base', 'Reset + body.nyx canvas/typography. Requires tokens.
 /* each banner section -> its own file */
 banners.forEach(function (b, i) {
   var body = css.slice(b.index, i + 1 < banners.length ? banners[i + 1].index : css.length);
-  var num = parseInt(b.title, 10);
+  /* numbered section titles look like "27. REGIONAL++ …" — require the dot so
+     descriptive banners ("3D Tilt Card") don't parse to a stray section number. */
+  var nm = /^(\d+)\./.exec(b.title);
+  var num = nm ? +nm[1] : NaN;
   var name = !isNaN(num) ? NAMES[num] : (/^RTL/i.test(b.title) ? 'rtl' : null);
   if (!name) { console.warn('Skipped unmapped section: ' + b.title); return; }
   var note = name === 'rtl'

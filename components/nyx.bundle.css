@@ -1841,3 +1841,81 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
   .nyx-typewriter { animation: none; border-color: var(--nyx-accent); }
   .nyx-glitch::before, .nyx-glitch::after { animation: none; }
 }
+
+/* ============================================================
+   27. REGIONAL++ (v1.1) — KSA forms & finance: BNPL, e-invoice, ID, name, address, region
+   ============================================================ */
+/* ZATCA e-invoice · national ID/Iqama · quadripartite Arabic name · العنوان الوطني.
+   Accent-driven, RTL-safe (logical properties), composes with .nyx-input / .nyx-select. */
+
+/* — BNPL — buy-now-pay-later badge (Tabby / Tamara style). Brand text is yours. */
+.nyx-bnpl{display:inline-flex;align-items:center;gap:var(--nyx-s2);padding:8px 12px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);background:var(--nyx-surface);font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted)}
+.nyx-bnpl .nyx-bnpl-brand{font-family:var(--nyx-font-display);font-weight:800;color:var(--nyx-accent)}
+.nyx-bnpl b{color:var(--nyx-text);font-weight:700}
+.nyx-bnpl small{font-size:var(--nyx-fs-xs)}
+/* full schedule — N installment steps joined by a connector line */
+.nyx-bnpl-plan{display:flex;align-items:flex-start;padding:var(--nyx-s4);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface)}
+.nyx-bnpl-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;text-align:center;padding:0 4px}
+.nyx-bnpl-step::before{content:"";position:absolute;top:11px;inset-inline-start:-50%;width:100%;height:2px;background:var(--nyx-border);z-index:0}
+.nyx-bnpl-step:first-child::before{display:none}
+.nyx-bnpl-step .dot{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--nyx-surface-2);border:2px solid var(--nyx-border);font-size:12px;position:relative;z-index:1}
+.nyx-bnpl-step .amt{font-family:var(--nyx-font-mono);font-weight:700;font-size:var(--nyx-fs-sm);color:var(--nyx-text)}
+.nyx-bnpl-step .when{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
+.nyx-bnpl-step.paid .dot{background:var(--nyx-accent-2);border-color:var(--nyx-accent-2);color:#04130f}
+.nyx-bnpl-step.paid::before{background:var(--nyx-accent-2)}
+.nyx-bnpl-step.current .dot{background:var(--nyx-accent);border-color:var(--nyx-accent);color:#fff;box-shadow:var(--nyx-glow)}
+
+/* — e-invoice — ZATCA simplified tax invoice (فاتورة ضريبية مبسطة) — */
+.nyx-invoice{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface);padding:var(--nyx-s5);max-width:520px;box-shadow:var(--nyx-shadow-sm)}
+.nyx-invoice-head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--nyx-s4);padding-bottom:var(--nyx-s4);border-bottom:1px solid var(--nyx-border)}
+.nyx-invoice-brand{display:flex;flex-direction:column;gap:4px;min-width:0}
+.nyx-invoice-brand b{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-lg);color:var(--nyx-text)}
+.nyx-invoice-brand small{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-family:var(--nyx-font-mono)}
+.nyx-invoice-stamp{display:inline-block;align-self:flex-start;font-size:var(--nyx-fs-xs);font-weight:600;padding:4px 10px;border-radius:var(--nyx-radius-full);background:color-mix(in srgb,var(--nyx-accent) 12%,transparent);color:var(--nyx-accent);border:1px solid color-mix(in srgb,var(--nyx-accent) 40%,transparent)}
+.nyx-invoice-qr{width:92px;height:92px;border-radius:var(--nyx-radius);background:var(--nyx-surface-2);border:1px dashed var(--nyx-border);display:grid;place-items:center;text-align:center;font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);overflow:hidden;flex-shrink:0}
+.nyx-invoice-qr img,.nyx-invoice-qr svg{width:100%;height:100%;object-fit:contain}
+.nyx-invoice-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px var(--nyx-s5);padding:var(--nyx-s4) 0;font-size:var(--nyx-fs-sm)}
+.nyx-invoice-meta .row{display:flex;justify-content:space-between;gap:var(--nyx-s3)}
+.nyx-invoice-meta .k{color:var(--nyx-text-muted)}
+.nyx-invoice-meta .v{color:var(--nyx-text);font-family:var(--nyx-font-mono)}
+.nyx-invoice-totals{border-top:1px solid var(--nyx-border);padding-top:var(--nyx-s3);display:flex;flex-direction:column;gap:6px}
+.nyx-invoice-totals .row{display:flex;justify-content:space-between;font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted)}
+.nyx-invoice-totals .row .v{font-family:var(--nyx-font-mono)}
+.nyx-invoice-totals .row.vat .v{color:var(--nyx-warning)}
+.nyx-invoice-totals .row.grand{border-top:1px solid var(--nyx-border);margin-top:6px;padding-top:var(--nyx-s3);color:var(--nyx-text);font-weight:800;font-size:var(--nyx-fs-lg)}
+
+/* — national ID / Iqama input — Saudi 10-digit (1=citizen, 2=resident). JS: .nyx-id-input */
+.nyx-id-input{display:flex;align-items:center;gap:var(--nyx-s3);padding-inline:14px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);background:var(--nyx-surface);transition:all .2s var(--nyx-ease)}
+.nyx-id-input:focus-within{border-color:var(--nyx-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent) 18%,transparent),var(--nyx-glow)}
+.nyx-id-input .nyx-id-flag{font-size:18px;line-height:1;flex-shrink:0}
+.nyx-id-input input{flex:1;min-width:0;border:0;outline:none;background:transparent;color:var(--nyx-text);font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-base);letter-spacing:.12em;padding:11px 0}
+.nyx-id-input input::placeholder{color:var(--nyx-text-muted);letter-spacing:normal}
+.nyx-id-type{margin-inline-start:auto;font-size:var(--nyx-fs-xs);font-weight:600;padding:3px 10px;border-radius:var(--nyx-radius-full);background:var(--nyx-surface-2);color:var(--nyx-text-muted);white-space:nowrap;flex-shrink:0}
+.nyx-id-type:empty{display:none}
+.nyx-id-type[data-kind="citizen"]{background:color-mix(in srgb,var(--nyx-accent) 14%,transparent);color:var(--nyx-accent)}
+.nyx-id-type[data-kind="resident"]{background:color-mix(in srgb,var(--nyx-accent-2) 16%,transparent);color:var(--nyx-accent-2)}
+.nyx-id-input.is-valid{border-color:var(--nyx-accent-2)}
+.nyx-id-input.is-valid:focus-within{box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-accent-2) 18%,transparent)}
+.nyx-id-input.is-invalid{border-color:var(--nyx-danger)}
+.nyx-id-input.is-invalid:focus-within{box-shadow:0 0 0 3px color-mix(in srgb,var(--nyx-danger) 18%,transparent)}
+
+/* — quadripartite Arabic name — الأول · الأب · الجد · العائلة (.triple drops the grandfather) */
+.nyx-name-ar{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--nyx-s3)}
+.nyx-name-ar.triple{grid-template-columns:repeat(3,1fr)}
+.nyx-name-ar .nyx-field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.nyx-name-ar .nyx-field > span{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-weight:500}
+@media (max-width:640px){.nyx-name-ar,.nyx-name-ar.triple{grid-template-columns:repeat(2,1fr)}}
+
+/* — Saudi national address — العنوان الوطني (.full spans the row; .nyx-natl-short = short code) */
+.nyx-national-address{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--nyx-s4)}
+.nyx-national-address .nyx-field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.nyx-national-address .nyx-field > span{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);font-weight:500}
+.nyx-national-address .full{grid-column:1/-1}
+.nyx-natl-short{display:inline-flex;align-items:center;gap:var(--nyx-s2);font-family:var(--nyx-font-mono);font-weight:700;letter-spacing:.15em;font-size:var(--nyx-fs-lg);color:var(--nyx-accent);padding:8px 14px;border:1px solid color-mix(in srgb,var(--nyx-accent) 40%,transparent);border-radius:var(--nyx-radius);background:color-mix(in srgb,var(--nyx-accent) 8%,transparent)}
+@media (max-width:640px){.nyx-national-address{grid-template-columns:1fr}}
+
+/* — region / governorate select — pin at the start, native chevron at the end (RTL-safe) */
+.nyx-region-select{position:relative;display:block}
+.nyx-region-select .nyx-rs-pin{position:absolute;inset-inline-start:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--nyx-accent);font-size:16px;line-height:1}
+.nyx-region-select select{padding-inline-start:38px;background-position:right 14px center}
+[dir="rtl"] .nyx-region-select select{background-position:left 14px center}
