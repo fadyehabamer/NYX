@@ -1544,7 +1544,7 @@
     },
     {
       id: 'zakat', group: 'Regional', title: 'Zakat calculator', added: 'v1.0', needsJs: true,
-      summary: 'A live 2.5% calculator (override with data-rate). The amount is a text field with built-in numeric validation (digits + one decimal only); type eligible wealth and the due figure updates instantly.',
+      summary: 'A live 2.5% calculator (override with data-rate). The amount is a text field with built-in numeric validation (digits + one decimal only); type eligible wealth and the due figure updates instantly. Add data-nisab="THRESHOLD" so no zakat is owed below the nisab — the widget gets a .nyx-below-nisab state and shows your optional .nyx-zakat-nisab-note.',
       sections: [
         { title: 'Calculate', demo: '<div class="nyx-zakat"><div><label class="nyx-label">Eligible wealth</label><div class="nyx-input-group"><span class="nyx-addon">ر.س</span><input class="nyx-input nyx-zakat-amount" type="text" inputmode="decimal" value="100000" aria-label="wealth"></div></div><div class="nyx-zakat-out"><span class="nyx-muted">Zakat due (2.5%)</span><b><span class="nyx-zakat-result">0</span> ر.س</b></div></div>' }
       ],
@@ -1552,7 +1552,7 @@
     },
     {
       id: 'qibla', group: 'Regional', title: 'Qibla indicator', added: 'v1.0', needsJs: true,
-      summary: 'A compass dial whose needle points toward the Qibla. Set data-nyx-qibla="degrees" (your computed bearing); pair with the Device Orientation API for a live compass.',
+      summary: 'A compass dial whose needle points toward the Qibla. Give it data-coords="lat,lng" and the runtime computes the great-circle bearing to the Kaaba for you (or set data-nyx-qibla="degrees" directly). Also exposed as Nyx.qiblaBearing(lat, lng); pair with the Device Orientation API for a live compass.',
       sections: [
         { title: 'Bearing 119°', demo: '<div class="nyx-qibla" data-nyx-qibla="119"><span class="dir n">N</span><span class="dir e">E</span><span class="dir s">S</span><span class="dir w">W</span><span class="needle"></span><span class="kaaba">🕋</span><span class="hub"></span></div>' }
       ],
@@ -1568,7 +1568,7 @@
     },
     {
       id: 'id-input', group: 'Regional', title: 'National ID / Iqama', added: 'v1.1', needsJs: true,
-      summary: 'A masked input for the Saudi 10-digit national ID. The runtime keeps it digits-only, caps the length, flags validity, and labels the holder from the first digit — 1 = citizen (مواطن), 2 = resident/Iqama (مقيم). Degrades to a plain numeric field without JS.',
+      summary: 'A masked input for the Saudi 10-digit national ID. The runtime keeps it digits-only and LTR, caps the length, validates the real Luhn check digit (not just the format), sets aria-invalid, and labels the holder from the first digit — 1 = citizen (مواطن), 2 = resident/Iqama (مقيم). Degrades to a plain numeric field without JS.',
       sections: [
         { title: 'Citizen / resident', demo: '<div style="display:flex;flex-direction:column;gap:12px;max-width:360px"><div class="nyx-id-input"><span class="nyx-id-flag">🪪</span><input inputmode="numeric" maxlength="10" placeholder="1xxxxxxxxx" aria-label="national id"><span class="nyx-id-type"></span></div><div class="nyx-id-input"><span class="nyx-id-flag">🪪</span><input inputmode="numeric" maxlength="10" value="2000000007" aria-label="iqama"><span class="nyx-id-type"></span></div></div>' }
       ],

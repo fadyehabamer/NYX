@@ -1115,6 +1115,9 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 .nyx-zakat{display:flex;flex-direction:column;gap:var(--nyx-s3);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface);padding:var(--nyx-s5);max-width:340px}
 .nyx-zakat-out{display:flex;align-items:baseline;justify-content:space-between;border-top:1px solid var(--nyx-border);padding-top:var(--nyx-s3)}
 .nyx-zakat-out b{font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-2xl);color:var(--nyx-accent-2)}
+.nyx-zakat.nyx-below-nisab .nyx-zakat-out b{color:var(--nyx-text-muted)}
+.nyx-zakat .nyx-zakat-nisab-note{display:none;font-size:var(--nyx-fs-xs);color:var(--nyx-warning)}
+.nyx-zakat.nyx-below-nisab .nyx-zakat-nisab-note{display:block}
 
 /* qibla compass */
 .nyx-qibla{width:128px;height:128px;border-radius:50%;border:2px solid var(--nyx-border);position:relative;display:grid;place-items:center;background:radial-gradient(circle,var(--nyx-surface-2),var(--nyx-surface));box-shadow:inset 0 0 24px rgba(0,0,0,.3)}
