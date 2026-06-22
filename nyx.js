@@ -704,9 +704,21 @@
   function toArabicNumerals(value) {
     return String(value).replace(/[0-9]/g, function (d) { return AR_DIGITS[+d]; });
   }
+  /* opt-in Arabic-Indic digits: nearest data-nyx-numerals="arab" ancestor (data-numerals kept for back-compat) */
+  function wantsArab(node) {
+    for (var n = node; n && n.getAttribute; n = n.parentElement) {
+      var v = n.getAttribute('data-nyx-numerals'); if (v == null) v = n.getAttribute('data-numerals');
+      if (v != null) return v === 'arab';
+    }
+    return false;
+  }
   function initNumerals(root) {
-    $$('[data-nyx-numerals="arab"]', root).filter(function (e) { return !e._nyxNum; })
-      .forEach(function (e) { e._nyxNum = true; e.textContent = toArabicNumerals(e.textContent); });
+    $$('[data-nyx-numerals="arab"]', root).filter(function (e) { return !e._nyxNum; }).forEach(function (e) {
+      e._nyxNum = true;                                        // convert digit text nodes in place — never clobber child structure
+      var w = doc.createTreeWalker(e, NodeFilter.SHOW_TEXT, null, false), nodes = [], t;
+      while ((t = w.nextNode())) nodes.push(t);
+      nodes.forEach(function (n) { if (/[0-9]/.test(n.nodeValue)) n.nodeValue = toArabicNumerals(n.nodeValue); });
+    });
   }
 
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
@@ -1165,16 +1177,16 @@
   function tickCountdown(c) {
     var diff = Math.max(0, Math.floor((c._nyxTarget - new Date()) / 1000));
     var u = $$('.unit b', c), m = Math.floor((diff % 3600) / 60), s = diff % 60;
+    function set(node, n) { if (node) node.textContent = c._nyxArab ? toArabicNumerals(pad(n)) : pad(n); }
     if (u.length >= 4) {                                        // D : H : M : S (multi-day targets)
-      u[0].textContent = pad(Math.floor(diff / 86400)); u[1].textContent = pad(Math.floor((diff % 86400) / 3600));
-      u[2].textContent = pad(m); u[3].textContent = pad(s);
+      set(u[0], Math.floor(diff / 86400)); set(u[1], Math.floor((diff % 86400) / 3600)); set(u[2], m); set(u[3], s);
     } else {                                                   // H : M : S (hours may exceed 24)
-      if (u[0]) u[0].textContent = pad(Math.floor(diff / 3600)); if (u[1]) u[1].textContent = pad(m); if (u[2]) u[2].textContent = pad(s);
+      set(u[0], Math.floor(diff / 3600)); set(u[1], m); set(u[2], s);
     }
   }
   function initCountdown(root) {
     $$('.nyx-countdown[data-nyx-countdown], .nyx-countdown[data-date]', root).filter(function (c) { return !c._nyxCd; }).forEach(function (c) {
-      c._nyxCd = true;
+      c._nyxCd = true; c._nyxArab = wantsArab(c);
       var dateAttr = c.getAttribute('data-date'), target;
       if (dateAttr) { target = new Date(dateAttr); }           // absolute target — ISO date or datetime
       else {
@@ -1290,7 +1302,7 @@
     /* one-attribute display: fill an element with today's Hijri date */
     $$('[data-nyx-hijri-today]', root).filter(function (e) { return !e._nyxHT; }).forEach(function (e) {
       e._nyxHT = true;
-      e.textContent = formatHijri(new Date(), { numerals: e.getAttribute('data-numerals') === 'arab' ? 'arab' : null });
+      e.textContent = formatHijri(new Date(), { numerals: wantsArab(e) ? 'arab' : null });
     });
     /* interactive bidirectional converter */
     $$('[data-nyx-hijri]', root).filter(function (w) { return !w._nyxHC; }).forEach(function (w) {
