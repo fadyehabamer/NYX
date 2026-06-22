@@ -1257,6 +1257,22 @@
   }
 
   /* ---------- qibla compass ---------- */
+  /* ZATCA (Saudi) e-invoice QR payload — TLV-encode the 5 phase-1 tags, Base64. Feed the result to any QR renderer. */
+  function zatcaQR(o) {
+    o = o || {};
+    var fields = [o.seller || '', o.vatNumber || '', o.timestamp || '', String(o.total != null ? o.total : ''), String(o.vatTotal != null ? o.vatTotal : '')];
+    function utf8(str) {
+      if (typeof TextEncoder !== 'undefined') return Array.prototype.slice.call(new TextEncoder().encode(str));
+      var out = [], s = unescape(encodeURIComponent(str)); for (var i = 0; i < s.length; i++) out.push(s.charCodeAt(i)); return out;
+    }
+    var bytes = [];
+    fields.forEach(function (v, i) {
+      var vb = utf8(v); bytes.push(i + 1, vb.length);           // tag (1-5), length, value
+      for (var j = 0; j < vb.length; j++) bytes.push(vb[j]);
+    });
+    var bin = ''; for (var k = 0; k < bytes.length; k++) bin += String.fromCharCode(bytes[k]);
+    return (typeof btoa !== 'undefined') ? btoa(bin) : bin;
+  }
   function qiblaBearing(lat, lng) {                             // initial great-circle bearing to the Kaaba (21.4225°N, 39.8262°E)
     var KLA = 21.4225 * Math.PI / 180, KLO = 39.8262 * Math.PI / 180, la = lat * Math.PI / 180, dLo = KLO - lng * Math.PI / 180;
     var y = Math.sin(dLo) * Math.cos(KLA), x = Math.cos(la) * Math.sin(KLA) - Math.sin(la) * Math.cos(KLA) * Math.cos(dLo);
@@ -1433,15 +1449,23 @@
   function initPrayerTimes(root) {
     $$('.nyx-prayer-times[data-nyx-prayers]', root).forEach(function (wrap) {
       if (wrap._nyxP) return; wrap._nyxP = true;
-      var now = new Date(), cur = now.getHours() * 60 + now.getMinutes();
-      var items = $$('.nyx-prayer', wrap), pick = null;
-      items.forEach(function (p) {
-        var t = p.getAttribute('data-time'); if (!t) return;
-        var pm = (+t.split(':')[0]) * 60 + (+t.split(':')[1]);
-        if (pm >= cur && !pick) pick = p;
-      });
-      if (!pick && items.length) pick = items[0];
-      items.forEach(function (p) { p.classList.toggle('next', p === pick); });
+      var items = $$('.nyx-prayer', wrap);
+      function update() {                                       // re-pick the next prayer as time passes (was computed once and went stale)
+        var now = new Date(), cur = now.getHours() * 60 + now.getMinutes(), pick = null;
+        items.forEach(function (p) {
+          var t = p.getAttribute('data-time'); if (!t) return;
+          var pm = (+t.split(':')[0]) * 60 + (+t.split(':')[1]);
+          if (pm >= cur && !pick) pick = p;
+        });
+        if (!pick && items.length) pick = items[0];
+        items.forEach(function (p) {
+          var on = p === pick;
+          p.classList.toggle('next', on);
+          if (on) p.setAttribute('aria-current', 'true'); else p.removeAttribute('aria-current');
+        });
+      }
+      update();
+      setInterval(update, 30000);
     });
   }
 
@@ -1774,7 +1798,7 @@
     togglePopover: togglePopover, openCommandPalette: openCommandPalette, closeCommandPalette: closeCommandPalette,
     setTheme: setTheme, toggleTheme: toggleTheme, setDir: setDir, toggleDir: toggleDir, setAccent: setAccent,
     toArabicNumerals: toArabicNumerals, progress: progress,
-    toHijri: toHijri, fromHijri: fromHijri, formatHijri: formatHijri, qiblaBearing: qiblaBearing,
+    toHijri: toHijri, fromHijri: fromHijri, formatHijri: formatHijri, qiblaBearing: qiblaBearing, zatcaQR: zatcaQR,
     snackbar: snackbar, confirm: confirmDialog
   };
 });

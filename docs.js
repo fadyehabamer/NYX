@@ -1492,7 +1492,7 @@
     /* ===== REGIONAL (MENA) ===== */
     {
       id: 'prayer-times', group: 'Regional', title: 'Prayer times', added: 'v1.0', needsJs: true,
-      summary: 'A row of the five daily prayers — add data-nyx-prayers and the runtime reads each data-time and glows whichever prayer is next from the device clock. A staple of MENA apps.',
+      summary: 'A row of the five daily prayers — add data-nyx-prayers and the runtime reads each data-time and glows whichever prayer is next from the device clock (re-evaluated as the day progresses, with aria-current on the next prayer). A staple of MENA apps.',
       sections: [
         {
           title: 'Today (the next prayer is auto-highlighted)', demo:
@@ -1662,7 +1662,7 @@
     },
     {
       id: 'invoice', group: 'Commerce', title: 'Tax e-invoice (ZATCA)', added: 'v1.1',
-      summary: 'A simplified tax invoice (فاتورة ضريبية مبسطة) header in the ZATCA layout — seller, VAT registration number, a QR slot for the e-invoice payload, a meta grid, and totals with a separate 15% VAT line. Drop your generated QR (img/svg) into .nyx-invoice-qr.',
+      summary: 'A simplified tax invoice (فاتورة ضريبية مبسطة) header in the ZATCA layout — seller, VAT registration number, a QR slot, a meta grid, and totals with a separate 15% VAT line. Nyx.zatcaQR({seller, vatNumber, timestamp, total, vatTotal}) builds the TLV/Base64 phase-1 payload; render it with any QR library and drop the img/svg into .nyx-invoice-qr.',
       sections: [
         { title: 'Simplified invoice', demo: '<div class="nyx-invoice"><div class="nyx-invoice-head"><div class="nyx-invoice-brand"><b>متجر نون</b><small>VAT 300000000000003</small><span class="nyx-invoice-stamp">فاتورة ضريبية مبسطة</span></div><div class="nyx-invoice-qr">QR</div></div><div class="nyx-invoice-meta"><div class="row"><span class="k">رقم الفاتورة</span><span class="v">INV-2043</span></div><div class="row"><span class="k">التاريخ</span><span class="v">2026-06-22</span></div></div><div class="nyx-invoice-totals"><div class="row"><span>الإجمالي قبل الضريبة</span><span class="v">300.00</span></div><div class="row vat"><span>ضريبة القيمة المضافة (15%)</span><span class="v">45.00</span></div><div class="row grand"><span>الإجمالي</span><span class="v">345.00 ر.س</span></div></div></div>' }
       ],
