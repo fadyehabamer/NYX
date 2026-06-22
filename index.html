@@ -40,9 +40,10 @@
   .hero-eyebrow b{color:var(--nyx-text);font-weight:600}
   .sec-eyebrow{margin-bottom:var(--nyx-s3)}
   /* ---- hero ---- */
-  .hero{text-align:center;padding-top:var(--nyx-s7);padding-bottom:var(--nyx-s7)}
+  .hero{text-align:center;padding-top:var(--nyx-s7);padding-bottom:var(--nyx-s7);}
   /* grid backdrop reuses .nyx-bg-grid; clipped to the section so it never overflows */
-  .hero.nyx-bg-grid::before{opacity:.35;
+  .hero.nyx-bg-grid::before{opacity:.5;
+    background-image:linear-gradient(color-mix(in srgb,var(--nyx-border) 45%,var(--nyx-text-muted)) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--nyx-border) 45%,var(--nyx-text-muted)) 1px,transparent 1px);
     -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000,transparent 75%);
     mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000,transparent 75%)}
   .hero h1{max-width:15ch;margin-inline:auto;line-height:1.02}
@@ -131,6 +132,7 @@
   /* ---- v1.0 effects showcase ---- */
   .bg-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--nyx-s4)}
   .bg-tile{position:relative;min-height:118px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);display:grid;place-items:center}
+  .bg-tile.nyx-bg-squares::before{opacity:.6}
   .bg-tile .lbl{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);background:var(--nyx-surface);border:1px solid var(--nyx-border);padding:3px 10px;border-radius:var(--nyx-radius-full)}
   .chart-card{height:100%}
   .chart-card h3{margin:0}
@@ -389,7 +391,7 @@
       <div class="nyx-bg-mesh bg-tile"><span class="lbl">mesh</span></div>
       <div class="nyx-bg-gradient animated bg-tile"><span class="lbl">gradient</span></div>
       <div class="nyx-bg-beams animated bg-tile"><span class="lbl">beams</span></div>
-      <div class="nyx-bg-squares bg-tile"><span class="lbl">squares · hover</span></div>
+      <div class="nyx-bg-squares bg-tile" style="--nyx-bg-cell:30px"><span class="lbl">squares · hover</span></div>
       <div class="nyx-bg-stars bg-tile"><span class="lbl">stars</span></div>
       <div class="nyx-bg-mesh nyx-bg-noise bg-tile"><span class="lbl">mesh + noise</span></div>
     </div>

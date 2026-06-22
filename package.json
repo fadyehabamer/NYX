@@ -48,10 +48,13 @@
     "nyx.js",
     "nyx.min.js",
     "components/",
+    "fonts/",
     "build.js",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js",
+    "build:check": "node build.js && git diff --exit-code"
   }
 }

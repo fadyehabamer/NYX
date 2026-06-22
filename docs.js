@@ -103,8 +103,8 @@
           title: 'Files', nocode: true, demo:
             '<div class="nyx-list-group">' +
             '<div class="nyx-list-item"><span><strong>nyx.css</strong> <span class="nyx-caption">· full bundle</span></span><a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="nyx.css" download>↓ Bundle</a></div>' +
-            '<div class="nyx-list-item"><span><strong>nyx.min.css</strong> <span class="nyx-badge nyx-badge-success">~11kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.min.css" download>↓ Min CSS</a></div>' +
-            '<div class="nyx-list-item"><span><strong>nyx.js</strong> · <strong>nyx.min.js</strong> <span class="nyx-badge nyx-badge-success">~4kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.min.js" download>↓ Min JS</a></div>' +
+            '<div class="nyx-list-item"><span><strong>nyx.min.css</strong> <span class="nyx-badge nyx-badge-success">~24kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.min.css" download>↓ Min CSS</a></div>' +
+            '<div class="nyx-list-item"><span><strong>nyx.js</strong> · <strong>nyx.min.js</strong> <span class="nyx-badge nyx-badge-success">~22kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.min.js" download>↓ Min JS</a></div>' +
             '<div class="nyx-list-item"><span><strong>tokens.css</strong> <span class="nyx-badge nyx-badge-warning">required</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="components/tokens.css" download>↓ CSS</a></div>' +
             ['base', 'layout', 'typography', 'buttons', 'cards', 'forms', 'navigation', 'feedback', 'data', 'overlays', 'signature', 'extras', 'motion', 'utilities', 'rtl'].map(function (n) {
               return '<div class="nyx-list-item"><span>' + n + '.css</span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="components/' + n + '.css" download>↓ CSS</a></div>';
@@ -112,7 +112,7 @@
             '</div>'
         }
       ],
-      classes: [['nyx.css / nyx.min.css', 'The bundle — full + minified (~11kb gzip).'], ['nyx.min.js', 'Minified runtime (~4kb gzip).'], ['CDN (jsDelivr/unpkg)', 'Serve the minified build with no install.'], ['components/*.css', 'Individual modules (each needs tokens.css).'], ['node build.js', 'Regenerates components/ + the minified files.']]
+      classes: [['nyx.css / nyx.min.css', 'The bundle — full + minified (~24kb gzip).'], ['nyx.min.js', 'Minified runtime (~22kb gzip).'], ['CDN (jsDelivr/unpkg)', 'Serve the minified build with no install.'], ['components/*.css', 'Individual modules (each needs tokens.css).'], ['node build.js', 'Regenerates components/ + the minified files.']]
     },
     {
       id: 'theming', group: 'Customize', title: 'Theming',

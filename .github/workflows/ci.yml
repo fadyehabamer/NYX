@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: Build & verify artifacts are in sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # nyx.css / nyx.js are the source of truth; build.js regenerates
+      # components/*.css and the minified distribution from them.
+      - name: Build
+        run: node build.js
+
+      # If a regenerated artifact differs from what's committed, the bundle and
+      # the à-la-carte / minified files have drifted — fail and ask for a rebuild.
+      - name: Verify no drift
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::Build artifacts are out of sync with nyx.css / nyx.js."
+            echo "Run 'node build.js' locally and commit the result."
+            git status --porcelain
+            git --no-pager diff
+            exit 1
+          fi
+          echo "✓ components/ and minified files match a fresh build."

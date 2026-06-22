@@ -13,8 +13,8 @@ A zero‑dependency CSS **+** JS component framework — fully themeable, light 
 [![npm](https://img.shields.io/npm/v/nyx-css?style=flat-square&color=6c63ff&label=npm)](https://www.npmjs.com/package/nyx-css)
 [![license](https://img.shields.io/npm/l/nyx-css?style=flat-square&color=00d4aa)](LICENSE)
 ![zero deps](https://img.shields.io/badge/dependencies-0-6c63ff?style=flat-square)
-![css gzip](https://img.shields.io/badge/CSS-23kb%20gzip-00d4aa?style=flat-square)
-![js gzip](https://img.shields.io/badge/JS-17kb%20gzip-00d4aa?style=flat-square)
+![css gzip](https://img.shields.io/badge/CSS-24kb%20gzip-00d4aa?style=flat-square)
+![js gzip](https://img.shields.io/badge/JS-22kb%20gzip-00d4aa?style=flat-square)
 ![rtl](https://img.shields.io/badge/RTL-first--class-ffb020?style=flat-square)
 
 **`npm i nyx-css`** &nbsp;·&nbsp; [Documentation](docs.html) &nbsp;·&nbsp; [Components](#-components) &nbsp;·&nbsp; [Theming](#-theming) &nbsp;·&nbsp; [العربية](docs.ar.html)
@@ -30,8 +30,8 @@ A zero‑dependency CSS **+** JS component framework — fully themeable, light 
 
 - 🌑 **Dark‑native, light‑ready** — both themes ship built‑in; flip with one attribute.
 - 🎨 **Themeable to the core** — every value is a `--nyx-*` custom property. Retint the whole system with `color-mix()`; no recompile.
-- 🌍 **RTL & Arabic, first‑class** — logical properties throughout, an RTL layer, and bundled Arabic faces (IBM Plex Sans Arabic + Aref Ruqaa).
-- 🧩 **80+ components** — buttons to command palettes, timelines, carousels, data grids, and signature pieces you won't find elsewhere.
+- 🌍 **RTL & Arabic, first‑class** — logical properties throughout, a dedicated RTL layer, Arabic faces by default (IBM Plex Sans Arabic + Aref Ruqaa), and the self‑hosted **Thmanyah** family bundled in `fonts/`.
+- 🧩 **100+ components** — buttons to command palettes, charts, timelines, carousels, data grids, MENA/Arabic regional widgets, and signature pieces you won't find elsewhere.
 - ⚡ **Tiny vanilla runtime** — UMD `window.Nyx`, declarative `data-nyx-*`, auto‑inits on load. Most pages need no JS at all.
 - 📦 **À‑la‑carte or all‑in‑one** — ship the full bundle or just the modules you import. Zero dependencies (except Google Fonts).
 
@@ -48,7 +48,7 @@ npm i nyx-css
 <html lang="en" data-theme="dark">
 <head>
   <!-- fonts (the only external dependency) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
   <!-- 1 · the framework -->
   <link rel="stylesheet" href="nyx.css">
@@ -140,6 +140,12 @@ Nyx.openModal('#invite');
 > **Data** `nyx-table` `nyx-table-sortable` `nyx-data-grid` `nyx-kpi-row` `nyx-list-group`
 > **Overlays** `nyx-modal` `nyx-drawer` `nyx-tooltip` `nyx-popover` `nyx-accordion` `nyx-collapse` `nyx-carousel` `nyx-ratio`
 > **Signature** `nyx-spotlight` `nyx-orbit` `nyx-chip` `nyx-timeline` `nyx-meter` `nyx-gradient-border` `nyx-avatar` `nyx-marquee` `nyx-segment` `nyx-rating` `nyx-empty` `nyx-banner` `nyx-dropzone`
+> **Charts** `nyx-chart-bars` `nyx-chart-line` `nyx-chart-donut` `nyx-chart-pie` `nyx-chart-legend` — zero‑dep CSS + SVG, accent‑driven
+> **Backgrounds** `nyx-bg-grid` `nyx-bg-dots` `nyx-bg-mesh` `nyx-bg-gradient` `nyx-bg-beams` `nyx-bg-noise` `nyx-bg-stars` `nyx-bg-squares`
+> **Motion** `nyx-anim-fade` `nyx-anim-up`/`-left`/`-right` `nyx-anim-blur` `nyx-anim-float` `nyx-anim-pulse-glow` · scroll‑reveal + delays
+> **Code** `nyx-code-block` — titled window, syntax tokens, one‑tap copy via `data-nyx-copy`
+> **Commerce** `nyx-product` `nyx-cart-item` `nyx-coupon` `nyx-pay` `nyx-order` `nyx-price` `nyx-address`
+> **Regional · MENA** `nyx-countdown` `nyx-prayer-times` `nyx-qibla` `nyx-zakat` `nyx-hijri-convert` `nyx-delivery` `nyx-bnpl` `nyx-invoice` (ZATCA QR) `nyx-national-address`
 
 Every component has its own page — with live examples, a class reference, and a search‑filterable sidebar — in **[`docs.html`](docs.html)** (and **[`docs.ar.html`](docs.ar.html)** in Arabic).
 
@@ -173,6 +179,6 @@ Modern evergreen browsers (Chrome · Edge · Firefox · Safari). Uses CSS custom
 
 ## 📜 License
 
-[MIT](LICENSE) © Nyx. The bundled **Thmanyah** Arabic typeface is © [ثمانية (Thmanyah)](https://font.thmanyah.com/) under its own license — see `Thmanyah-Font-Family/LICENSE.pdf`.
+[MIT](LICENSE) © Nyx. The self‑hosted **Thmanyah** Arabic typeface (`fonts/thmanyah/`) is © [ثمانية (Thmanyah)](https://font.thmanyah.com/) and remains under its own license.
 
 <div align="center"><sub>Built with Luminous Depth · dark‑first · bilingual</sub></div>
