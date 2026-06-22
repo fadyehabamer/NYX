@@ -1857,11 +1857,31 @@
     }
   });
 
+  /* ---------- command palette: fill from the full component registry so every page is searchable ---------- */
+  function buildPalette() {
+    var list = document.querySelector('#commandPalette .nyx-cp-list');
+    if (!list) return;
+    var groups = [], seen = {};
+    PAGES.forEach(function (p) { if (!seen[p.group]) { seen[p.group] = []; groups.push(p.group); } seen[p.group].push(p); });
+    groups.sort(function (a, b) { return groupRank(a) - groupRank(b); });
+    var html = '';
+    groups.forEach(function (g) {
+      seen[g].forEach(function (p) {
+        html += '<a class="nyx-cp-item" href="#/' + p.id + '">' + L(p, 'title') +
+          '<small style="opacity:.55;margin-inline-start:auto;font-size:11px">' + G(g) + '</small></a>';
+      });
+    });
+    list.innerHTML = html;
+  }
+
   /* ---------- router ---------- */
   function router() {
+    if (window.Nyx && Nyx.closeCommandPalette) Nyx.closeCommandPalette();   // picking a result navigates → dismiss the palette
     var id = (location.hash.replace(/^#\/?/, '') || 'introduction').trim();
     renderPage(id);
   }
+
+  buildPalette();                                                           // run now (sync) — before nyx.js wires the palette on DOMContentLoaded
 
   document.addEventListener('DOMContentLoaded', function () {
     buildSidebar();
