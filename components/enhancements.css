@@ -121,25 +121,30 @@
   width: 0%;
   transition: width 0.3s var(--nyx-ease), background 0.3s var(--nyx-ease);
 }
+.nyx-strength-fill.strength-0 {
+  width: 12%;
+  background: var(--nyx-danger);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--nyx-danger) 60%, transparent);
+}
 .nyx-strength-fill.strength-1 {
   width: 25%;
-  background: #ff5f57;
-  box-shadow: 0 0 8px rgba(255, 95, 87, 0.6);
+  background: var(--nyx-danger);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--nyx-danger) 60%, transparent);
 }
 .nyx-strength-fill.strength-2 {
   width: 50%;
-  background: #febc2e;
-  box-shadow: 0 0 8px rgba(254, 188, 46, 0.6);
+  background: var(--nyx-warning);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--nyx-warning) 60%, transparent);
 }
 .nyx-strength-fill.strength-3 {
   width: 75%;
-  background: #29b6f6;
-  box-shadow: 0 0 8px rgba(41, 182, 246, 0.6);
+  background: var(--nyx-accent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--nyx-accent) 60%, transparent);
 }
 .nyx-strength-fill.strength-4 {
   width: 100%;
   background: var(--nyx-accent-2);
-  box-shadow: 0 0 10px var(--nyx-glow-color);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--nyx-accent-2) 60%, transparent);
 }
 .nyx-strength-text {
   font-size: var(--nyx-fs-xs);

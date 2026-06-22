@@ -38,7 +38,7 @@
 .nyx-tree-label::before{content:"▸";color:var(--nyx-text-muted);font-size:10px;transition:transform .2s var(--nyx-ease)}
 .nyx-tree-label.active::before{transform:rotate(90deg)}
 .nyx-tree-children{padding-inline-start:18px}
-.nyx-tree-leaf{display:flex;align-items:center;gap:8px;padding:6px 8px 6px 26px;color:var(--nyx-text-muted)}
+.nyx-tree-leaf{display:flex;align-items:center;gap:8px;padding:6px 8px;padding-inline-start:26px;color:var(--nyx-text-muted)}
 
 /* vertical tabs */
 .nyx-tabs-vertical{display:flex;gap:var(--nyx-s5)}
