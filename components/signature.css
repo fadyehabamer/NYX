@@ -54,7 +54,7 @@
 .nyx-avatar-group .nyx-avatar:hover{transform:translateY(-3px);z-index:1}
 
 .nyx-notification-dot{position:relative;display:inline-flex}
-.nyx-notification-dot[data-count]::after{content:attr(data-count);position:absolute;top:-6px;inset-inline-end:-6px;min-width:18px;height:18px;padding:0 4px;border-radius:var(--nyx-radius-full);background:var(--nyx-danger);color:#fff;font-size:10px;font-weight:600;font-family:var(--nyx-font-mono);display:grid;place-items:center;border:2px solid var(--nyx-bg);box-shadow:0 0 12px rgba(255,77,106,.5)}
+.nyx-notification-dot[data-count]::after{content:attr(data-count);position:absolute;top:-6px;inset-inline-end:-6px;min-width:18px;height:18px;padding:0 4px;border-radius:var(--nyx-radius-full);background:var(--nyx-danger);color:#fff;font-size:10px;font-weight:600;font-family:var(--nyx-font-mono);display:grid;place-items:center;border:2px solid var(--nyx-bg);box-shadow:0 0 12px color-mix(in srgb,var(--nyx-danger) 50%,transparent)}
 .nyx-notification-dot.plain::after{content:"";min-width:0;width:10px;height:10px;padding:0;top:-2px;inset-inline-end:-2px}
 
 .nyx-marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}

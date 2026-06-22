@@ -23,6 +23,8 @@
   --nyx-shadow:0 4px 16px rgba(0,0,0,.5);
   --nyx-shadow-lg:0 12px 40px rgba(0,0,0,.6);
   --nyx-glow:0 0 24px color-mix(in srgb,var(--nyx-accent) 35%,transparent);
+  --nyx-glow-danger:0 0 24px color-mix(in srgb,var(--nyx-danger) 38%,transparent);
+  --nyx-success:var(--nyx-accent-2);
 
   --nyx-fs-xs:11px; --nyx-fs-sm:13px; --nyx-fs-base:15px; --nyx-fs-lg:17px;
   --nyx-fs-xl:22px; --nyx-fs-2xl:30px; --nyx-fs-3xl:42px;
@@ -55,6 +57,8 @@
   --nyx-shadow:0 6px 20px rgba(20,22,50,.10);
   --nyx-shadow-lg:0 16px 40px rgba(20,22,50,.16);
   --nyx-glow:0 0 22px color-mix(in srgb,var(--nyx-accent) 22%,transparent);
+  --nyx-glow-danger:0 0 22px color-mix(in srgb,var(--nyx-danger) 26%,transparent);
+  --nyx-success:var(--nyx-accent-2);
 }
 
 /* ---------- ACCENT THEMES (data-accent="…", default is violet) ----------

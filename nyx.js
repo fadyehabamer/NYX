@@ -729,9 +729,9 @@
       c._nyxCb = true;
       var input = c.querySelector('input'), opts = $$('.nyx-combobox-opt', c), menu = c.querySelector('.nyx-combobox-menu');
       input.setAttribute('role', 'combobox'); input.setAttribute('aria-autocomplete', 'list'); input.setAttribute('aria-expanded', 'false');
-      if (menu) menu.setAttribute('role', 'listbox');
-      opts.forEach(function (o) { o.setAttribute('role', 'option'); o.setAttribute('tabindex', '-1'); });
-      function setOpen(on) { c.classList.toggle('open', on); input.setAttribute('aria-expanded', on ? 'true' : 'false'); }
+      if (menu) { if (!menu.id) menu.id = 'nyx-cb-' + (++_uid); menu.setAttribute('role', 'listbox'); input.setAttribute('aria-controls', menu.id); }
+      opts.forEach(function (o) { o.setAttribute('role', 'option'); o.setAttribute('tabindex', '-1'); if (!o.id) o.id = 'nyx-cbo-' + (++_uid); });
+      function setOpen(on) { c.classList.toggle('open', on); input.setAttribute('aria-expanded', on ? 'true' : 'false'); if (!on) input.removeAttribute('aria-activedescendant'); }
       function filter() {
         var q = (input.value || '').trim().toLowerCase(), shown = 0;
         opts.forEach(function (o) { var hit = o.textContent.toLowerCase().indexOf(q) > -1; o.hidden = !hit; if (hit) shown++; });
@@ -740,7 +740,8 @@
       function vis() { return opts.filter(function (o) { return !o.hidden; }); }
       function setActive(list, i) {
         opts.forEach(function (o) { o.classList.remove('active'); o.setAttribute('aria-selected', 'false'); });
-        if (list[i]) { list[i].classList.add('active'); list[i].setAttribute('aria-selected', 'true'); list[i].scrollIntoView({ block: 'nearest' }); }
+        if (list[i]) { list[i].classList.add('active'); list[i].setAttribute('aria-selected', 'true'); input.setAttribute('aria-activedescendant', list[i].id); list[i].scrollIntoView({ block: 'nearest' }); }
+        else input.removeAttribute('aria-activedescendant');
       }
       function choose(o) { input.value = o.getAttribute('data-value') || o.textContent.trim(); setOpen(false); input.dispatchEvent(new Event('change', { bubbles: true })); }
       input.addEventListener('focus', function () { setOpen(true); filter(); });
@@ -755,6 +756,29 @@
       c.addEventListener('mousedown', function (e) {
         var o = e.target.closest('.nyx-combobox-opt'); if (!o) return; e.preventDefault(); choose(o);
       });
+    });
+  }
+
+  /* ---------- charts: image semantics + keyboard-revealable values ---------- */
+  function initCharts(root) {
+    $$('.nyx-chart-bars', root).filter(function (c) { return !c._nyxCh; }).forEach(function (c) {
+      c._nyxCh = true;
+      var bars = $$('.nyx-bar', c);
+      bars.forEach(function (b) { if (!b.hasAttribute('tabindex')) b.setAttribute('tabindex', '0'); });   // keyboard reveals the value tooltip
+      if (!c.getAttribute('role')) c.setAttribute('role', 'img');
+      if (!c.getAttribute('aria-label')) {
+        var summary = c.getAttribute('data-nyx-label');
+        if (!summary) {
+          var pts = bars.map(function (b) { return ((b.getAttribute('data-label') || '') + ' ' + (b.getAttribute('data-val') || '')).trim(); }).filter(Boolean);
+          summary = 'Bar chart' + (pts.length ? ': ' + pts.join(', ') : '');
+        }
+        c.setAttribute('aria-label', summary);
+      }
+    });
+    $$('.nyx-chart-line, .nyx-chart-donut, .nyx-chart-pie, .nyx-donut', root).filter(function (c) { return !c._nyxCh; }).forEach(function (c) {
+      c._nyxCh = true;
+      if (!c.getAttribute('role')) c.setAttribute('role', 'img');
+      if (!c.getAttribute('aria-label')) c.setAttribute('aria-label', c.getAttribute('data-nyx-label') || (c.classList.contains('nyx-chart-line') ? 'Line chart' : 'Donut chart'));
     });
   }
 
@@ -1674,6 +1698,7 @@
     initHierarchy(root);
     initPrayerTimes(root);
     initCombobox(root);
+    initCharts(root);
     initMultiselect(root);
     initDatepicker(root);
     initCountdown(root);

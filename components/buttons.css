@@ -21,18 +21,18 @@
 .nyx-btn-ghost{background:transparent;border-color:transparent;color:var(--nyx-text-muted)}
 .nyx-btn-ghost:hover{border-color:var(--nyx-border);color:var(--nyx-text);background:var(--nyx-glass)}
 .nyx-btn-danger{background:linear-gradient(120deg,var(--nyx-danger),#ff6f86);color:#fff}
-.nyx-btn-danger:hover{box-shadow:0 0 24px rgba(255,77,106,.35);transform:translateY(-1px)}
+.nyx-btn-danger:hover{box-shadow:var(--nyx-glow-danger);transform:translateY(-1px)}
 .nyx-btn-glass{background:var(--nyx-glass);border-color:var(--nyx-glass-border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--nyx-text)}
 .nyx-btn-glass:hover{background:var(--nyx-elev-hover);box-shadow:var(--nyx-shadow)}
 /* outline variants (Bootstrap-style, all colors) */
 .nyx-btn-outline-primary{background:transparent;border-color:var(--nyx-accent);color:var(--nyx-accent)}
 .nyx-btn-outline-primary:hover{background:color-mix(in srgb,var(--nyx-accent) 12%,transparent);box-shadow:var(--nyx-glow)}
-.nyx-btn-outline-success{background:transparent;border-color:var(--nyx-accent-2);color:var(--nyx-accent-2)}
-.nyx-btn-outline-success:hover{background:color-mix(in srgb,var(--nyx-accent-2) 12%,transparent)}
+.nyx-btn-outline-success{background:transparent;border-color:var(--nyx-success);color:var(--nyx-success)}
+.nyx-btn-outline-success:hover{background:color-mix(in srgb,var(--nyx-success) 12%,transparent)}
 .nyx-btn-outline-danger{background:transparent;border-color:var(--nyx-danger);color:var(--nyx-danger)}
-.nyx-btn-outline-danger:hover{background:rgba(255,77,106,.12)}
+.nyx-btn-outline-danger:hover{background:color-mix(in srgb,var(--nyx-danger) 12%,transparent)}
 .nyx-btn-outline-warning{background:transparent;border-color:var(--nyx-warning);color:var(--nyx-warning)}
-.nyx-btn-outline-warning:hover{background:rgba(255,176,32,.12)}
+.nyx-btn-outline-warning:hover{background:color-mix(in srgb,var(--nyx-warning) 12%,transparent)}
 .nyx-btn-icon{padding:10px;width:40px;height:40px}
 .nyx-btn-sm{padding:6px 12px;font-size:var(--nyx-fs-xs)}
 .nyx-btn-sm.nyx-btn-icon{width:32px;height:32px;padding:6px}

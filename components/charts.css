@@ -17,12 +17,12 @@
   background:linear-gradient(180deg,var(--nyx-accent),color-mix(in srgb,var(--nyx-accent-2) 85%,var(--nyx-accent)));
   box-shadow:0 0 16px color-mix(in srgb,var(--nyx-accent) 30%,transparent);
   animation:nyx-bar-rise .6s var(--nyx-ease) both;transition:filter .2s var(--nyx-ease)}
-.nyx-bar:hover{filter:brightness(1.15)}
+.nyx-bar:hover,.nyx-bar:focus-visible{filter:brightness(1.15);outline:none}
 .nyx-bar.alt{background:linear-gradient(180deg,var(--nyx-accent-2),color-mix(in srgb,var(--nyx-accent) 70%,var(--nyx-accent-2)));box-shadow:0 0 16px color-mix(in srgb,var(--nyx-accent-2) 30%,transparent)}
 .nyx-bar.muted{background:var(--nyx-surface-2);box-shadow:none}
 .nyx-bar[data-label]::after{content:attr(data-label);position:absolute;top:100%;left:0;right:0;margin-top:8px;text-align:center;font-size:var(--nyx-fs-xs);font-family:var(--nyx-font-mono);color:var(--nyx-text-muted);white-space:nowrap}
 .nyx-bar[data-val]::before{content:attr(data-val);position:absolute;bottom:100%;left:50%;margin-bottom:7px;transform:translateX(-50%) translateY(4px);padding:3px 8px;border-radius:var(--nyx-radius-sm);background:var(--nyx-surface-2);border:1px solid var(--nyx-border);font-size:var(--nyx-fs-xs);font-family:var(--nyx-font-mono);color:var(--nyx-text);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s var(--nyx-ease),transform .2s var(--nyx-ease)}
-.nyx-bar:hover[data-val]::before{opacity:1;transform:translateX(-50%) translateY(0)}
+.nyx-bar:hover[data-val]::before,.nyx-bar:focus-visible[data-val]::before{opacity:1;transform:translateX(-50%) translateY(0)}
 @keyframes nyx-bar-rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 
 /* — line / area chart (style an author-supplied <svg>) — */
