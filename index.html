@@ -854,13 +854,24 @@
     sync('[data-theme-set]', 'data-theme-set', docEl.getAttribute('data-theme') || 'dark');
   }
 
-  /* ---- live GitHub star count (graceful: keeps the static value on failure) ---- */
+  /* ---- live GitHub star count: cached in localStorage so we don't hit the API (60/hr) on every load ---- */
   var gh = document.getElementById('gh-stars');
-  if (gh && 'fetch' in window) {
-    fetch('https://api.github.com/repos/fadyehabamer/NYX', { headers: { 'Accept': 'application/vnd.github+json' } })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (d) { if (d && typeof d.stargazers_count === 'number') { var n = d.stargazers_count; gh.textContent = n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(n); } })
-      .catch(function () {});
+  if (gh) {
+    var fmtStars = function (n) { return n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(n); };
+    var GH_KEY = 'nyx-gh-stars', st = null;
+    try { st = JSON.parse(localStorage.getItem(GH_KEY) || 'null'); } catch (e) {}
+    if (st && typeof st.n === 'number') gh.textContent = fmtStars(st.n);
+    var ttl = (st && st.ok) ? 216e5 : 36e5; /* re-check every 6h after a success, 1h back-off otherwise */
+    if ((!st || Date.now() - (st.t || 0) > ttl) && 'fetch' in window) {
+      fetch('https://api.github.com/repos/fadyehabamer/NYX', { headers: { 'Accept': 'application/vnd.github+json' } })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          var ok = d && typeof d.stargazers_count === 'number';
+          if (ok) gh.textContent = fmtStars(d.stargazers_count);
+          try { localStorage.setItem(GH_KEY, JSON.stringify({ n: ok ? d.stargazers_count : (st && st.n), t: Date.now(), ok: !!ok })); } catch (e) {}
+        })
+        .catch(function () { try { localStorage.setItem(GH_KEY, JSON.stringify({ n: st && st.n, t: Date.now(), ok: false })); } catch (e) {} });
+    }
   }
 })();
 </script>
