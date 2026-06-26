@@ -16,94 +16,123 @@
 <link rel="stylesheet" href="fonts/thmanyah.css" />
 <link rel="stylesheet" href="nyx.css" />
 <style>
-  html{scroll-behavior:smooth;scroll-padding-top:80px}
-  /* Thmanyah typeface is enabled via data-font="thmanyah" on <html> (see fonts/thmanyah.css) */
+  html{scroll-behavior:smooth;scroll-padding-top:104px}
+  ::selection{background:color-mix(in srgb,var(--nyx-accent) 32%,transparent);color:#fff}
+  html,body{overflow-x:clip}
   /* ---- icon system ---- */
   .ico{width:24px;height:24px;display:inline-block;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
   .ico-sm{width:18px;height:18px}
   [dir="rtl"] .ico-flip{transform:scaleX(-1)}
-  /* ---- brand / nav ---- */
+
+  /* ============ FLOATING GLASS NAVBAR ============ */
+  .nyx-navbar.lp-nav{position:sticky;top:14px;z-index:60;margin:14px auto 0;max-width:1180px;width:calc(100% - 28px);padding:10px 12px 10px 20px;border:1px solid color-mix(in srgb,var(--nyx-border) 90%,var(--nyx-accent));border-bottom-width:1px;border-radius:var(--nyx-radius-full);background:color-mix(in srgb,var(--nyx-bg) 72%,transparent);box-shadow:var(--nyx-shadow-lg),inset 0 1px 0 var(--nyx-glass-border)}
   .lp-logo{display:inline-flex;align-items:center;line-height:0}
-  .lp-logo .lp-wordmark{height:24px;width:auto;display:block}
+  .lp-logo .lp-wordmark{height:23px;width:auto;display:block}
   [data-theme="light"] .lp-logo .lp-wordmark{filter:invert(1)}
-  .lp-links{display:flex;align-items:center;gap:var(--nyx-s4);font-size:var(--nyx-fs-sm);font-weight:500}
+  .lp-links{display:flex;align-items:center;gap:var(--nyx-s5);font-size:var(--nyx-fs-sm);font-weight:500}
   .lp-links a{color:var(--nyx-text-muted);transition:color .2s var(--nyx-ease)}
   .lp-links a:hover{color:var(--nyx-text)}
   .nyx-dropdown-item{display:flex;align-items:center;gap:10px}
   .nyx-dropdown-item .ico{color:var(--nyx-accent)}
-  /* ---- generic section ---- */
+  /* navbar responsive: collapse secondary items until there's room; keep essential controls */
+  @media(max-width:1080px){
+    .nyx-navbar.lp-nav .lp-links,
+    .nyx-navbar.lp-nav .lp-gh,
+    .nyx-navbar.lp-nav .lp-ver,
+    .nyx-navbar.lp-nav .lp-search .nyx-command{display:none}
+  }
+  @media(max-width:480px){.nyx-navbar.lp-nav .lp-theme{display:none}}
+  @media(max-width:430px){
+    .nyx-navbar.lp-nav{padding:8px 10px;gap:var(--nyx-s2)}
+    .nyx-navbar.lp-nav .nyx-gap-4{gap:var(--nyx-s2)}
+    .nyx-navbar.lp-nav .nyx-btn-sm{padding-inline:10px}
+    .lp-logo .lp-wordmark{height:21px}
+  }
+
+  /* ============ EDITORIAL PRIMITIVES ============ */
   section.lp{padding-block:var(--nyx-s9)}
-  .lp-section-head{text-align:center;max-width:660px;margin:0 auto var(--nyx-s7)}
-  .lp-comp{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--nyx-s4)}
-  .lp-comp a{text-decoration:none}
-  .comp-ico{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;background:color-mix(in srgb,var(--nyx-accent) 13%,transparent);color:var(--nyx-accent);margin-bottom:var(--nyx-s3)}
-  /* ---- eyebrow ---- */
-  .hero-eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-full);font-size:var(--nyx-fs-sm);font-weight:600;color:var(--nyx-text-muted);background:var(--nyx-surface);box-shadow:var(--nyx-shadow-sm)}
-  .hero-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--nyx-accent-2);box-shadow:0 0 0 4px rgba(0,212,170,.18)}
-  .hero-eyebrow b{color:var(--nyx-text);font-weight:700}
-  .sec-eyebrow{margin-bottom:var(--nyx-s3)}
-  /* ---- hero ---- */
-  .hero{text-align:center;padding-top:var(--nyx-s7);padding-bottom:var(--nyx-s7);}
-  /* grid backdrop reuses .nyx-bg-grid; clipped to the section so it never overflows */
-  .hero.nyx-bg-grid::before{opacity:.5;
-    background-image:linear-gradient(color-mix(in srgb,var(--nyx-border) 45%,var(--nyx-text-muted)) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--nyx-border) 45%,var(--nyx-text-muted)) 1px,transparent 1px);
-    -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000,transparent 75%);
-    mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000,transparent 75%)}
-  .hero h1{max-width:16ch;margin-inline:auto}
+  .lp-head{text-align:center;max-width:660px;margin:0 auto var(--nyx-s7)}
+  .lp-head .nyx-overline{display:block;margin-bottom:var(--nyx-s3)}
+  .lp-head .lp-eyebrow{margin-bottom:var(--nyx-s3)}
+  .lp-head h2{margin:0}
+  .lp-head p{margin-top:var(--nyx-s3)}
+  .lp-eyebrow{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:9px;row-gap:5px;max-width:100%;padding:6px 8px 6px 14px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-full);font-size:var(--nyx-fs-sm);font-weight:500;color:var(--nyx-text-muted);background:var(--nyx-surface);box-shadow:var(--nyx-shadow-sm)}
+  .lp-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--nyx-accent-2);box-shadow:0 0 0 4px color-mix(in srgb,var(--nyx-accent-2) 18%,transparent)}
+  .lp-eyebrow b{color:var(--nyx-text);font-weight:600}
+  .lp-eyebrow .tag{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-accent);background:color-mix(in srgb,var(--nyx-accent) 14%,transparent);border-radius:var(--nyx-radius-full);padding:2px 9px}
+  .lp-rule{max-width:1180px;margin-inline:auto;height:1px;border:0;background:linear-gradient(90deg,transparent,var(--nyx-border) 18%,var(--nyx-border) 82%,transparent)}
+
+  /* ============ HERO ============ */
+  .hero{position:relative;text-align:center;padding-top:var(--nyx-s9);padding-bottom:var(--nyx-s8);isolation:isolate}
+  /* layered backdrop: faint grid that dissolves + twin accent glows */
+  .hero::before{content:"";position:absolute;inset:-120px calc(-1 * var(--nyx-s6)) 0;z-index:-2;
+    background-image:linear-gradient(color-mix(in srgb,var(--nyx-border) 60%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--nyx-border) 60%,transparent) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(ellipse 65% 55% at 50% 12%,#000,transparent 72%);
+    mask-image:radial-gradient(ellipse 65% 55% at 50% 12%,#000,transparent 72%);opacity:.6}
+  .hero::after{content:"";position:absolute;inset-block-start:-160px;inset-inline:calc(-1 * var(--nyx-s6));height:620px;z-index:-2;pointer-events:none;
+    background:radial-gradient(620px 380px at 32% 4%,color-mix(in srgb,var(--nyx-accent) 26%,transparent),transparent 64%),radial-gradient(560px 360px at 70% 20%,color-mix(in srgb,var(--nyx-accent-2) 20%,transparent),transparent 64%)}
+  .hero h1{max-width:16ch;margin-inline:auto;margin-top:var(--nyx-s5);line-height:.98}
   .hero h1 .l2{display:block}
-  .hero-sub{max-width:580px;margin-inline:auto}
+  .hero-sub{max-width:580px;margin-inline:auto;margin-top:var(--nyx-s5)}
+  .hero-cta{margin-top:var(--nyx-s6)}
   .hero-cta .nyx-btn{border-radius:var(--nyx-radius-full)}
-  .install-cmd{display:inline-flex;align-items:center;gap:12px;margin-top:var(--nyx-s5);font-family:var(--nyx-font-ar);font-size:var(--nyx-fs-sm);color:var(--nyx-text);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-full);padding:8px 18px 8px 8px;cursor:pointer;transition:all .2s var(--nyx-ease);box-shadow:var(--nyx-shadow-sm)}
+  .install-cmd{display:inline-flex;align-items:center;gap:12px;margin-top:var(--nyx-s5);font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);color:var(--nyx-text);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-full);padding-block:8px;padding-inline:18px 8px;cursor:pointer;transition:border-color .2s var(--nyx-ease),box-shadow .2s var(--nyx-ease);box-shadow:var(--nyx-shadow-sm)}
   .install-cmd:hover{border-color:color-mix(in srgb,var(--nyx-accent) 45%,transparent);box-shadow:var(--nyx-glow)}
-  .install-cmd .prompt{color:var(--nyx-accent-2);font-weight:700;font-family:var(--nyx-font-mono)}
-  .install-cmd .fn{font-family:var(--nyx-font-mono)}
+  .install-cmd .prompt{color:var(--nyx-accent-2);font-weight:700}
   .install-cmd .cp{display:grid;place-items:center;width:30px;height:30px;border-radius:var(--nyx-radius-full);background:var(--nyx-surface-2);color:var(--nyx-text-muted);transition:color .2s var(--nyx-ease)}
   .install-cmd:hover .cp{color:var(--nyx-text)}
-  /* radiating rings + floating icon tiles */
-  .hero-orbits{position:relative;height:300px;margin-top:var(--nyx-s7);overflow:hidden}
-  .hero-orbits .ring,.hero-orbits .hero-glow,.hero-orbits .hero-pos{position:absolute;left:50%;top:50%}
-  .hero-orbits .ring{border:1px solid var(--nyx-border);border-radius:50%;transform:translate(-50%,-50%)}
-  .hero-orbits .ring.r1{width:170px;height:170px;opacity:.75}
-  .hero-orbits .ring.r2{width:330px;height:330px;opacity:.55}
-  .hero-orbits .ring.r3{width:510px;height:510px;opacity:.35}
-  .hero-orbits .ring.r4{width:710px;height:710px;opacity:.2}
-  .hero-glow{width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(108,99,255,.28),transparent 62%);filter:blur(18px);transform:translate(-50%,-50%);pointer-events:none}
-  .hero-pos.center{transform:translate(-50%,-50%);z-index:3}
-  .hero-pos.p1{transform:translate(calc(-50% - 170px),calc(-50% - 66px))}
-  .hero-pos.p2{transform:translate(calc(-50% + 178px),calc(-50% - 28px))}
-  .hero-pos.p3{transform:translate(calc(-50% - 116px),calc(-50% + 96px))}
-  .hero-pos.p4{transform:translate(calc(-50% + 126px),calc(-50% + 104px))}
-  .hero-tile{width:62px;height:62px;border-radius:18px;display:grid;place-items:center;background:var(--nyx-surface);border:1px solid var(--nyx-border);box-shadow:var(--nyx-shadow-lg);animation:nyx-float 4s var(--nyx-ease) infinite}
-  .hero-tile .ico{width:27px;height:27px;stroke-width:1.6}
-  .hero-tile.center{width:86px;height:86px;font-size:36px;color:#fff;font-family:var(--nyx-font-display);font-weight:800;border:0;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));box-shadow:var(--nyx-glow),var(--nyx-shadow-lg)}
-  .hero-tile.t-violet{color:var(--nyx-accent);background:color-mix(in srgb,var(--nyx-accent) 16%,var(--nyx-surface))}
-  .hero-tile.t-teal{color:var(--nyx-accent-2);background:color-mix(in srgb,var(--nyx-accent-2) 14%,var(--nyx-surface))}
-  .hero-tile.t-amber{color:var(--nyx-warning);background:color-mix(in srgb,var(--nyx-warning) 14%,var(--nyx-surface))}
-  .hero-pos.center .hero-tile{animation-delay:.2s}
-  .hero-pos.p2 .hero-tile{animation-delay:.7s}
-  .hero-pos.p3 .hero-tile{animation-delay:1.2s}
-  .hero-pos.p4 .hero-tile{animation-delay:1.7s}
-  /* ---- logo cloud ---- */
-  .logo-cloud{padding-top:var(--nyx-s6)}
-  .logo-cloud .lbl{text-align:center;font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted);margin-bottom:var(--nyx-s5)}
-  .nyx-marquee .nyx-track span{display:inline-flex;align-items:center;gap:10px;font-size:var(--nyx-fs-lg)}
-  .nyx-marquee .nyx-track .ico{width:23px;height:23px;opacity:.85}
-  /* ---- code window ---- */
-  .code-window{border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;background:#070810;box-shadow:var(--nyx-shadow-lg)}
-  .code-window .cw-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--nyx-border);background:var(--nyx-surface)}
-  .code-window .cw-bar i{width:11px;height:11px;border-radius:50%;display:inline-block}
-  .code-window .cw-bar .r{background:#ff5f57}.code-window .cw-bar .y{background:#febc2e}.code-window .cw-bar .g{background:#28c840}
-  .code-window .cw-bar em{margin-inline-start:auto;font-style:normal;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
-  .code-window pre{margin:0;border:0;border-radius:0;box-shadow:none;background:#070810;padding:var(--nyx-s4);overflow-x:auto}
-  .code-window pre code{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);line-height:1.7;color:#c8cce0;display:block}
-  .code-window .t-tag{color:#6c63ff}.code-window .t-attr{color:#00d4aa}.code-window .t-str{color:#ffb020}.code-window .t-cmt{color:#4b5061}
+  .hero-meta{display:flex;justify-content:center;flex-wrap:wrap;gap:var(--nyx-s2) var(--nyx-s5);margin-top:var(--nyx-s5);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+  .hero-meta span{display:inline-flex;align-items:center;gap:7px}
+  .hero-meta .ico{color:var(--nyx-accent-2)}
+
+  /* ============ HERO LIVE-PREVIEW APP FRAME ============ */
+  .app-stage{position:relative;max-width:1000px;margin:var(--nyx-s8) auto 0}
+  .app-stage::before{content:"";position:absolute;inset:-6% 6% auto;height:70%;z-index:-1;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--nyx-accent) 34%,transparent),transparent 62%);filter:blur(46px)}
+  .app-frame{position:relative;border:1px solid var(--nyx-glass-border);border-radius:var(--nyx-radius-xl);background:color-mix(in srgb,var(--nyx-surface) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:var(--nyx-shadow-lg),0 50px 130px -50px color-mix(in srgb,var(--nyx-accent) 60%,#000);overflow:hidden}
+  .app-bar{display:flex;align-items:center;gap:var(--nyx-s3);padding:12px 16px;border-bottom:1px solid var(--nyx-border);background:color-mix(in srgb,var(--nyx-surface-2) 55%,transparent)}
+  .app-dots{display:inline-flex;gap:7px}
+  .app-dots i{width:11px;height:11px;border-radius:50%;background:var(--nyx-surface-2)}
+  .app-dots i.r{background:#ff5f57}.app-dots i.y{background:#febc2e}.app-dots i.g{background:#28c840}
+  .app-url{flex:1;display:flex;justify-content:center}
+  .app-url span{display:inline-flex;align-items:center;gap:7px;font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-full);padding:5px 14px}
+  .app-url .ico{width:13px;height:13px;color:var(--nyx-accent-2)}
+  .app-body{display:grid;grid-template-columns:60px 1fr}
+  .app-rail{border-inline-end:1px solid var(--nyx-border);padding:var(--nyx-s4) 0;display:flex;flex-direction:column;align-items:center;gap:6px;background:color-mix(in srgb,var(--nyx-surface-2) 22%,transparent)}
+  .app-rail .r-ico{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;color:var(--nyx-text-muted)}
+  .app-rail .r-ico.on{background:color-mix(in srgb,var(--nyx-accent) 16%,transparent);color:var(--nyx-accent)}
+  .app-rail .r-sp{flex:1}
+  .app-main{padding:var(--nyx-s5);text-align:start}
+  .app-head{display:flex;align-items:center;justify-content:space-between;gap:var(--nyx-s3);flex-wrap:wrap}
+  .app-head h4{margin:0}
+  .app-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--nyx-s3);margin-top:var(--nyx-s4)}
+  .app-kpis .nyx-stat-card{padding:var(--nyx-s3) var(--nyx-s4)}
+  .app-kpis .nyx-stat-num{font-size:var(--nyx-fs-xl)}
+  .app-panel{margin-top:var(--nyx-s4);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface);padding:var(--nyx-s4)}
+  .app-panel .nyx-chart-bars{--nyx-chart-h:120px;margin-top:var(--nyx-s4)}
+  /* floating accent chips around the frame */
+  .app-chip{position:absolute;z-index:3;display:inline-flex;align-items:center;gap:7px;font-size:var(--nyx-fs-sm);font-weight:600;padding:9px 13px;border-radius:var(--nyx-radius-full);background:var(--nyx-surface);border:1px solid var(--nyx-border);box-shadow:var(--nyx-shadow-lg);animation:nyx-float 5s var(--nyx-ease) infinite}
+  .app-chip .ico{width:17px;height:17px}
+  .app-chip.c1{inset-block-start:74px;inset-inline-start:-26px}
+  .app-chip.c1 .ico{color:var(--nyx-accent-2)}
+  .app-chip.c2{inset-block-end:30px;inset-inline-end:-22px;animation-delay:1.4s}
+  .app-chip.c2 .ico{color:var(--nyx-warning)}
+
+  /* ============ TRUST MARQUEE ============ */
+  .logo-cloud{padding-top:var(--nyx-s7)}
+  .logo-cloud .lbl{text-align:center;font-size:var(--nyx-fs-xs);text-transform:uppercase;letter-spacing:.14em;color:var(--nyx-text-muted);font-family:var(--nyx-font-mono);margin-bottom:var(--nyx-s5)}
+  .nyx-marquee .nyx-track span{display:inline-flex;align-items:center;gap:10px;font-size:var(--nyx-fs-lg);opacity:.62}
+  .nyx-marquee .nyx-track .ico{width:23px;height:23px}
+
+  /* ============ INSTALL ============ */
   .install-pts{list-style:none;margin:var(--nyx-s4) 0 0;padding:0;display:flex;flex-direction:column;gap:var(--nyx-s3)}
   .install-pts li{display:flex;align-items:flex-start;gap:10px;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
   .install-pts .ico{color:var(--nyx-accent-2);margin-top:1px}
-  /* ---- bento features ---- */
+
+  /* ============ FEATURES BENTO ============ */
   .lp-bento{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--nyx-s4)}
-  .lp-cell{position:relative;overflow:hidden;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface);padding:var(--nyx-s5);transition:transform .2s var(--nyx-ease),border-color .2s var(--nyx-ease),box-shadow .2s var(--nyx-ease)}
-  .lp-cell:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--nyx-accent) 50%,transparent);box-shadow:var(--nyx-glow),var(--nyx-shadow-lg)}
+  .lp-cell{position:relative;overflow:hidden;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface);padding:var(--nyx-s5);transition:transform .25s var(--nyx-ease),border-color .25s var(--nyx-ease),box-shadow .25s var(--nyx-ease)}
+  .lp-cell:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--nyx-accent) 45%,transparent);box-shadow:var(--nyx-glow),var(--nyx-shadow-lg)}
   .lp-cell h3{margin-top:var(--nyx-s4)}
   .lp-cell p{margin-top:7px}
   .b6{grid-column:span 6}.b4{grid-column:span 4}.b3{grid-column:span 3}.b2{grid-column:span 2}
@@ -123,59 +152,96 @@
   .resp-row .scr{border:1px solid var(--nyx-border);border-radius:8px;background:var(--nyx-surface-2);position:relative}
   .resp-row .scr::after{content:"";position:absolute;inset:6px;border-radius:4px;background:color-mix(in srgb,var(--nyx-accent) 22%,transparent)}
   .resp-row .s1{width:34px;height:54px}.resp-row .s2{width:78px;height:50px}.resp-row .s3{width:120px;height:44px}
-  /* ---- stats ---- */
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--nyx-s4)}
-  .stat{text-align:center;padding:var(--nyx-s5) var(--nyx-s4);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);background:var(--nyx-surface)}
-  .stat b{display:block;font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-2xl);line-height:1.1;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .stat span{display:block;margin-top:6px;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
-  /* ---- closing CTA ---- */
-  .cta-band{position:relative;text-align:center;padding:var(--nyx-s8) var(--nyx-s5);border-radius:var(--nyx-radius-xl);border:1px solid var(--nyx-border);background:var(--nyx-surface);overflow:hidden}
-  .cta-band::before{content:"";position:absolute;inset:-40% 0 auto 0;height:380px;background:radial-gradient(circle at 50% 0,rgba(108,99,255,.32),transparent 60%);pointer-events:none}
-  .cta-band > *{position:relative}
-  .cta-band .nyx-btn{border-radius:var(--nyx-radius-full)}
-  /* ---- footer ---- */
-  .foot{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:var(--nyx-s5);text-align:start;padding-block:var(--nyx-s7) var(--nyx-s5)}
-  .foot h4{font-size:var(--nyx-fs-sm);color:var(--nyx-text-muted);margin-bottom:var(--nyx-s3);font-weight:700}
-  .foot a{display:flex;align-items:center;gap:8px;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);padding:4px 0;transition:color .2s var(--nyx-ease)}
-  .foot a:hover{color:var(--nyx-text)}
-  .foot-brand p{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);max-width:34ch;margin-top:var(--nyx-s3)}
-  .foot-bottom{border-top:1px solid var(--nyx-border);padding-block:var(--nyx-s4);text-align:center;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
-  /* ---- v1.0 effects showcase ---- */
+  .resp-row span{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs)}
+  /* in-cell live mini-demos */
+  .feat-mini{margin-top:var(--nyx-s4)}
+  .tok-line{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);padding:9px 12px;color:var(--nyx-text);display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .tok-line .k{color:var(--nyx-accent-2)}
+  .tok-line .v{color:var(--nyx-accent);font-weight:700}
+  .sw-row{display:inline-flex;gap:9px;margin-top:var(--nyx-s3)}
+  .sw-row i{width:22px;height:22px;border-radius:50%;background:var(--c);box-shadow:0 0 0 1px var(--nyx-border),0 0 16px -3px var(--c)}
+  .bidi-demo{display:flex;flex-direction:column;gap:8px}
+  .bidi-demo .row{display:flex;align-items:center;gap:9px;padding:8px 12px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);background:var(--nyx-surface-2);font-size:var(--nyx-fs-sm)}
+  .bidi-demo .row .ico{color:var(--nyx-accent-2)}
+  .code-chip{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);background:#0a0b11;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);padding:10px 12px;color:var(--nyx-text-muted);overflow-x:auto;white-space:nowrap}
+  .code-chip .t{color:var(--nyx-text-muted)}
+  .code-chip .a{color:var(--nyx-accent)}
+  /* responsive + a11y showcase (features wide cell) */
+  .ra-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:var(--nyx-s6);align-items:center;margin-top:var(--nyx-s5)}
+  .ra-devices{display:flex;align-items:flex-end;justify-content:center;gap:var(--nyx-s5)}
+  .ra-dev{display:flex;flex-direction:column;align-items:center;gap:9px}
+  .ra-screen{display:flex;flex-direction:column;gap:6px;padding:8px;border:1px solid var(--nyx-border);border-radius:12px;background:var(--nyx-surface-2);box-shadow:var(--nyx-shadow),inset 0 1px 0 var(--nyx-glass-border);transition:transform .25s var(--nyx-ease),box-shadow .25s var(--nyx-ease)}
+  .lp-cell:hover .ra-dev.desk .ra-screen{transform:translateY(-3px);box-shadow:var(--nyx-shadow-lg),var(--nyx-glow)}
+  .ra-screen .bar{flex:none;height:8px;border-radius:3px;background:linear-gradient(90deg,color-mix(in srgb,var(--nyx-accent) 70%,transparent),color-mix(in srgb,var(--nyx-accent-2) 70%,transparent))}
+  .ra-screen .rows{flex:1;display:grid;gap:5px;grid-auto-rows:1fr}
+  .ra-screen .rows i{border-radius:4px;background:var(--nyx-surface);border:1px solid var(--nyx-border)}
+  .ra-screen .rows i:first-child{background:color-mix(in srgb,var(--nyx-accent) 22%,transparent);border-color:color-mix(in srgb,var(--nyx-accent) 35%,transparent)}
+  .ra-dev.desk .ra-screen{width:176px;height:110px}
+  .ra-dev.desk .rows{grid-template-columns:repeat(3,1fr)}
+  .ra-dev.tab .ra-screen{width:108px;height:96px}
+  .ra-dev.tab .rows{grid-template-columns:repeat(2,1fr)}
+  .ra-dev.phone .ra-screen{width:58px;height:110px}
+  .ra-dev.phone .rows{grid-template-columns:1fr}
+  .ra-w{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
+  .ra-a11y{list-style:none;margin:0;padding:0;display:grid;gap:var(--nyx-s2)}
+  .ra-check{display:flex;align-items:center;gap:10px;font-size:var(--nyx-fs-sm);color:var(--nyx-text)}
+  .ra-check .ico{color:var(--nyx-accent-2);flex:none}
+  @media(max-width:780px){.ra-grid{grid-template-columns:1fr;gap:var(--nyx-s5)}}
+  @media(max-width:560px){.ra-dev.desk .ra-screen{width:130px;height:84px}.ra-dev.tab .ra-screen{width:82px;height:74px}.ra-dev.phone .ra-screen{width:46px;height:84px}.ra-devices{gap:var(--nyx-s4)}}
+
+  /* ============ COMPONENTS GRID ============ */
+  .lp-comp{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--nyx-s4)}
+  .lp-comp a{text-decoration:none}
+  .comp-ico{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;background:color-mix(in srgb,var(--nyx-accent) 13%,transparent);color:var(--nyx-accent);margin-bottom:var(--nyx-s3)}
+
+  /* ============ EFFECTS GALLERY + CHARTS ============ */
   .bg-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--nyx-s4)}
   .bg-tile{position:relative;min-height:118px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);display:grid;place-items:center}
   .bg-tile.nyx-bg-squares::before{opacity:.6}
   .bg-tile .lbl{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted);background:var(--nyx-surface);border:1px solid var(--nyx-border);padding:3px 10px;border-radius:var(--nyx-radius-full)}
   .chart-card{height:100%}
   .chart-card h3{margin:0}
-  @media(max-width:780px){
-    .bg-gallery{grid-template-columns:repeat(2,1fr)}
-    .lp-comp{grid-template-columns:1fr}.hide-sm{display:none}section.lp{padding-block:var(--nyx-s7)}
-    .lp-bento{grid-template-columns:1fr}.b6,.b4,.b3,.b2{grid-column:auto}
-    .stats{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr;gap:var(--nyx-s4)}.foot-brand{grid-column:1/-1}
-    .hero-orbits{height:240px}
-    .hero-orbits .ring.r1{width:130px;height:130px}.hero-orbits .ring.r2{width:240px;height:240px}.hero-orbits .ring.r3{width:360px;height:360px}.hero-orbits .ring.r4{display:none}
-    .hero-glow{width:240px;height:240px}
-    .hero-tile{width:52px;height:52px;border-radius:15px}.hero-tile .ico{width:23px;height:23px}.hero-tile.center{width:66px;height:66px;font-size:28px}
-    .hero-pos.p1{transform:translate(calc(-50% - 112px),calc(-50% - 52px))}.hero-pos.p2{transform:translate(calc(-50% + 118px),calc(-50% - 22px))}.hero-pos.p3{transform:translate(calc(-50% - 80px),calc(-50% + 74px))}.hero-pos.p4{display:none}
-  }
-  /* ---- code-window copy button ---- */
-  .code-window .cw-bar .cw-copy{margin-inline-start:8px;display:grid;place-items:center;width:26px;height:26px;border-radius:7px;border:1px solid var(--nyx-border);background:var(--nyx-surface-2);color:var(--nyx-text-muted);cursor:pointer;transition:color .2s var(--nyx-ease),border-color .2s var(--nyx-ease)}
-  .code-window .cw-bar .cw-copy:hover{color:var(--nyx-text);border-color:color-mix(in srgb,var(--nyx-accent) 45%,transparent)}
-  .code-window .cw-bar .cw-copy.copied{color:var(--nyx-accent-2);border-color:color-mix(in srgb,var(--nyx-accent-2) 50%,transparent)}
-  /* ---- comparison table ---- */
-  .cmp-wrap{max-width:760px;margin:0 auto}
+
+  /* ============ STATS BAND ============ */
+  .stats-band{position:relative;overflow:hidden;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-xl);background:var(--nyx-surface);padding:var(--nyx-s7) var(--nyx-s5)}
+  .stats-band::before{content:"";position:absolute;inset:auto 0 -60% 0;height:340px;background:radial-gradient(circle at 50% 100%,color-mix(in srgb,var(--nyx-accent) 22%,transparent),transparent 62%);pointer-events:none}
+  .stats{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--nyx-s4)}
+  .stat{text-align:center;padding:var(--nyx-s3) var(--nyx-s4)}
+  .stat + .stat{border-inline-start:1px solid var(--nyx-border)}
+  .stat b{display:block;font-family:var(--nyx-font-display);font-weight:800;font-size:var(--nyx-fs-3xl);line-height:1.05;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat span{display:block;margin-top:8px;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+
+  /* ============ COMPARISON ============ */
+  .cmp-wrap{max-width:780px;margin:0 auto}
   .cmp-table{width:100%}
   .cmp-table th,.cmp-table td{text-align:center;vertical-align:middle}
   .cmp-table th:first-child,.cmp-table td:first-child{text-align:start;color:var(--nyx-text)}
-  .cmp-table .cmp-hl{background:color-mix(in srgb,var(--nyx-accent) 9%,transparent)}
+  .cmp-table .cmp-hl{background:color-mix(in srgb,var(--nyx-accent) 10%,transparent)}
   .cmp-table thead .cmp-hl{color:var(--nyx-text);font-weight:800}
   .cmp-yes{color:var(--nyx-accent-2)}
   .cmp-no{color:var(--nyx-text-muted);opacity:.55}
-  /* ---- interactive donut legend ---- */
+
+  /* ============ CLOSING CTA ============ */
+  .cta-band{position:relative;text-align:center;padding:var(--nyx-s9) var(--nyx-s5);border-radius:var(--nyx-radius-xl);border:1px solid var(--nyx-border);background:var(--nyx-surface);overflow:hidden}
+  .cta-band::before{content:"";position:absolute;inset:-50% 0 auto 0;height:440px;background:radial-gradient(circle at 50% 0,color-mix(in srgb,var(--nyx-accent) 34%,transparent),transparent 60%);pointer-events:none}
+  .cta-band::after{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:280px;height:1px;background:linear-gradient(90deg,transparent,var(--nyx-accent),transparent)}
+  .cta-band > *{position:relative}
+  .cta-band .nyx-btn{border-radius:var(--nyx-radius-full)}
+
+  /* ============ FOOTER ============ */
+  .foot{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:var(--nyx-s5);text-align:start;padding-block:var(--nyx-s7) var(--nyx-s5)}
+  .foot h4{font-size:var(--nyx-fs-xs);text-transform:uppercase;letter-spacing:.1em;color:var(--nyx-text-muted);margin-bottom:var(--nyx-s3);font-family:var(--nyx-font-mono)}
+  .foot a{display:flex;align-items:center;gap:8px;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);padding:4px 0;transition:color .2s var(--nyx-ease)}
+  .foot a:hover{color:var(--nyx-text)}
+  .foot-brand p{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);max-width:32ch;margin-top:var(--nyx-s3)}
+  .foot-bottom{border-top:1px solid var(--nyx-border);padding-block:var(--nyx-s4);text-align:center;color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm)}
+
+  /* ============ INTERACTIVE DONUT LEGEND (JS) ============ */
   .donut-interactive .nyx-legend{cursor:pointer;padding:2px 4px;border-radius:var(--nyx-radius-sm);transition:opacity .2s var(--nyx-ease)}
   .donut-interactive.dim .nyx-legend:not(.active){opacity:.4}
   .donut-interactive .nyx-legend:focus-visible{outline:2px solid var(--nyx-accent);outline-offset:2px}
-  /* ---- live customizer dock ---- */
+
+  /* ============ LIVE CUSTOMIZER DOCK (JS) ============ */
   .nyx-customizer{position:fixed;inset-block-end:20px;inset-inline-end:20px;z-index:150;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
   .cz-fab{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;border:0;background:linear-gradient(120deg,var(--nyx-accent),var(--nyx-accent-2));color:#fff;cursor:pointer;box-shadow:var(--nyx-glow),var(--nyx-shadow-lg);transition:transform .2s var(--nyx-ease)}
   .cz-fab:hover{transform:translateY(-2px) scale(1.04)}
@@ -192,7 +258,28 @@
   .cz-sw{width:24px;height:24px;border-radius:50%;border:2px solid var(--nyx-surface);background:var(--sw);cursor:pointer;box-shadow:0 0 0 1px var(--nyx-border);transition:transform .15s var(--nyx-ease)}
   .cz-sw:hover{transform:scale(1.12)}
   .cz-sw.is-on{box-shadow:0 0 0 2px var(--sw)}
+
+  /* ============ RESPONSIVE ============ */
+  @media(max-width:920px){
+    .app-body{grid-template-columns:1fr}
+    .app-rail{flex-direction:row;border-inline-end:0;border-bottom:1px solid var(--nyx-border);justify-content:center}
+    .app-rail .r-sp{display:none}
+    .app-chip{display:none}
+  }
+  @media(max-width:780px){
+    .bg-gallery{grid-template-columns:repeat(2,1fr)}
+    .lp-comp{grid-template-columns:1fr}.hide-sm{display:none}
+    .lp-bento{grid-template-columns:1fr}.b6,.b4,.b3,.b2{grid-column:auto}
+    .app-kpis{grid-template-columns:1fr 1fr}
+    .stats{grid-template-columns:repeat(2,1fr);gap:var(--nyx-s5)}
+    .stat:nth-child(odd){border-inline-start:0}
+    .stat:nth-child(n+3){border-top:1px solid var(--nyx-border);padding-top:var(--nyx-s5)}
+    .foot{grid-template-columns:1fr 1fr;gap:var(--nyx-s4)}.foot-brand{grid-column:1/-1}
+    .nyx-navbar.lp-nav{padding-inline:16px}
+  }
+  @media(max-width:520px){.app-kpis{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.stat + .stat{border-inline-start:0}.stat:nth-child(n+2){border-top:1px solid var(--nyx-border);padding-top:var(--nyx-s5)}}
   @media(max-width:780px){.nyx-customizer{inset-block-end:14px;inset-inline-end:14px}.cz-panel{width:220px}}
+
 </style>
 </head>
 <body class="nyx nyx-reset">
@@ -235,10 +322,10 @@
 </svg>
 
 <!-- ===================== NAVBAR ===================== -->
-<nav class="nyx-navbar">
+<nav class="nyx-navbar lp-nav">
   <div class="nyx-flex nyx-items-center nyx-gap-4">
     <a class="lp-logo" href="index.ar.html"><img class="lp-wordmark" src="logo-white.png" alt="نيكس" width="82" height="24" /></a>
-    <span class="nyx-badge nyx-badge-info hide-sm">v1.0.2</span>
+    <span class="nyx-badge nyx-badge-info hide-sm lp-ver">v1.0.2</span>
   </div>
   <div class="nyx-flex nyx-items-center nyx-gap-4">
     <div class="lp-links hide-sm">
@@ -258,40 +345,98 @@
       <a href="docs.ar.html">التوثيق</a>
     </div>
     <button class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-search" data-nyx-toggle="command" aria-label="بحث في الصفحة" title="بحث (⌘K)"><svg class="ico ico-sm"><use href="#i-search"/></svg> <span class="nyx-command hide-sm">⌘ K</span></button>
-    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost" onclick="Nyx.toggleTheme()" aria-label="تبديل السمة" title="تبديل السمة">◐</button>
+    <button class="nyx-btn nyx-btn-icon nyx-btn-ghost lp-theme" onclick="Nyx.toggleTheme()" aria-label="تبديل السمة" title="تبديل السمة">◐</button>
     <a class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-lang" href="index.html" hreflang="en" aria-label="Switch to English" title="English">EN</a>
-    <a class="nyx-btn nyx-btn-glass nyx-btn-sm hide-sm" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> <span class="nyx-badge" id="gh-stars">2.4k</span></a>
+    <a class="nyx-btn nyx-btn-glass nyx-btn-sm hide-sm lp-gh" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> <span class="nyx-badge" id="gh-stars">2.4k</span></a>
     <a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="docs.ar.html">ابدأ الآن</a>
   </div>
 </nav>
 
 <div class="nyx-container">
-
   <!-- ===================== HERO ===================== -->
-  <section class="hero nyx-bg-grid">
-    <span class="hero-eyebrow nyx-anim-up"><span class="dot"></span> واجهات فاخرة، <b>مُضيئة من الداخل</b></span>
-    <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1" style="margin-top:var(--nyx-s5)">ابنِ واجهات سريعة ومتجاوبة<span class="l2 nyx-gradient-text animated">مع نيكس.</span></h1>
-    <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2" style="margin-top:var(--nyx-s5)">مجموعة أدوات أمامية قويّة وقابلة للتوسيع، داكنة المظهر بالكامل. خصّص كل شيء عبر متغيّرات CSS، وركّب شبكات ومكوّنات جاهزة، وأضِف الحياة لواجهاتك عبر نواة JavaScript خفيفة بلا اعتماديات — مع دعم RTL وطباعة عربية أصيلة.</p>
-    <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta nyx-anim-up nyx-anim-delay-3" style="margin-top:var(--nyx-s6)">
-      <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.ar.html#/installation">ابدأ الآن</a>
+  <section class="hero">
+    <span class="lp-eyebrow nyx-anim-up"><span class="dot"></span> واجهات فاخرة، <b>مُضيئة من الداخل</b> <span class="tag">v1.0.2</span></span>
+    <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1 nyx-text-balance">ابنِ واجهاتٍ مُضيئة<br>جاهزة للعربية و RTL<span class="l2 nyx-gradient-text animated">مع نيكس_</span></h1>
+    <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2">مجموعة أدوات أمامية داكنة المظهر بالكامل. خصّص كلّ شيء من رمزٍ واحد، وركّب أكثر من ٥٠ مكوّناً جاهزاً، وأضِف لها الحياة عبر نواة JavaScript بلا اعتماديات — مع دعم RTL وطباعة عربية أصيلة في الصندوق.</p>
+    <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta nyx-anim-up nyx-anim-delay-3">
+      <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.ar.html#/installation">ابدأ الآن <svg class="ico ico-sm ico-flip"><use href="#i-arrow"/></svg></a>
       <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs.ar.html">تصفّح المكوّنات</a>
     </div>
-    <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap nyx-anim-up nyx-anim-delay-3">
+    <div class="nyx-flex nyx-justify-center nyx-anim-up nyx-anim-delay-3">
       <button class="install-cmd" onclick="navigator.clipboard&&navigator.clipboard.writeText('npm install nyx-css');Nyx.toast('تم النسخ: npm install nyx-css ✓','success')" aria-label="انسخ أمر تثبيت npm">
         <span class="prompt">$</span><span class="fn" dir="ltr">npm install nyx-css</span>
         <span class="cp"><svg class="ico ico-sm"><use href="#i-copy"/></svg></span>
       </button>
-     
+    </div>
+    <div class="hero-meta nyx-anim-up nyx-anim-delay-4">
+      <span><svg class="ico ico-sm"><use href="#i-check"/></svg> بلا اعتماديات</span>
+      <span><svg class="ico ico-sm"><use href="#i-zap"/></svg> بلا خطوة بناء</span>
+      <span><svg class="ico ico-sm"><use href="#i-bidi"/></svg> دعم RTL وسمة فاتحة</span>
     </div>
 
-    <div class="hero-orbits nyx-anim-fade nyx-anim-delay-4" aria-hidden="true">
-      <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span><span class="ring r4"></span>
-      <span class="hero-glow"></span>
-      <span class="hero-pos center"><span class="hero-tile center">N</span></span>
-      <span class="hero-pos p1"><span class="hero-tile t-violet"><svg class="ico"><use href="#i-layers"/></svg></span></span>
-      <span class="hero-pos p2"><span class="hero-tile t-teal"><svg class="ico"><use href="#i-zap"/></svg></span></span>
-      <span class="hero-pos p3"><span class="hero-tile t-amber"><svg class="ico"><use href="#i-sparkles"/></svg></span></span>
-      <span class="hero-pos p4"><span class="hero-tile"><svg class="ico"><use href="#i-bidi"/></svg></span></span>
+    <!-- معاينة حيّة: لوحة تحكّم نيكس حقيقية، مبنية بالمكتبة نفسها -->
+    <div class="app-stage nyx-anim-up nyx-anim-delay-4">
+      <div class="app-frame nyx-spotlight-card" aria-hidden="true">
+        <div class="app-bar">
+          <span class="app-dots"><i class="r"></i><i class="y"></i><i class="g"></i></span>
+          <span class="app-url"><svg class="ico"><use href="#i-zap"/></svg> app.nyx — نظرة عامة</span>
+          <span class="nyx-command">⌘ K</span>
+        </div>
+        <div class="app-body">
+          <aside class="app-rail">
+            <span class="r-ico on"><svg class="ico ico-sm"><use href="#i-dashboard"/></svg></span>
+            <span class="r-ico"><svg class="ico ico-sm"><use href="#i-table"/></svg></span>
+            <span class="r-ico"><svg class="ico ico-sm"><use href="#i-card"/></svg></span>
+            <span class="r-ico"><svg class="ico ico-sm"><use href="#i-sliders"/></svg></span>
+            <span class="r-sp"></span>
+            <span class="r-ico"><svg class="ico ico-sm"><use href="#i-a11y"/></svg></span>
+          </aside>
+          <div class="app-main">
+            <div class="app-head">
+              <div>
+                <h4 class="nyx-h3">مساء الخير، ليلى</h4>
+                <p class="nyx-caption">أداء مساحة العمل · آخر ٧ أيام</p>
+              </div>
+              <div class="nyx-flex nyx-items-center nyx-gap-3">
+                <span class="nyx-segment" role="group">
+                  <label><input type="radio" name="rng" tabindex="-1"><span>يوم</span></label>
+                  <label><input type="radio" name="rng" checked tabindex="-1"><span>أسبوع</span></label>
+                  <label><input type="radio" name="rng" tabindex="-1"><span>شهر</span></label>
+                </span>
+                <span class="nyx-btn nyx-btn-primary nyx-btn-sm">تصدير</span>
+              </div>
+            </div>
+            <div class="app-kpis">
+              <div class="nyx-stat-card">
+                <div class="nyx-stat-top"><span class="nyx-stat-label">الإيراد الشهري</span><span class="nyx-stat-delta up">▲ ١٨٪</span></div>
+                <span class="nyx-stat-num" dir="ltr">$48.2k</span>
+              </div>
+              <div class="nyx-stat-card">
+                <div class="nyx-stat-top"><span class="nyx-stat-label">المستخدمون النشطون</span><span class="nyx-stat-delta up">▲ ٧٪</span></div>
+                <span class="nyx-stat-num">١٢٬٨٤٠</span>
+              </div>
+              <div class="nyx-stat-card">
+                <div class="nyx-stat-top"><span class="nyx-stat-label">معدّل التسرّب</span><span class="nyx-stat-delta down">▼ ٠٫٤٪</span></div>
+                <span class="nyx-stat-num">١٫٩٪</span>
+              </div>
+            </div>
+            <div class="app-panel">
+              <div class="nyx-flex nyx-justify-between nyx-items-center"><span class="nyx-h4">المستخدمون النشطون أسبوعياً</span><span class="nyx-badge nyx-badge-success">▲ ١٨٪</span></div>
+              <div class="nyx-chart-bars">
+                <div class="nyx-bar" style="--nyx-bar:42"></div>
+                <div class="nyx-bar" style="--nyx-bar:63"></div>
+                <div class="nyx-bar alt" style="--nyx-bar:55"></div>
+                <div class="nyx-bar" style="--nyx-bar:78"></div>
+                <div class="nyx-bar" style="--nyx-bar:90"></div>
+                <div class="nyx-bar muted" style="--nyx-bar:48"></div>
+                <div class="nyx-bar muted" style="--nyx-bar:58"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="app-chip c1"><svg class="ico"><use href="#i-contrast"/></svg> تخصيص برمزٍ واحد</span>
+      <span class="app-chip c2"><svg class="ico"><use href="#i-sparkles"/></svg> عمقٌ مضيء</span>
     </div>
   </section>
 
@@ -316,11 +461,13 @@
     </div>
   </div>
 
+  <hr class="lp-rule" />
+
   <!-- ===================== INSTALL ===================== -->
   <section class="lp" id="install">
     <div class="nyx-grid nyx-items-center">
       <div class="nyx-col-5 nyx-stack" data-nyx-reveal>
-        <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> التثبيت</span>
+        <span class="lp-eyebrow"><span class="dot"></span> التثبيت</span>
         <h2 class="nyx-h1">أضِفها إلى أيّ صفحة</h2>
         <p class="nyx-muted">ملفّان فقط وبلا خطوة بناء. اربط ملف الأنماط، وأضِف الصنف <span class="nyx-code">nyx</span> إلى عنصر <span class="nyx-code">&lt;body&gt;</span>، ثم أضِف المُشغّل للتبويبات والنوافذ والإشعارات.</p>
         <ul class="install-pts">
@@ -334,106 +481,114 @@
         </div>
       </div>
       <div class="nyx-col-7" data-nyx-reveal>
-        <div class="code-window"><div class="cw-bar"><i class="r"></i><i class="y"></i><i class="g"></i><em>index.html</em><button class="cw-copy" data-nyx-copy="#install-code" aria-label="انسخ الشيفرة" title="انسخ الشيفرة"><svg class="ico ico-sm"><use href="#i-copy"/></svg></button></div>
-        <pre dir="ltr" id="install-code"><code><span class="t-cmt">&lt;!-- 1. the framework --&gt;</span>
-<span class="t-tag">&lt;link</span> <span class="t-attr">rel</span>=<span class="t-str">"stylesheet"</span> <span class="t-attr">href</span>=<span class="t-str">"nyx.css"</span><span class="t-tag">&gt;</span>
+        <div class="nyx-code-block" id="install-code"><div class="nyx-code-bar"><span class="nyx-dot r"></span><span class="nyx-dot y"></span><span class="nyx-dot g"></span><span class="nyx-code-name">index.html</span><button class="nyx-code-copy" data-nyx-copy aria-label="انسخ الشيفرة"><svg class="ico ico-sm"><use href="#i-copy"/></svg></button></div>
+        <pre dir="ltr"><code><span class="nyx-tok-comment">&lt;!-- 1. the framework --&gt;</span>
+<span class="nyx-tok-tag">&lt;link</span> <span class="nyx-tok-attr">rel</span>=<span class="nyx-tok-str">"stylesheet"</span> <span class="nyx-tok-attr">href</span>=<span class="nyx-tok-str">"nyx.css"</span><span class="nyx-tok-tag">&gt;</span>
 
-<span class="t-cmt">&lt;!-- 2. opt the body in (RTL) --&gt;</span>
-<span class="t-tag">&lt;body</span> <span class="t-attr">class</span>=<span class="t-str">"nyx nyx-reset"</span> <span class="t-attr">dir</span>=<span class="t-str">"rtl"</span><span class="t-tag">&gt;</span>
-  <span class="t-tag">&lt;button</span> <span class="t-attr">class</span>=<span class="t-str">"nyx-btn nyx-btn-primary"</span><span class="t-tag">&gt;</span>ابدأ<span class="t-tag">&lt;/button&gt;</span>
+<span class="nyx-tok-comment">&lt;!-- 2. opt the body in (RTL) --&gt;</span>
+<span class="nyx-tok-tag">&lt;body</span> <span class="nyx-tok-attr">class</span>=<span class="nyx-tok-str">"nyx nyx-reset"</span> <span class="nyx-tok-attr">dir</span>=<span class="nyx-tok-str">"rtl"</span><span class="nyx-tok-tag">&gt;</span>
+  <span class="nyx-tok-tag">&lt;button</span> <span class="nyx-tok-attr">class</span>=<span class="nyx-tok-str">"nyx-btn nyx-btn-primary"</span><span class="nyx-tok-tag">&gt;</span>ابدأ<span class="nyx-tok-tag">&lt;/button&gt;</span>
 
-<span class="t-cmt">&lt;!-- 3. the runtime --&gt;</span>
-<span class="t-tag">&lt;script</span> <span class="t-attr">src</span>=<span class="t-str">"nyx.js"</span><span class="t-tag">&gt;&lt;/script&gt;</span></code></pre></div>
+<span class="nyx-tok-comment">&lt;!-- 3. the runtime --&gt;</span>
+<span class="nyx-tok-tag">&lt;script</span> <span class="nyx-tok-attr">src</span>=<span class="nyx-tok-str">"nyx.js"</span><span class="nyx-tok-tag">&gt;&lt;/script&gt;</span></code></pre></div>
       </div>
     </div>
   </section>
 
   <!-- ===================== FEATURES (BENTO) ===================== -->
   <section class="lp" id="features">
-    <div class="lp-section-head">
-      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> لماذا نيكس</span>
-      <h2 class="nyx-h1 nyx-font-ruqaa" style="margin-top:var(--nyx-s3)">مصمّمة لعصر الـ SaaS — وللعربية أوّلاً</h2>
-      <p class="nyx-muted" style="margin-top:var(--nyx-s2)">إعدادات افتراضية مدروسة، ونظام رموز تعيد تنسيقه بسطر واحد، وسلوكيات لا تحتاج كتابة جافاسكربت.</p>
+    <div class="lp-head">
+      <span class="lp-eyebrow"><span class="dot"></span> لماذا نيكس</span>
+      <h2 class="nyx-h1 nyx-text-balance">مصمّمة لعصر الـ SaaS — وللعربية أوّلاً</h2>
+      <p class="nyx-muted">إعدادات افتراضية مدروسة، ونظام رموز تعيد تنسيقه بسطر واحد، وسلوكيات لا تحتاج كتابة جافاسكربت.</p>
     </div>
     <div class="lp-bento">
-      <div class="lp-cell b4" data-nyx-reveal>
+      <div class="lp-cell b4 nyx-spotlight-card" data-nyx-reveal>
         <span class="feat-tile v"><svg class="ico"><use href="#i-layers"/></svg></span>
         <h3 class="nyx-h3">العمق المضيء</h3>
         <p class="nyx-muted">كلّ عنصر تفاعلي مُضاء من الداخل — توهّجات ملوّنة وأسطح متعدّدة وزجاج يمنح الواجهة عمقاً حقيقياً على خلفية داكنة.</p>
         <div class="depth-viz"><span class="gl"></span><span class="pane p-a"></span><span class="pane p-b"></span><span class="pane p-c"></span></div>
       </div>
-      <div class="lp-cell b2" data-nyx-reveal>
+      <div class="lp-cell b2 nyx-spotlight-card" data-nyx-reveal>
+        <span class="feat-tile v"><svg class="ico"><use href="#i-contrast"/></svg></span>
+        <h3 class="nyx-h3">أعِد التنسيق بسطر</h3>
+        <p class="nyx-muted">تجاوز رمزاً واحداً <span class="nyx-code">--nyx-*</span> لإعادة تلوين الواجهة بالكامل.</p>
+        <div class="tok-line feat-mini" dir="ltr"><span><span class="k">--nyx-accent</span>:</span><span class="v">#6c63ff</span></div>
+        <div class="sw-row"><i style="--c:#6c63ff"></i><i style="--c:#00d4aa"></i><i style="--c:#f59e0b"></i><i style="--c:#f43f6b"></i></div>
+      </div>
+      <div class="lp-cell b2 nyx-spotlight-card" data-nyx-reveal>
         <span class="feat-tile t"><svg class="ico"><use href="#i-zap"/></svg></span>
         <h3 class="nyx-h3">بلا اعتماديات</h3>
-        <p class="nyx-muted">ملفّان فقط ومُشغّل جافاسكربت صغير. بلا خطوة بناء وبلا ارتباط بإطار.</p>
+        <p class="nyx-muted">مُشغّل جافاسكربت صغير. بلا خطوة بناء وبلا ارتباط بإطار.</p>
         <span class="cell-num" style="display:block;margin-top:var(--nyx-s4)">0</span>
       </div>
-      <div class="lp-cell b2" data-nyx-reveal>
+      <div class="lp-cell b2 nyx-spotlight-card" data-nyx-reveal>
         <span class="feat-tile t"><svg class="ico"><use href="#i-bidi"/></svg></span>
         <h3 class="nyx-h3">دعم RTL كامل</h3>
-        <p class="nyx-muted">خصائص CSS المنطقية تعكس كلّ مكوّن تلقائياً، مع خطوط عربية في الصندوق.</p>
+        <p class="nyx-muted">خصائص CSS المنطقية تعكس كلّ مكوّن تلقائياً.</p>
+        <div class="bidi-demo feat-mini">
+          <div class="row" dir="rtl"><svg class="ico ico-sm"><use href="#i-layers"/></svg> لوحة التحكّم <span class="nyx-badge nyx-badge-info" style="margin-inline-start:auto">RTL</span></div>
+          <div class="row" dir="ltr"><svg class="ico ico-sm"><use href="#i-layers"/></svg> Dashboard <span class="nyx-badge nyx-badge-info" style="margin-inline-start:auto">LTR</span></div>
+        </div>
       </div>
-      <div class="lp-cell b2" data-nyx-reveal>
-        <span class="feat-tile v"><svg class="ico"><use href="#i-contrast"/></svg></span>
-        <h3 class="nyx-h3">سمات قابلة للتخصيص</h3>
-        <p class="nyx-muted">تجاوز أيّ متغيّر <span class="nyx-code">--nyx-*</span> لإعادة التنسيق بالكامل. داكن وفاتح مدمجان.</p>
-      </div>
-      <div class="lp-cell b2" data-nyx-reveal>
+      <div class="lp-cell b2 nyx-spotlight-card" data-nyx-reveal>
         <span class="feat-tile a"><svg class="ico"><use href="#i-sliders"/></svg></span>
         <h3 class="nyx-h3">جافاسكربت تعريفي</h3>
-        <p class="nyx-muted">النوافذ والتبويبات والأدراج عبر سمات <span class="nyx-code">data-nyx-*</span> — دون كتابة كود.</p>
+        <p class="nyx-muted">اربط النوافذ والتبويبات والأدراج بالسمات — دون كود.</p>
+        <div class="code-chip feat-mini" dir="ltr"><span class="t">&lt;dialog</span> <span class="a">data-nyx-modal</span><span class="t">&gt;</span></div>
       </div>
-      <div class="lp-cell b6" data-nyx-reveal>
-        <div class="nyx-flex nyx-items-center nyx-gap-4 nyx-wrap">
+      <div class="lp-cell b6 nyx-spotlight-card" data-nyx-reveal>
+        <div class="nyx-flex nyx-items-center nyx-gap-3">
           <span class="feat-tile a"><svg class="ico"><use href="#i-phone"/></svg></span>
-          <div style="flex:1;min-width:240px">
+          <div>
             <h3 class="nyx-h3">متجاوبة ومتاحة للجميع افتراضياً</h3>
-            <p class="nyx-muted" style="margin-top:7px">من لوحة تحكّم بعرض 1440 بكسل إلى هاتف بعرض 375 — مع حلقات تركيز وسمات ARIA ودعم تقليل الحركة، كلّها جاهزة.</p>
+            <p class="nyx-muted" style="margin-top:6px">تخطيط واحد يتكيّف مع كلّ شاشة — مع إنجاز عمل الإتاحة مسبقاً نيابةً عنك.</p>
           </div>
-          <div class="resp-row">
-            <span class="scr s1"></span><span class="scr s2"></span><span class="scr s3"></span>
+        </div>
+        <div class="ra-grid">
+          <div class="ra-devices" aria-hidden="true">
+            <div class="ra-dev desk"><span class="ra-screen"><span class="bar"></span><span class="rows"><i></i><i></i><i></i><i></i><i></i><i></i></span></span><span class="ra-w" dir="ltr">1440px</span></div>
+            <div class="ra-dev tab"><span class="ra-screen"><span class="bar"></span><span class="rows"><i></i><i></i><i></i><i></i></span></span><span class="ra-w" dir="ltr">768px</span></div>
+            <div class="ra-dev phone"><span class="ra-screen"><span class="bar"></span><span class="rows"><i></i><i></i><i></i></span></span><span class="ra-w" dir="ltr">375px</span></div>
           </div>
+          <ul class="ra-a11y">
+            <li class="ra-check"><svg class="ico ico-sm"><use href="#i-check"/></svg> تباين WCAG AA</li>
+            <li class="ra-check"><svg class="ico ico-sm"><use href="#i-check"/></svg> حلقات تركيز ظاهرة</li>
+            <li class="ra-check"><svg class="ico ico-sm"><use href="#i-check"/></svg> ربط ARIA كامل</li>
+            <li class="ra-check"><svg class="ico ico-sm"><use href="#i-check"/></svg> تنقّل بلوحة المفاتيح</li>
+            <li class="ra-check"><svg class="ico ico-sm"><use href="#i-check"/></svg> احترام تقليل الحركة</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== STATS ===================== -->
-  <section class="lp" id="stats" style="padding-top:0">
-    <div class="stats">
-      <div class="stat" data-nyx-reveal><b class="count" data-to="80" data-prefix="+">+80</b><span>صفحة موثّقة</span></div>
-      <div class="stat" data-nyx-reveal><b class="count" data-to="500" data-prefix="~">~500</b><span>سطر CSS</span></div>
-      <div class="stat" data-nyx-reveal><b class="count" data-to="0">0</b><span>اعتماديات</span></div>
-      <div class="stat" data-nyx-reveal><b class="count" data-to="2">2</b><span>سمتان · RTL كامل</span></div>
-    </div>
-  </section>
-
   <!-- ===================== COMPONENTS ===================== -->
   <section class="lp" id="components">
-    <div class="lp-section-head">
-      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> أكثر من 80 صفحة</span>
-      <h2 class="nyx-h1 nyx-font-ruqaa" style="margin-top:var(--nyx-s3)">كل ما تحتاجه لتطلق منتجك</h2>
-      <p class="nyx-muted" style="margin-top:var(--nyx-s2)">لكلّ مكوّن صفحته الخاصّة مع الاستخدام وأمثلة حيّة ومرجع للأصناف. ابدأ من هنا:</p>
+    <div class="lp-head">
+      <span class="lp-eyebrow"><span class="dot"></span> أكثر من ٥٠ مكوّناً</span>
+      <h2 class="nyx-h1 nyx-text-balance">كل ما تحتاجه لتطلق منتجك</h2>
+      <p class="nyx-muted">لكلّ مكوّن صفحته الخاصّة مع الاستخدام وأمثلة حيّة ومرجع للأصناف. ابدأ من هنا:</p>
     </div>
     <div class="lp-comp">
-      <a href="docs.ar.html#/buttons"><div class="nyx-card nyx-card-interactive"><span class="comp-ico"><svg class="ico"><use href="#i-pill"/></svg></span><h3 class="nyx-h4">الأزرار</h3><p class="nyx-caption">ستة أنماط، وتوهّج، وحالات تحميل.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-btn nyx-btn-primary nyx-btn-sm">أساسي</span><span class="nyx-btn nyx-btn-glow nyx-btn-sm">توهّج</span></div></div></a>
-      <a href="docs.ar.html#/cards"><div class="nyx-card nyx-card-interactive"><span class="comp-ico"><svg class="ico"><use href="#i-card"/></svg></span><h3 class="nyx-h4">البطاقات</h3><p class="nyx-caption">زجاجية، ومتدرّجة، وإحصائية.</p><div class="nyx-card-gradient" style="margin-top:var(--nyx-s3);padding:var(--nyx-s3)"><span class="nyx-caption">بطاقة متدرّجة</span></div></div></a>
-      <a href="docs.ar.html#/inputs"><div class="nyx-card nyx-card-interactive"><span class="comp-ico"><svg class="ico"><use href="#i-form"/></svg></span><h3 class="nyx-h4">النماذج</h3><p class="nyx-caption">حقول وقوائم ومفاتيح وبحث.</p><div style="margin-top:var(--nyx-s3)"><label class="nyx-toggle"><input type="checkbox" checked tabindex="-1" aria-label="معاينة"><span class="nyx-track"></span></label></div></div></a>
-      <a href="docs.ar.html#/tables"><div class="nyx-card nyx-card-interactive"><span class="comp-ico"><svg class="ico"><use href="#i-table"/></svg></span><h3 class="nyx-h4">الجداول والبيانات</h3><p class="nyx-caption">جداول قابلة للفرز وصفوف مؤشّرات.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-badge nyx-badge-success">▲ ١٢٪</span><span class="nyx-badge">الإيراد</span></div></div></a>
-      <a href="docs.ar.html#/modal"><div class="nyx-card nyx-card-interactive"><span class="comp-ico"><svg class="ico"><use href="#i-overlay"/></svg></span><h3 class="nyx-h4">التراكبات</h3><p class="nyx-caption">نوافذ وأدراج وتلميحات ومنبثقات.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-command">⌘ K</span><span class="nyx-badge nyx-badge-info">esc</span></div></div></a>
-      <a href="docs.ar.html#/big-type"><div class="nyx-card nyx-card-interactive"><span class="comp-ico"><svg class="ico"><use href="#i-sparkles"/></svg></span><h3 class="nyx-h4">عناصر مميّزة</h3><p class="nyx-caption">الخط الكبير، الحركات، الخط الزمني والمزيد.</p><div class="nyx-flex nyx-gap-2 nyx-items-center" style="margin-top:var(--nyx-s3)"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">N</span><span class="nyx-badge-dot">مباشر</span></div></div></a>
+      <a href="docs.ar.html#/buttons"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-pill"/></svg></span><h3 class="nyx-h4">الأزرار</h3><p class="nyx-caption">ستة أنماط، وتوهّج، وحالات تحميل.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-btn nyx-btn-primary nyx-btn-sm">أساسي</span><span class="nyx-btn nyx-btn-glow nyx-btn-sm">توهّج</span></div></div></a>
+      <a href="docs.ar.html#/cards"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-card"/></svg></span><h3 class="nyx-h4">البطاقات</h3><p class="nyx-caption">زجاجية، ومتدرّجة، وإحصائية.</p><div class="nyx-card-gradient" style="margin-top:var(--nyx-s3);padding:var(--nyx-s3)"><span class="nyx-caption">بطاقة متدرّجة</span></div></div></a>
+      <a href="docs.ar.html#/inputs"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-form"/></svg></span><h3 class="nyx-h4">النماذج</h3><p class="nyx-caption">حقول وقوائم ومفاتيح وبحث.</p><div style="margin-top:var(--nyx-s3)"><label class="nyx-toggle"><input type="checkbox" checked tabindex="-1" aria-label="معاينة"><span class="nyx-track"></span></label></div></div></a>
+      <a href="docs.ar.html#/tables"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-table"/></svg></span><h3 class="nyx-h4">الجداول والبيانات</h3><p class="nyx-caption">جداول قابلة للفرز وصفوف مؤشّرات.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-badge nyx-badge-success">▲ ١٢٪</span><span class="nyx-badge">الإيراد</span></div></div></a>
+      <a href="docs.ar.html#/modal"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-overlay"/></svg></span><h3 class="nyx-h4">التراكبات</h3><p class="nyx-caption">نوافذ وأدراج وتلميحات ومنبثقات.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-command">⌘ K</span><span class="nyx-badge nyx-badge-info">esc</span></div></div></a>
+      <a href="docs.ar.html#/big-type"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-sparkles"/></svg></span><h3 class="nyx-h4">عناصر مميّزة</h3><p class="nyx-caption">الخط الكبير، الحركات، الخط الزمني والمزيد.</p><div class="nyx-flex nyx-gap-2 nyx-items-center" style="margin-top:var(--nyx-s3)"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">N</span><span class="nyx-badge-dot">مباشر</span></div></div></a>
     </div>
     <div class="nyx-flex nyx-justify-center" style="margin-top:var(--nyx-s6)">
       <a class="nyx-btn nyx-btn-secondary nyx-btn-lg" href="docs.ar.html">افتح التوثيق الكامل <svg class="ico ico-sm ico-flip"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
-  <!-- ===================== EFFECTS / DATA SHOWCASE (v1.0) ===================== -->
+  <!-- ===================== EFFECTS / DATA SHOWCASE ===================== -->
   <section class="lp" id="effects">
-    <div class="lp-section-head">
-      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> جديد في v1.0</span>
-      <h2 class="nyx-h1" style="margin-top:var(--nyx-s3)">خلفيات ومخططات وشيفرة — جاهزة في الصندوق</h2>
-      <p class="nyx-muted" style="margin-top:var(--nyx-s2)">خلفيات محيطة، ورسوم بيانية بلا أيّ اعتماديات، وكتلة شيفرة تُنسخ بنقرة — جميعها مدفوعة باللون، وتدعم RTL، وتحترم تقليل الحركة.</p>
+    <div class="lp-head">
+      <span class="lp-eyebrow"><span class="dot"></span> جديد في v1.0</span>
+      <h2 class="nyx-h1 nyx-text-balance">خلفيات ومخططات وشيفرة — جاهزة في الصندوق</h2>
+      <p class="nyx-muted">خلفيات محيطة، ورسوم بيانية بلا أيّ اعتماديات، وكتلة شيفرة تُنسخ بنقرة — جميعها مدفوعة باللون، وتدعم RTL، وتحترم تقليل الحركة.</p>
     </div>
 
     <div class="bg-gallery" data-nyx-reveal>
@@ -478,12 +633,24 @@
     </div>
   </section>
 
+  <!-- ===================== STATS BAND ===================== -->
+  <section class="lp" id="stats">
+    <div class="stats-band" data-nyx-reveal>
+      <div class="stats">
+        <div class="stat"><b class="count" data-to="80" data-prefix="+">+80</b><span>صفحة موثّقة</span></div>
+        <div class="stat"><b class="count" data-to="50" data-prefix="+">+50</b><span>مكوّناً</span></div>
+        <div class="stat"><b class="count" data-to="0">0</b><span>اعتماديات</span></div>
+        <div class="stat"><b class="count" data-to="2">2</b><span>سمتان · RTL كامل</span></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== COMPARISON ===================== -->
   <section class="lp" id="compare">
-    <div class="lp-section-head">
-      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> المقارنة</span>
-      <h2 class="nyx-h1" style="margin-top:var(--nyx-s3)">لماذا نيكس للعربية تحديداً؟</h2>
-      <p class="nyx-muted" style="margin-top:var(--nyx-s2)">مقارنة صريحة مع أشهر الأطر — مع التركيز على ما يهمّ المطوّر العربي فعلاً.</p>
+    <div class="lp-head">
+      <span class="lp-eyebrow"><span class="dot"></span> المقارنة</span>
+      <h2 class="nyx-h1 nyx-text-balance">لماذا نيكس للعربية تحديداً؟</h2>
+      <p class="nyx-muted">مقارنة صريحة مع أشهر الأطر — مع التركيز على ما يهمّ المطوّر العربي فعلاً.</p>
     </div>
     <div class="nyx-table-wrap cmp-wrap" data-nyx-reveal>
       <table class="nyx-table cmp-table">
@@ -541,7 +708,7 @@
   <!-- ===================== CLOSING CTA ===================== -->
   <section class="lp" id="cta">
     <div class="cta-band" data-nyx-reveal>
-      <span class="hero-eyebrow sec-eyebrow"><span class="dot"></span> جاهزون متى استعددت</span>
+      <span class="lp-eyebrow"><span class="dot"></span> جاهزون متى استعددت</span>
       <h2 class="nyx-bigtype nyx-bigtype-sm" style="margin-top:var(--nyx-s4)">ابنِ شيئاً <span class="nyx-gradient-text animated">فاخراً ومضيئاً.</span></h2>
       <p class="nyx-lead nyx-muted" style="max-width:540px;margin:var(--nyx-s4) auto 0">بلا إعداد وبلا اعتماديات. أضِف ملفّين فقط وأطلق واجهة مضيئة جاهزة للعربية اليوم.</p>
       <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta" style="margin-top:var(--nyx-s6)">
@@ -550,7 +717,6 @@
       </div>
     </div>
   </section>
-
 </div>
 
 <!-- ===================== COMMAND PALETTE (⌘K) ===================== -->
