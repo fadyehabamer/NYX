@@ -950,7 +950,7 @@
   function initCalendar(root) {
     $$('.nyx-calendar[data-nyx-calendar]', root).filter(function (c) { return !c._nyxCal; }).forEach(function (cal) {
       cal._nyxCal = true;
-      if (cal.getAttribute('data-nyx-calendar') === 'hijri') { initHijri(cal); return; }
+      if (cal.getAttribute('data-nyx-calendar') === 'hijri') { initHijriCalendar(cal); return; }
       var now = new Date();
       var st = { y: now.getFullYear(), m: now.getMonth(), sel: null, today: { y: now.getFullYear(), m: now.getMonth(), d: now.getDate() } };
       var cfg = calCfg(cal, cal.hasAttribute('data-footer'));     // add data-footer for Today/Clear
@@ -1005,7 +1005,7 @@
     }
     return { day1: day1, days: days };
   }
-  function initHijri(cal) {
+  function initHijriCalendar(cal) {
     var ar = docEl.getAttribute('dir') === 'rtl' || (docEl.getAttribute('lang') || '').indexOf('ar') === 0;
     var loc = ar ? 'ar' : 'en';
     var anchor = new Date(), today = new Date();
@@ -1023,7 +1023,8 @@
       m.days.forEach(function (day) {
         var t = eq(day.greg, today) ? ' today' : '';
         var label = ar ? toArabicNumerals(day.hd) : day.hd;
-        h += '<span class="day' + t + '" data-day="' + day.hd + '" title="' + day.greg.toLocaleDateString() + '">' + label + '</span>';
+        var iso = day.greg.getFullYear() + '-' + _pad(day.greg.getMonth() + 1) + '-' + _pad(day.greg.getDate());
+        h += '<span class="day' + t + '" data-day="' + day.hd + '" data-greg="' + iso + '" title="' + day.greg.toLocaleDateString() + '">' + label + '</span>';
       });
       cal.innerHTML = h + '</div>';
     }
@@ -1037,7 +1038,11 @@
         render(); return;
       }
       var day = e.target.closest('.day[data-day]');
-      if (day) { $$('.day.selected', cal).forEach(function (x) { x.classList.remove('selected'); }); day.classList.add('selected'); }
+      if (day) {
+        $$('.day.selected', cal).forEach(function (x) { x.classList.remove('selected'); });
+        day.classList.add('selected');
+        cal.dispatchEvent(new CustomEvent('nyx:date', { bubbles: true, detail: day.getAttribute('data-greg') }));
+      }
     });
   }
 
