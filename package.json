@@ -1,6 +1,6 @@
 {
   "name": "nyx-css",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A zero-dependency CSS & JS component framework with Luminous Depth — light & dark themes, fully themeable via CSS variables, with first-class RTL and Arabic typography.",
   "keywords": [
     "css",
