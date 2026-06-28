@@ -5,6 +5,21 @@ All notable changes to **Nyx** are documented here. The format follows
 [Semantic Versioning](https://semver.org/). `package.json` is the single source
 of truth for the version; `node build.js` stamps it into every artifact.
 
+## [1.0.3] — 2026-06-28
+
+### Fixed
+- **Hijri calendar rendered as an empty box.** Two runtime functions shared the
+  name `initHijri` — one drawing the standalone month grid
+  (`data-nyx-calendar="hijri"`), one wiring the Hijri converter widgets
+  (`data-nyx-hijri`). Function hoisting let the converter definition silently
+  overwrite the grid renderer, so `data-nyx-calendar="hijri"` invoked the wrong
+  code and painted nothing. The grid renderer is now `initHijriCalendar`, so the
+  two no longer collide.
+- **`nyx:date` never fired from the Hijri calendar.** Selecting a day only
+  toggled the `.selected` class; the documented `nyx:date` event was never
+  dispatched. Each cell now carries its Gregorian date (`data-greg`) and a click
+  emits `nyx:date` with the `YYYY-MM-DD` string in `event.detail`.
+
 ## [1.0.2] — 2026-06-23
 
 ### Added
@@ -89,5 +104,6 @@ of truth for the version; `node build.js` stamps it into every artifact.
 - Initial release: tokens, layout, typography, buttons, cards, forms,
   navigation, feedback, data display, overlays, signature elements.
 
+[1.0.3]: #103--2026-06-28
 [1.0.2]: #102--2026-06-23
 [1.7.0]: #170--2026-06-20
