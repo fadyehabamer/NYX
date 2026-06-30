@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="logo-white.png" />
-  <img src="logo-black.png" alt="NYX" width="300" />
+  <source media="(prefers-color-scheme: dark)" srcset="assets/logo-white.png" />
+  <img src="assets/logo-black.png" alt="NYX" width="300" />
 </picture>
 
 ### The dark‑native design system with **Luminous Depth**
@@ -17,7 +17,7 @@ A zero‑dependency CSS **+** JS component framework — fully themeable, light 
 ![js gzip](https://img.shields.io/badge/JS-22kb%20gzip-00d4aa?style=flat-square)
 ![rtl](https://img.shields.io/badge/RTL-first--class-ffb020?style=flat-square)
 
-**`npm i nyx-css`** &nbsp;·&nbsp; [Documentation](docs.html) &nbsp;·&nbsp; [Components](#-components) &nbsp;·&nbsp; [Theming](#-theming) &nbsp;·&nbsp; [العربية](docs.ar.html)
+**`npm i nyx-css`** &nbsp;·&nbsp; [Documentation](docs/docs.html) &nbsp;·&nbsp; [Components](#-components) &nbsp;·&nbsp; [Theming](#-theming) &nbsp;·&nbsp; [العربية](docs/docs.ar.html)
 
 </div>
 
@@ -147,7 +147,7 @@ Nyx.openModal('#invite');
 > **Commerce** `nyx-product` `nyx-cart-item` `nyx-coupon` `nyx-pay` `nyx-order` `nyx-price` `nyx-address`
 > **Regional · MENA** `nyx-countdown` `nyx-prayer-times` `nyx-qibla` `nyx-zakat` `nyx-hijri-convert` `nyx-delivery` `nyx-bnpl` `nyx-invoice` (ZATCA QR) `nyx-national-address`
 
-Every component has its own page — with live examples, a class reference, and a search‑filterable sidebar — in **[`docs.html`](docs.html)** (and **[`docs.ar.html`](docs.ar.html)** in Arabic).
+Every component has its own page — with live examples, a class reference, and a search‑filterable sidebar — in **[`docs.html`](docs/docs.html)** (and **[`docs.ar.html`](docs/docs.ar.html)** in Arabic).
 
 ## 📁 Project layout
 

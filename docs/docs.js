@@ -102,12 +102,12 @@
         {
           title: 'Files', nocode: true, demo:
             '<div class="nyx-list-group">' +
-            '<div class="nyx-list-item"><span><strong>nyx.css</strong> <span class="nyx-caption">· full bundle</span></span><a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="nyx.css" download>↓ Bundle</a></div>' +
-            '<div class="nyx-list-item"><span><strong>nyx.min.css</strong> <span class="nyx-badge nyx-badge-success">~24kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.min.css" download>↓ Min CSS</a></div>' +
-            '<div class="nyx-list-item"><span><strong>nyx.js</strong> · <strong>nyx.min.js</strong> <span class="nyx-badge nyx-badge-success">~22kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.min.js" download>↓ Min JS</a></div>' +
-            '<div class="nyx-list-item"><span><strong>tokens.css</strong> <span class="nyx-badge nyx-badge-warning">required</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="components/tokens.css" download>↓ CSS</a></div>' +
+            '<div class="nyx-list-item"><span><strong>nyx.css</strong> <span class="nyx-caption">· full bundle</span></span><a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="../nyx.css" download>↓ Bundle</a></div>' +
+            '<div class="nyx-list-item"><span><strong>nyx.min.css</strong> <span class="nyx-badge nyx-badge-success">~24kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../nyx.min.css" download>↓ Min CSS</a></div>' +
+            '<div class="nyx-list-item"><span><strong>nyx.js</strong> · <strong>nyx.min.js</strong> <span class="nyx-badge nyx-badge-success">~22kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../nyx.min.js" download>↓ Min JS</a></div>' +
+            '<div class="nyx-list-item"><span><strong>tokens.css</strong> <span class="nyx-badge nyx-badge-warning">required</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../components/tokens.css" download>↓ CSS</a></div>' +
             ['base', 'layout', 'typography', 'buttons', 'cards', 'forms', 'navigation', 'feedback', 'data', 'overlays', 'signature', 'extras', 'motion', 'utilities', 'rtl'].map(function (n) {
-              return '<div class="nyx-list-item"><span>' + n + '.css</span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="components/' + n + '.css" download>↓ CSS</a></div>';
+              return '<div class="nyx-list-item"><span>' + n + '.css</span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../components/' + n + '.css" download>↓ CSS</a></div>';
             }).join('') +
             '</div>'
         }
@@ -217,10 +217,10 @@
         {
           title: 'Open a template', nocode: true, demo:
             '<div class="lp-comp" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">' +
-            '<a href="examples/dashboard.html" target="_blank" rel="noopener"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">▦ Dashboard</h3><p class="nyx-caption">Sidebar, KPI cards with sparklines, sortable table, activity timeline, ⌘K palette.</p></div></a>' +
-            '<a href="examples/checkout.html" target="_blank" rel="noopener"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">🛒 Checkout</h3><p class="nyx-caption">Cart with steppers, address, payment cards, coupon and a sticky order summary (VAT).</p></div></a>' +
-            '<a href="examples/pricing.html" target="_blank" rel="noopener"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">💳 Pricing</h3><p class="nyx-caption">Monthly/yearly toggle, three plans (featured), feature lists and an FAQ accordion.</p></div></a>' +
-            '<a href="examples/auth.html" target="_blank" rel="noopener"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">🔐 Auth</h3><p class="nyx-caption">Split-screen sign-in / sign-up with tabs, social buttons and an aurora brand panel.</p></div></a>' +
+            '<a href="../examples/dashboard.html" target="_blank" rel="noopener"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">▦ Dashboard</h3><p class="nyx-caption">Sidebar, KPI cards with sparklines, sortable table, activity timeline, ⌘K palette.</p></div></a>' +
+            '<a href="../examples/checkout.html" target="_blank" rel="noopener"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">🛒 Checkout</h3><p class="nyx-caption">Cart with steppers, address, payment cards, coupon and a sticky order summary (VAT).</p></div></a>' +
+            '<a href="../examples/pricing.html" target="_blank" rel="noopener"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">💳 Pricing</h3><p class="nyx-caption">Monthly/yearly toggle, three plans (featured), feature lists and an FAQ accordion.</p></div></a>' +
+            '<a href="../examples/auth.html" target="_blank" rel="noopener"><div class="nyx-card nyx-card-interactive"><h3 class="nyx-h4">🔐 Auth</h3><p class="nyx-caption">Split-screen sign-in / sign-up with tabs, social buttons and an aurora brand panel.</p></div></a>' +
             '</div>'
         }
       ],

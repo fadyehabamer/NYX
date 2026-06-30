@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Nyx — The Design System for Modern SaaS</title>
 <meta name="description" content="Nyx is a modern, dark-mode-native CSS/JS component framework with Luminous Depth — every element lit from within. Full RTL, Arabic fonts, zero dependencies." />
-<link rel="icon" href="favicon.svg" type="image/svg+xml" />
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
-<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
 <meta name="theme-color" content="#0b0b0f" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -320,7 +320,7 @@
 <!-- ===================== NAVBAR ===================== -->
 <nav class="nyx-navbar lp-nav">
   <div class="nyx-flex nyx-items-center nyx-gap-4">
-    <a class="lp-logo" href="index.html"><img class="lp-wordmark" src="logo-white.png" alt="Nyx" width="82" height="24" /></a>
+    <a class="lp-logo" href="index.html"><img class="lp-wordmark" src="assets/logo-white.png" alt="Nyx" width="82" height="24" /></a>
     <span class="nyx-badge nyx-badge-info hide-sm lp-ver">v1.0.2</span>
   </div>
   <div class="nyx-flex nyx-items-center nyx-gap-4">
@@ -337,13 +337,13 @@
           <a class="nyx-dropdown-item" href="examples/auth.html"><svg class="ico ico-sm"><use href="#i-lock"/></svg> Auth</a>
         </div>
       </div>
-      <a href="docs.html">Docs</a>
+      <a href="docs/docs.html">Docs</a>
     </div>
     <button class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-search" data-nyx-toggle="command" aria-label="Search the page" title="Search (⌘K)"><svg class="ico ico-sm"><use href="#i-search"/></svg> <span class="nyx-command hide-sm">⌘ K</span></button>
     <button class="nyx-btn nyx-btn-icon nyx-btn-ghost lp-theme" onclick="Nyx.toggleTheme()" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
     <a class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-lang" href="index.ar.html" hreflang="ar" aria-label="التبديل إلى العربية" title="العربية">العربية</a>
     <a class="nyx-btn nyx-btn-glass nyx-btn-sm hide-sm lp-gh" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> <span class="hide-sm">Star</span> <span class="nyx-badge" id="gh-stars">2.4k</span></a>
-    <a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="docs.html">Get started</a>
+    <a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="docs/docs.html">Get started</a>
   </div>
 </nav>
 
@@ -354,8 +354,8 @@
     <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1 nyx-text-balance">Build luminous,<br>RTL-ready interfaces<span class="l2 nyx-gradient-text animated">with&nbsp;Nyx_</span></h1>
     <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2">A dark-mode-native CSS &amp; JS toolkit. Theme everything from one token, compose 50+ prebuilt components, and bring them to life with a zero-dependency runtime — RTL and Arabic typography in the box.</p>
     <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta nyx-anim-up nyx-anim-delay-3">
-      <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.html#/installation">Get started <svg class="ico ico-sm"><use href="#i-arrow"/></svg></a>
-      <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs.html">Browse components</a>
+      <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs/docs.html#/installation">Get started <svg class="ico ico-sm"><use href="#i-arrow"/></svg></a>
+      <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs/docs.html">Browse components</a>
     </div>
     <div class="nyx-flex nyx-justify-center nyx-anim-up nyx-anim-delay-3">
       <button class="install-cmd" onclick="navigator.clipboard&&navigator.clipboard.writeText('npm install nyx-css');Nyx.toast('Copied: npm install nyx-css ✓','success')" aria-label="Copy npm install command">
@@ -471,7 +471,7 @@
           <li><svg class="ico ico-sm"><use href="#i-check"/></svg> RTL &amp; light theme ship in the box</li>
         </ul>
         <div class="nyx-flex nyx-gap-3 nyx-wrap" style="margin-top:var(--nyx-s2)">
-          <a class="nyx-btn nyx-btn-secondary" href="docs.html#/installation">Read the guide</a>
+          <a class="nyx-btn nyx-btn-secondary" href="docs/docs.html#/installation">Read the guide</a>
           <button class="nyx-btn nyx-btn-ghost" data-nyx-copy="#install-code">Copy snippet</button>
         </div>
       </div>
@@ -566,15 +566,15 @@
       <p class="nyx-muted">Each component has its own page with usage, live examples and a class reference. Jump in:</p>
     </div>
     <div class="lp-comp">
-      <a href="docs.html#/buttons"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-pill"/></svg></span><h3 class="nyx-h4">Buttons</h3><p class="nyx-caption">Six variants, glow, loading &amp; icon styles.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-btn nyx-btn-primary nyx-btn-sm">Primary</span><span class="nyx-btn nyx-btn-glow nyx-btn-sm">Glow</span></div></div></a>
-      <a href="docs.html#/cards"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-card"/></svg></span><h3 class="nyx-h4">Cards</h3><p class="nyx-caption">Glass, gradient, stat &amp; feature layouts.</p><div class="nyx-card-gradient" style="margin-top:var(--nyx-s3);padding:var(--nyx-s3)"><span class="nyx-caption">Gradient card</span></div></div></a>
-      <a href="docs.html#/inputs"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-form"/></svg></span><h3 class="nyx-h4">Forms</h3><p class="nyx-caption">Inputs, selects, switches &amp; search.</p><div style="margin-top:var(--nyx-s3)"><label class="nyx-toggle"><input type="checkbox" checked tabindex="-1" aria-label="preview"><span class="nyx-track"></span></label></div></div></a>
-      <a href="docs.html#/tables"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-table"/></svg></span><h3 class="nyx-h4">Tables &amp; Data</h3><p class="nyx-caption">Sortable tables, data grids, KPI rows.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-badge nyx-badge-success">▲ 12%</span><span class="nyx-badge">MRR</span></div></div></a>
-      <a href="docs.html#/modal"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-overlay"/></svg></span><h3 class="nyx-h4">Overlays</h3><p class="nyx-caption">Modal, drawer, tooltip, popover.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-command">⌘ K</span><span class="nyx-badge nyx-badge-info">esc</span></div></div></a>
-      <a href="docs.html#/spotlight"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-sparkles"/></svg></span><h3 class="nyx-h4">Signature</h3><p class="nyx-caption">Spotlight, orbit, meter, timeline &amp; more.</p><div class="nyx-flex nyx-gap-2 nyx-items-center" style="margin-top:var(--nyx-s3)"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">N</span><span class="nyx-badge-dot">live</span></div></div></a>
+      <a href="docs/docs.html#/buttons"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-pill"/></svg></span><h3 class="nyx-h4">Buttons</h3><p class="nyx-caption">Six variants, glow, loading &amp; icon styles.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-btn nyx-btn-primary nyx-btn-sm">Primary</span><span class="nyx-btn nyx-btn-glow nyx-btn-sm">Glow</span></div></div></a>
+      <a href="docs/docs.html#/cards"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-card"/></svg></span><h3 class="nyx-h4">Cards</h3><p class="nyx-caption">Glass, gradient, stat &amp; feature layouts.</p><div class="nyx-card-gradient" style="margin-top:var(--nyx-s3);padding:var(--nyx-s3)"><span class="nyx-caption">Gradient card</span></div></div></a>
+      <a href="docs/docs.html#/inputs"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-form"/></svg></span><h3 class="nyx-h4">Forms</h3><p class="nyx-caption">Inputs, selects, switches &amp; search.</p><div style="margin-top:var(--nyx-s3)"><label class="nyx-toggle"><input type="checkbox" checked tabindex="-1" aria-label="preview"><span class="nyx-track"></span></label></div></div></a>
+      <a href="docs/docs.html#/tables"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-table"/></svg></span><h3 class="nyx-h4">Tables &amp; Data</h3><p class="nyx-caption">Sortable tables, data grids, KPI rows.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-badge nyx-badge-success">▲ 12%</span><span class="nyx-badge">MRR</span></div></div></a>
+      <a href="docs/docs.html#/modal"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-overlay"/></svg></span><h3 class="nyx-h4">Overlays</h3><p class="nyx-caption">Modal, drawer, tooltip, popover.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-command">⌘ K</span><span class="nyx-badge nyx-badge-info">esc</span></div></div></a>
+      <a href="docs/docs.html#/spotlight"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-sparkles"/></svg></span><h3 class="nyx-h4">Signature</h3><p class="nyx-caption">Spotlight, orbit, meter, timeline &amp; more.</p><div class="nyx-flex nyx-gap-2 nyx-items-center" style="margin-top:var(--nyx-s3)"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">N</span><span class="nyx-badge-dot">live</span></div></div></a>
     </div>
     <div class="nyx-flex nyx-justify-center" style="margin-top:var(--nyx-s6)">
-      <a class="nyx-btn nyx-btn-secondary nyx-btn-lg" href="docs.html">Open the full docs <svg class="ico ico-sm"><use href="#i-arrow"/></svg></a>
+      <a class="nyx-btn nyx-btn-secondary nyx-btn-lg" href="docs/docs.html">Open the full docs <svg class="ico ico-sm"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
@@ -707,7 +707,7 @@
       <h2 class="nyx-bigtype nyx-bigtype-sm" style="margin-top:var(--nyx-s4)">Build something <span class="nyx-gradient-text animated">premium &amp; luminous.</span></h2>
       <p class="nyx-lead nyx-muted" style="max-width:520px;margin:var(--nyx-s4) auto 0">Zero setup, zero dependencies. Drop in two files and ship a luminous, RTL-ready interface today.</p>
       <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta" style="margin-top:var(--nyx-s6)">
-        <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.html#/installation">Get started</a>
+        <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs/docs.html#/installation">Get started</a>
         <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="index.ar.html">النسخة العربية <svg class="ico ico-sm"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
@@ -728,7 +728,7 @@
       <li class="nyx-cp-item" data-nyx-target="#compare"><svg class="ico ico-sm"><use href="#i-table"/></svg> Comparison</li>
       <li class="nyx-cp-item" data-nyx-target="#install"><svg class="ico ico-sm"><use href="#i-zap"/></svg> Install</li>
       <li class="nyx-cp-item" data-nyx-target="#cta"><svg class="ico ico-sm"><use href="#i-arrow"/></svg> Get started</li>
-      <a class="nyx-cp-item" href="docs.html"><svg class="ico ico-sm"><use href="#i-form"/></svg> Full documentation</a>
+      <a class="nyx-cp-item" href="docs/docs.html"><svg class="ico ico-sm"><use href="#i-form"/></svg> Full documentation</a>
       <li class="nyx-cp-item" onclick="Nyx.toggleTheme();Nyx.closeCommandPalette()"><svg class="ico ico-sm"><use href="#i-contrast"/></svg> Toggle theme (dark / light)</li>
       <a class="nyx-cp-item" href="index.ar.html" hreflang="ar"><svg class="ico ico-sm"><use href="#i-bidi"/></svg> النسخة العربية</a>
       <a class="nyx-cp-item" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> GitHub</a>
@@ -764,29 +764,29 @@
   <div class="nyx-container">
     <div class="foot">
       <div class="foot-brand">
-        <a class="lp-logo" href="index.html"><img class="lp-wordmark" src="logo-white.png" alt="Nyx" width="82" height="24" /></a>
+        <a class="lp-logo" href="index.html"><img class="lp-wordmark" src="assets/logo-white.png" alt="Nyx" width="82" height="24" /></a>
         <p>The dark-mode-native component framework — the first CSS library built for Arabic developers.</p>
       </div>
       <div>
         <h4>Docs</h4>
-        <a href="docs.html#/installation">Installation</a>
-        <a href="docs.html#/theming">Theming</a>
-        <a href="docs.html#/rtl">RTL support</a>
-        <a href="docs.html#/buttons">Components</a>
+        <a href="docs/docs.html#/installation">Installation</a>
+        <a href="docs/docs.html#/theming">Theming</a>
+        <a href="docs/docs.html#/rtl">RTL support</a>
+        <a href="docs/docs.html#/buttons">Components</a>
       </div>
       <div>
         <h4>Library</h4>
-        <a href="docs.html#/download">Download</a>
-        <a href="docs.html#/javascript">JavaScript</a>
-        <a href="docs.html#/grid">Layout</a>
-        <a href="docs.html#/spacing">Utilities</a>
+        <a href="docs/docs.html#/download">Download</a>
+        <a href="docs/docs.html#/javascript">JavaScript</a>
+        <a href="docs/docs.html#/grid">Layout</a>
+        <a href="docs/docs.html#/spacing">Utilities</a>
       </div>
       <div>
         <h4>More</h4>
         <a href="index.ar.html">العربية</a>
         <a href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> GitHub</a>
-        <a href="docs.html#/big-type">Big type</a>
-        <a href="docs.html#/animations">Motion</a>
+        <a href="docs/docs.html#/big-type">Big type</a>
+        <a href="docs/docs.html#/animations">Motion</a>
       </div>
     </div>
     <div class="foot-bottom">Built with <span class="nyx-gradient-text" style="font-weight:700">Nyx</span> · MIT License · Luminous Depth, dark-first &amp; Arabic-first.</div>

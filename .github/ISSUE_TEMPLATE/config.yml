@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Documentation
+    url: https://github.com/fadyehabamer/NYX/blob/main/docs/docs.html
+    about: Browse the component docs before filing — your answer may be there.
+  - name: 💬 Questions & ideas
+    url: https://github.com/fadyehabamer/NYX/discussions
+    about: For open‑ended questions and discussion, please use Discussions.

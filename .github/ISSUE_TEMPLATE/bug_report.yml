@@ -1,0 +1,54 @@
+name: 🐛 Bug report
+description: Something in Nyx renders or behaves incorrectly.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for filing a bug! A minimal reproduction is the single most helpful thing you can include.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you see, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: A small HTML snippet using Nyx, or a link (CodePen/JSFiddle/repo).
+      render: html
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Nyx version
+      placeholder: e.g. 1.0.3 (or "main")
+    validations:
+      required: true
+  - type: dropdown
+    id: theme
+    attributes:
+      label: Theme
+      options:
+        - Both
+        - Dark
+        - Light
+    validations:
+      required: true
+  - type: dropdown
+    id: direction
+    attributes:
+      label: Direction
+      options:
+        - LTR
+        - RTL (Arabic)
+        - Both
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Browser / OS
+      placeholder: e.g. Chrome 126 on macOS 14

@@ -1,6 +1,6 @@
 /*! Nyx · base.css · v1.0.3 · MIT
  * Reset + body.nyx canvas/typography. Requires tokens.css.
- * Bundle: nyx.css   Docs: docs.html
+ * Bundle: nyx.css   Docs: docs/docs.html
  */
 /* ---------- BASE (opt-in via <body class="nyx">) ---------- */
 .nyx-reset *,.nyx-reset *::before,.nyx-reset *::after{box-sizing:border-box;margin:0;padding:0}

@@ -59,7 +59,7 @@ if (!banners.length) { console.error('No section banners found — aborting.'); 
 function header(name, note) {
   return '/*! Nyx · ' + name + '.css · v' + VERSION + ' · MIT\n' +
     ' * ' + note + '\n' +
-    ' * Bundle: nyx.css   Docs: docs.html\n' +
+    ' * Bundle: nyx.css   Docs: docs/docs.html\n' +
     ' */\n';
 }
 function write(name, note, body) {

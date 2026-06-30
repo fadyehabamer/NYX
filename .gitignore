@@ -1,2 +1,26 @@
-.vscode/
+# OS
 .DS_Store
+Thumbs.db
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*~
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+*.tgz
+
+# Claude Code (local, machine‑specific)
+.claude/settings.local.json
+
+# Python caches (from local tooling/skills)
+__pycache__/
+*.pyc
+
+# Env / secrets
+.env
+.env.*

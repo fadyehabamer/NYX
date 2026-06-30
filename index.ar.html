@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>نيكس — أوّل مكتبة CSS للمطوّرين العرب</title>
 <meta name="description" content="نيكس: أوّل مكتبة مكوّنات CSS/JS مبنية للمطوّرين العرب، بدعم RTL كامل وخطوط عربية وطابع العمق المضيء." />
-<link rel="icon" href="favicon.svg" type="image/svg+xml" />
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
-<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
 <meta name="theme-color" content="#0b0b0f" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -324,7 +324,7 @@
 <!-- ===================== NAVBAR ===================== -->
 <nav class="nyx-navbar lp-nav">
   <div class="nyx-flex nyx-items-center nyx-gap-4">
-    <a class="lp-logo" href="index.ar.html"><img class="lp-wordmark" src="logo-white.png" alt="نيكس" width="82" height="24" /></a>
+    <a class="lp-logo" href="index.ar.html"><img class="lp-wordmark" src="assets/logo-white.png" alt="نيكس" width="82" height="24" /></a>
     <span class="nyx-badge nyx-badge-info hide-sm lp-ver">v1.0.2</span>
   </div>
   <div class="nyx-flex nyx-items-center nyx-gap-4">
@@ -342,13 +342,13 @@
           <a class="nyx-dropdown-item" href="examples/article.ar.html"><svg class="ico ico-sm"><use href="#i-form"/></svg> مقال <span class="nyx-badge nyx-badge-info">ثمانية</span></a>
         </div>
       </div>
-      <a href="docs.ar.html">التوثيق</a>
+      <a href="docs/docs.ar.html">التوثيق</a>
     </div>
     <button class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-search" data-nyx-toggle="command" aria-label="بحث في الصفحة" title="بحث (⌘K)"><svg class="ico ico-sm"><use href="#i-search"/></svg> <span class="nyx-command hide-sm">⌘ K</span></button>
     <button class="nyx-btn nyx-btn-icon nyx-btn-ghost lp-theme" onclick="Nyx.toggleTheme()" aria-label="تبديل السمة" title="تبديل السمة">◐</button>
     <a class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-lang" href="index.html" hreflang="en" aria-label="Switch to English" title="English">EN</a>
     <a class="nyx-btn nyx-btn-glass nyx-btn-sm hide-sm lp-gh" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> <span class="nyx-badge" id="gh-stars">2.4k</span></a>
-    <a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="docs.ar.html">ابدأ الآن</a>
+    <a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="docs/docs.ar.html">ابدأ الآن</a>
   </div>
 </nav>
 
@@ -359,8 +359,8 @@
     <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1 nyx-text-balance">ابنِ واجهاتٍ مُضيئة<br>جاهزة للعربية و RTL<span class="l2 nyx-gradient-text animated">مع نيكس_</span></h1>
     <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2">مجموعة أدوات أمامية داكنة المظهر بالكامل. خصّص كلّ شيء من رمزٍ واحد، وركّب أكثر من ٥٠ مكوّناً جاهزاً، وأضِف لها الحياة عبر نواة JavaScript بلا اعتماديات — مع دعم RTL وطباعة عربية أصيلة في الصندوق.</p>
     <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta nyx-anim-up nyx-anim-delay-3">
-      <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.ar.html#/installation">ابدأ الآن <svg class="ico ico-sm ico-flip"><use href="#i-arrow"/></svg></a>
-      <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs.ar.html">تصفّح المكوّنات</a>
+      <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs/docs.ar.html#/installation">ابدأ الآن <svg class="ico ico-sm ico-flip"><use href="#i-arrow"/></svg></a>
+      <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs/docs.ar.html">تصفّح المكوّنات</a>
     </div>
     <div class="nyx-flex nyx-justify-center nyx-anim-up nyx-anim-delay-3">
       <button class="install-cmd" onclick="navigator.clipboard&&navigator.clipboard.writeText('npm install nyx-css');Nyx.toast('تم النسخ: npm install nyx-css ✓','success')" aria-label="انسخ أمر تثبيت npm">
@@ -476,7 +476,7 @@
           <li><svg class="ico ico-sm"><use href="#i-check"/></svg> دعم RTL والسمة الفاتحة جاهزان في الصندوق</li>
         </ul>
         <div class="nyx-flex nyx-gap-3 nyx-wrap" style="margin-top:var(--nyx-s2)">
-          <a class="nyx-btn nyx-btn-secondary" href="docs.ar.html#/installation">اقرأ الدليل</a>
+          <a class="nyx-btn nyx-btn-secondary" href="docs/docs.ar.html#/installation">اقرأ الدليل</a>
           <button class="nyx-btn nyx-btn-ghost" data-nyx-copy="#install-code">انسخ المقتطف</button>
         </div>
       </div>
@@ -571,15 +571,15 @@
       <p class="nyx-muted">لكلّ مكوّن صفحته الخاصّة مع الاستخدام وأمثلة حيّة ومرجع للأصناف. ابدأ من هنا:</p>
     </div>
     <div class="lp-comp">
-      <a href="docs.ar.html#/buttons"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-pill"/></svg></span><h3 class="nyx-h4">الأزرار</h3><p class="nyx-caption">ستة أنماط، وتوهّج، وحالات تحميل.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-btn nyx-btn-primary nyx-btn-sm">أساسي</span><span class="nyx-btn nyx-btn-glow nyx-btn-sm">توهّج</span></div></div></a>
-      <a href="docs.ar.html#/cards"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-card"/></svg></span><h3 class="nyx-h4">البطاقات</h3><p class="nyx-caption">زجاجية، ومتدرّجة، وإحصائية.</p><div class="nyx-card-gradient" style="margin-top:var(--nyx-s3);padding:var(--nyx-s3)"><span class="nyx-caption">بطاقة متدرّجة</span></div></div></a>
-      <a href="docs.ar.html#/inputs"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-form"/></svg></span><h3 class="nyx-h4">النماذج</h3><p class="nyx-caption">حقول وقوائم ومفاتيح وبحث.</p><div style="margin-top:var(--nyx-s3)"><label class="nyx-toggle"><input type="checkbox" checked tabindex="-1" aria-label="معاينة"><span class="nyx-track"></span></label></div></div></a>
-      <a href="docs.ar.html#/tables"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-table"/></svg></span><h3 class="nyx-h4">الجداول والبيانات</h3><p class="nyx-caption">جداول قابلة للفرز وصفوف مؤشّرات.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-badge nyx-badge-success">▲ ١٢٪</span><span class="nyx-badge">الإيراد</span></div></div></a>
-      <a href="docs.ar.html#/modal"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-overlay"/></svg></span><h3 class="nyx-h4">التراكبات</h3><p class="nyx-caption">نوافذ وأدراج وتلميحات ومنبثقات.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-command">⌘ K</span><span class="nyx-badge nyx-badge-info">esc</span></div></div></a>
-      <a href="docs.ar.html#/big-type"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-sparkles"/></svg></span><h3 class="nyx-h4">عناصر مميّزة</h3><p class="nyx-caption">الخط الكبير، الحركات، الخط الزمني والمزيد.</p><div class="nyx-flex nyx-gap-2 nyx-items-center" style="margin-top:var(--nyx-s3)"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">N</span><span class="nyx-badge-dot">مباشر</span></div></div></a>
+      <a href="docs/docs.ar.html#/buttons"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-pill"/></svg></span><h3 class="nyx-h4">الأزرار</h3><p class="nyx-caption">ستة أنماط، وتوهّج، وحالات تحميل.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-btn nyx-btn-primary nyx-btn-sm">أساسي</span><span class="nyx-btn nyx-btn-glow nyx-btn-sm">توهّج</span></div></div></a>
+      <a href="docs/docs.ar.html#/cards"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-card"/></svg></span><h3 class="nyx-h4">البطاقات</h3><p class="nyx-caption">زجاجية، ومتدرّجة، وإحصائية.</p><div class="nyx-card-gradient" style="margin-top:var(--nyx-s3);padding:var(--nyx-s3)"><span class="nyx-caption">بطاقة متدرّجة</span></div></div></a>
+      <a href="docs/docs.ar.html#/inputs"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-form"/></svg></span><h3 class="nyx-h4">النماذج</h3><p class="nyx-caption">حقول وقوائم ومفاتيح وبحث.</p><div style="margin-top:var(--nyx-s3)"><label class="nyx-toggle"><input type="checkbox" checked tabindex="-1" aria-label="معاينة"><span class="nyx-track"></span></label></div></div></a>
+      <a href="docs/docs.ar.html#/tables"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-table"/></svg></span><h3 class="nyx-h4">الجداول والبيانات</h3><p class="nyx-caption">جداول قابلة للفرز وصفوف مؤشّرات.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-badge nyx-badge-success">▲ ١٢٪</span><span class="nyx-badge">الإيراد</span></div></div></a>
+      <a href="docs/docs.ar.html#/modal"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-overlay"/></svg></span><h3 class="nyx-h4">التراكبات</h3><p class="nyx-caption">نوافذ وأدراج وتلميحات ومنبثقات.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-command">⌘ K</span><span class="nyx-badge nyx-badge-info">esc</span></div></div></a>
+      <a href="docs/docs.ar.html#/big-type"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-sparkles"/></svg></span><h3 class="nyx-h4">عناصر مميّزة</h3><p class="nyx-caption">الخط الكبير، الحركات، الخط الزمني والمزيد.</p><div class="nyx-flex nyx-gap-2 nyx-items-center" style="margin-top:var(--nyx-s3)"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">N</span><span class="nyx-badge-dot">مباشر</span></div></div></a>
     </div>
     <div class="nyx-flex nyx-justify-center" style="margin-top:var(--nyx-s6)">
-      <a class="nyx-btn nyx-btn-secondary nyx-btn-lg" href="docs.ar.html">افتح التوثيق الكامل <svg class="ico ico-sm ico-flip"><use href="#i-arrow"/></svg></a>
+      <a class="nyx-btn nyx-btn-secondary nyx-btn-lg" href="docs/docs.ar.html">افتح التوثيق الكامل <svg class="ico ico-sm ico-flip"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
@@ -712,7 +712,7 @@
       <h2 class="nyx-bigtype nyx-bigtype-sm" style="margin-top:var(--nyx-s4)">ابنِ شيئاً <span class="nyx-gradient-text animated">فاخراً ومضيئاً.</span></h2>
       <p class="nyx-lead nyx-muted" style="max-width:540px;margin:var(--nyx-s4) auto 0">بلا إعداد وبلا اعتماديات. أضِف ملفّين فقط وأطلق واجهة مضيئة جاهزة للعربية اليوم.</p>
       <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta" style="margin-top:var(--nyx-s6)">
-        <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs.ar.html#/installation">ابدأ الآن</a>
+        <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs/docs.ar.html#/installation">ابدأ الآن</a>
         <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="index.html">English version <svg class="ico ico-sm ico-flip"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
@@ -733,7 +733,7 @@
       <li class="nyx-cp-item" data-nyx-target="#compare"><svg class="ico ico-sm"><use href="#i-table"/></svg> المقارنة</li>
       <li class="nyx-cp-item" data-nyx-target="#install"><svg class="ico ico-sm"><use href="#i-zap"/></svg> التثبيت</li>
       <li class="nyx-cp-item" data-nyx-target="#cta"><svg class="ico ico-sm ico-flip"><use href="#i-arrow"/></svg> ابدأ الآن</li>
-      <a class="nyx-cp-item" href="docs.ar.html"><svg class="ico ico-sm"><use href="#i-form"/></svg> التوثيق الكامل</a>
+      <a class="nyx-cp-item" href="docs/docs.ar.html"><svg class="ico ico-sm"><use href="#i-form"/></svg> التوثيق الكامل</a>
       <li class="nyx-cp-item" onclick="Nyx.toggleTheme();Nyx.closeCommandPalette()"><svg class="ico ico-sm"><use href="#i-contrast"/></svg> تبديل السمة (داكن / فاتح)</li>
       <a class="nyx-cp-item" href="index.html" hreflang="en"><svg class="ico ico-sm"><use href="#i-bidi"/></svg> English version</a>
       <a class="nyx-cp-item" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> GitHub</a>
@@ -776,29 +776,29 @@
   <div class="nyx-container">
     <div class="foot">
       <div class="foot-brand">
-        <a class="lp-logo" href="index.ar.html"><img class="lp-wordmark" src="logo-white.png" alt="نيكس" width="82" height="24" /></a>
+        <a class="lp-logo" href="index.ar.html"><img class="lp-wordmark" src="assets/logo-white.png" alt="نيكس" width="82" height="24" /></a>
         <p>مكتبة المكوّنات داكنة المظهر — أوّل مكتبة CSS مبنية للمطوّرين العرب.</p>
       </div>
       <div>
         <h4>التوثيق</h4>
-        <a href="docs.ar.html#/installation">التثبيت</a>
-        <a href="docs.ar.html#/theming">السمات</a>
-        <a href="docs.ar.html#/rtl">دعم RTL</a>
-        <a href="docs.ar.html#/buttons">المكوّنات</a>
+        <a href="docs/docs.ar.html#/installation">التثبيت</a>
+        <a href="docs/docs.ar.html#/theming">السمات</a>
+        <a href="docs/docs.ar.html#/rtl">دعم RTL</a>
+        <a href="docs/docs.ar.html#/buttons">المكوّنات</a>
       </div>
       <div>
         <h4>المكتبة</h4>
-        <a href="docs.ar.html#/download">التحميل</a>
-        <a href="docs.ar.html#/javascript">جافاسكربت</a>
-        <a href="docs.ar.html#/grid">التخطيط</a>
-        <a href="docs.ar.html#/spacing">الأدوات</a>
+        <a href="docs/docs.ar.html#/download">التحميل</a>
+        <a href="docs/docs.ar.html#/javascript">جافاسكربت</a>
+        <a href="docs/docs.ar.html#/grid">التخطيط</a>
+        <a href="docs/docs.ar.html#/spacing">الأدوات</a>
       </div>
       <div>
         <h4>المزيد</h4>
         <a href="index.html">English</a>
         <a href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> GitHub</a>
-        <a href="docs.ar.html#/big-type">الخط الكبير</a>
-        <a href="docs.ar.html#/animations">الحركة</a>
+        <a href="docs/docs.ar.html#/big-type">الخط الكبير</a>
+        <a href="docs/docs.ar.html#/animations">الحركة</a>
       </div>
     </div>
     <div class="foot-bottom">صُنع بـ <span class="nyx-gradient-text" style="font-weight:700">نيكس</span> · الخطّ العربي © <a href="https://font.thmanyah.com/" target="_blank" rel="noopener" style="color:var(--nyx-text);text-decoration:underline;text-underline-offset:2px">ثمانية</a> · رخصة MIT · عمقٌ مضيء، داكن أوّلاً وعربيّ أوّلاً.</div>
