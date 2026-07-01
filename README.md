@@ -17,7 +17,9 @@ A zero‑dependency CSS **+** JS component framework — fully themeable, light 
 ![js gzip](https://img.shields.io/badge/JS-22kb%20gzip-00d4aa?style=flat-square)
 ![rtl](https://img.shields.io/badge/RTL-first--class-ffb020?style=flat-square)
 
-**`npm i nyx-css`** &nbsp;·&nbsp; [Documentation](docs/docs.html) &nbsp;·&nbsp; [Components](#-components) &nbsp;·&nbsp; [Theming](#-theming) &nbsp;·&nbsp; [العربية](docs/docs.ar.html)
+**`npm i nyx-css`** &nbsp;·&nbsp; [Live demo](https://fadyehabamer.github.io/NYX/) &nbsp;·&nbsp; [Documentation](https://fadyehabamer.github.io/NYX/docs/docs.html) &nbsp;·&nbsp; [Components](#-components) &nbsp;·&nbsp; [Theming](#-theming) &nbsp;·&nbsp; [العربية](https://fadyehabamer.github.io/NYX/docs/docs.ar.html)
+
+<a href="https://fadyehabamer.github.io/NYX/"><img src="assets/preview.png" alt="Nyx — dark-native UI with Luminous Depth: luminous, RTL-ready interfaces" width="820" /></a>
 
 </div>
 
@@ -41,6 +43,13 @@ A zero‑dependency CSS **+** JS component framework — fully themeable, light 
 npm i nyx-css
 ```
 
+Then import the stylesheet and runtime in your app (Vite · webpack · Next · Nuxt):
+
+```js
+import 'nyx-css/nyx.css';   // styles
+import 'nyx-css/nyx.js';    // runtime → window.Nyx
+```
+
 …or drop two files into any page — **no build step:**
 
 ```html
@@ -62,6 +71,8 @@ npm i nyx-css
 </body>
 </html>
 ```
+
+> **Building for Arabic / RTL?** Add the Arabic faces to the fonts link — `&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Aref+Ruqaa:wght@400;700` — and Nyx switches to them automatically under `dir="rtl"`.
 
 **From a CDN** (no install — `@1` tracks the latest 1.x):
 
@@ -147,7 +158,7 @@ Nyx.openModal('#invite');
 > **Commerce** `nyx-product` `nyx-cart-item` `nyx-coupon` `nyx-pay` `nyx-order` `nyx-price` `nyx-address`
 > **Regional · MENA** `nyx-countdown` `nyx-prayer-times` `nyx-qibla` `nyx-zakat` `nyx-hijri-convert` `nyx-delivery` `nyx-bnpl` `nyx-invoice` (ZATCA QR) `nyx-national-address`
 
-Every component has its own page — with live examples, a class reference, and a search‑filterable sidebar — in **[`docs.html`](docs/docs.html)** (and **[`docs.ar.html`](docs/docs.ar.html)** in Arabic).
+Every component has its own page — with live examples, a class reference, and a search‑filterable sidebar — in the **[live docs](https://fadyehabamer.github.io/NYX/docs/docs.html)** (and **[العربية](https://fadyehabamer.github.io/NYX/docs/docs.ar.html)** in Arabic).
 
 ## 📁 Project layout
 
@@ -175,7 +186,7 @@ Each section's `demo` renders **both** as the live example and as its (escaped, 
 
 ## 🌐 Browser support
 
-Modern evergreen browsers (Chrome · Edge · Firefox · Safari). Uses CSS custom properties, grid, `backdrop-filter`, and `IntersectionObserver`. Respects `prefers-reduced-motion`.
+Modern evergreen browsers. Theming leans on `color-mix()` and `:has()`, so the practical baseline is **Chrome / Edge 111+, Safari 16.4+, Firefox 113+** (mid‑2023). Also uses CSS custom properties, grid, `backdrop-filter`, and `IntersectionObserver`, and respects `prefers-reduced-motion`.
 
 ## 📜 License
 

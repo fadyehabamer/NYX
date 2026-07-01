@@ -35,6 +35,10 @@
   ],
   "exports": {
     ".": "./nyx.js",
+    "./nyx.css": "./nyx.css",
+    "./nyx.min.css": "./nyx.min.css",
+    "./nyx.js": "./nyx.js",
+    "./nyx.min.js": "./nyx.min.js",
     "./css": "./nyx.css",
     "./css/min": "./nyx.min.css",
     "./js": "./nyx.js",
