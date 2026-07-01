@@ -115,6 +115,23 @@
       classes: [['nyx.css / nyx.min.css', 'The bundle — full + minified (~24kb gzip).'], ['nyx.min.js', 'Minified runtime (~22kb gzip).'], ['CDN (jsDelivr/unpkg)', 'Serve the minified build with no install.'], ['components/*.css', 'Individual modules (each needs tokens.css).'], ['node build.js', 'Regenerates components/ + the minified files.']]
     },
     {
+      id: 'optimize', group: 'Getting Started', title: 'Optimize size', added: 'v1.0',
+      summary: 'Nyx is ~24 KB gzipped for CSS and ~22 KB for JS — Bootstrap territory, so most sites can ship the full bundle and never think about it. When you do want less, trim by module or purge unused rules. Because every class is static and semantic, Nyx purges cleanly — the one rule is to safelist the classes nyx.js adds at runtime.',
+      sections: [
+        { title: 'How big is it', nocode: true, text: 'The whole framework is ~24 KB gzipped CSS + ~22 KB gzipped JS, with zero dependencies — the same range as Bootstrap. Ship it as-is, or trim it with either approach below.', demo: '<div class="nyx-flex nyx-gap-3 nyx-wrap nyx-items-center"><span class="nyx-badge nyx-badge-success">CSS · ~24kb gzip</span><span class="nyx-badge nyx-badge-success">JS · ~22kb gzip</span><span class="nyx-badge nyx-badge-info">0 dependencies</span></div>' },
+        { title: 'Trim by module', text: 'The lightest option needs no build step: import tokens.css plus only the modules you use. Every à-la-carte file is generated into components/ by node build.js — see Download for the full list.', lang: 'html', code: '<!-- tokens.css is always required; add only what you use -->\n<link rel="stylesheet" href="components/tokens.css">\n<link rel="stylesheet" href="components/base.css">\n<link rel="stylesheet" href="components/buttons.css">\n<link rel="stylesheet" href="components/cards.css">' },
+        { title: 'Purge unused rules', text: 'Utility frameworks purge unreliably because class names are composed at runtime (bg-${c}-500). Nyx never does that — every class is written literally in your markup, so a content-based purge finds all of them. Point PurgeCSS at your files:', lang: 'js', code: '// purgecss.config.js\nmodule.exports = {\n  content: ["./**/*.{html,js,jsx,ts,tsx,vue,svelte}"],\n  css: ["nyx.min.css"],\n  keyframes: true,           // drop unused @keyframes, keep referenced ones (Nyx has 44)\n  safelist: {\n    standard: [\n      // state classes nyx.js toggles at runtime\n      "active", "open", "selected", "copied", "scrolled", "show", "empty", "playing", "next", "has-kids", "caret",\n      /^is-(valid|invalid)$/, /^strength-\\d$/,\n      /^nyx-(in|out|reveal|dragging|drop-over|collapsed|invalid|below-nisab|typing-done)$/,\n      // components nyx.js builds in JS — never in your markup\n      /^nyx-(toast|snackbar|overlay|lightbox|modal|topbar|calendar|datepicker|cp-|nav-indicator|strength-fill|chip)/\n    ],\n    deep: [/\\[data-(theme|accent|open|pos|kind|nyx-)/, /\\[dir=/]   // attribute-driven theming & state\n  }\n};' },
+        { title: 'Keep runtime classes', text: 'nyx.js injects classes that never appear in your static HTML — toasts, snackbars, the command palette, modal and validation states. The safelist above preserves them; without it, purge would silently strip your toasts and modals. keyframes: true removes only unused animations, and leaving variables off (the default) keeps every --nyx-* token so theming still works. Tip: also add nyx.js to your content globs and most runtime classes are detected automatically.' }
+      ],
+      classes: [
+        ['components/*.css', 'Ship only the modules you use — each requires tokens.css.'],
+        ['keyframes: true', 'Removes unused @keyframes; keeps the ones referenced by kept rules.'],
+        ['safelist', 'Preserves classes nyx.js adds at runtime (toasts, modals, validation).'],
+        ['variables (leave off)', 'Default keeps all --nyx-* tokens — the theming API stays intact.'],
+        ['content: [… nyx.js]', 'Add nyx.js to content globs so runtime class names are auto-detected.']
+      ]
+    },
+    {
       id: 'theming', group: 'Customize', title: 'Theming',
       summary: 'Every value is a CSS custom property on :root. Override any --nyx-* token — anywhere downstream — to retheme. No recompile.',
       sections: [
