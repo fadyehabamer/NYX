@@ -24,9 +24,11 @@ index.html         ← English landing page · index.ar.html ← Arabic
 **`nyx.css` and `nyx.js` are the only files you edit by hand.**
 
 `components/*.css`, `nyx.min.css`, and `nyx.min.js` are all regenerated from them.
-After any change to `nyx.css` or `nyx.js`, run the build and commit the result:
+After any change to `nyx.css` or `nyx.js`, run the build and commit the result. The build minifies JS with esbuild, so
+install the dev dependencies first:
 
 ```bash
+npm install   # once
 node build.js
 ```
 

@@ -11,12 +11,14 @@
  *                     plus version stamps across the site + docs HTML.
  *
  * Every component file requires components/tokens.css for its CSS variables.
- * Zero dependencies: pure Node, no install step.
+ * JS is minified with esbuild (a devDependency); CSS minification is built in.
+ * Run `npm install` once before building.
  */
 
 const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
+const esbuild = require('esbuild');   // real JS minifier (devDependency)
 
 const { version: VERSION } = require('./package.json');   // single source of truth
 const ROOT = __dirname;
@@ -137,7 +139,7 @@ function componentHeader(name, note) {
 }
 
 /* ------------------------------------------------------------------ *
- *  Minifiers — string-safe, no external deps
+ *  Minifiers — CSS hand-rolled (string-safe); JS via esbuild
  * ------------------------------------------------------------------ */
 
 const STR_TOKEN = '__NYXSTR__';
@@ -158,16 +160,10 @@ function minifyCss(css) {
     .replace(new RegExp(`${STR_TOKEN}(\\d+)${STR_TOKEN}`, 'g'), (_, i) => literals[Number(i)]);
 }
 
-// Strip block comments, then trim each line and drop blanks. Newlines stay, so
-// automatic semicolon insertion is safe — this is a size pass, not a mangler.
+// Real minification (mangle + compress) via esbuild. The runtime is authored as
+// modern ES2019, so this is a size pass only — no downleveling, no injected helpers.
 function minifyJs(js) {
-  return js
-    .replace(/\/\*[\s\S]*?\*\//g, '')
-    .split('\n')
-    .map((line) => line.replace(/^\s+/, ''))
-    .filter((line) => line.length > 0)
-    .join('\n')
-    .trim() + '\n';
+  return esbuild.transformSync(js, { minify: true, target: 'es2019', legalComments: 'none' }).code;
 }
 
 /* ------------------------------------------------------------------ *
