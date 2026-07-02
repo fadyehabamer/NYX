@@ -15,6 +15,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
+
+      # jsdom is the only devDependency (tests) — the framework ships zero deps.
+      - name: Install dev dependencies
+        run: npm ci
+
+      # Behavioural tests: load the runtime in jsdom and exercise the API.
+      - name: Test
+        run: npm test
 
       # nyx.css / nyx.js are the source of truth; build.js regenerates
       # components/*.css and the minified distribution from them.

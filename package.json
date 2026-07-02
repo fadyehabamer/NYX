@@ -59,6 +59,10 @@
   ],
   "scripts": {
     "build": "node build.js",
-    "build:check": "node build.js && git diff --exit-code"
+    "build:check": "node build.js && git diff --exit-code",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1"
   }
 }

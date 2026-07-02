@@ -34,6 +34,21 @@ CI runs `node build.js` and **fails if any generated file drifts** from a fresh
 build, so a PR that edits a component file directly — or forgets to rebuild —
 will be rejected. Always rebuild before you commit.
 
+## Testing
+
+The runtime has a behavioural test suite that loads `nyx.js` (and the minified
+build) into a jsdom document and exercises the public API + declarative wiring.
+It uses Node's built-in test runner; `jsdom` is the **only** devDependency and is
+never shipped to consumers — the framework itself stays runtime-dependency-free.
+
+```bash
+npm install   # one-time: pulls the jsdom devDependency
+npm test      # node --test
+```
+
+Please add or update a test in `test/` when you change runtime behaviour. CI runs
+`npm test` on every PR.
+
 ## Previewing your change
 
 No dev server is required. Open the files directly, or serve the repo root with
