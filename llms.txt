@@ -1,0 +1,62 @@
+# nyx-css (Nyx) v1.1.0
+
+> A zero-dependency CSS & JS component framework with Luminous Depth — light & dark themes, fully themeable via CSS variables, with first-class RTL and Arabic typography.
+
+Nyx is a zero-dependency CSS + JS component framework. Components are plain HTML
+with `nyx-*` classes and `data-nyx-*` attributes — no JSX and no build step. The
+runtime auto-initializes on load and exposes `window.Nyx`.
+
+## Use
+- CSS — one stylesheet: link `nyx.min.css` or `import 'nyx-css/nyx.css'`.
+- JS (UMD): `<script src="nyx.min.js"></script>` → `window.Nyx`.
+- JS (ESM): `import Nyx from 'nyx-css'` (default export is the Nyx API).
+- Theme/dir: `<html data-theme="dark|light" dir="ltr|rtl">`; retint with `--nyx-accent`.
+
+## Docs
+- [Documentation](https://fadyehabamer.github.io/NYX/docs/docs.html)
+- [Arabic documentation](https://fadyehabamer.github.io/NYX/docs/docs.ar.html)
+- [Full LLM reference](https://fadyehabamer.github.io/NYX/llms-full.txt) — every class, attribute, token, and method.
+
+## Component sections (39 sections, 1240 classes)
+- 1. LAYOUT (154)
+- 2. TYPOGRAPHY (24)
+- 3. BUTTONS (19)
+- 4. CARDS (9)
+- 5. FORMS (33)
+- 6. NAVIGATION (23)
+- 7. FEEDBACK & STATUS (32)
+- 8. DATA DISPLAY (7)
+- 9. OVERLAYS (23)
+- 10. SIGNATURE ELEMENTS (32)
+- 11. MORE COMPONENTS (v1.0) (25)
+- 12. BIG TYPE & MOTION (v1.0) (34)
+- 13. UTILITIES & HELPERS (v1.0) (586)
+- 14. HIERARCHY (v1.0) — file/org trees, vertical + horizontal (6)
+- 15. REGIONAL — built for MENA (v1.0) (4)
+- 16. FORMS+ (v1.0) — combobox, multi-select, phone, date picker (14)
+- 17. OVERLAYS+ (v1.0) — sheet, FAB, back-to-top, top progress, context menu (11)
+- 18. COMMERCE (v1.0) — product, cart, order, coupon, payment, address (18)
+- 19. REGIONAL+ (v1.0) — countdown, zakat, qibla, delivery tracking (12)
+- 20. BACKGROUNDS (v1.0) — ambient gradient, grid & interactive layers (8)
+- 21. CHARTS (v1.0) — zero-dep CSS + SVG data viz (15)
+- 22. CODE BLOCK (v1.0) — titled code window + syntax tokens + copy (12)
+- 23. BLOCKS (v1.0) — chat, slider, steps, testimonial, pricing, kanban, notifications (31)
+- 24. BLOCKS+ (v1.0) — gauge · ring · heatmap · stats · skeletons · nav · overlays · media · hijri (47)
+- RTL — flips for physical properties not covered by logical CSS (17)
+- 25. MEDIA (4)
+- 26. ENHANCEMENTS (16)
+- 3D Tilt Card (.nyx-tilt) (2)
+- Typewriter Effect (.nyx-typewriter) (2)
+- Glitch Text Effect (.nyx-glitch) (3)
+- 27. REGIONAL++ (v1.1) — KSA forms & finance: BNPL, e-invoice, ID, name, address, region (22)
+- 28. HIJRI (v1.1) — Hijri ⇄ Gregorian converter + today's date (6)
+- 29. DATA+ (v1.1) — descriptions (label→value grid) + watermark (6)
+- 30. FEEDBACK+ (v1.1) — result / status screen + corner ribbon (7)
+- 31. LAYOUT+ (v1.1) — masonry columns (1)
+- 32. FORMS++ (v1.2) — color picker (5)
+- 33. CHARTS+ (v1.2) — radar / spider chart (7)
+- 34. OVERLAYS++ (v1.2) — product tour / coachmarks (8)
+- 35. LAYOUT++ (v1.2) — resizable split panes + affix (6)
+
+## JS API (window.Nyx)
+Nyx.init, Nyx.toast, Nyx.openModal, Nyx.openDrawer, Nyx.close, Nyx.closeAll, Nyx.togglePopover, Nyx.openCommandPalette, Nyx.closeCommandPalette, Nyx.showTab, Nyx.toggleCollapse, Nyx.toggleDropdown, Nyx.getInstance, Nyx.getOrCreateInstance, Nyx.carousel, Nyx.position, Nyx.tour, Nyx.setTheme, Nyx.toggleTheme, Nyx.setDir, Nyx.toggleDir, Nyx.setAccent, Nyx.toArabicNumerals, Nyx.progress, Nyx.toHijri, Nyx.fromHijri, Nyx.formatHijri, Nyx.qiblaBearing, Nyx.zatcaQR, Nyx.snackbar, Nyx.confirm

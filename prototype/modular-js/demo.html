@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nyx modular runtime — demo</title>
+<link rel="stylesheet" href="../../nyx.css" />
+<style>
+  body { padding: 48px 24px; max-width: 720px; margin: 0 auto; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; margin: 24px 0; }
+  .note { font-family: var(--nyx-font-mono); font-size: var(--nyx-fs-xs); }
+</style>
+</head>
+<body class="nyx">
+  <h1 class="nyx-h2">Nyx modular runtime — demo</h1>
+  <p class="nyx-muted">This page loads only <span class="note">core + overlay + tabs + toast</span> — no countdown, none of the other ~35 components. View source.</p>
+
+  <div class="row">
+    <button class="nyx-btn nyx-btn-primary" data-nyx-toggle="modal" data-nyx-target="#demo-modal">Open modal</button>
+    <button class="nyx-btn" onclick="Nyx.toast('Hello from a plugin', 'success')">Fire toast</button>
+    <button class="nyx-btn nyx-btn-ghost" onclick="Nyx.toggleTheme()">Toggle theme</button>
+  </div>
+
+  <div data-nyx-tabs class="nyx-tabs" role="tablist">
+    <button data-nyx-tab="one" class="active" role="tab">One</button>
+    <button data-nyx-tab="two" role="tab">Two</button>
+  </div>
+  <div data-nyx-panel="one" class="active"><p>Panel one — switched by the tabs plugin.</p></div>
+  <div data-nyx-panel="two"><p>Panel two.</p></div>
+
+  <div class="nyx-modal" id="demo-modal">
+    <div class="nyx-modal-box">
+      <h3 class="nyx-modal-title">Modal</h3>
+      <p>Opened through the shared delegation bus in <span class="note">nyx.core.js</span>.</p>
+      <button class="nyx-btn nyx-btn-primary" data-nyx-dismiss>Close</button>
+    </div>
+  </div>
+
+  <!-- core first, then only the plugins this page uses -->
+  <script src="nyx.core.js"></script>
+  <script src="nyx.overlay.js"></script>
+  <script src="nyx.tabs.js"></script>
+  <script src="nyx.toast.js"></script>
+</body>
+</html>

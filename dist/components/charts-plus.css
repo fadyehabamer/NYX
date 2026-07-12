@@ -1,0 +1,19 @@
+/*! Nyx · charts-plus.css · v1.1.0 · MIT
+ * The charts-plus module. Requires tokens.css.
+ * Bundle: src/nyx.css   Docs: docs/docs.html
+ */
+/* ============================================================
+   33. CHARTS+ (v1.2) — radar / spider chart
+   ============================================================ */
+/* radar — style an author-supplied <svg> (like the line/area charts).
+   .nyx-radar-grid = concentric rings, .nyx-radar-axis = spokes,
+   .nyx-radar-area = the filled data polygon, .nyx-radar-line = its outline,
+   .nyx-radar-dot = vertices. Add .alt for a second accent-2 series. */
+.nyx-chart-radar{display:block;width:100%;height:auto;overflow:visible}
+.nyx-chart-radar .nyx-radar-grid{fill:none;stroke:var(--nyx-border);stroke-width:1;opacity:.6}
+.nyx-chart-radar .nyx-radar-axis{stroke:var(--nyx-border);stroke-width:1;opacity:.5}
+.nyx-chart-radar .nyx-radar-area{fill:color-mix(in srgb,var(--nyx-accent) 30%,transparent);stroke:var(--nyx-accent);stroke-width:2;stroke-linejoin:round;filter:drop-shadow(0 0 6px color-mix(in srgb,var(--nyx-accent) 45%,transparent))}
+.nyx-chart-radar .nyx-radar-area.alt{fill:color-mix(in srgb,var(--nyx-accent-2) 28%,transparent);stroke:var(--nyx-accent-2);filter:drop-shadow(0 0 6px color-mix(in srgb,var(--nyx-accent-2) 45%,transparent))}
+.nyx-chart-radar .nyx-radar-dot{fill:var(--nyx-bg);stroke:var(--nyx-accent);stroke-width:2}
+.nyx-chart-radar .nyx-radar-dot.alt{stroke:var(--nyx-accent-2)}
+.nyx-chart-radar .nyx-radar-label{fill:var(--nyx-text-muted);font-family:var(--nyx-font-mono);font-size:9px}

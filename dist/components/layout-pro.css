@@ -1,0 +1,29 @@
+/*! Nyx · layout-pro.css · v1.1.0 · MIT
+ * The layout-pro module. Requires tokens.css.
+ * Bundle: src/nyx.css   Docs: docs/docs.html
+ */
+/* ============================================================
+   35. LAYOUT++ (v1.2) — resizable split panes + affix
+   ============================================================ */
+/* split — two (or more) panes divided by a draggable bar. initResizable
+   wires pointer + keyboard dragging and writes each pane's flex-basis.
+   .nyx-split-v stacks vertically; --nyx-split-min clamps the smallest pane. */
+.nyx-split{display:flex;align-items:stretch;width:100%;overflow:hidden;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);--nyx-split-min:80px}
+.nyx-split-v{flex-direction:column}
+.nyx-split-pane{overflow:auto;min-width:0;min-height:0}
+.nyx-split>.nyx-split-pane:first-child{flex:0 0 var(--nyx-split,50%)}
+.nyx-split>.nyx-split-pane:last-child{flex:1 1 0}
+.nyx-split-bar{flex:0 0 auto;position:relative;background:var(--nyx-border);border:0;padding:0;cursor:col-resize;touch-action:none;-webkit-user-select:none;user-select:none;transition:background .2s var(--nyx-ease)}
+.nyx-split:not(.nyx-split-v)>.nyx-split-bar{width:6px;align-self:stretch}
+.nyx-split-v>.nyx-split-bar{height:6px;width:100%;cursor:row-resize}
+.nyx-split-bar::before{content:"";position:absolute;inset:-4px}
+.nyx-split-bar::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:3px;height:26px;border-radius:3px;background:color-mix(in srgb,var(--nyx-text-muted) 55%,transparent)}
+.nyx-split-v>.nyx-split-bar::after{width:26px;height:3px}
+.nyx-split-bar:hover,.nyx-split-bar:focus-visible{background:var(--nyx-accent);outline:none}
+.nyx-split.nyx-dragging .nyx-split-pane{pointer-events:none}
+
+/* affix — position:sticky with a pinned-state hook. initAffix toggles
+   .is-pinned once the element sticks so you can add a shadow/border.
+   Offset via --nyx-affix-top or data-affix-top="80". */
+.nyx-affix{position:sticky;top:var(--nyx-affix-top,var(--nyx-s4));z-index:20}
+.nyx-affix.is-pinned{box-shadow:var(--nyx-shadow)}

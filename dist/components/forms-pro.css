@@ -1,0 +1,23 @@
+/*! Nyx · forms-pro.css · v1.1.0 · MIT
+ * The forms-pro module. Requires tokens.css.
+ * Bundle: src/nyx.css   Docs: docs/docs.html
+ */
+/* ============================================================
+   32. FORMS++ (v1.2) — color picker
+   ============================================================ */
+/* colorpicker — a native <input type=color> restyled into a rounded swatch,
+   paired with a hex text field and optional preset dots (data-swatches).
+   initColorPicker keeps swatch, hex field and presets in sync and emits
+   nyx:color-change. */
+.nyx-colorpicker{display:inline-flex;align-items:center;gap:var(--nyx-s3);flex-wrap:wrap}
+.nyx-color-swatch{-webkit-appearance:none;appearance:none;width:44px;height:44px;padding:0;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);background:transparent;cursor:pointer;overflow:hidden;transition:border-color .2s var(--nyx-ease),box-shadow .2s var(--nyx-ease)}
+.nyx-color-swatch:hover{border-color:var(--nyx-accent)}
+.nyx-color-swatch:focus-visible{outline:none;box-shadow:var(--nyx-glow)}
+.nyx-color-swatch::-webkit-color-swatch-wrapper{padding:0}
+.nyx-color-swatch::-webkit-color-swatch{border:none;border-radius:calc(var(--nyx-radius) - 3px)}
+.nyx-color-swatch::-moz-color-swatch{border:none;border-radius:calc(var(--nyx-radius) - 3px)}
+.nyx-color-hex{width:110px;font-family:var(--nyx-font-mono);text-transform:uppercase}
+.nyx-color-swatches{display:inline-flex;gap:6px;flex-wrap:wrap}
+.nyx-color-dot{width:22px;height:22px;padding:0;border:1px solid var(--nyx-glass-border);border-radius:var(--nyx-radius-full);cursor:pointer;background:var(--nyx-dot,#000);transition:transform .15s var(--nyx-ease),box-shadow .15s var(--nyx-ease)}
+.nyx-color-dot:hover{transform:scale(1.12)}
+.nyx-color-dot.selected,.nyx-color-dot:focus-visible{outline:none;box-shadow:0 0 0 2px var(--nyx-bg),0 0 0 4px var(--nyx-accent)}

@@ -13,16 +13,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/thmanyah/thmanyahsans-Regular.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/thmanyah/thmanyahserifdisplay-Bold.woff2" />
 <link rel="stylesheet" href="fonts/thmanyah.css" />
-<link rel="stylesheet" href="nyx.css" />
+<link rel="stylesheet" href="src/nyx.css" />
 <style>
   html{scroll-behavior:smooth;scroll-padding-top:104px}
+  [dir="rtl"] .ico-flip{transform:scaleX(-1)}
   ::selection{background:color-mix(in srgb,var(--nyx-accent) 32%,transparent);color:#fff}
   html,body{overflow-x:clip}
   /* ---- icon system ---- */
   .ico{width:24px;height:24px;display:inline-block;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
   .ico-sm{width:18px;height:18px}
-  [dir="rtl"] .ico-flip{transform:scaleX(-1)}
 
   /* ============ FLOATING GLASS NAVBAR ============ */
   .nyx-navbar.lp-nav{position:sticky;top:14px;z-index:60;margin:14px auto 0;max-width:1180px;width:calc(100% - 28px);padding:10px 12px 10px 20px;border:1px solid color-mix(in srgb,var(--nyx-border) 90%,var(--nyx-accent));border-bottom-width:1px;border-radius:var(--nyx-radius-full);background:color-mix(in srgb,var(--nyx-bg) 72%,transparent);box-shadow:var(--nyx-shadow-lg),inset 0 1px 0 var(--nyx-glass-border)}
@@ -53,7 +55,6 @@
   section.lp{padding-block:var(--nyx-s9)}
   .lp-head{text-align:center;max-width:660px;margin:0 auto var(--nyx-s7)}
   .lp-head .nyx-overline{display:block;margin-bottom:var(--nyx-s3)}
-  .lp-head .lp-eyebrow{margin-bottom:var(--nyx-s3)}
   .lp-head h2{margin:0}
   .lp-head p{margin-top:var(--nyx-s3)}
   .lp-eyebrow{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:9px;row-gap:5px;max-width:100%;padding:6px 8px 6px 14px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-full);font-size:var(--nyx-fs-sm);font-weight:500;color:var(--nyx-text-muted);background:var(--nyx-surface);box-shadow:var(--nyx-shadow-sm)}
@@ -77,7 +78,7 @@
   .hero-sub{max-width:580px;margin-inline:auto;margin-top:var(--nyx-s5)}
   .hero-cta{margin-top:var(--nyx-s6)}
   .hero-cta .nyx-btn{border-radius:var(--nyx-radius-full)}
-  .install-cmd{display:inline-flex;align-items:center;gap:12px;margin-top:var(--nyx-s5);font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);color:var(--nyx-text);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-full);padding-block:8px;padding-inline:18px 8px;cursor:pointer;transition:border-color .2s var(--nyx-ease),box-shadow .2s var(--nyx-ease);box-shadow:var(--nyx-shadow-sm)}
+  .install-cmd{display:inline-flex;align-items:center;gap:12px;margin-top:var(--nyx-s5);font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-sm);color:var(--nyx-text);background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-full);padding:8px 8px 8px 18px;cursor:pointer;transition:border-color .2s var(--nyx-ease),box-shadow .2s var(--nyx-ease);box-shadow:var(--nyx-shadow-sm)}
   .install-cmd:hover{border-color:color-mix(in srgb,var(--nyx-accent) 45%,transparent);box-shadow:var(--nyx-glow)}
   .install-cmd .prompt{color:var(--nyx-accent-2);font-weight:700}
   .install-cmd .cp{display:grid;place-items:center;width:30px;height:30px;border-radius:var(--nyx-radius-full);background:var(--nyx-surface-2);color:var(--nyx-text-muted);transition:color .2s var(--nyx-ease)}
@@ -308,7 +309,6 @@
     <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
     <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 2.5 2.5 0 0 0 2.5-2.5 2 2 0 0 1 2-2H19a2 2 0 0 0 2-2 9 9 0 0 0-9-9.5Z"/><circle cx="7.5" cy="11.5" r="1" fill="currentColor" stroke="none"/><circle cx="10.5" cy="7.5" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="8" r="1" fill="currentColor" stroke="none"/></symbol>
-    <symbol id="i-type" viewBox="0 0 24 24"><path d="M4 6V4h16v2M9 20h6M12 4v16"/></symbol>
     <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6L12 17.8 6.6 19.6l1-6L3.3 9.4l6-.9L12 3Z"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7"/></symbol>
     <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 1.5a10.5 10.5 0 0 0-3.32 20.46c.53.1.72-.23.72-.51l-.01-1.8c-2.92.64-3.54-1.4-3.54-1.4-.48-1.22-1.17-1.54-1.17-1.54-.95-.65.08-.64.08-.64 1.06.07 1.61 1.09 1.61 1.09.94 1.6 2.46 1.14 3.06.87.1-.68.37-1.14.66-1.4-2.33-.27-4.78-1.17-4.78-5.18 0-1.15.41-2.08 1.08-2.82-.11-.27-.47-1.34.1-2.78 0 0 .88-.28 2.88 1.07a10 10 0 0 1 5.24 0c2-1.35 2.88-1.07 2.88-1.07.57 1.44.21 2.51.1 2.78.68.74 1.08 1.67 1.08 2.82 0 4.02-2.46 4.9-4.8 5.16.38.33.72.97.72 1.96l-.01 2.9c0 .28.19.62.73.51A10.5 10.5 0 0 0 12 1.5Z"/></symbol>
@@ -324,8 +324,8 @@
 <!-- ===================== NAVBAR ===================== -->
 <nav class="nyx-navbar lp-nav">
   <div class="nyx-flex nyx-items-center nyx-gap-4">
-    <a class="lp-logo" href="index.ar.html"><img class="lp-wordmark" src="assets/logo-white.png" alt="نيكس" width="82" height="24" /></a>
-    <span class="nyx-badge nyx-badge-info hide-sm lp-ver">v1.0.3</span>
+    <a class="lp-logo" href="index.html"><img class="lp-wordmark" src="assets/logo-white.png" alt="نيكس" width="82" height="24" /></a>
+    <span class="nyx-badge nyx-badge-info hide-sm lp-ver">v1.1.0</span>
   </div>
   <div class="nyx-flex nyx-items-center nyx-gap-4">
     <div class="lp-links hide-sm">
@@ -346,7 +346,7 @@
     </div>
     <button class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-search" data-nyx-toggle="command" aria-label="بحث في الصفحة" title="بحث (⌘K)"><svg class="ico ico-sm"><use href="#i-search"/></svg> <span class="nyx-command hide-sm">⌘ K</span></button>
     <button class="nyx-btn nyx-btn-icon nyx-btn-ghost lp-theme" onclick="Nyx.toggleTheme()" aria-label="تبديل السمة" title="تبديل السمة">◐</button>
-    <a class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-lang" href="index.html" hreflang="en" aria-label="Switch to English" title="English">EN</a>
+    <a class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-lang" href="index.html" hreflang="en" aria-label="Switch to English" title="English">English</a>
     <a class="nyx-btn nyx-btn-glass nyx-btn-sm hide-sm lp-gh" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> <span class="nyx-badge" id="gh-stars">2.4k</span></a>
     <a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="docs/docs.ar.html">ابدأ الآن</a>
   </div>
@@ -355,16 +355,16 @@
 <div class="nyx-container">
   <!-- ===================== HERO ===================== -->
   <section class="hero">
-    <span class="lp-eyebrow nyx-anim-up"><span class="dot"></span> واجهات فاخرة، <b>مُضيئة من الداخل</b> <span class="tag">v1.0.3</span></span>
+    <span class="lp-eyebrow nyx-anim-up"><span class="dot"></span> واجهات فاخرة، <b>مُضيئة من الداخل</b> <span class="tag">v1.1.0</span></span>
     <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1 nyx-text-balance">ابنِ واجهاتٍ مُضيئة<br>جاهزة للعربية و RTL<span class="l2 nyx-gradient-text animated">مع نيكس_</span></h1>
     <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2">مجموعة أدوات أمامية داكنة المظهر بالكامل. خصّص كلّ شيء من رمزٍ واحد، وركّب أكثر من ١٠٠ مكوّناً جاهزاً، وأضِف لها الحياة عبر نواة JavaScript بلا اعتماديات — مع دعم RTL وطباعة عربية أصيلة في الصندوق.</p>
     <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta nyx-anim-up nyx-anim-delay-3">
-      <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs/docs.ar.html#/installation">ابدأ الآن <svg class="ico ico-sm ico-flip"><use href="#i-arrow"/></svg></a>
+      <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs/docs.ar.html#/installation">ابدأ الآن <svg class="ico ico-sm"><use href="#i-arrow"/></svg></a>
       <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="docs/docs.ar.html">تصفّح المكوّنات</a>
     </div>
     <div class="nyx-flex nyx-justify-center nyx-anim-up nyx-anim-delay-3">
-      <button class="install-cmd" onclick="navigator.clipboard&&navigator.clipboard.writeText('npm install nyx-css');Nyx.toast('تم النسخ: npm install nyx-css ✓','success')" aria-label="انسخ أمر تثبيت npm">
-        <span class="prompt">$</span><span class="fn" dir="ltr">npm install nyx-css</span>
+      <button class="install-cmd" onclick="navigator.clipboard&&navigator.clipboard.writeText('npm install nyx-css');Nyx.toast('Copied: npm install nyx-css ✓','success')" aria-label="انسخ أمر تثبيت npm">
+        <span class="prompt">$</span><span>npm install nyx-css</span>
         <span class="cp"><svg class="ico ico-sm"><use href="#i-copy"/></svg></span>
       </button>
     </div>
@@ -374,7 +374,7 @@
       <span><svg class="ico ico-sm"><use href="#i-bidi"/></svg> دعم RTL وسمة فاتحة</span>
     </div>
 
-    <!-- معاينة حيّة: لوحة تحكّم نيكس حقيقية، مبنية بالمكتبة نفسها -->
+    <!-- live preview: a real Nyx dashboard, built from the framework itself -->
     <div class="app-stage nyx-anim-up nyx-anim-delay-4">
       <div class="app-frame nyx-spotlight-card" aria-hidden="true">
         <div class="app-bar">
@@ -408,8 +408,8 @@
             </div>
             <div class="app-kpis">
               <div class="nyx-stat-card">
-                <div class="nyx-stat-top"><span class="nyx-stat-label">الإيراد الشهري</span><span class="nyx-stat-delta up">▲ ١٨٪</span></div>
-                <span class="nyx-stat-num" dir="ltr">$48.2k</span>
+                <div class="nyx-stat-top"><span class="nyx-stat-label">الإيراد</span><span class="nyx-stat-delta up">▲ ١٨٪</span></div>
+                <span class="nyx-stat-num">$48.2k</span>
               </div>
               <div class="nyx-stat-card">
                 <div class="nyx-stat-top"><span class="nyx-stat-label">المستخدمون النشطون</span><span class="nyx-stat-delta up">▲ ٧٪</span></div>
@@ -467,8 +467,8 @@
   <section class="lp" id="install">
     <div class="nyx-grid nyx-items-center">
       <div class="nyx-col-5 nyx-stack" data-nyx-reveal>
-        <span class="lp-eyebrow"><span class="dot"></span> التثبيت</span>
-        <h2 class="nyx-h1">أضِفها إلى أيّ صفحة</h2>
+        <span class="nyx-overline">التثبيت</span>
+        <h2 class="nyx-h1" style="margin-top:var(--nyx-s2)">أضِفها إلى أيّ صفحة</h2>
         <p class="nyx-muted">ملفّان فقط وبلا خطوة بناء. اربط ملف الأنماط، وأضِف الصنف <span class="nyx-code">nyx</span> إلى عنصر <span class="nyx-code">&lt;body&gt;</span>، ثم أضِف المُشغّل للتبويبات والنوافذ والإشعارات.</p>
         <ul class="install-pts">
           <li><svg class="ico ico-sm"><use href="#i-check"/></svg> تعمل مع أيّ إطار عمل — أو بدونه</li>
@@ -482,12 +482,12 @@
       </div>
       <div class="nyx-col-7" data-nyx-reveal>
         <div class="nyx-code-block" id="install-code"><div class="nyx-code-bar"><span class="nyx-dot r"></span><span class="nyx-dot y"></span><span class="nyx-dot g"></span><span class="nyx-code-name">index.html</span><button class="nyx-code-copy" data-nyx-copy aria-label="انسخ الشيفرة"><svg class="ico ico-sm"><use href="#i-copy"/></svg></button></div>
-        <pre dir="ltr"><code><span class="nyx-tok-comment">&lt;!-- 1. the framework --&gt;</span>
+        <pre><code><span class="nyx-tok-comment">&lt;!-- 1. the framework --&gt;</span>
 <span class="nyx-tok-tag">&lt;link</span> <span class="nyx-tok-attr">rel</span>=<span class="nyx-tok-str">"stylesheet"</span> <span class="nyx-tok-attr">href</span>=<span class="nyx-tok-str">"nyx.css"</span><span class="nyx-tok-tag">&gt;</span>
 
-<span class="nyx-tok-comment">&lt;!-- 2. opt the body in (RTL) --&gt;</span>
-<span class="nyx-tok-tag">&lt;body</span> <span class="nyx-tok-attr">class</span>=<span class="nyx-tok-str">"nyx nyx-reset"</span> <span class="nyx-tok-attr">dir</span>=<span class="nyx-tok-str">"rtl"</span><span class="nyx-tok-tag">&gt;</span>
-  <span class="nyx-tok-tag">&lt;button</span> <span class="nyx-tok-attr">class</span>=<span class="nyx-tok-str">"nyx-btn nyx-btn-primary"</span><span class="nyx-tok-tag">&gt;</span>ابدأ<span class="nyx-tok-tag">&lt;/button&gt;</span>
+<span class="nyx-tok-comment">&lt;!-- 2. opt the body in --&gt;</span>
+<span class="nyx-tok-tag">&lt;body</span> <span class="nyx-tok-attr">class</span>=<span class="nyx-tok-str">"nyx nyx-reset"</span><span class="nyx-tok-tag">&gt;</span>
+  <span class="nyx-tok-tag">&lt;button</span> <span class="nyx-tok-attr">class</span>=<span class="nyx-tok-str">"nyx-btn nyx-btn-primary"</span><span class="nyx-tok-tag">&gt;</span>Hello<span class="nyx-tok-tag">&lt;/button&gt;</span>
 
 <span class="nyx-tok-comment">&lt;!-- 3. the runtime --&gt;</span>
 <span class="nyx-tok-tag">&lt;script</span> <span class="nyx-tok-attr">src</span>=<span class="nyx-tok-str">"nyx.js"</span><span class="nyx-tok-tag">&gt;&lt;/script&gt;</span></code></pre></div>
@@ -498,7 +498,7 @@
   <!-- ===================== FEATURES (BENTO) ===================== -->
   <section class="lp" id="features">
     <div class="lp-head">
-      <span class="lp-eyebrow"><span class="dot"></span> لماذا نيكس</span>
+      <span class="nyx-overline">لماذا نيكس</span>
       <h2 class="nyx-h1 nyx-text-balance">مصمّمة لعصر الـ SaaS — وللعربية أوّلاً</h2>
       <p class="nyx-muted">إعدادات افتراضية مدروسة، ونظام رموز تعيد تنسيقه بسطر واحد، وسلوكيات لا تحتاج كتابة جافاسكربت.</p>
     </div>
@@ -513,7 +513,7 @@
         <span class="feat-tile v"><svg class="ico"><use href="#i-contrast"/></svg></span>
         <h3 class="nyx-h3">أعِد التنسيق بسطر</h3>
         <p class="nyx-muted">تجاوز رمزاً واحداً <span class="nyx-code">--nyx-*</span> لإعادة تلوين الواجهة بالكامل.</p>
-        <div class="tok-line feat-mini" dir="ltr"><span><span class="k">--nyx-accent</span>:</span><span class="v">#6c63ff</span></div>
+        <div class="tok-line feat-mini"><span><span class="k">--nyx-accent</span>:</span><span class="v">#6c63ff</span></div>
         <div class="sw-row"><i style="--c:#6c63ff"></i><i style="--c:#00d4aa"></i><i style="--c:#f59e0b"></i><i style="--c:#f43f6b"></i></div>
       </div>
       <div class="lp-cell b2 nyx-spotlight-card" data-nyx-reveal>
@@ -527,8 +527,8 @@
         <h3 class="nyx-h3">دعم RTL كامل</h3>
         <p class="nyx-muted">خصائص CSS المنطقية تعكس كلّ مكوّن تلقائياً.</p>
         <div class="bidi-demo feat-mini">
+          <div class="row"><svg class="ico ico-sm"><use href="#i-layers"/></svg> لوحة التحكّم <span class="nyx-badge nyx-badge-info" style="margin-inline-start:auto">LTR</span></div>
           <div class="row" dir="rtl"><svg class="ico ico-sm"><use href="#i-layers"/></svg> لوحة التحكّم <span class="nyx-badge nyx-badge-info" style="margin-inline-start:auto">RTL</span></div>
-          <div class="row" dir="ltr"><svg class="ico ico-sm"><use href="#i-layers"/></svg> Dashboard <span class="nyx-badge nyx-badge-info" style="margin-inline-start:auto">LTR</span></div>
         </div>
       </div>
       <div class="lp-cell b2 nyx-spotlight-card" data-nyx-reveal>
@@ -547,9 +547,9 @@
         </div>
         <div class="ra-grid">
           <div class="ra-devices" aria-hidden="true">
-            <div class="ra-dev desk"><span class="ra-screen"><span class="bar"></span><span class="rows"><i></i><i></i><i></i><i></i><i></i><i></i></span></span><span class="ra-w" dir="ltr">1440px</span></div>
-            <div class="ra-dev tab"><span class="ra-screen"><span class="bar"></span><span class="rows"><i></i><i></i><i></i><i></i></span></span><span class="ra-w" dir="ltr">768px</span></div>
-            <div class="ra-dev phone"><span class="ra-screen"><span class="bar"></span><span class="rows"><i></i><i></i><i></i></span></span><span class="ra-w" dir="ltr">375px</span></div>
+            <div class="ra-dev desk"><span class="ra-screen"><span class="bar"></span><span class="rows"><i></i><i></i><i></i><i></i><i></i><i></i></span></span><span class="ra-w">1440px</span></div>
+            <div class="ra-dev tab"><span class="ra-screen"><span class="bar"></span><span class="rows"><i></i><i></i><i></i><i></i></span></span><span class="ra-w">768px</span></div>
+            <div class="ra-dev phone"><span class="ra-screen"><span class="bar"></span><span class="rows"><i></i><i></i><i></i></span></span><span class="ra-w">375px</span></div>
           </div>
           <ul class="ra-a11y">
             <li class="ra-check"><svg class="ico ico-sm"><use href="#i-check"/></svg> تباين WCAG AA</li>
@@ -563,10 +563,10 @@
     </div>
   </section>
 
-  <!-- ===================== COMPONENTS ===================== -->
+  <!-- ===================== COMPONENTS PREVIEW ===================== -->
   <section class="lp" id="components">
     <div class="lp-head">
-      <span class="lp-eyebrow"><span class="dot"></span> أكثر من ١٠٠ مكوّناً</span>
+      <span class="nyx-overline">أكثر من ١٠٠ مكوّناً</span>
       <h2 class="nyx-h1 nyx-text-balance">كل ما تحتاجه لتطلق منتجك</h2>
       <p class="nyx-muted">لكلّ مكوّن صفحته الخاصّة مع الاستخدام وأمثلة حيّة ومرجع للأصناف. ابدأ من هنا:</p>
     </div>
@@ -576,17 +576,17 @@
       <a href="docs/docs.ar.html#/inputs"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-form"/></svg></span><h3 class="nyx-h4">النماذج</h3><p class="nyx-caption">حقول وقوائم ومفاتيح وبحث.</p><div style="margin-top:var(--nyx-s3)"><label class="nyx-toggle"><input type="checkbox" checked tabindex="-1" aria-label="معاينة"><span class="nyx-track"></span></label></div></div></a>
       <a href="docs/docs.ar.html#/tables"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-table"/></svg></span><h3 class="nyx-h4">الجداول والبيانات</h3><p class="nyx-caption">جداول قابلة للفرز وصفوف مؤشّرات.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-badge nyx-badge-success">▲ ١٢٪</span><span class="nyx-badge">الإيراد</span></div></div></a>
       <a href="docs/docs.ar.html#/modal"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-overlay"/></svg></span><h3 class="nyx-h4">التراكبات</h3><p class="nyx-caption">نوافذ وأدراج وتلميحات ومنبثقات.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-command">⌘ K</span><span class="nyx-badge nyx-badge-info">esc</span></div></div></a>
-      <a href="docs/docs.ar.html#/big-type"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-sparkles"/></svg></span><h3 class="nyx-h4">عناصر مميّزة</h3><p class="nyx-caption">الخط الكبير، الحركات، الخط الزمني والمزيد.</p><div class="nyx-flex nyx-gap-2 nyx-items-center" style="margin-top:var(--nyx-s3)"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">N</span><span class="nyx-badge-dot">مباشر</span></div></div></a>
+      <a href="docs/docs.ar.html#/spotlight"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-sparkles"/></svg></span><h3 class="nyx-h4">عناصر مميّزة</h3><p class="nyx-caption">الخط الكبير، الحركات، الخط الزمني والمزيد.</p><div class="nyx-flex nyx-gap-2 nyx-items-center" style="margin-top:var(--nyx-s3)"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">N</span><span class="nyx-badge-dot">مباشر</span></div></div></a>
     </div>
     <div class="nyx-flex nyx-justify-center" style="margin-top:var(--nyx-s6)">
-      <a class="nyx-btn nyx-btn-secondary nyx-btn-lg" href="docs/docs.ar.html">افتح التوثيق الكامل <svg class="ico ico-sm ico-flip"><use href="#i-arrow"/></svg></a>
+      <a class="nyx-btn nyx-btn-secondary nyx-btn-lg" href="docs/docs.ar.html">افتح التوثيق الكامل <svg class="ico ico-sm"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
   <!-- ===================== EFFECTS / DATA SHOWCASE ===================== -->
   <section class="lp" id="effects">
     <div class="lp-head">
-      <span class="lp-eyebrow"><span class="dot"></span> جديد في v1.0</span>
+      <span class="nyx-overline">جديد في v1.0</span>
       <h2 class="nyx-h1 nyx-text-balance">خلفيات ومخططات وشيفرة — جاهزة في الصندوق</h2>
       <p class="nyx-muted">خلفيات محيطة، ورسوم بيانية بلا أيّ اعتماديات، وكتلة شيفرة تُنسخ بنقرة — جميعها مدفوعة باللون، وتدعم RTL، وتحترم تقليل الحركة.</p>
     </div>
@@ -607,13 +607,13 @@
         <div class="nyx-card chart-card">
           <div class="nyx-flex nyx-justify-between nyx-items-center"><h3 class="nyx-h4">المستخدمون النشطون أسبوعياً</h3><span class="nyx-badge nyx-badge-success">▲ ١٨٪</span></div>
           <div class="nyx-chart-bars" style="--nyx-chart-h:150px;margin-top:var(--nyx-s5)">
-            <div class="nyx-bar" style="--nyx-bar:42" data-label="أحد" data-val="٤٢"></div>
-            <div class="nyx-bar" style="--nyx-bar:63" data-label="إثن" data-val="٦٣"></div>
-            <div class="nyx-bar alt" style="--nyx-bar:55" data-label="ثلا" data-val="٥٥"></div>
-            <div class="nyx-bar" style="--nyx-bar:78" data-label="أرب" data-val="٧٨"></div>
-            <div class="nyx-bar" style="--nyx-bar:90" data-label="خمي" data-val="٩٠"></div>
-            <div class="nyx-bar muted" style="--nyx-bar:48" data-label="جمع" data-val="٤٨"></div>
-            <div class="nyx-bar muted" style="--nyx-bar:51" data-label="سبت" data-val="٥١"></div>
+            <div class="nyx-bar" style="--nyx-bar:42" data-label="Mon" data-val="42"></div>
+            <div class="nyx-bar" style="--nyx-bar:63" data-label="Tue" data-val="63"></div>
+            <div class="nyx-bar alt" style="--nyx-bar:55" data-label="Wed" data-val="55"></div>
+            <div class="nyx-bar" style="--nyx-bar:78" data-label="Thu" data-val="78"></div>
+            <div class="nyx-bar" style="--nyx-bar:90" data-label="Fri" data-val="90"></div>
+            <div class="nyx-bar muted" style="--nyx-bar:48" data-label="Sat" data-val="48"></div>
+            <div class="nyx-bar muted" style="--nyx-bar:51" data-label="Sun" data-val="51"></div>
           </div>
         </div>
       </div>
@@ -621,11 +621,11 @@
         <div class="nyx-card chart-card">
           <h3 class="nyx-h4">مصادر الزيارات</h3>
           <div class="nyx-flex nyx-gap-5 nyx-items-center donut-interactive" style="margin-top:var(--nyx-s5)">
-            <div class="nyx-donut"><div class="nyx-chart-donut" style="background:conic-gradient(var(--nyx-accent) 0 62%,var(--nyx-accent-2) 62% 84%,var(--nyx-surface-2) 84%)"></div><span class="nyx-donut-val" data-default="٦٢٪">٦٢٪</span></div>
+            <div class="nyx-donut"><div class="nyx-chart-donut" style="background:conic-gradient(var(--nyx-accent) 0 62%,var(--nyx-accent-2) 62% 84%,var(--nyx-surface-2) 84%)"></div><span class="nyx-donut-val" data-default="62%">٦٢٪</span></div>
             <div class="nyx-chart-legend" style="flex-direction:column;align-items:flex-start;gap:var(--nyx-s2)">
-              <span class="nyx-legend" tabindex="0" data-val="٦٢٪" data-lbl="مباشر">مباشر · ٦٢٪</span>
-              <span class="nyx-legend" tabindex="0" data-val="٢٢٪" data-lbl="إحالة" style="--nyx-legend-c:var(--nyx-accent-2)">إحالة · ٢٢٪</span>
-              <span class="nyx-legend" tabindex="0" data-val="١٦٪" data-lbl="أخرى" style="--nyx-legend-c:var(--nyx-surface-2)">أخرى · ١٦٪</span>
+              <span class="nyx-legend" tabindex="0" data-val="62%" data-lbl="Direct">مباشر · ٦٢٪</span>
+              <span class="nyx-legend" tabindex="0" data-val="22%" data-lbl="Referral" style="--nyx-legend-c:var(--nyx-accent-2)">إحالة · ٢٢٪</span>
+              <span class="nyx-legend" tabindex="0" data-val="16%" data-lbl="Other" style="--nyx-legend-c:var(--nyx-surface-2)">أخرى · ١٦٪</span>
             </div>
           </div>
         </div>
@@ -637,8 +637,8 @@
   <section class="lp" id="stats">
     <div class="stats-band" data-nyx-reveal>
       <div class="stats">
-        <div class="stat"><b class="count" data-to="140" data-prefix="+">+140</b><span>صفحة موثّقة</span></div>
-        <div class="stat"><b class="count" data-to="100" data-prefix="+">+100</b><span>مكوّناً</span></div>
+        <div class="stat"><b class="count" data-to="140" data-suffix="+">+140</b><span>صفحة موثّقة</span></div>
+        <div class="stat"><b class="count" data-to="100" data-suffix="+">+100</b><span>مكوّناً</span></div>
         <div class="stat"><b class="count" data-to="0">0</b><span>اعتماديات</span></div>
         <div class="stat"><b class="count" data-to="2">2</b><span>سمتان · RTL كامل</span></div>
       </div>
@@ -648,7 +648,7 @@
   <!-- ===================== COMPARISON ===================== -->
   <section class="lp" id="compare">
     <div class="lp-head">
-      <span class="lp-eyebrow"><span class="dot"></span> المقارنة</span>
+      <span class="nyx-overline">المقارنة</span>
       <h2 class="nyx-h1 nyx-text-balance">لماذا نيكس للعربية تحديداً؟</h2>
       <p class="nyx-muted">مقارنة صريحة مع أشهر الأطر — مع التركيز على ما يهمّ المطوّر العربي فعلاً.</p>
     </div>
@@ -710,10 +710,10 @@
     <div class="cta-band" data-nyx-reveal>
       <span class="lp-eyebrow"><span class="dot"></span> جاهزون متى استعددت</span>
       <h2 class="nyx-bigtype nyx-bigtype-sm" style="margin-top:var(--nyx-s4)">ابنِ شيئاً <span class="nyx-gradient-text animated">فاخراً ومضيئاً.</span></h2>
-      <p class="nyx-lead nyx-muted" style="max-width:540px;margin:var(--nyx-s4) auto 0">بلا إعداد وبلا اعتماديات. أضِف ملفّين فقط وأطلق واجهة مضيئة جاهزة للعربية اليوم.</p>
+      <p class="nyx-lead nyx-muted" style="max-width:520px;margin:var(--nyx-s4) auto 0">بلا إعداد وبلا اعتماديات. أضِف ملفّين فقط وأطلق واجهة مضيئة جاهزة للعربية اليوم.</p>
       <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta" style="margin-top:var(--nyx-s6)">
         <a class="nyx-btn nyx-btn-primary nyx-btn-lg" href="docs/docs.ar.html#/installation">ابدأ الآن</a>
-        <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="index.html">English version <svg class="ico ico-sm ico-flip"><use href="#i-arrow"/></svg></a>
+        <a class="nyx-btn nyx-btn-glass nyx-btn-lg" href="index.html">English version <svg class="ico ico-sm"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
   </section>
@@ -732,7 +732,7 @@
       <li class="nyx-cp-item" data-nyx-target="#effects"><svg class="ico ico-sm"><use href="#i-sparkles"/></svg> التأثيرات والمخططات</li>
       <li class="nyx-cp-item" data-nyx-target="#compare"><svg class="ico ico-sm"><use href="#i-table"/></svg> المقارنة</li>
       <li class="nyx-cp-item" data-nyx-target="#install"><svg class="ico ico-sm"><use href="#i-zap"/></svg> التثبيت</li>
-      <li class="nyx-cp-item" data-nyx-target="#cta"><svg class="ico ico-sm ico-flip"><use href="#i-arrow"/></svg> ابدأ الآن</li>
+      <li class="nyx-cp-item" data-nyx-target="#cta"><svg class="ico ico-sm"><use href="#i-arrow"/></svg> ابدأ الآن</li>
       <a class="nyx-cp-item" href="docs/docs.ar.html"><svg class="ico ico-sm"><use href="#i-form"/></svg> التوثيق الكامل</a>
       <li class="nyx-cp-item" onclick="Nyx.toggleTheme();Nyx.closeCommandPalette()"><svg class="ico ico-sm"><use href="#i-contrast"/></svg> تبديل السمة (داكن / فاتح)</li>
       <a class="nyx-cp-item" href="index.html" hreflang="en"><svg class="ico ico-sm"><use href="#i-bidi"/></svg> English version</a>
@@ -769,6 +769,15 @@
         <button type="button" data-font-set="">IBM&nbsp;Plex</button>
       </div>
     </div>
+    <script>
+    (function () {
+      var el = document.documentElement, btns = document.querySelectorAll('[data-font-set]');
+      try { var sf = localStorage.getItem('nyx-font'); if (sf !== null) { if (sf) el.setAttribute('data-font', sf); else el.removeAttribute('data-font'); } } catch (e) {}
+      function sync() { var cur = el.getAttribute('data-font') || ''; btns.forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-font-set') === cur); }); }
+      btns.forEach(function (b) { b.addEventListener('click', function () { var f = b.getAttribute('data-font-set'); if (f) el.setAttribute('data-font', f); else el.removeAttribute('data-font'); try { localStorage.setItem('nyx-font', f); } catch (e) {} sync(); }); });
+      sync();
+    })();
+    </script>
   </div>
 </div>
 
@@ -776,7 +785,7 @@
   <div class="nyx-container">
     <div class="foot">
       <div class="foot-brand">
-        <a class="lp-logo" href="index.ar.html"><img class="lp-wordmark" src="assets/logo-white.png" alt="نيكس" width="82" height="24" /></a>
+        <a class="lp-logo" href="index.html"><img class="lp-wordmark" src="assets/logo-white.png" alt="نيكس" width="82" height="24" /></a>
         <p>مكتبة المكوّنات داكنة المظهر — أوّل مكتبة CSS مبنية للمطوّرين العرب.</p>
       </div>
       <div>
@@ -805,16 +814,12 @@
   </div>
 </footer>
 
-<script src="nyx.js"></script>
-<script>document.documentElement.setAttribute('dir', 'rtl'); document.documentElement.setAttribute('lang', 'ar');</script>
+<script src="src/nyx.js"></script>
 <script>
 /* ===== landing-page interactions (count-up · donut · live customizer · GitHub stars) ===== */
 (function () {
   var docEl = document.documentElement;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---- restore saved Arabic font (persisted by the customizer) ---- */
-  try { var sf = localStorage.getItem('nyx-font'); if (sf !== null) { if (sf) docEl.setAttribute('data-font', sf); else docEl.removeAttribute('data-font'); } } catch (e) {}
 
   /* ---- animated count-up stats on scroll-reveal ---- */
   function runCount(el) {
@@ -852,7 +857,7 @@
     wrap.addEventListener('focusout', function (e) { if (!wrap.contains(e.relatedTarget)) reset(); });
   });
 
-  /* ---- live customizer: theme · accent · Arabic font (all via real Nyx APIs / tokens) ---- */
+  /* ---- live customizer: theme · accent (all via real Nyx APIs / tokens) ---- */
   var cz = document.getElementById('lp-customizer');
   if (cz && window.Nyx) {
     var fab = cz.querySelector('.cz-fab'), panel = cz.querySelector('.cz-panel');
@@ -864,12 +869,10 @@
     function sync(sel, attr, cur) { cz.querySelectorAll(sel).forEach(function (b) { b.classList.toggle('is-on', b.getAttribute(attr) === cur); }); }
     cz.querySelectorAll('[data-accent]').forEach(function (b) { b.addEventListener('click', function () { var v = b.getAttribute('data-accent'); Nyx.setAccent(v); sync('[data-accent]', 'data-accent', v); }); });
     cz.querySelectorAll('[data-theme-set]').forEach(function (b) { b.addEventListener('click', function () { var t = b.getAttribute('data-theme-set'); Nyx.setTheme(t); sync('[data-theme-set]', 'data-theme-set', t); }); });
-    cz.querySelectorAll('[data-font-set]').forEach(function (b) { b.addEventListener('click', function () { var f = b.getAttribute('data-font-set'); if (f) docEl.setAttribute('data-font', f); else docEl.removeAttribute('data-font'); try { localStorage.setItem('nyx-font', f); } catch (e) {} sync('[data-font-set]', 'data-font-set', f); }); });
 
     var savedAccent = 'violet'; try { savedAccent = localStorage.getItem('nyx-accent') || 'violet'; } catch (e) {}
     sync('[data-accent]', 'data-accent', savedAccent);
     sync('[data-theme-set]', 'data-theme-set', docEl.getAttribute('data-theme') || 'dark');
-    sync('[data-font-set]', 'data-font-set', docEl.getAttribute('data-font') || '');
   }
 
   /* ---- live GitHub star count: cached in localStorage so we don't hit the API (60/hr) on every load ---- */

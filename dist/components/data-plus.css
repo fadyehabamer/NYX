@@ -1,0 +1,30 @@
+/*! Nyx · data-plus.css · v1.1.0 · MIT
+ * The data-plus module. Requires tokens.css.
+ * Bundle: src/nyx.css   Docs: docs/docs.html
+ */
+/* ============================================================
+   29. DATA+ (v1.1) — descriptions (label→value grid) + watermark
+   ============================================================ */
+/* descriptions — Ant-style detail grid on a <dl>. Each .nyx-desc-item holds a
+   .nyx-desc-label + .nyx-desc-value. data-cols=1|2|3 packs pairs per row.
+   .bordered draws cell borders; .vertical stacks label above value. */
+.nyx-descriptions{display:grid;grid-template-columns:max-content 1fr;font-size:var(--nyx-fs-sm);border-radius:var(--nyx-radius-lg);overflow:hidden}
+.nyx-descriptions[data-cols="2"]{grid-template-columns:max-content 1fr max-content 1fr}
+.nyx-descriptions[data-cols="3"]{grid-template-columns:repeat(3,max-content 1fr)}
+.nyx-desc-item{display:contents}
+.nyx-desc-label{padding:10px 16px;color:var(--nyx-text-muted);font-weight:600;background:var(--nyx-surface)}
+.nyx-desc-value{padding:10px 16px;color:var(--nyx-text)}
+.nyx-descriptions.bordered{border:1px solid var(--nyx-border)}
+.nyx-descriptions.bordered .nyx-desc-label,.nyx-descriptions.bordered .nyx-desc-value{border-bottom:1px solid var(--nyx-border)}
+.nyx-descriptions.bordered .nyx-desc-label{border-inline-end:1px solid var(--nyx-border)}
+.nyx-descriptions.vertical{grid-template-columns:1fr}
+.nyx-descriptions.vertical .nyx-desc-item{display:block}
+.nyx-descriptions.vertical .nyx-desc-label{background:transparent;padding-bottom:2px}
+.nyx-descriptions.vertical .nyx-desc-value{padding-top:0}
+@media (max-width:560px){.nyx-descriptions,.nyx-descriptions[data-cols="2"],.nyx-descriptions[data-cols="3"]{grid-template-columns:max-content 1fr}}
+
+/* watermark — a repeating diagonal text layer painted by initWatermark from
+   data-text (data-angle optional). Content sits above the layer automatically. */
+.nyx-watermark{position:relative}
+.nyx-watermark>.nyx-watermark-layer{position:absolute;inset:0;pointer-events:none;z-index:1;background-repeat:repeat;opacity:var(--nyx-watermark-opacity,.09)}
+.nyx-watermark>*:not(.nyx-watermark-layer){position:relative;z-index:2}

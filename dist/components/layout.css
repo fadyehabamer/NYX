@@ -1,0 +1,72 @@
+/*! Nyx · layout.css · v1.1.0 · MIT
+ * The layout module. Requires tokens.css.
+ * Bundle: src/nyx.css   Docs: docs/docs.html
+ */
+/* ============================================================
+   1. LAYOUT
+   ============================================================ */
+.nyx-container{max-width:1280px;margin-inline:auto;padding-inline:var(--nyx-s5)}
+.nyx-container-fluid,.nyx-container-sm,.nyx-container-md,.nyx-container-lg,.nyx-container-xl{width:100%;margin-inline:auto;padding-inline:var(--nyx-s5)}
+@media(min-width:640px){.nyx-container-sm{max-width:600px}}
+@media(min-width:768px){.nyx-container-md{max-width:720px}}
+@media(min-width:1024px){.nyx-container-lg{max-width:960px}}
+@media(min-width:1280px){.nyx-container-xl{max-width:1180px}}
+.nyx-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--nyx-s4)}
+.nyx-col-1{grid-column:span 1}.nyx-col-2{grid-column:span 2}.nyx-col-3{grid-column:span 3}
+.nyx-col-4{grid-column:span 4}.nyx-col-5{grid-column:span 5}.nyx-col-6{grid-column:span 6}
+.nyx-col-7{grid-column:span 7}.nyx-col-8{grid-column:span 8}.nyx-col-9{grid-column:span 9}
+.nyx-col-10{grid-column:span 10}.nyx-col-11{grid-column:span 11}.nyx-col-12{grid-column:span 12}
+/* column offsets — start N lines in (line-based, so RTL-correct automatically). Neutralized by the mobile auto-collapse below, like the columns themselves. */
+.nyx-offset-0{grid-column-start:auto}.nyx-offset-1{grid-column-start:2}.nyx-offset-2{grid-column-start:3}.nyx-offset-3{grid-column-start:4}.nyx-offset-4{grid-column-start:5}.nyx-offset-5{grid-column-start:6}.nyx-offset-6{grid-column-start:7}.nyx-offset-7{grid-column-start:8}.nyx-offset-8{grid-column-start:9}.nyx-offset-9{grid-column-start:10}.nyx-offset-10{grid-column-start:11}.nyx-offset-11{grid-column-start:12}
+.nyx-flex{display:flex}.nyx-inline-flex{display:inline-flex}
+.nyx-items-center{align-items:center}.nyx-items-start{align-items:flex-start}
+.nyx-justify-between{justify-content:space-between}.nyx-justify-center{justify-content:center}
+.nyx-wrap{flex-wrap:wrap}.nyx-flex-col{flex-direction:column}.nyx-grow{flex:1}
+.nyx-gap-1{gap:var(--nyx-s1)}.nyx-gap-2{gap:var(--nyx-s2)}.nyx-gap-3{gap:var(--nyx-s3)}
+.nyx-gap-4{gap:var(--nyx-s4)}.nyx-gap-5{gap:var(--nyx-s5)}.nyx-gap-6{gap:var(--nyx-s6)}
+.nyx-stack{display:flex;flex-direction:column;gap:var(--nyx-s4)}
+/* — flex & grid utilities (v1.0) — */
+.nyx-flex-row{flex-direction:row}.nyx-flex-row-reverse{flex-direction:row-reverse}.nyx-flex-col-reverse{flex-direction:column-reverse}
+.nyx-nowrap{flex-wrap:nowrap}.nyx-wrap-reverse{flex-wrap:wrap-reverse}
+.nyx-justify-start{justify-content:flex-start}.nyx-justify-end{justify-content:flex-end}.nyx-justify-around{justify-content:space-around}.nyx-justify-evenly{justify-content:space-evenly}
+.nyx-items-end{align-items:flex-end}.nyx-items-stretch{align-items:stretch}.nyx-items-baseline{align-items:baseline}
+.nyx-content-start{align-content:flex-start}.nyx-content-center{align-content:center}.nyx-content-between{align-content:space-between}.nyx-content-around{align-content:space-around}.nyx-content-end{align-content:flex-end}
+.nyx-self-auto{align-self:auto}.nyx-self-start{align-self:flex-start}.nyx-self-center{align-self:center}.nyx-self-end{align-self:flex-end}.nyx-self-stretch{align-self:stretch}
+.nyx-flex-1{flex:1 1 0%}.nyx-flex-auto{flex:1 1 auto}.nyx-flex-initial{flex:0 1 auto}.nyx-flex-none{flex:none}
+.nyx-grow-0{flex-grow:0}.nyx-shrink{flex-shrink:1}.nyx-shrink-0{flex-shrink:0}
+.nyx-gap-0{gap:0}.nyx-gap-x-2{column-gap:var(--nyx-s2)}.nyx-gap-x-3{column-gap:var(--nyx-s3)}.nyx-gap-x-4{column-gap:var(--nyx-s4)}.nyx-gap-y-2{row-gap:var(--nyx-s2)}.nyx-gap-y-3{row-gap:var(--nyx-s3)}.nyx-gap-y-4{row-gap:var(--nyx-s4)}
+.nyx-order-first{order:-9999}.nyx-order-last{order:9999}.nyx-order-none{order:0}.nyx-order-1{order:1}.nyx-order-2{order:2}.nyx-order-3{order:3}.nyx-order-4{order:4}.nyx-order-5{order:5}
+.nyx-grid-cols-1{display:grid;grid-template-columns:repeat(1,minmax(0,1fr))}.nyx-grid-cols-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.nyx-grid-cols-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.nyx-grid-cols-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.nyx-grid-cols-5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}.nyx-grid-cols-6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.nyx-grid-auto{display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--nyx-grid-min,220px),1fr))}
+.nyx-col-span-full{grid-column:1/-1}.nyx-place-center{place-items:center}.nyx-place-between{place-content:space-between}
+.nyx-divider{display:flex;align-items:center;gap:var(--nyx-s3);color:var(--nyx-text-muted);
+  font-size:var(--nyx-fs-xs);text-transform:uppercase;letter-spacing:.08em;margin:var(--nyx-s5) 0}
+.nyx-divider::before,.nyx-divider::after{content:"";flex:1;height:1px;background:var(--nyx-border)}
+.nyx-divider.plain{margin-block:var(--nyx-s4)}
+.nyx-ratio{position:relative;width:100%}
+.nyx-ratio::before{content:"";display:block;padding-top:56.25%}
+.nyx-ratio-1x1::before{padding-top:100%}
+.nyx-ratio-4x3::before{padding-top:75%}
+.nyx-ratio > *{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:var(--nyx-radius)}
+
+/* auto-collapse for bare cols (no explicit breakpoint class) */
+@media(max-width:1024px){[class*="nyx-col-"]:not([class*="-sm-"]):not([class*="-md-"]):not([class*="-lg-"]):not([class*="-xl-"]){grid-column:span 6}}
+@media(max-width:640px){
+  [class*="nyx-col-"]:not([class*="-sm-"]):not([class*="-md-"]):not([class*="-lg-"]):not([class*="-xl-"]){grid-column:span 12}
+  .nyx-container{padding-inline:var(--nyx-s4)}
+}
+/* responsive grid — Bootstrap-style breakpoints (mobile-first, min-width).
+   Pair a base col for mobile with a breakpoint col: class="nyx-col-12 nyx-col-md-6" */
+.nyx-col-auto{grid-column:auto}
+@media(min-width:640px){
+  .nyx-col-sm-1{grid-column:span 1}.nyx-col-sm-2{grid-column:span 2}.nyx-col-sm-3{grid-column:span 3}.nyx-col-sm-4{grid-column:span 4}.nyx-col-sm-5{grid-column:span 5}.nyx-col-sm-6{grid-column:span 6}.nyx-col-sm-7{grid-column:span 7}.nyx-col-sm-8{grid-column:span 8}.nyx-col-sm-9{grid-column:span 9}.nyx-col-sm-10{grid-column:span 10}.nyx-col-sm-11{grid-column:span 11}.nyx-col-sm-12{grid-column:span 12}
+}
+@media(min-width:768px){
+  .nyx-col-md-1{grid-column:span 1}.nyx-col-md-2{grid-column:span 2}.nyx-col-md-3{grid-column:span 3}.nyx-col-md-4{grid-column:span 4}.nyx-col-md-5{grid-column:span 5}.nyx-col-md-6{grid-column:span 6}.nyx-col-md-7{grid-column:span 7}.nyx-col-md-8{grid-column:span 8}.nyx-col-md-9{grid-column:span 9}.nyx-col-md-10{grid-column:span 10}.nyx-col-md-11{grid-column:span 11}.nyx-col-md-12{grid-column:span 12}
+}
+@media(min-width:1024px){
+  .nyx-col-lg-1{grid-column:span 1}.nyx-col-lg-2{grid-column:span 2}.nyx-col-lg-3{grid-column:span 3}.nyx-col-lg-4{grid-column:span 4}.nyx-col-lg-5{grid-column:span 5}.nyx-col-lg-6{grid-column:span 6}.nyx-col-lg-7{grid-column:span 7}.nyx-col-lg-8{grid-column:span 8}.nyx-col-lg-9{grid-column:span 9}.nyx-col-lg-10{grid-column:span 10}.nyx-col-lg-11{grid-column:span 11}.nyx-col-lg-12{grid-column:span 12}
+}
+@media(min-width:1280px){
+  .nyx-col-xl-1{grid-column:span 1}.nyx-col-xl-2{grid-column:span 2}.nyx-col-xl-3{grid-column:span 3}.nyx-col-xl-4{grid-column:span 4}.nyx-col-xl-5{grid-column:span 5}.nyx-col-xl-6{grid-column:span 6}.nyx-col-xl-7{grid-column:span 7}.nyx-col-xl-8{grid-column:span 8}.nyx-col-xl-9{grid-column:span 9}.nyx-col-xl-10{grid-column:span 10}.nyx-col-xl-11{grid-column:span 11}.nyx-col-xl-12{grid-column:span 12}
+}

@@ -13,9 +13,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Aref+Ruqaa:wght@400;700&family=Lalezar&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="nyx.css" />
+<link rel="stylesheet" href="src/nyx.css" />
 <style>
   html{scroll-behavior:smooth;scroll-padding-top:104px}
+  [dir="rtl"] .ico-flip{transform:scaleX(-1)}
   ::selection{background:color-mix(in srgb,var(--nyx-accent) 32%,transparent);color:#fff}
   html,body{overflow-x:clip}
   /* ---- icon system ---- */
@@ -321,7 +322,7 @@
 <nav class="nyx-navbar lp-nav">
   <div class="nyx-flex nyx-items-center nyx-gap-4">
     <a class="lp-logo" href="index.html"><img class="lp-wordmark" src="assets/logo-white.png" alt="Nyx" width="82" height="24" /></a>
-    <span class="nyx-badge nyx-badge-info hide-sm lp-ver">v1.0.3</span>
+    <span class="nyx-badge nyx-badge-info hide-sm lp-ver">v1.1.0</span>
   </div>
   <div class="nyx-flex nyx-items-center nyx-gap-4">
     <div class="lp-links hide-sm">
@@ -335,6 +336,7 @@
           <a class="nyx-dropdown-item" href="examples/checkout.html"><svg class="ico ico-sm"><use href="#i-cart"/></svg> Checkout</a>
           <a class="nyx-dropdown-item" href="examples/pricing.html"><svg class="ico ico-sm"><use href="#i-creditcard"/></svg> Pricing</a>
           <a class="nyx-dropdown-item" href="examples/auth.html"><svg class="ico ico-sm"><use href="#i-lock"/></svg> Auth</a>
+          <!--nyx:ar nav-article-->
         </div>
       </div>
       <a href="docs/docs.html">Docs</a>
@@ -342,7 +344,7 @@
     <button class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-search" data-nyx-toggle="command" aria-label="Search the page" title="Search (⌘K)"><svg class="ico ico-sm"><use href="#i-search"/></svg> <span class="nyx-command hide-sm">⌘ K</span></button>
     <button class="nyx-btn nyx-btn-icon nyx-btn-ghost lp-theme" onclick="Nyx.toggleTheme()" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
     <a class="nyx-btn nyx-btn-ghost nyx-btn-sm lp-lang" href="index.ar.html" hreflang="ar" aria-label="التبديل إلى العربية" title="العربية">العربية</a>
-    <a class="nyx-btn nyx-btn-glass nyx-btn-sm hide-sm lp-gh" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> <span class="hide-sm">Star</span> <span class="nyx-badge" id="gh-stars">2.4k</span></a>
+    <a class="nyx-btn nyx-btn-glass nyx-btn-sm hide-sm lp-gh" href="https://github.com/fadyehabamer/NYX" target="_blank" rel="noopener"><svg class="ico ico-sm"><use href="#i-github"/></svg> <!--nyx:en-only--><span class="hide-sm">Star</span> <!--/nyx:en-only--><span class="nyx-badge" id="gh-stars">2.4k</span></a>
     <a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="docs/docs.html">Get started</a>
   </div>
 </nav>
@@ -350,7 +352,7 @@
 <div class="nyx-container">
   <!-- ===================== HERO ===================== -->
   <section class="hero">
-    <span class="lp-eyebrow nyx-anim-up"><span class="dot"></span> Premium UI, <b>lit from within</b> <span class="tag">v1.0.3</span></span>
+    <span class="lp-eyebrow nyx-anim-up"><span class="dot"></span> Premium UI, <b>lit from within</b> <span class="tag">v1.1.0</span></span>
     <h1 class="nyx-bigtype nyx-bigtype-sm nyx-anim-up nyx-anim-delay-1 nyx-text-balance">Build luminous,<br>RTL-ready interfaces<span class="l2 nyx-gradient-text animated">with&nbsp;Nyx_</span></h1>
     <p class="nyx-lead nyx-muted hero-sub nyx-anim-up nyx-anim-delay-2">A dark-mode-native CSS &amp; JS toolkit. Theme everything from one token, compose 100+ prebuilt components, and bring them to life with a zero-dependency runtime — RTL and Arabic typography in the box.</p>
     <div class="nyx-flex nyx-justify-center nyx-gap-3 nyx-wrap hero-cta nyx-anim-up nyx-anim-delay-3">
@@ -464,7 +466,7 @@
       <div class="nyx-col-5 nyx-stack" data-nyx-reveal>
         <span class="nyx-overline">Installation</span>
         <h2 class="nyx-h1" style="margin-top:var(--nyx-s2)">Drop it into any page</h2>
-        <p class="nyx-muted">Two files, no build step. Link the stylesheet, opt your <span class="nyx-code">&lt;body&gt;</span> into Nyx, and add the runtime for tabs, modals and toasts.</p>
+        <!--nyx:ar install--><!--nyx:en-only--><p class="nyx-muted">Two files, no build step. Link the stylesheet, opt your <span class="nyx-code">&lt;body&gt;</span> into Nyx, and add the runtime for tabs, modals and toasts.</p><!--/nyx:en-only-->
         <ul class="install-pts">
           <li><svg class="ico ico-sm"><use href="#i-check"/></svg> Works with any framework — or none at all</li>
           <li><svg class="ico ico-sm"><use href="#i-check"/></svg> Retheme everything by overriding one token</li>
@@ -757,6 +759,7 @@
         <button type="button" class="cz-sw" data-accent="rose" style="--sw:#f43f6b" aria-label="Rose"></button>
       </div>
     </div>
+    <!--nyx:ar cz-font-->
   </div>
 </div>
 
@@ -789,11 +792,11 @@
         <a href="docs/docs.html#/animations">Motion</a>
       </div>
     </div>
-    <div class="foot-bottom">Built with <span class="nyx-gradient-text" style="font-weight:700">Nyx</span> · MIT License · Luminous Depth, dark-first &amp; Arabic-first.</div>
+    <div class="foot-bottom">Built with <span class="nyx-gradient-text" style="font-weight:700">Nyx</span><!--nyx:ar foot-credit--> · MIT License · Luminous Depth, dark-first &amp; Arabic-first.</div>
   </div>
 </footer>
 
-<script src="nyx.js"></script>
+<script src="src/nyx.js"></script>
 <script>
 /* ===== landing-page interactions (count-up · donut · live customizer · GitHub stars) ===== */
 (function () {

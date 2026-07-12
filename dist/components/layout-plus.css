@@ -1,0 +1,13 @@
+/*! Nyx · layout-plus.css · v1.1.0 · MIT
+ * The layout-plus module. Requires tokens.css.
+ * Bundle: src/nyx.css   Docs: docs/docs.html
+ */
+/* ============================================================
+   31. LAYOUT+ (v1.1) — masonry columns
+   ============================================================ */
+/* masonry — CSS-column masonry. Set --nyx-masonry-cols; children avoid breaking.
+   Order flows top→bottom per column (native CSS columns behavior). */
+.nyx-masonry{column-count:var(--nyx-masonry-cols,3);column-gap:var(--nyx-s4)}
+.nyx-masonry>*{break-inside:avoid;margin-bottom:var(--nyx-s4)}
+@media (max-width:900px){.nyx-masonry{column-count:2}}
+@media (max-width:560px){.nyx-masonry{column-count:1}}

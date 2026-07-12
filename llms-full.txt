@@ -1,0 +1,283 @@
+# nyx-css (Nyx) v1.1.0
+
+> A zero-dependency CSS & JS component framework with Luminous Depth — light & dark themes, fully themeable via CSS variables, with first-class RTL and Arabic typography.
+
+Nyx is a zero-dependency CSS + JS component framework. Components are plain HTML
+with `nyx-*` classes and `data-nyx-*` attributes — no JSX and no build step. The
+runtime auto-initializes on load and exposes `window.Nyx`.
+
+## Use
+- CSS — one stylesheet: link `nyx.min.css` or `import 'nyx-css/nyx.css'`.
+- JS (UMD): `<script src="nyx.min.js"></script>` → `window.Nyx`.
+- JS (ESM): `import Nyx from 'nyx-css'` (default export is the Nyx API).
+- Theme/dir: `<html data-theme="dark|light" dir="ltr|rtl">`; retint with `--nyx-accent`.
+
+## Docs
+- [Documentation](https://fadyehabamer.github.io/NYX/docs/docs.html)
+- [Arabic documentation](https://fadyehabamer.github.io/NYX/docs/docs.ar.html)
+- [Full LLM reference](https://fadyehabamer.github.io/NYX/llms-full.txt) — every class, attribute, token, and method.
+
+## Component sections (39 sections, 1240 classes)
+- 1. LAYOUT (154)
+- 2. TYPOGRAPHY (24)
+- 3. BUTTONS (19)
+- 4. CARDS (9)
+- 5. FORMS (33)
+- 6. NAVIGATION (23)
+- 7. FEEDBACK & STATUS (32)
+- 8. DATA DISPLAY (7)
+- 9. OVERLAYS (23)
+- 10. SIGNATURE ELEMENTS (32)
+- 11. MORE COMPONENTS (v1.0) (25)
+- 12. BIG TYPE & MOTION (v1.0) (34)
+- 13. UTILITIES & HELPERS (v1.0) (586)
+- 14. HIERARCHY (v1.0) — file/org trees, vertical + horizontal (6)
+- 15. REGIONAL — built for MENA (v1.0) (4)
+- 16. FORMS+ (v1.0) — combobox, multi-select, phone, date picker (14)
+- 17. OVERLAYS+ (v1.0) — sheet, FAB, back-to-top, top progress, context menu (11)
+- 18. COMMERCE (v1.0) — product, cart, order, coupon, payment, address (18)
+- 19. REGIONAL+ (v1.0) — countdown, zakat, qibla, delivery tracking (12)
+- 20. BACKGROUNDS (v1.0) — ambient gradient, grid & interactive layers (8)
+- 21. CHARTS (v1.0) — zero-dep CSS + SVG data viz (15)
+- 22. CODE BLOCK (v1.0) — titled code window + syntax tokens + copy (12)
+- 23. BLOCKS (v1.0) — chat, slider, steps, testimonial, pricing, kanban, notifications (31)
+- 24. BLOCKS+ (v1.0) — gauge · ring · heatmap · stats · skeletons · nav · overlays · media · hijri (47)
+- RTL — flips for physical properties not covered by logical CSS (17)
+- 25. MEDIA (4)
+- 26. ENHANCEMENTS (16)
+- 3D Tilt Card (.nyx-tilt) (2)
+- Typewriter Effect (.nyx-typewriter) (2)
+- Glitch Text Effect (.nyx-glitch) (3)
+- 27. REGIONAL++ (v1.1) — KSA forms & finance: BNPL, e-invoice, ID, name, address, region (22)
+- 28. HIJRI (v1.1) — Hijri ⇄ Gregorian converter + today's date (6)
+- 29. DATA+ (v1.1) — descriptions (label→value grid) + watermark (6)
+- 30. FEEDBACK+ (v1.1) — result / status screen + corner ribbon (7)
+- 31. LAYOUT+ (v1.1) — masonry columns (1)
+- 32. FORMS++ (v1.2) — color picker (5)
+- 33. CHARTS+ (v1.2) — radar / spider chart (7)
+- 34. OVERLAYS++ (v1.2) — product tour / coachmarks (8)
+- 35. LAYOUT++ (v1.2) — resizable split panes + affix (6)
+
+## JS API (window.Nyx)
+Nyx.init, Nyx.toast, Nyx.openModal, Nyx.openDrawer, Nyx.close, Nyx.closeAll, Nyx.togglePopover, Nyx.openCommandPalette, Nyx.closeCommandPalette, Nyx.showTab, Nyx.toggleCollapse, Nyx.toggleDropdown, Nyx.getInstance, Nyx.getOrCreateInstance, Nyx.carousel, Nyx.position, Nyx.tour, Nyx.setTheme, Nyx.toggleTheme, Nyx.setDir, Nyx.toggleDir, Nyx.setAccent, Nyx.toArabicNumerals, Nyx.progress, Nyx.toHijri, Nyx.fromHijri, Nyx.formatHijri, Nyx.qiblaBearing, Nyx.zatcaQR, Nyx.snackbar, Nyx.confirm
+
+---
+
+## Runtime API — declarative attributes + imperative methods
+
+```
+Nyx — runtime · v1.1.0 · MIT License
+Zero dependencies. UMD: window.Nyx (or CommonJS export).
+
+Declarative API (no JS to write):
+  data-nyx-toggle="modal|drawer|sheet|popover|command|dropdown|collapse"  (+ data-nyx-target)
+  data-nyx-dismiss                                  closes its overlay
+  data-nyx-tabs / data-nyx-tab / data-nyx-panel     tabs & pills
+  data-nyx-accordion                                accordion (single-open) wrapper
+  data-nyx-spy · data-nyx-reveal · data-nyx-numerals="arab"
+  data-nyx-carousel  +  data-nyx-slide="prev|next" / data-nyx-slide-to="i"
+  data-nyx-datepicker · data-nyx-contextmenu="#id" · data-nyx-countdown="HH:MM"
+  data-nyx-prayers · data-nyx-qibla="deg" · class="nyx-combobox|nyx-multiselect|nyx-hierarchy"
+  data-nyx-tour[="#scope"]  +  data-nyx-tour-step / data-title / data-text   product tour
+  class="nyx-colorpicker|nyx-split|nyx-affix"       color picker · resizable panes · sticky affix
+  class="nyx-table-sortable"                        click headers to sort
+
+Imperative API:
+  Nyx.toast · openModal · openDrawer · close · closeAll · togglePopover
+  Nyx.openCommandPalette · setTheme · toggleTheme · setDir · toggleDir · setAccent
+  Nyx.toArabicNumerals · Nyx.progress.{start,set,done} · init
+  Nyx.showTab · Nyx.toggleCollapse · Nyx.toggleDropdown
+  Nyx.getInstance · Nyx.getOrCreateInstance → { el, show, hide, toggle, dispose }
+    (overlays · popover · collapse · dropdown; tab instances support show() only)
+  Nyx.carousel(el) → { el, next, prev, to, dispose } (slides honor cancelable nyx:before-slide)
+  Nyx.tour(steps, opts) → { next, prev, stop } — spotlight coachmark walkthrough
+    steps: [{ target, title, text, placement }]. Also fires via data-nyx-tour.
+  Nyx.position(anchor, floating, { placement, offset, padding }) — zero-dep floating
+    engine (flip + shift, RTL-aware); pins floating:fixed by an anchor, no Popper.
+    Opt a dropdown/popover into it with data-nyx-float="[placement]" (repositions on scroll/resize).
+Lifecycle events (bubbling, cancelable -before-* pair):
+  modal/drawer/sheet/popover/collapse/dropdown:
+    nyx:<type>-before-show / -show / -shown  and  -before-hide / -hide / -hidden
+  tabs:     nyx:tab-before-show (cancelable) · nyx:tab-show
+  carousel: nyx:before-slide (cancelable) · nyx:slide
+  tour:     nyx:tour-start · nyx:tour-step · nyx:tour-end
+  stepper:  nyx:stepper-change · colorpicker: nyx:color-change · split: nyx:split-resize
+  Call e.preventDefault() on any -before-* / before-slide event to abort the action.
+==========================================================
+```
+
+## Design tokens (55) — override any `--nyx-*` to theme
+- `--nyx-accent`
+- `--nyx-accent-2`
+- `--nyx-bar`
+- `--nyx-bg`
+- `--nyx-border`
+- `--nyx-danger`
+- `--nyx-ease`
+- `--nyx-elev-hover`
+- `--nyx-font-ar`
+- `--nyx-font-ar-display`
+- `--nyx-font-body`
+- `--nyx-font-display`
+- `--nyx-font-mono`
+- `--nyx-fs-2xl`
+- `--nyx-fs-3xl`
+- `--nyx-fs-base`
+- `--nyx-fs-lg`
+- `--nyx-fs-sm`
+- `--nyx-fs-xl`
+- `--nyx-fs-xs`
+- `--nyx-gauge`
+- `--nyx-glass`
+- `--nyx-glass-border`
+- `--nyx-glow`
+- `--nyx-glow-danger`
+- `--nyx-navbar-bg`
+- `--nyx-overlay-bg`
+- `--nyx-pos`
+- `--nyx-radius`
+- `--nyx-radius-full`
+- `--nyx-radius-lg`
+- `--nyx-radius-sm`
+- `--nyx-radius-xl`
+- `--nyx-ring`
+- `--nyx-s1`
+- `--nyx-s2`
+- `--nyx-s3`
+- `--nyx-s4`
+- `--nyx-s5`
+- `--nyx-s6`
+- `--nyx-s7`
+- `--nyx-s8`
+- `--nyx-s9`
+- `--nyx-shadow`
+- `--nyx-shadow-lg`
+- `--nyx-shadow-sm`
+- `--nyx-shimmer`
+- `--nyx-slider`
+- `--nyx-split-min`
+- `--nyx-success`
+- `--nyx-surface`
+- `--nyx-surface-2`
+- `--nyx-text`
+- `--nyx-text-muted`
+- `--nyx-warning`
+
+## All classes, by section
+
+### 1. LAYOUT
+`.nyx-col-1` `.nyx-col-10` `.nyx-col-11` `.nyx-col-12` `.nyx-col-2` `.nyx-col-3` `.nyx-col-4` `.nyx-col-5` `.nyx-col-6` `.nyx-col-7` `.nyx-col-8` `.nyx-col-9` `.nyx-col-auto` `.nyx-col-lg-1` `.nyx-col-lg-10` `.nyx-col-lg-11` `.nyx-col-lg-12` `.nyx-col-lg-2` `.nyx-col-lg-3` `.nyx-col-lg-4` `.nyx-col-lg-5` `.nyx-col-lg-6` `.nyx-col-lg-7` `.nyx-col-lg-8` `.nyx-col-lg-9` `.nyx-col-md-1` `.nyx-col-md-10` `.nyx-col-md-11` `.nyx-col-md-12` `.nyx-col-md-2` `.nyx-col-md-3` `.nyx-col-md-4` `.nyx-col-md-5` `.nyx-col-md-6` `.nyx-col-md-7` `.nyx-col-md-8` `.nyx-col-md-9` `.nyx-col-sm-1` `.nyx-col-sm-10` `.nyx-col-sm-11` `.nyx-col-sm-12` `.nyx-col-sm-2` `.nyx-col-sm-3` `.nyx-col-sm-4` `.nyx-col-sm-5` `.nyx-col-sm-6` `.nyx-col-sm-7` `.nyx-col-sm-8` `.nyx-col-sm-9` `.nyx-col-span-full` `.nyx-col-xl-1` `.nyx-col-xl-10` `.nyx-col-xl-11` `.nyx-col-xl-12` `.nyx-col-xl-2` `.nyx-col-xl-3` `.nyx-col-xl-4` `.nyx-col-xl-5` `.nyx-col-xl-6` `.nyx-col-xl-7` `.nyx-col-xl-8` `.nyx-col-xl-9` `.nyx-container` `.nyx-container-fluid` `.nyx-container-lg` `.nyx-container-md` `.nyx-container-sm` `.nyx-container-xl` `.nyx-content-around` `.nyx-content-between` `.nyx-content-center` `.nyx-content-end` `.nyx-content-start` `.nyx-divider` `.nyx-flex` `.nyx-flex-1` `.nyx-flex-auto` `.nyx-flex-col` `.nyx-flex-col-reverse` `.nyx-flex-initial` `.nyx-flex-none` `.nyx-flex-row` `.nyx-flex-row-reverse` `.nyx-gap-0` `.nyx-gap-1` `.nyx-gap-2` `.nyx-gap-3` `.nyx-gap-4` `.nyx-gap-5` `.nyx-gap-6` `.nyx-gap-x-2` `.nyx-gap-x-3` `.nyx-gap-x-4` `.nyx-gap-y-2` `.nyx-gap-y-3` `.nyx-gap-y-4` `.nyx-grid` `.nyx-grid-auto` `.nyx-grid-cols-1` `.nyx-grid-cols-2` `.nyx-grid-cols-3` `.nyx-grid-cols-4` `.nyx-grid-cols-5` `.nyx-grid-cols-6` `.nyx-grow` `.nyx-grow-0` `.nyx-inline-flex` `.nyx-items-baseline` `.nyx-items-center` `.nyx-items-end` `.nyx-items-start` `.nyx-items-stretch` `.nyx-justify-around` `.nyx-justify-between` `.nyx-justify-center` `.nyx-justify-end` `.nyx-justify-evenly` `.nyx-justify-start` `.nyx-nowrap` `.nyx-offset-0` `.nyx-offset-1` `.nyx-offset-10` `.nyx-offset-11` `.nyx-offset-2` `.nyx-offset-3` `.nyx-offset-4` `.nyx-offset-5` `.nyx-offset-6` `.nyx-offset-7` `.nyx-offset-8` `.nyx-offset-9` `.nyx-order-1` `.nyx-order-2` `.nyx-order-3` `.nyx-order-4` `.nyx-order-5` `.nyx-order-first` `.nyx-order-last` `.nyx-order-none` `.nyx-place-between` `.nyx-place-center` `.nyx-ratio` `.nyx-ratio-1x1` `.nyx-ratio-4x3` `.nyx-self-auto` `.nyx-self-center` `.nyx-self-end` `.nyx-self-start` `.nyx-self-stretch` `.nyx-shrink` `.nyx-shrink-0` `.nyx-stack` `.nyx-wrap` `.nyx-wrap-reverse`
+
+### 2. TYPOGRAPHY
+`.nyx-blockquote` `.nyx-body` `.nyx-caption` `.nyx-code` `.nyx-display` `.nyx-dropcap` `.nyx-gradient-text` `.nyx-h1` `.nyx-h2` `.nyx-h3` `.nyx-h4` `.nyx-h5` `.nyx-h6` `.nyx-kbd` `.nyx-lead` `.nyx-lead-sm` `.nyx-link` `.nyx-mark` `.nyx-muted` `.nyx-overline` `.nyx-prose` `.nyx-smallcaps` `.nyx-text-glow` `.nyx-text-stroke`
+
+### 3. BUTTONS
+`.nyx-btn` `.nyx-btn-block` `.nyx-btn-danger` `.nyx-btn-ghost` `.nyx-btn-glass` `.nyx-btn-glow` `.nyx-btn-group` `.nyx-btn-icon` `.nyx-btn-lg` `.nyx-btn-loading` `.nyx-btn-outline-danger` `.nyx-btn-outline-primary` `.nyx-btn-outline-success` `.nyx-btn-outline-warning` `.nyx-btn-primary` `.nyx-btn-secondary` `.nyx-btn-sm` `.nyx-btn-split` `.nyx-close`
+
+### 4. CARDS
+`.nyx-card` `.nyx-card-feature` `.nyx-card-glass` `.nyx-card-gradient` `.nyx-card-interactive` `.nyx-card-stat` `.nyx-feat-icon` `.nyx-stat-label` `.nyx-stat-num`
+
+### 5. FORMS
+`.nyx-addon` `.nyx-box` `.nyx-btn` `.nyx-checkbox` `.nyx-file` `.nyx-file-input` `.nyx-float` `.nyx-form-hint` `.nyx-form-inline` `.nyx-form-row` `.nyx-input` `.nyx-input-group` `.nyx-input-lg` `.nyx-input-sm` `.nyx-invalid` `.nyx-invalid-feedback` `.nyx-label` `.nyx-phone` `.nyx-radio` `.nyx-range` `.nyx-search` `.nyx-search-icon` `.nyx-select` `.nyx-select-lg` `.nyx-select-sm` `.nyx-slider` `.nyx-textarea` `.nyx-textarea-lg` `.nyx-textarea-sm` `.nyx-toggle` `.nyx-track` `.nyx-valid-feedback` `.nyx-was-validated`
+
+### 6. NAVIGATION
+`.nyx-breadcrumb` `.nyx-command-palette` `.nyx-cp-box` `.nyx-cp-input` `.nyx-cp-item` `.nyx-cp-list` `.nyx-dropdown` `.nyx-dropdown-divider` `.nyx-dropdown-item` `.nyx-dropdown-menu` `.nyx-mega` `.nyx-nav` `.nyx-nav-pills` `.nyx-navbar` `.nyx-page-gap` `.nyx-pagination` `.nyx-pagination-info` `.nyx-pill` `.nyx-sep` `.nyx-sidebar` `.nyx-tab` `.nyx-tab-panel` `.nyx-tabs`
+
+### 7. FEEDBACK & STATUS
+`.nyx-alert` `.nyx-alert-danger` `.nyx-alert-icon` `.nyx-alert-info` `.nyx-alert-success` `.nyx-alert-warning` `.nyx-badge` `.nyx-badge-danger` `.nyx-badge-dot` `.nyx-badge-info` `.nyx-badge-success` `.nyx-badge-warning` `.nyx-out` `.nyx-progress` `.nyx-skeleton` `.nyx-spinner` `.nyx-spinner-dots` `.nyx-spinner-lg` `.nyx-spinner-sm` `.nyx-status-bar` `.nyx-step` `.nyx-step-dot` `.nyx-toast` `.nyx-toast-action` `.nyx-toast-body` `.nyx-toast-close` `.nyx-toast-danger` `.nyx-toast-info` `.nyx-toast-success` `.nyx-toast-title` `.nyx-toast-warning` `.nyx-toast-wrap`
+
+### 8. DATA DISPLAY
+`.nyx-data-grid` `.nyx-kpi-row` `.nyx-list-group` `.nyx-list-item` `.nyx-table` `.nyx-table-sortable` `.nyx-table-wrap`
+
+### 9. OVERLAYS
+`.nyx-accordion` `.nyx-accordion-body` `.nyx-accordion-head` `.nyx-accordion-item` `.nyx-btn` `.nyx-card` `.nyx-carousel` `.nyx-carousel-caption` `.nyx-carousel-ctrl` `.nyx-carousel-dots` `.nyx-collapse` `.nyx-drawer` `.nyx-drawer-left` `.nyx-modal` `.nyx-modal-box` `.nyx-overlay` `.nyx-pop` `.nyx-popover` `.nyx-product` `.nyx-slide` `.nyx-spotlight` `.nyx-tip` `.nyx-tooltip`
+
+### 10. SIGNATURE ELEMENTS
+`.nyx-avatar` `.nyx-avatar-group` `.nyx-banner` `.nyx-chip` `.nyx-chip-accent` `.nyx-chip-outline` `.nyx-chip-x` `.nyx-command` `.nyx-dropzone` `.nyx-dz-icon` `.nyx-empty` `.nyx-empty-icon` `.nyx-gradient-border` `.nyx-marquee` `.nyx-meter` `.nyx-meter-fill` `.nyx-meter-track` `.nyx-meter-val` `.nyx-node` `.nyx-notification-dot` `.nyx-orbit` `.nyx-orbit-center` `.nyx-rating` `.nyx-ring` `.nyx-segment` `.nyx-spin` `.nyx-spotlight` `.nyx-timeline` `.nyx-tl-date` `.nyx-tl-dot` `.nyx-tl-item` `.nyx-track`
+
+### 11. MORE COMPONENTS (v1.0)
+`.nyx-btn` `.nyx-btn-split` `.nyx-calendar` `.nyx-calendar-foot` `.nyx-calendar-grid` `.nyx-calendar-head` `.nyx-dropdown` `.nyx-file` `.nyx-file-icon` `.nyx-file-meta` `.nyx-file-name` `.nyx-file-sub` `.nyx-otp` `.nyx-sparkline` `.nyx-stepper` `.nyx-tab` `.nyx-tabs` `.nyx-tabs-vertical` `.nyx-tag-input` `.nyx-toolbar` `.nyx-toolbar-sep` `.nyx-tree` `.nyx-tree-children` `.nyx-tree-label` `.nyx-tree-leaf`
+
+### 12. BIG TYPE & MOTION (v1.0)
+`.nyx-anim-blur` `.nyx-anim-bounce` `.nyx-anim-delay-1` `.nyx-anim-delay-2` `.nyx-anim-delay-3` `.nyx-anim-delay-4` `.nyx-anim-fade` `.nyx-anim-float` `.nyx-anim-heartbeat` `.nyx-anim-kenburns` `.nyx-anim-left` `.nyx-anim-ping` `.nyx-anim-pulse-glow` `.nyx-anim-right` `.nyx-anim-shake` `.nyx-anim-spin-slow` `.nyx-anim-underline` `.nyx-anim-up` `.nyx-anim-wiggle` `.nyx-anim-zoom` `.nyx-aurora` `.nyx-bigtype` `.nyx-bigtype-sm` `.nyx-font-ruqaa` `.nyx-glass-flare` `.nyx-gradient-text` `.nyx-hover-glow` `.nyx-hover-grow` `.nyx-hover-lift` `.nyx-hover-rotate` `.nyx-hover-shrink` `.nyx-in` `.nyx-reveal` `.nyx-spotlight-card`
+
+### 13. UTILITIES & HELPERS (v1.0)
+`.nyx-bg-accent` `.nyx-bg-glass` `.nyx-bg-surface` `.nyx-bg-surface-2` `.nyx-border` `.nyx-border-0` `.nyx-clearfix` `.nyx-d-block` `.nyx-d-flex` `.nyx-d-grid` `.nyx-d-inline` `.nyx-d-inline-block` `.nyx-d-inline-flex` `.nyx-d-lg-block` `.nyx-d-lg-flex` `.nyx-d-lg-grid` `.nyx-d-lg-inline` `.nyx-d-lg-inline-block` `.nyx-d-lg-inline-flex` `.nyx-d-lg-none` `.nyx-d-md-block` `.nyx-d-md-flex` `.nyx-d-md-grid` `.nyx-d-md-inline` `.nyx-d-md-inline-block` `.nyx-d-md-inline-flex` `.nyx-d-md-none` `.nyx-d-none` `.nyx-d-sm-block` `.nyx-d-sm-flex` `.nyx-d-sm-grid` `.nyx-d-sm-inline` `.nyx-d-sm-inline-block` `.nyx-d-sm-inline-flex` `.nyx-d-sm-none` `.nyx-d-xl-block` `.nyx-d-xl-flex` `.nyx-d-xl-grid` `.nyx-d-xl-inline` `.nyx-d-xl-inline-block` `.nyx-d-xl-inline-flex` `.nyx-d-xl-none` `.nyx-flex-lg-col` `.nyx-flex-lg-col-reverse` `.nyx-flex-lg-row` `.nyx-flex-lg-row-reverse` `.nyx-flex-md-col` `.nyx-flex-md-col-reverse` `.nyx-flex-md-row` `.nyx-flex-md-row-reverse` `.nyx-flex-sm-col` `.nyx-flex-sm-col-reverse` `.nyx-flex-sm-row` `.nyx-flex-sm-row-reverse` `.nyx-flex-xl-col` `.nyx-flex-xl-col-reverse` `.nyx-flex-xl-row` `.nyx-flex-xl-row-reverse` `.nyx-focus` `.nyx-focus-ring` `.nyx-font-body` `.nyx-font-display` `.nyx-font-mono` `.nyx-font-serif` `.nyx-fw-black` `.nyx-fw-bold` `.nyx-fw-extrabold` `.nyx-fw-light` `.nyx-fw-medium` `.nyx-fw-normal` `.nyx-fw-semibold` `.nyx-gap-lg-0` `.nyx-gap-lg-1` `.nyx-gap-lg-2` `.nyx-gap-lg-3` `.nyx-gap-lg-4` `.nyx-gap-lg-5` `.nyx-gap-lg-6` `.nyx-gap-md-0` `.nyx-gap-md-1` `.nyx-gap-md-2` `.nyx-gap-md-3` `.nyx-gap-md-4` `.nyx-gap-md-5` `.nyx-gap-md-6` `.nyx-gap-sm-0` `.nyx-gap-sm-1` `.nyx-gap-sm-2` `.nyx-gap-sm-3` `.nyx-gap-sm-4` `.nyx-gap-sm-5` `.nyx-gap-sm-6` `.nyx-gap-xl-0` `.nyx-gap-xl-1` `.nyx-gap-xl-2` `.nyx-gap-xl-3` `.nyx-gap-xl-4` `.nyx-gap-xl-5` `.nyx-gap-xl-6` `.nyx-h-100` `.nyx-hover` `.nyx-italic` `.nyx-items-lg-baseline` `.nyx-items-lg-center` `.nyx-items-lg-end` `.nyx-items-lg-start` `.nyx-items-lg-stretch` `.nyx-items-md-baseline` `.nyx-items-md-center` `.nyx-items-md-end` `.nyx-items-md-start` `.nyx-items-md-stretch` `.nyx-items-sm-baseline` `.nyx-items-sm-center` `.nyx-items-sm-end` `.nyx-items-sm-start` `.nyx-items-sm-stretch` `.nyx-items-xl-baseline` `.nyx-items-xl-center` `.nyx-items-xl-end` `.nyx-items-xl-start` `.nyx-items-xl-stretch` `.nyx-justify-lg-around` `.nyx-justify-lg-between` `.nyx-justify-lg-center` `.nyx-justify-lg-end` `.nyx-justify-lg-evenly` `.nyx-justify-lg-start` `.nyx-justify-md-around` `.nyx-justify-md-between` `.nyx-justify-md-center` `.nyx-justify-md-end` `.nyx-justify-md-evenly` `.nyx-justify-md-start` `.nyx-justify-sm-around` `.nyx-justify-sm-between` `.nyx-justify-sm-center` `.nyx-justify-sm-end` `.nyx-justify-sm-evenly` `.nyx-justify-sm-start` `.nyx-justify-xl-around` `.nyx-justify-xl-between` `.nyx-justify-xl-center` `.nyx-justify-xl-end` `.nyx-justify-xl-evenly` `.nyx-justify-xl-start` `.nyx-leading-loose` `.nyx-leading-none` `.nyx-leading-normal` `.nyx-leading-relaxed` `.nyx-leading-snug` `.nyx-leading-tight` `.nyx-line-clamp-1` `.nyx-line-clamp-2` `.nyx-line-clamp-3` `.nyx-m-0` `.nyx-m-1` `.nyx-m-2` `.nyx-m-3` `.nyx-m-4` `.nyx-m-5` `.nyx-m-6` `.nyx-m-lg-0` `.nyx-m-lg-1` `.nyx-m-lg-2` `.nyx-m-lg-3` `.nyx-m-lg-4` `.nyx-m-lg-5` `.nyx-m-lg-6` `.nyx-m-md-0` `.nyx-m-md-1` `.nyx-m-md-2` `.nyx-m-md-3` `.nyx-m-md-4` `.nyx-m-md-5` `.nyx-m-md-6` `.nyx-m-sm-0` `.nyx-m-sm-1` `.nyx-m-sm-2` `.nyx-m-sm-3` `.nyx-m-sm-4` `.nyx-m-sm-5` `.nyx-m-sm-6` `.nyx-m-xl-0` `.nyx-m-xl-1` `.nyx-m-xl-2` `.nyx-m-xl-3` `.nyx-m-xl-4` `.nyx-m-xl-5` `.nyx-m-xl-6` `.nyx-mb-0` `.nyx-mb-1` `.nyx-mb-2` `.nyx-mb-3` `.nyx-mb-4` `.nyx-mb-5` `.nyx-mb-6` `.nyx-mb-lg-0` `.nyx-mb-lg-1` `.nyx-mb-lg-2` `.nyx-mb-lg-3` `.nyx-mb-lg-4` `.nyx-mb-lg-5` `.nyx-mb-lg-6` `.nyx-mb-md-0` `.nyx-mb-md-1` `.nyx-mb-md-2` `.nyx-mb-md-3` `.nyx-mb-md-4` `.nyx-mb-md-5` `.nyx-mb-md-6` `.nyx-mb-sm-0` `.nyx-mb-sm-1` `.nyx-mb-sm-2` `.nyx-mb-sm-3` `.nyx-mb-sm-4` `.nyx-mb-sm-5` `.nyx-mb-sm-6` `.nyx-mb-xl-0` `.nyx-mb-xl-1` `.nyx-mb-xl-2` `.nyx-mb-xl-3` `.nyx-mb-xl-4` `.nyx-mb-xl-5` `.nyx-mb-xl-6` `.nyx-me-0` `.nyx-me-1` `.nyx-me-2` `.nyx-me-3` `.nyx-me-4` `.nyx-me-5` `.nyx-me-6` `.nyx-me-lg-0` `.nyx-me-lg-1` `.nyx-me-lg-2` `.nyx-me-lg-3` `.nyx-me-lg-4` `.nyx-me-lg-5` `.nyx-me-lg-6` `.nyx-me-md-0` `.nyx-me-md-1` `.nyx-me-md-2` `.nyx-me-md-3` `.nyx-me-md-4` `.nyx-me-md-5` `.nyx-me-md-6` `.nyx-me-sm-0` `.nyx-me-sm-1` `.nyx-me-sm-2` `.nyx-me-sm-3` `.nyx-me-sm-4` `.nyx-me-sm-5` `.nyx-me-sm-6` `.nyx-me-xl-0` `.nyx-me-xl-1` `.nyx-me-xl-2` `.nyx-me-xl-3` `.nyx-me-xl-4` `.nyx-me-xl-5` `.nyx-me-xl-6` `.nyx-ms-0` `.nyx-ms-1` `.nyx-ms-2` `.nyx-ms-3` `.nyx-ms-4` `.nyx-ms-5` `.nyx-ms-6` `.nyx-ms-lg-0` `.nyx-ms-lg-1` `.nyx-ms-lg-2` `.nyx-ms-lg-3` `.nyx-ms-lg-4` `.nyx-ms-lg-5` `.nyx-ms-lg-6` `.nyx-ms-md-0` `.nyx-ms-md-1` `.nyx-ms-md-2` `.nyx-ms-md-3` `.nyx-ms-md-4` `.nyx-ms-md-5` `.nyx-ms-md-6` `.nyx-ms-sm-0` `.nyx-ms-sm-1` `.nyx-ms-sm-2` `.nyx-ms-sm-3` `.nyx-ms-sm-4` `.nyx-ms-sm-5` `.nyx-ms-sm-6` `.nyx-ms-xl-0` `.nyx-ms-xl-1` `.nyx-ms-xl-2` `.nyx-ms-xl-3` `.nyx-ms-xl-4` `.nyx-ms-xl-5` `.nyx-ms-xl-6` `.nyx-mt-0` `.nyx-mt-1` `.nyx-mt-2` `.nyx-mt-3` `.nyx-mt-4` `.nyx-mt-5` `.nyx-mt-6` `.nyx-mt-lg-0` `.nyx-mt-lg-1` `.nyx-mt-lg-2` `.nyx-mt-lg-3` `.nyx-mt-lg-4` `.nyx-mt-lg-5` `.nyx-mt-lg-6` `.nyx-mt-md-0` `.nyx-mt-md-1` `.nyx-mt-md-2` `.nyx-mt-md-3` `.nyx-mt-md-4` `.nyx-mt-md-5` `.nyx-mt-md-6` `.nyx-mt-sm-0` `.nyx-mt-sm-1` `.nyx-mt-sm-2` `.nyx-mt-sm-3` `.nyx-mt-sm-4` `.nyx-mt-sm-5` `.nyx-mt-sm-6` `.nyx-mt-xl-0` `.nyx-mt-xl-1` `.nyx-mt-xl-2` `.nyx-mt-xl-3` `.nyx-mt-xl-4` `.nyx-mt-xl-5` `.nyx-mt-xl-6` `.nyx-mw-100` `.nyx-mx-auto` `.nyx-mx-lg-auto` `.nyx-mx-md-auto` `.nyx-mx-sm-auto` `.nyx-mx-xl-auto` `.nyx-no-underline` `.nyx-nums-slashed` `.nyx-nums-tabular` `.nyx-opacity-0` `.nyx-opacity-100` `.nyx-opacity-25` `.nyx-opacity-50` `.nyx-opacity-75` `.nyx-p-0` `.nyx-p-1` `.nyx-p-2` `.nyx-p-3` `.nyx-p-4` `.nyx-p-5` `.nyx-p-6` `.nyx-p-lg-0` `.nyx-p-lg-1` `.nyx-p-lg-2` `.nyx-p-lg-3` `.nyx-p-lg-4` `.nyx-p-lg-5` `.nyx-p-lg-6` `.nyx-p-md-0` `.nyx-p-md-1` `.nyx-p-md-2` `.nyx-p-md-3` `.nyx-p-md-4` `.nyx-p-md-5` `.nyx-p-md-6` `.nyx-p-sm-0` `.nyx-p-sm-1` `.nyx-p-sm-2` `.nyx-p-sm-3` `.nyx-p-sm-4` `.nyx-p-sm-5` `.nyx-p-sm-6` `.nyx-p-xl-0` `.nyx-p-xl-1` `.nyx-p-xl-2` `.nyx-p-xl-3` `.nyx-p-xl-4` `.nyx-p-xl-5` `.nyx-p-xl-6` `.nyx-pb-0` `.nyx-pb-1` `.nyx-pb-2` `.nyx-pb-3` `.nyx-pb-4` `.nyx-pb-5` `.nyx-pb-6` `.nyx-pb-lg-0` `.nyx-pb-lg-1` `.nyx-pb-lg-2` `.nyx-pb-lg-3` `.nyx-pb-lg-4` `.nyx-pb-lg-5` `.nyx-pb-lg-6` `.nyx-pb-md-0` `.nyx-pb-md-1` `.nyx-pb-md-2` `.nyx-pb-md-3` `.nyx-pb-md-4` `.nyx-pb-md-5` `.nyx-pb-md-6` `.nyx-pb-sm-0` `.nyx-pb-sm-1` `.nyx-pb-sm-2` `.nyx-pb-sm-3` `.nyx-pb-sm-4` `.nyx-pb-sm-5` `.nyx-pb-sm-6` `.nyx-pb-xl-0` `.nyx-pb-xl-1` `.nyx-pb-xl-2` `.nyx-pb-xl-3` `.nyx-pb-xl-4` `.nyx-pb-xl-5` `.nyx-pb-xl-6` `.nyx-pe-0` `.nyx-pe-1` `.nyx-pe-2` `.nyx-pe-3` `.nyx-pe-4` `.nyx-pe-5` `.nyx-pe-6` `.nyx-pe-lg-0` `.nyx-pe-lg-1` `.nyx-pe-lg-2` `.nyx-pe-lg-3` `.nyx-pe-lg-4` `.nyx-pe-lg-5` `.nyx-pe-lg-6` `.nyx-pe-md-0` `.nyx-pe-md-1` `.nyx-pe-md-2` `.nyx-pe-md-3` `.nyx-pe-md-4` `.nyx-pe-md-5` `.nyx-pe-md-6` `.nyx-pe-sm-0` `.nyx-pe-sm-1` `.nyx-pe-sm-2` `.nyx-pe-sm-3` `.nyx-pe-sm-4` `.nyx-pe-sm-5` `.nyx-pe-sm-6` `.nyx-pe-xl-0` `.nyx-pe-xl-1` `.nyx-pe-xl-2` `.nyx-pe-xl-3` `.nyx-pe-xl-4` `.nyx-pe-xl-5` `.nyx-pe-xl-6` `.nyx-position-absolute` `.nyx-position-fixed` `.nyx-position-relative` `.nyx-position-sticky` `.nyx-ps-0` `.nyx-ps-1` `.nyx-ps-2` `.nyx-ps-3` `.nyx-ps-4` `.nyx-ps-5` `.nyx-ps-6` `.nyx-ps-lg-0` `.nyx-ps-lg-1` `.nyx-ps-lg-2` `.nyx-ps-lg-3` `.nyx-ps-lg-4` `.nyx-ps-lg-5` `.nyx-ps-lg-6` `.nyx-ps-md-0` `.nyx-ps-md-1` `.nyx-ps-md-2` `.nyx-ps-md-3` `.nyx-ps-md-4` `.nyx-ps-md-5` `.nyx-ps-md-6` `.nyx-ps-sm-0` `.nyx-ps-sm-1` `.nyx-ps-sm-2` `.nyx-ps-sm-3` `.nyx-ps-sm-4` `.nyx-ps-sm-5` `.nyx-ps-sm-6` `.nyx-ps-xl-0` `.nyx-ps-xl-1` `.nyx-ps-xl-2` `.nyx-ps-xl-3` `.nyx-ps-xl-4` `.nyx-ps-xl-5` `.nyx-ps-xl-6` `.nyx-pt-0` `.nyx-pt-1` `.nyx-pt-2` `.nyx-pt-3` `.nyx-pt-4` `.nyx-pt-5` `.nyx-pt-6` `.nyx-pt-lg-0` `.nyx-pt-lg-1` `.nyx-pt-lg-2` `.nyx-pt-lg-3` `.nyx-pt-lg-4` `.nyx-pt-lg-5` `.nyx-pt-lg-6` `.nyx-pt-md-0` `.nyx-pt-md-1` `.nyx-pt-md-2` `.nyx-pt-md-3` `.nyx-pt-md-4` `.nyx-pt-md-5` `.nyx-pt-md-6` `.nyx-pt-sm-0` `.nyx-pt-sm-1` `.nyx-pt-sm-2` `.nyx-pt-sm-3` `.nyx-pt-sm-4` `.nyx-pt-sm-5` `.nyx-pt-sm-6` `.nyx-pt-xl-0` `.nyx-pt-xl-1` `.nyx-pt-xl-2` `.nyx-pt-xl-3` `.nyx-pt-xl-4` `.nyx-pt-xl-5` `.nyx-pt-xl-6` `.nyx-rounded` `.nyx-rounded-full` `.nyx-rounded-lg` `.nyx-rounded-sm` `.nyx-shadow` `.nyx-shadow-glow` `.nyx-shadow-lg` `.nyx-shadow-sm` `.nyx-stretched-link` `.nyx-strike` `.nyx-text-2xl` `.nyx-text-3xl` `.nyx-text-accent` `.nyx-text-accent-2` `.nyx-text-balance` `.nyx-text-base` `.nyx-text-break` `.nyx-text-capitalize` `.nyx-text-center` `.nyx-text-danger` `.nyx-text-end` `.nyx-text-lg` `.nyx-text-lg-center` `.nyx-text-lg-end` `.nyx-text-lg-start` `.nyx-text-lowercase` `.nyx-text-md-center` `.nyx-text-md-end` `.nyx-text-md-start` `.nyx-text-muted` `.nyx-text-nowrap` `.nyx-text-pretty` `.nyx-text-sm` `.nyx-text-sm-center` `.nyx-text-sm-end` `.nyx-text-sm-start` `.nyx-text-start` `.nyx-text-truncate` `.nyx-text-uppercase` `.nyx-text-warning` `.nyx-text-xl` `.nyx-text-xl-center` `.nyx-text-xl-end` `.nyx-text-xl-start` `.nyx-text-xs` `.nyx-tracking-normal` `.nyx-tracking-tight` `.nyx-tracking-wide` `.nyx-tracking-wider` `.nyx-underline` `.nyx-visually-hidden` `.nyx-vr` `.nyx-w-100` `.nyx-w-25` `.nyx-w-50` `.nyx-w-75` `.nyx-z-0` `.nyx-z-10` `.nyx-z-20` `.nyx-z-30` `.nyx-z-40` `.nyx-z-50` `.nyx-z-auto`
+
+### 14. HIERARCHY (v1.0) — file/org trees, vertical + horizontal
+`.nyx-collapsed` `.nyx-hcol` `.nyx-hierarchy` `.nyx-hierarchy-cols` `.nyx-hierarchy-node` `.nyx-hitem`
+
+### 15. REGIONAL — built for MENA (v1.0)
+`.nyx-datepair` `.nyx-prayer` `.nyx-prayer-times` `.nyx-price`
+
+### 16. FORMS+ (v1.0) — combobox, multi-select, phone, date picker
+`.nyx-calendar-grid` `.nyx-calendar-head` `.nyx-calendar-sel` `.nyx-combobox` `.nyx-combobox-empty` `.nyx-combobox-menu` `.nyx-combobox-opt` `.nyx-datepicker` `.nyx-datepicker-pop` `.nyx-multiselect` `.nyx-multiselect-control` `.nyx-multiselect-menu` `.nyx-multiselect-opt` `.nyx-phone`
+
+### 17. OVERLAYS+ (v1.0) — sheet, FAB, back-to-top, top progress, context menu
+`.nyx-context-menu` `.nyx-fab` `.nyx-fab-action` `.nyx-fab-actions` `.nyx-fab-btn` `.nyx-fab-label` `.nyx-fab-mini` `.nyx-sheet` `.nyx-sheet-grip` `.nyx-to-top` `.nyx-topbar`
+
+### 18. COMMERCE (v1.0) — product, cart, order, coupon, payment, address
+`.nyx-address` `.nyx-address-icon` `.nyx-cart-item` `.nyx-cart-meta` `.nyx-cart-thumb` `.nyx-coupon` `.nyx-order` `.nyx-order-row` `.nyx-pay` `.nyx-pay-check` `.nyx-pay-icon` `.nyx-pay-opt` `.nyx-product` `.nyx-product-body` `.nyx-product-foot` `.nyx-product-media` `.nyx-product-tag` `.nyx-product-title`
+
+### 19. REGIONAL+ (v1.0) — countdown, zakat, qibla, delivery tracking
+`.nyx-below-nisab` `.nyx-countdown` `.nyx-ddot` `.nyx-delivery` `.nyx-dmeta` `.nyx-dstep` `.nyx-dtime` `.nyx-dtitle` `.nyx-qibla` `.nyx-zakat` `.nyx-zakat-nisab-note` `.nyx-zakat-out`
+
+### 20. BACKGROUNDS (v1.0) — ambient gradient, grid & interactive layers
+`.nyx-bg-beams` `.nyx-bg-dots` `.nyx-bg-gradient` `.nyx-bg-grid` `.nyx-bg-mesh` `.nyx-bg-noise` `.nyx-bg-squares` `.nyx-bg-stars`
+
+### 21. CHARTS (v1.0) — zero-dep CSS + SVG data viz
+`.nyx-area` `.nyx-bar` `.nyx-chart-area` `.nyx-chart-bars` `.nyx-chart-donut` `.nyx-chart-legend` `.nyx-chart-line` `.nyx-chart-pie` `.nyx-donut` `.nyx-donut-val` `.nyx-dot` `.nyx-grid` `.nyx-legend` `.nyx-line` `.nyx-meter`
+
+### 22. CODE BLOCK (v1.0) — titled code window + syntax tokens + copy
+`.nyx-code-bar` `.nyx-code-block` `.nyx-code-copy` `.nyx-code-name` `.nyx-dot` `.nyx-tok-attr` `.nyx-tok-comment` `.nyx-tok-fn` `.nyx-tok-kw` `.nyx-tok-num` `.nyx-tok-str` `.nyx-tok-tag`
+
+### 23. BLOCKS (v1.0) — chat, slider, steps, testimonial, pricing, kanban, notifications
+`.nyx-bubble` `.nyx-bubble-meta` `.nyx-chat` `.nyx-cite` `.nyx-dragging` `.nyx-drop-over` `.nyx-kanban` `.nyx-kanban-card` `.nyx-kanban-col` `.nyx-notif` `.nyx-notif-body` `.nyx-notif-ico` `.nyx-notif-item` `.nyx-notif-time` `.nyx-price` `.nyx-price-card` `.nyx-price-feat` `.nyx-price-name` `.nyx-price-tag` `.nyx-pricing` `.nyx-quote` `.nyx-range` `.nyx-range-fill` `.nyx-range-out` `.nyx-range-track` `.nyx-slider` `.nyx-status-bar` `.nyx-step` `.nyx-steps` `.nyx-testimonial` `.nyx-typing`
+
+### 24. BLOCKS+ (v1.0) — gauge · ring · heatmap · stats · skeletons · nav · overlays · media · hijri
+`.nyx-bottom-nav` `.nyx-compare` `.nyx-compare-after` `.nyx-compare-handle` `.nyx-confirm-actions` `.nyx-confirm-box` `.nyx-dl` `.nyx-gallery` `.nyx-gauge` `.nyx-gauge-val` `.nyx-heatmap` `.nyx-heatmap-body` `.nyx-heatmap-container` `.nyx-heatmap-grid-wrapper` `.nyx-heatmap-header` `.nyx-heatmap-legend` `.nyx-heatmap-months` `.nyx-heatmap-title` `.nyx-heatmap-weekdays` `.nyx-lightbox` `.nyx-lightbox-close` `.nyx-lightbox-next` `.nyx-lightbox-prev` `.nyx-megamenu` `.nyx-megamenu-col` `.nyx-megamenu-panel` `.nyx-modal` `.nyx-out` `.nyx-progress-ring` `.nyx-skeleton` `.nyx-skeleton-card` `.nyx-skeleton-circle` `.nyx-skeleton-lines` `.nyx-skeleton-media` `.nyx-skeleton-row` `.nyx-skeleton-text` `.nyx-snackbar` `.nyx-snackbar-action` `.nyx-snackbar-msg` `.nyx-snackbar-wrap` `.nyx-stat-card` `.nyx-stat-delta` `.nyx-stat-label` `.nyx-stat-num` `.nyx-stat-top` `.nyx-video` `.nyx-video-play`
+
+### RTL — flips for physical properties not covered by logical CSS
+`.nyx-bigtype` `.nyx-drawer` `.nyx-drawer-left` `.nyx-dropcap` `.nyx-marquee` `.nyx-out` `.nyx-phone` `.nyx-select` `.nyx-smallcaps` `.nyx-tip` `.nyx-toast` `.nyx-toast-wrap` `.nyx-tooltip` `.nyx-track` `.nyx-tracking-tight` `.nyx-tracking-wide` `.nyx-tracking-wider`
+
+### 25. MEDIA
+`.nyx-image` `.nyx-image--ratio-1-1` `.nyx-image--ratio-16-9` `.nyx-image--ratio-4-3`
+
+### 26. ENHANCEMENTS
+`.nyx-anim-cascade` `.nyx-btn` `.nyx-card` `.nyx-cursor-follower` `.nyx-magnetic` `.nyx-nav-indicator` `.nyx-navbar-sticky` `.nyx-password-wrapper` `.nyx-scroll-progress` `.nyx-segmented` `.nyx-shiny-btn` `.nyx-shiny-card` `.nyx-spotlight-group` `.nyx-strength-bar` `.nyx-strength-fill` `.nyx-strength-text`
+
+### 3D Tilt Card (.nyx-tilt)
+`.nyx-tilt` `.nyx-tilt-layer`
+
+### Typewriter Effect (.nyx-typewriter)
+`.nyx-typewriter` `.nyx-typing-done`
+
+### Glitch Text Effect (.nyx-glitch)
+`.nyx-glitch` `.nyx-tilt` `.nyx-typewriter`
+
+### 27. REGIONAL++ (v1.1) — KSA forms & finance: BNPL, e-invoice, ID, name, address, region
+`.nyx-bnpl` `.nyx-bnpl-brand` `.nyx-bnpl-plan` `.nyx-bnpl-step` `.nyx-field` `.nyx-id-flag` `.nyx-id-input` `.nyx-id-type` `.nyx-input` `.nyx-invoice` `.nyx-invoice-brand` `.nyx-invoice-head` `.nyx-invoice-meta` `.nyx-invoice-qr` `.nyx-invoice-stamp` `.nyx-invoice-totals` `.nyx-name-ar` `.nyx-national-address` `.nyx-natl-short` `.nyx-region-select` `.nyx-rs-pin` `.nyx-select`
+
+### 28. HIJRI (v1.1) — Hijri ⇄ Gregorian converter + today's date
+`.nyx-hc-arrow` `.nyx-hc-fields` `.nyx-hc-label` `.nyx-hc-out` `.nyx-hc-row` `.nyx-hijri-convert`
+
+### 29. DATA+ (v1.1) — descriptions (label→value grid) + watermark
+`.nyx-desc-item` `.nyx-desc-label` `.nyx-desc-value` `.nyx-descriptions` `.nyx-watermark` `.nyx-watermark-layer`
+
+### 30. FEEDBACK+ (v1.1) — result / status screen + corner ribbon
+`.nyx-result` `.nyx-result-actions` `.nyx-result-icon` `.nyx-result-text` `.nyx-result-title` `.nyx-ribbon` `.nyx-ribbon-start`
+
+### 31. LAYOUT+ (v1.1) — masonry columns
+`.nyx-masonry`
+
+### 32. FORMS++ (v1.2) — color picker
+`.nyx-color-dot` `.nyx-color-hex` `.nyx-color-swatch` `.nyx-color-swatches` `.nyx-colorpicker`
+
+### 33. CHARTS+ (v1.2) — radar / spider chart
+`.nyx-chart-radar` `.nyx-radar-area` `.nyx-radar-axis` `.nyx-radar-dot` `.nyx-radar-grid` `.nyx-radar-label` `.nyx-radar-line`
+
+### 34. OVERLAYS++ (v1.2) — product tour / coachmarks
+`.nyx-tour-actions` `.nyx-tour-overlay` `.nyx-tour-pop` `.nyx-tour-pop-foot` `.nyx-tour-pop-text` `.nyx-tour-pop-title` `.nyx-tour-spot` `.nyx-tour-step`
+
+### 35. LAYOUT++ (v1.2) — resizable split panes + affix
+`.nyx-affix` `.nyx-dragging` `.nyx-split` `.nyx-split-bar` `.nyx-split-pane` `.nyx-split-v`

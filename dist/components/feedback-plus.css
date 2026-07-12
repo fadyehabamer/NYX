@@ -1,0 +1,36 @@
+/*! Nyx · feedback-plus.css · v1.1.0 · MIT
+ * The feedback-plus module. Requires tokens.css.
+ * Bundle: src/nyx.css   Docs: docs/docs.html
+ */
+/* ============================================================
+   30. FEEDBACK+ (v1.1) — result / status screen + corner ribbon
+   ============================================================ */
+/* result — full status screen. data-status = success|error|warning|info|403|404|500
+   drives the icon glyph + accent. Compose with .nyx-result-actions for buttons. */
+.nyx-result{text-align:center;padding:var(--nyx-s7) var(--nyx-s5);max-width:520px;margin-inline:auto}
+.nyx-result-icon{width:72px;height:72px;margin:0 auto var(--nyx-s4);border-radius:50%;display:grid;place-items:center;font-size:36px;line-height:1;font-weight:800;background:var(--nyx-surface-2);color:var(--nyx-text-muted)}
+.nyx-result-icon::before{content:"•"}
+.nyx-result[data-status="success"] .nyx-result-icon{color:var(--nyx-success);background:color-mix(in srgb,var(--nyx-success) 15%,transparent)}
+.nyx-result[data-status="success"] .nyx-result-icon::before{content:"✓"}
+.nyx-result[data-status="error"] .nyx-result-icon,.nyx-result[data-status="500"] .nyx-result-icon{color:var(--nyx-danger);background:color-mix(in srgb,var(--nyx-danger) 15%,transparent)}
+.nyx-result[data-status="error"] .nyx-result-icon::before,.nyx-result[data-status="500"] .nyx-result-icon::before{content:"✕"}
+.nyx-result[data-status="warning"] .nyx-result-icon,.nyx-result[data-status="403"] .nyx-result-icon{color:var(--nyx-warning);background:color-mix(in srgb,var(--nyx-warning) 15%,transparent)}
+.nyx-result[data-status="warning"] .nyx-result-icon::before,.nyx-result[data-status="403"] .nyx-result-icon::before{content:"⚠"}
+.nyx-result[data-status="info"] .nyx-result-icon{color:var(--nyx-accent);background:color-mix(in srgb,var(--nyx-accent) 15%,transparent)}
+.nyx-result[data-status="info"] .nyx-result-icon::before{content:"i"}
+.nyx-result[data-status="404"] .nyx-result-icon::before{content:"404";font-size:20px}
+.nyx-result-title{font-family:var(--nyx-font-display);font-weight:700;font-size:var(--nyx-fs-xl);margin-bottom:var(--nyx-s2)}
+.nyx-result-text{color:var(--nyx-text-muted);margin-bottom:var(--nyx-s5)}
+.nyx-result-actions{display:flex;gap:var(--nyx-s3);justify-content:center;flex-wrap:wrap}
+
+/* ribbon — corner banner on a position:relative container (e.g. a card).
+   Text from data-ribbon. .nyx-ribbon-start flips to the leading corner;
+   .success/.danger recolor. Angle is mirrored under dir=rtl. */
+.nyx-ribbon{position:absolute;top:0;inset-inline-end:0;width:90px;height:90px;overflow:hidden;pointer-events:none;z-index:3}
+.nyx-ribbon::before{content:attr(data-ribbon);position:absolute;top:15px;inset-inline-end:-26px;width:130px;padding:5px 0;text-align:center;transform:rotate(45deg);background:linear-gradient(135deg,var(--nyx-accent),var(--nyx-accent-2));color:#fff;font-size:var(--nyx-fs-xs);font-weight:700;letter-spacing:.03em;box-shadow:var(--nyx-shadow-sm)}
+.nyx-ribbon-start{inset-inline-end:auto;inset-inline-start:0}
+.nyx-ribbon-start::before{inset-inline-end:auto;inset-inline-start:-26px;transform:rotate(-45deg)}
+.nyx-ribbon.success::before{background:linear-gradient(135deg,var(--nyx-success),color-mix(in srgb,var(--nyx-success) 55%,#000))}
+.nyx-ribbon.danger::before{background:linear-gradient(135deg,var(--nyx-danger),color-mix(in srgb,var(--nyx-danger) 55%,#000))}
+[dir="rtl"] .nyx-ribbon::before{transform:rotate(-45deg)}
+[dir="rtl"] .nyx-ribbon-start::before{transform:rotate(45deg)}

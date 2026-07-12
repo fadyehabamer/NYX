@@ -1,0 +1,3129 @@
+/*! Nyx v1.1.0 · MIT · ESM (default export → Nyx) */
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __commonJS = (cb, mod) => function __require() {
+  try {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  } catch (e) {
+    throw mod = 0, e;
+  }
+};
+
+// src/nyx.js
+var require_nyx = __commonJS({
+  "src/nyx.js"(exports, module) {
+    ((root, factory) => {
+      if (typeof module === "object" && module.exports) module.exports = factory();
+      else root.Nyx = factory();
+    })(typeof self !== "undefined" ? self : exports, () => {
+      "use strict";
+      const doc = document, docEl = doc.documentElement;
+      function $(sel, ctx) {
+        return (ctx || doc).querySelector(sel);
+      }
+      function $$(sel, ctx) {
+        return Array.prototype.slice.call((ctx || doc).querySelectorAll(sel));
+      }
+      function el(node) {
+        return typeof node === "string" ? $(node) : node;
+      }
+      function store(k, v) {
+        try {
+          localStorage.setItem(k, v);
+        } catch (e) {
+        }
+      }
+      function read(k) {
+        try {
+          return localStorage.getItem(k);
+        } catch (e) {
+          return null;
+        }
+      }
+      function prefersReducedMotion() {
+        try {
+          return matchMedia("(prefers-reduced-motion: reduce)").matches;
+        } catch (e) {
+          return false;
+        }
+      }
+      let _mqlDark = null, _mqlHandler = null;
+      function resolveTheme(t) {
+        if (t !== "auto") return t;
+        try {
+          return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        } catch (e) {
+          return "dark";
+        }
+      }
+      function watchAutoTheme(on) {
+        try {
+          if (!_mqlDark) _mqlDark = matchMedia("(prefers-color-scheme: dark)");
+          if (_mqlHandler) {
+            if (_mqlDark.removeEventListener) _mqlDark.removeEventListener("change", _mqlHandler);
+            else if (_mqlDark.removeListener) _mqlDark.removeListener(_mqlHandler);
+            _mqlHandler = null;
+          }
+          if (on) {
+            _mqlHandler = () => {
+              if (read("nyx-theme") === "auto") docEl.setAttribute("data-theme", _mqlDark.matches ? "dark" : "light");
+            };
+            if (_mqlDark.addEventListener) _mqlDark.addEventListener("change", _mqlHandler);
+            else if (_mqlDark.addListener) _mqlDark.addListener(_mqlHandler);
+          }
+        } catch (e) {
+        }
+      }
+      function setTheme(t) {
+        store("nyx-theme", t);
+        docEl.setAttribute("data-theme", resolveTheme(t));
+        watchAutoTheme(t === "auto");
+      }
+      function toggleTheme() {
+        setTheme(docEl.getAttribute("data-theme") === "light" ? "dark" : "light");
+      }
+      function setDir(d) {
+        docEl.setAttribute("dir", d);
+        store("nyx-dir", d);
+      }
+      function toggleDir() {
+        setDir(docEl.getAttribute("dir") === "rtl" ? "ltr" : "rtl");
+      }
+      function setAccent(a) {
+        if (a && a !== "violet") docEl.setAttribute("data-accent", a);
+        else docEl.removeAttribute("data-accent");
+        store("nyx-accent", a || "violet");
+      }
+      (function applySaved() {
+        const t = read("nyx-theme");
+        if (t) {
+          docEl.setAttribute("data-theme", resolveTheme(t));
+          if (t === "auto") watchAutoTheme(true);
+        }
+        const d = read("nyx-dir");
+        if (d) docEl.setAttribute("dir", d);
+        const a = read("nyx-accent");
+        if (a && a !== "violet") docEl.setAttribute("data-accent", a);
+      })();
+      let _backdrop = null;
+      function backdrop() {
+        if (!_backdrop) {
+          _backdrop = doc.createElement("div");
+          _backdrop.className = "nyx-overlay";
+          _backdrop.setAttribute("data-nyx-backdrop", "");
+          _backdrop.addEventListener("click", closeAll);
+          doc.body.appendChild(_backdrop);
+        }
+        return _backdrop;
+      }
+      function lockScroll(on) {
+        doc.body.style.overflow = on ? "hidden" : "";
+      }
+      let _lastFocus = null;
+      const FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+      function focusables(c) {
+        return $$(FOCUSABLE, c).filter((e) => e.offsetWidth > 0 || e.offsetHeight > 0 || e === doc.activeElement);
+      }
+      function currentOverlay() {
+        return $(".nyx-modal.open") || $(".nyx-sheet.open") || $(".nyx-drawer.open") || $(".nyx-command-palette.open");
+      }
+      function releaseFocus() {
+        const l = _lastFocus;
+        _lastFocus = null;
+        if (l && l.focus) setTimeout(() => {
+          try {
+            l.focus();
+          } catch (e) {
+          }
+        }, 0);
+      }
+      let _uid = 0;
+      function applyInert() {
+        $$("body > *").forEach((n) => {
+          if (n === _backdrop || n.classList.contains("nyx-modal") || n.classList.contains("nyx-drawer") || n.classList.contains("nyx-sheet") || n.classList.contains("nyx-command-palette")) return;
+          if (!n.hasAttribute("inert")) {
+            n.setAttribute("inert", "");
+            n.setAttribute("data-nyx-inert", "");
+          }
+        });
+      }
+      function clearInert() {
+        $$("[data-nyx-inert]").forEach((n) => {
+          n.removeAttribute("inert");
+          n.removeAttribute("data-nyx-inert");
+        });
+      }
+      function dialogSemantics(m) {
+        const dlg = m.classList.contains("nyx-modal") ? m.querySelector(".nyx-modal-box") || m : m;
+        dlg.setAttribute("role", "dialog");
+        dlg.setAttribute("aria-modal", "true");
+        if (!dlg.getAttribute("aria-label") && !dlg.getAttribute("aria-labelledby")) {
+          const h = dlg.querySelector(".nyx-modal-title, .nyx-drawer-title, .nyx-sheet-title, [data-nyx-dialog-title], h1, h2, h3");
+          if (h) {
+            if (!h.id) h.id = "nyx-dlg-" + ++_uid;
+            dlg.setAttribute("aria-labelledby", h.id);
+          }
+        }
+      }
+      function emitBefore(node, name) {
+        return node.dispatchEvent(new CustomEvent(name, { bubbles: true, cancelable: true }));
+      }
+      function afterTransition(node, cb) {
+        let done = false, timer = 0;
+        const fin = () => {
+          if (done) return;
+          done = true;
+          node.removeEventListener("transitionend", onEnd);
+          node.removeEventListener("animationend", onEnd);
+          if (timer) clearTimeout(timer);
+          cb();
+        };
+        const onEnd = (e) => {
+          if (e.target === node || e.target.parentNode === node) fin();
+        };
+        node.addEventListener("transitionend", onEnd);
+        node.addEventListener("animationend", onEnd);
+        timer = setTimeout(fin, 400);
+      }
+      function overlayType(n) {
+        return n.classList.contains("nyx-drawer") ? "drawer" : n.classList.contains("nyx-sheet") ? "sheet" : "modal";
+      }
+      function openModal(target) {
+        const m = el(target);
+        if (!m) return;
+        const type = overlayType(m);
+        if (!emitBefore(m, "nyx:" + type + "-before-show")) return;
+        if (!_lastFocus) _lastFocus = doc.activeElement;
+        backdrop().classList.add("open");
+        m.classList.add("open");
+        dialogSemantics(m);
+        applyInert();
+        lockScroll(true);
+        const f = focusables(m);
+        if (f.length) setTimeout(() => {
+          f[0].focus();
+        }, 60);
+        m.dispatchEvent(new CustomEvent("nyx:" + type + "-show", { bubbles: true }));
+        afterTransition(m, () => m.dispatchEvent(new CustomEvent("nyx:" + type + "-shown", { bubbles: true })));
+      }
+      const openDrawer = openModal;
+      function close(target) {
+        const t = el(target);
+        if (!t) return;
+        const type = overlayType(t);
+        if (!emitBefore(t, "nyx:" + type + "-before-hide")) return;
+        t.classList.remove("open");
+        t.dispatchEvent(new CustomEvent("nyx:" + type + "-hide", { bubbles: true }));
+        afterTransition(t, () => t.dispatchEvent(new CustomEvent("nyx:" + type + "-hidden", { bubbles: true })));
+        if (!currentOverlay()) {
+          if (_backdrop) _backdrop.classList.remove("open");
+          lockScroll(false);
+          clearInert();
+          releaseFocus();
+        }
+      }
+      function closeAll() {
+        $$(".nyx-modal.open, .nyx-drawer.open, .nyx-sheet.open").forEach((n) => {
+          const type = overlayType(n);
+          if (!emitBefore(n, "nyx:" + type + "-before-hide")) return;
+          n.classList.remove("open");
+          n.dispatchEvent(new CustomEvent("nyx:" + type + "-hide", { bubbles: true }));
+          afterTransition(n, () => n.dispatchEvent(new CustomEvent("nyx:" + type + "-hidden", { bubbles: true })));
+        });
+        closeCommandPalette();
+        if (!currentOverlay()) {
+          if (_backdrop) _backdrop.classList.remove("open");
+          lockScroll(false);
+          clearInert();
+          releaseFocus();
+        }
+      }
+      function togglePopover(node, forceState) {
+        let p = el(node);
+        if (!p) return;
+        if (!p.classList.contains("nyx-popover")) p = p.closest(".nyx-popover");
+        if (!p) return;
+        const willOpen = forceState !== void 0 ? forceState : !p.classList.contains("open");
+        if (willOpen) {
+          if (p.classList.contains("open")) return;
+          if (!emitBefore(p, "nyx:popover-before-show")) return;
+          $$(".nyx-popover.open").forEach((o) => {
+            if (o !== p) {
+              o.classList.remove("open");
+              const ofl = floatFor(o);
+              if (ofl) floatClose(ofl.floating);
+              o.dispatchEvent(new CustomEvent("nyx:popover-hide", { bubbles: true }));
+            }
+          });
+          p.classList.add("open");
+          const fl = floatFor(p);
+          if (fl) floatOpen(fl.anchor, fl.floating, fl.placement);
+          p.dispatchEvent(new CustomEvent("nyx:popover-show", { bubbles: true }));
+          afterTransition(p, () => p.dispatchEvent(new CustomEvent("nyx:popover-shown", { bubbles: true })));
+        } else {
+          if (p.classList.contains("open")) {
+            if (!emitBefore(p, "nyx:popover-before-hide")) return;
+            p.classList.remove("open");
+            const fl = floatFor(p);
+            if (fl) floatClose(fl.floating);
+            p.dispatchEvent(new CustomEvent("nyx:popover-hide", { bubbles: true }));
+            afterTransition(p, () => p.dispatchEvent(new CustomEvent("nyx:popover-hidden", { bubbles: true })));
+          }
+        }
+        const trg = p.querySelector('[data-nyx-toggle="popover"]');
+        if (trg) trg.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      }
+      const _instances = /* @__PURE__ */ new WeakMap();
+      function makeInstance(node, setOpen, isOpen) {
+        const api = {
+          el: node,
+          show() {
+            setOpen(true);
+            return api;
+          },
+          hide() {
+            setOpen(false);
+            return api;
+          },
+          toggle() {
+            setOpen(!isOpen());
+            return api;
+          },
+          dispose() {
+            _instances.delete(node);
+          }
+        };
+        return api;
+      }
+      function matchesSel(node, sel) {
+        return node.matches ? node.matches(sel) : false;
+      }
+      function instanceFor(node) {
+        if (node.classList.contains("nyx-popover"))
+          return makeInstance(node, (s) => togglePopover(node, s), () => node.classList.contains("open"));
+        if (matchesSel(node, '[data-nyx-toggle="collapse"]'))
+          return makeInstance(node, (s) => toggleCollapse(node, s), () => {
+            const t = el(node.getAttribute("data-nyx-target"));
+            return !!(t && t.classList.contains("open"));
+          });
+        if (node.classList.contains("nyx-dropdown") || matchesSel(node, '[data-nyx-toggle="dropdown"]')) {
+          const dd = node.classList.contains("nyx-dropdown") ? node : node.closest(".nyx-dropdown");
+          return makeInstance(dd || node, (s) => toggleDropdown(dd || node, s), () => !!dd && dd.classList.contains("open"));
+        }
+        if (matchesSel(node, "[data-nyx-tab]")) {
+          const api = { el: node, show() {
+            activateTab(node);
+            return api;
+          }, hide() {
+            return api;
+          }, toggle() {
+            activateTab(node);
+            return api;
+          }, dispose() {
+            _instances.delete(node);
+          } };
+          return api;
+        }
+        if (node.classList.contains("nyx-carousel")) {
+          const c = carousel(node);
+          if (!c) return null;
+          const api = { el: node, next() {
+            c.next();
+            return api;
+          }, prev() {
+            c.prev();
+            return api;
+          }, to(i) {
+            c.to(i);
+            return api;
+          }, dispose() {
+            c.dispose();
+            _instances.delete(node);
+          } };
+          return api;
+        }
+        if (node.classList.contains("nyx-modal") || node.classList.contains("nyx-drawer") || node.classList.contains("nyx-sheet"))
+          return makeInstance(node, (s) => s ? openModal(node) : close(node), () => node.classList.contains("open"));
+        return null;
+      }
+      function canonicalEl(n) {
+        if (n && !n.classList.contains("nyx-dropdown") && matchesSel(n, '[data-nyx-toggle="dropdown"]')) {
+          const dd = n.closest && n.closest(".nyx-dropdown");
+          if (dd) return dd;
+        }
+        return n;
+      }
+      function getInstance(target) {
+        const n = canonicalEl(el(target));
+        return n && _instances.get(n) || null;
+      }
+      function getOrCreateInstance(target) {
+        const n = canonicalEl(el(target));
+        if (!n) return null;
+        if (!_instances.has(n)) {
+          const api = instanceFor(n);
+          if (!api) return null;
+          _instances.set(n, api);
+        }
+        return _instances.get(n);
+      }
+      function carousel(target) {
+        const car = el(target);
+        if (!car || !car.classList.contains("nyx-carousel")) return null;
+        const api = {
+          el: car,
+          next() {
+            carouselStep(car, "next");
+            return api;
+          },
+          prev() {
+            carouselStep(car, "prev");
+            return api;
+          },
+          to(i) {
+            const n = $$(".nyx-slide", car).length;
+            if (n) carouselSet(car, Math.max(0, Math.min(i | 0, n - 1)));
+            return api;
+          },
+          dispose() {
+            if (car._nyxCarStop) car._nyxCarStop();
+          }
+          // stop autoplay if running
+        };
+        return api;
+      }
+      function position(anchor, floating, opts) {
+        opts = opts || {};
+        const a = el(anchor), f = el(floating);
+        if (!a || !f || !a.getBoundingClientRect) return null;
+        const parts = (opts.placement || "bottom").split("-");
+        const side0 = parts[0], align = parts[1];
+        const offset = opts.offset != null ? opts.offset : 8;
+        const pad2 = opts.padding != null ? opts.padding : 8;
+        const rtl = docEl.getAttribute("dir") === "rtl";
+        f.style.position = "fixed";
+        f.style.bottom = "auto";
+        f.style.right = "auto";
+        f.style.marginInline = "0";
+        const ar = a.getBoundingClientRect();
+        const fr = f.getBoundingClientRect();
+        const vw = docEl.clientWidth || 0, vh = docEl.clientHeight || 0;
+        const opp = { top: "bottom", bottom: "top", left: "right", right: "left" };
+        const room = { top: ar.top, bottom: vh - ar.bottom, left: ar.left, right: vw - ar.right };
+        const vertical = side0 === "top" || side0 === "bottom";
+        const need = (vertical ? fr.height : fr.width) + offset;
+        let side = side0;
+        if (room[side] < need && room[opp[side]] > room[side]) side = opp[side];
+        let top, left;
+        if (side === "bottom") top = ar.bottom + offset;
+        else if (side === "top") top = ar.top - fr.height - offset;
+        else if (side === "right") left = ar.right + offset;
+        else left = ar.left - fr.width - offset;
+        if (side === "top" || side === "bottom") {
+          const al = rtl ? align === "start" ? "end" : align === "end" ? "start" : align : align;
+          left = al === "start" ? ar.left : al === "end" ? ar.right - fr.width : ar.left + (ar.width - fr.width) / 2;
+          left = Math.max(pad2, Math.min(left, vw - fr.width - pad2));
+        } else {
+          top = align === "start" ? ar.top : align === "end" ? ar.bottom - fr.height : ar.top + (ar.height - fr.height) / 2;
+          top = Math.max(pad2, Math.min(top, vh - fr.height - pad2));
+        }
+        top = Math.round(top);
+        left = Math.round(left);
+        f.style.top = top + "px";
+        f.style.left = left + "px";
+        const finalPlacement = side + (align ? "-" + align : "");
+        f.setAttribute("data-nyx-placement", finalPlacement);
+        return { top, left, placement: finalPlacement };
+      }
+      function floatOpen(anchor, floating, placement) {
+        if (!anchor || !floating) return;
+        if (floating._nyxUnfloat) floating._nyxUnfloat();
+        let frame = 0;
+        const place = () => {
+          frame = 0;
+          position(anchor, floating, { placement });
+        };
+        const reposition = () => {
+          if (!frame) frame = requestAnimationFrame(place);
+        };
+        position(anchor, floating, { placement });
+        const listen = { capture: true, passive: true };
+        window.addEventListener("scroll", reposition, listen);
+        window.addEventListener("resize", reposition, listen);
+        floating._nyxUnfloat = () => {
+          if (frame) cancelAnimationFrame(frame);
+          window.removeEventListener("scroll", reposition, listen);
+          window.removeEventListener("resize", reposition, listen);
+          floating.style.position = "";
+          floating.style.top = "";
+          floating.style.left = "";
+          floating.style.bottom = "";
+          floating.style.right = "";
+          floating.style.marginInline = "";
+          floating.removeAttribute("data-nyx-placement");
+          floating._nyxUnfloat = null;
+        };
+      }
+      function floatClose(floating) {
+        if (floating && floating._nyxUnfloat) floating._nyxUnfloat();
+      }
+      function floatFor(container) {
+        if (!container || !container.hasAttribute || !container.hasAttribute("data-nyx-float")) return null;
+        const isDrop = container.classList.contains("nyx-dropdown");
+        const anchor = container.querySelector(isDrop ? '[data-nyx-toggle="dropdown"]' : '[data-nyx-toggle="popover"]');
+        const floating = container.querySelector(isDrop ? ".nyx-dropdown-menu" : ".nyx-pop");
+        if (!anchor || !floating) return null;
+        return { anchor, floating, placement: container.getAttribute("data-nyx-float") || (isDrop ? "bottom-start" : "bottom") };
+      }
+      function closeDropdowns(except) {
+        $$(".nyx-dropdown.open").forEach((d) => {
+          if (d !== except) {
+            d.classList.remove("open");
+            const tg = d.querySelector('[data-nyx-toggle="dropdown"]');
+            if (tg) tg.setAttribute("aria-expanded", "false");
+            const fl = floatFor(d);
+            if (fl) floatClose(fl.floating);
+          }
+        });
+      }
+      function toggleDropdown(node, force) {
+        const dd = node && (node.classList.contains("nyx-dropdown") ? node : node.closest ? node.closest(".nyx-dropdown") : null);
+        if (!dd) return;
+        const isOpen = dd.classList.contains("open");
+        const willOpen = force === void 0 ? !isOpen : !!force;
+        if (willOpen === isOpen) return;
+        if (!emitBefore(dd, willOpen ? "nyx:dropdown-before-show" : "nyx:dropdown-before-hide")) return;
+        if (willOpen) closeDropdowns(dd);
+        dd.classList.toggle("open", willOpen);
+        const fl = floatFor(dd);
+        if (fl) {
+          if (willOpen) floatOpen(fl.anchor, fl.floating, fl.placement);
+          else floatClose(fl.floating);
+        }
+        const tg = dd.querySelector('[data-nyx-toggle="dropdown"]');
+        if (tg) tg.setAttribute("aria-expanded", willOpen ? "true" : "false");
+        dd.dispatchEvent(new CustomEvent(willOpen ? "nyx:dropdown-show" : "nyx:dropdown-hide", { bubbles: true }));
+        afterTransition(dd, () => dd.dispatchEvent(new CustomEvent(willOpen ? "nyx:dropdown-shown" : "nyx:dropdown-hidden", { bubbles: true })));
+        if (willOpen) {
+          const fi = dd.querySelector(".nyx-dropdown-item");
+          if (fi) setTimeout(() => {
+            fi.focus();
+          }, 20);
+        }
+      }
+      function paletteEl() {
+        return $(".nyx-command-palette");
+      }
+      function openCommandPalette() {
+        const cp = paletteEl();
+        if (!cp) return;
+        if (!_lastFocus) _lastFocus = doc.activeElement;
+        cp.classList.add("open");
+        applyInert();
+        lockScroll(true);
+        const inp = cp.querySelector("input");
+        if (inp) {
+          inp.value = "";
+          inp.dispatchEvent(new Event("input", { bubbles: true }));
+          setTimeout(() => {
+            inp.focus();
+          }, 60);
+        }
+        cp.dispatchEvent(new CustomEvent("nyx:palette-show", { bubbles: true }));
+      }
+      function closeCommandPalette() {
+        const cp = paletteEl();
+        if (cp && cp.classList.contains("open")) {
+          cp.classList.remove("open");
+          cp.dispatchEvent(new CustomEvent("nyx:palette-hide", { bubbles: true }));
+        }
+        if (!currentOverlay()) {
+          lockScroll(false);
+          clearInert();
+          releaseFocus();
+        }
+      }
+      function initPalette(root) {
+        $$(".nyx-command-palette", root).filter((cp) => !cp._nyxCp).forEach((cp) => {
+          cp._nyxCp = true;
+          if (!cp.getAttribute("role")) {
+            cp.setAttribute("role", "dialog");
+            cp.setAttribute("aria-modal", "true");
+          }
+          if (!cp.getAttribute("aria-label") && !cp.getAttribute("aria-labelledby")) cp.setAttribute("aria-label", "Command palette");
+          const input = cp.querySelector(".nyx-cp-input input"), list = cp.querySelector(".nyx-cp-list");
+          if (!input || !list) return;
+          const items = $$(".nyx-cp-item", list);
+          if (!list.id) list.id = "nyx-cp-list-" + ++_uid;
+          list.setAttribute("role", "listbox");
+          input.setAttribute("role", "combobox");
+          input.setAttribute("aria-controls", list.id);
+          input.setAttribute("aria-expanded", "true");
+          input.setAttribute("aria-autocomplete", "list");
+          items.forEach((it) => {
+            it.setAttribute("role", "option");
+            it.setAttribute("aria-selected", "false");
+            if (!it.id) it.id = "nyx-cp-opt-" + ++_uid;
+          });
+          function visible() {
+            return items.filter((it) => it.style.display !== "none");
+          }
+          function setActive(it) {
+            items.forEach((o) => {
+              o.classList.remove("active");
+              o.setAttribute("aria-selected", "false");
+            });
+            if (it) {
+              it.classList.add("active");
+              it.setAttribute("aria-selected", "true");
+              input.setAttribute("aria-activedescendant", it.id);
+              it.scrollIntoView({ block: "nearest" });
+            } else input.removeAttribute("aria-activedescendant");
+          }
+          input.addEventListener("input", () => {
+            const q = input.value.trim().toLowerCase();
+            items.forEach((it) => {
+              it.style.display = !q || it.textContent.toLowerCase().includes(q) ? "" : "none";
+            });
+            setActive(visible()[0] || null);
+          });
+          input.addEventListener("keydown", (e) => {
+            const vis = visible();
+            if (!vis.length) return;
+            const cur = vis.indexOf(cp.querySelector(".nyx-cp-item.active"));
+            if (e.key === "ArrowDown") {
+              e.preventDefault();
+              setActive(vis[(cur + 1) % vis.length]);
+            } else if (e.key === "ArrowUp") {
+              e.preventDefault();
+              setActive(vis[(cur - 1 + vis.length) % vis.length]);
+            } else if (e.key === "Home") {
+              e.preventDefault();
+              setActive(vis[0]);
+            } else if (e.key === "End") {
+              e.preventDefault();
+              setActive(vis[vis.length - 1]);
+            } else if (e.key === "Enter") {
+              const a = cp.querySelector(".nyx-cp-item.active");
+              if (a) {
+                e.preventDefault();
+                a.click();
+              }
+            }
+          });
+        });
+      }
+      const ICONS = { info: "\u2139\uFE0F", success: "\u2705", warning: "\u26A0\uFE0F", danger: "\u26D4" };
+      function toastWrap(pos) {
+        pos = pos || "bottom-right";
+        let w = $('.nyx-toast-wrap[data-pos="' + pos + '"]');
+        if (!w) {
+          w = doc.createElement("div");
+          w.className = "nyx-toast-wrap";
+          w.setAttribute("data-pos", pos);
+          w.setAttribute("aria-live", "polite");
+          doc.body.appendChild(w);
+        }
+        return w;
+      }
+      function toast(message, typeOrOpts, ms) {
+        const o = typeOrOpts && typeof typeOrOpts === "object" ? typeOrOpts : { type: typeOrOpts, duration: ms };
+        const type = o.type || "info";
+        const dur = o.persistent ? 0 : o.duration != null ? o.duration : 3200;
+        const t = doc.createElement("div");
+        t.className = "nyx-toast nyx-toast-" + type;
+        const urgent = type === "danger" || type === "warning";
+        t.setAttribute("role", urgent ? "alert" : "status");
+        t.setAttribute("aria-live", urgent ? "assertive" : "polite");
+        const icon = doc.createElement("span");
+        icon.className = "nyx-toast-icon";
+        icon.setAttribute("aria-hidden", "true");
+        icon.textContent = o.icon || ICONS[type] || "\u2022";
+        t.appendChild(icon);
+        const body = doc.createElement("div");
+        body.className = "nyx-toast-body";
+        if (o.title) {
+          const ti = doc.createElement("strong");
+          ti.className = "nyx-toast-title";
+          ti.textContent = o.title;
+          body.appendChild(ti);
+        }
+        const txt = doc.createElement("span");
+        txt.textContent = message;
+        body.appendChild(txt);
+        t.appendChild(body);
+        let timer;
+        function dismiss() {
+          clearTimeout(timer);
+          t.classList.add("nyx-out");
+          t.addEventListener("animationend", () => {
+            t.remove();
+          });
+        }
+        if (o.action) {
+          const b = doc.createElement("button");
+          b.type = "button";
+          b.className = "nyx-toast-action";
+          b.textContent = o.action.label || o.action;
+          b.addEventListener("click", () => {
+            if (o.action.onClick) o.action.onClick();
+            dismiss();
+          });
+          t.appendChild(b);
+        }
+        if (o.dismissible) {
+          const x = doc.createElement("button");
+          x.type = "button";
+          x.className = "nyx-toast-close";
+          x.setAttribute("aria-label", "Dismiss");
+          x.textContent = "\u2715";
+          x.addEventListener("click", dismiss);
+          t.appendChild(x);
+        }
+        toastWrap(o.position).appendChild(t);
+        if (dur) timer = setTimeout(dismiss, dur);
+        t.dismiss = dismiss;
+        return t;
+      }
+      function snackbarWrap() {
+        let w = $(".nyx-snackbar-wrap");
+        if (!w) {
+          w = doc.createElement("div");
+          w.className = "nyx-snackbar-wrap";
+          w.setAttribute("aria-live", "polite");
+          doc.body.appendChild(w);
+        }
+        return w;
+      }
+      function snackbar(message, opts) {
+        opts = opts || {};
+        const s = doc.createElement("div");
+        s.className = "nyx-snackbar";
+        s.setAttribute("role", "status");
+        const msg = doc.createElement("span");
+        msg.className = "nyx-snackbar-msg";
+        msg.textContent = message;
+        s.appendChild(msg);
+        let timer;
+        function dismiss() {
+          clearTimeout(timer);
+          s.classList.add("nyx-out");
+          s.addEventListener("animationend", () => {
+            s.remove();
+          });
+        }
+        if (opts.action) {
+          const b = doc.createElement("button");
+          b.type = "button";
+          b.className = "nyx-snackbar-action";
+          b.textContent = opts.action;
+          b.addEventListener("click", () => {
+            if (opts.onAction) opts.onAction();
+            dismiss();
+          });
+          s.appendChild(b);
+        }
+        snackbarWrap().appendChild(s);
+        if (opts.duration !== 0) timer = setTimeout(dismiss, opts.duration || 4500);
+        s.dismiss = dismiss;
+        return s;
+      }
+      function htmlEsc(s) {
+        const d = doc.createElement("div");
+        d.textContent = s == null ? "" : s;
+        return d.innerHTML;
+      }
+      function confirmDialog(message, opts) {
+        opts = opts || {};
+        return new Promise((resolve) => {
+          const modal = doc.createElement("div");
+          modal.className = "nyx-modal open";
+          modal.innerHTML = '<div class="nyx-modal-box nyx-confirm-box">' + (opts.title ? '<h3 class="nyx-h3" style="margin-bottom:8px">' + htmlEsc(opts.title) + "</h3>" : "") + '<p class="nyx-body nyx-muted">' + htmlEsc(message) + '</p><div class="nyx-confirm-actions"><button class="nyx-btn nyx-btn-glass" data-act="cancel">' + htmlEsc(opts.cancelText || "Cancel") + '</button><button class="nyx-btn nyx-btn-primary" data-act="ok"' + (opts.danger ? ' style="background:linear-gradient(120deg,var(--nyx-danger),color-mix(in srgb,var(--nyx-danger) 65%,#000))"' : "") + ">" + htmlEsc(opts.confirmText || "Confirm") + "</button></div></div>";
+          doc.body.appendChild(modal);
+          const bd = backdrop();
+          bd.classList.add("open");
+          lockScroll(true);
+          function done(val) {
+            modal.classList.remove("open");
+            if (!$(".nyx-modal.open")) bd.classList.remove("open");
+            lockScroll(false);
+            doc.removeEventListener("keydown", onKey);
+            setTimeout(() => {
+              modal.remove();
+            }, 250);
+            resolve(val);
+          }
+          function onKey(e) {
+            if (e.key === "Escape") done(false);
+          }
+          modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+              done(false);
+              return;
+            }
+            const a = e.target.closest("[data-act]");
+            if (a) done(a.getAttribute("data-act") === "ok");
+          });
+          doc.addEventListener("keydown", onKey);
+          const f = modal.querySelector('[data-act="ok"]');
+          if (f) setTimeout(() => {
+            f.focus();
+          }, 60);
+        });
+      }
+      function activateTab(btn) {
+        const group = btn.closest("[data-nyx-tabs]");
+        if (!group) return;
+        const key = btn.getAttribute("data-nyx-tab");
+        if (!emitBefore(btn, "nyx:tab-before-show")) return;
+        const scope = group.parentElement || doc;
+        let activePanel = null;
+        $$("[data-nyx-tab]", group).forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle("active", on);
+          b.setAttribute("aria-selected", on ? "true" : "false");
+          b.setAttribute("tabindex", on ? "0" : "-1");
+        });
+        $$("[data-nyx-panel]", scope).forEach((p) => {
+          const show = p.getAttribute("data-nyx-panel") === key;
+          p.classList.toggle("active", show);
+          if (show) activePanel = p;
+        });
+        if (activePanel) {
+          activePanel.dispatchEvent(new CustomEvent("nyx:tab-show", { bubbles: true, detail: { tab: btn, panel: activePanel } }));
+        }
+        if (group.hasAttribute("data-hash") && key) {
+          try {
+            history.replaceState(null, "", "#" + key);
+          } catch (e) {
+          }
+        }
+      }
+      function toggleCollapse(trigger, force) {
+        const t = el(trigger.getAttribute("data-nyx-target"));
+        if (!t) return;
+        const isOpen = t.classList.contains("open");
+        const willOpen = force === void 0 ? !isOpen : !!force;
+        if (willOpen === isOpen) return;
+        if (!emitBefore(t, willOpen ? "nyx:collapse-before-show" : "nyx:collapse-before-hide")) return;
+        const acc = trigger.closest("[data-nyx-accordion]");
+        if (acc && willOpen && !acc.hasAttribute("data-multi")) {
+          $$('[data-nyx-toggle="collapse"].active', acc).forEach((h) => {
+            const c = el(h.getAttribute("data-nyx-target"));
+            if (!c || c === t || !c.classList.contains("open")) return;
+            if (!emitBefore(c, "nyx:collapse-before-hide")) return;
+            c.classList.remove("open");
+            h.classList.remove("active");
+            h.setAttribute("aria-expanded", "false");
+            c.dispatchEvent(new CustomEvent("nyx:collapse-hide", { bubbles: true }));
+            afterTransition(c, () => c.dispatchEvent(new CustomEvent("nyx:collapse-hidden", { bubbles: true })));
+          });
+        }
+        t.classList.toggle("open", willOpen);
+        trigger.classList.toggle("active", willOpen);
+        trigger.setAttribute("aria-expanded", willOpen ? "true" : "false");
+        t.dispatchEvent(new CustomEvent(willOpen ? "nyx:collapse-show" : "nyx:collapse-hide", { bubbles: true }));
+        afterTransition(t, () => t.dispatchEvent(new CustomEvent(willOpen ? "nyx:collapse-shown" : "nyx:collapse-hidden", { bubbles: true })));
+      }
+      function initAccordion(root) {
+        $$("[data-nyx-accordion][data-open]", root).filter((a) => !a._nyxAcc).forEach((acc) => {
+          acc._nyxAcc = true;
+          const triggers = $$('[data-nyx-toggle="collapse"]', acc);
+          acc.getAttribute("data-open").split(",").forEach((n) => {
+            const trig = triggers[parseInt(n, 10)];
+            if (!trig) return;
+            const t = el(trig.getAttribute("data-nyx-target"));
+            if (!t) return;
+            t.classList.add("open");
+            trig.classList.add("active");
+          });
+        });
+      }
+      function initDisclosure(root) {
+        $$('[data-nyx-toggle="collapse"]', root).filter((t) => !t._nyxDisc).forEach((t) => {
+          t._nyxDisc = true;
+          const tg = el(t.getAttribute("data-nyx-target"));
+          t.setAttribute("aria-expanded", t.classList.contains("active") ? "true" : "false");
+          if (tg) {
+            if (!tg.id) tg.id = "nyx-col-" + ++_uid;
+            t.setAttribute("aria-controls", tg.id);
+            tg.setAttribute("role", "region");
+            if (!t.id) t.id = "nyx-colt-" + ++_uid;
+            if (!tg.getAttribute("aria-labelledby")) tg.setAttribute("aria-labelledby", t.id);
+          }
+        });
+      }
+      function initTriggers(root) {
+        $$('[data-nyx-toggle="popover"]', root).filter((t) => !t._nyxTp).forEach((t) => {
+          t._nyxTp = true;
+          t.setAttribute("aria-haspopup", "dialog");
+          if (!t.hasAttribute("aria-expanded")) t.setAttribute("aria-expanded", "false");
+        });
+        $$('[data-nyx-toggle="dropdown"]', root).filter((t) => !t._nyxTd).forEach((t) => {
+          t._nyxTd = true;
+          t.setAttribute("aria-haspopup", "menu");
+          if (!t.hasAttribute("aria-expanded")) t.setAttribute("aria-expanded", "false");
+        });
+        $$(".nyx-fab-btn", root).filter((t) => !t._nyxTf).forEach((t) => {
+          t._nyxTf = true;
+          t.setAttribute("aria-haspopup", "menu");
+          if (!t.hasAttribute("aria-expanded")) t.setAttribute("aria-expanded", "false");
+        });
+      }
+      function carouselStep(car, dir) {
+        const slides = $$(".nyx-slide", car);
+        if (!slides.length) return;
+        let cur = slides.findIndex((s) => s.classList.contains("active"));
+        if (cur < 0) cur = 0;
+        const next = dir === "prev" ? (cur - 1 + slides.length) % slides.length : (cur + 1) % slides.length;
+        carouselSet(car, next, slides);
+      }
+      function carouselSet(car, i, slides) {
+        slides = slides || $$(".nyx-slide", car);
+        const oldActive = slides.findIndex((s) => s.classList.contains("active"));
+        if (oldActive !== i && !car.dispatchEvent(new CustomEvent("nyx:before-slide", { bubbles: true, cancelable: true, detail: { index: i, from: oldActive } }))) return;
+        slides.forEach((s, n) => {
+          s.classList.toggle("active", n === i);
+        });
+        $$(".nyx-carousel-dots button", car).forEach((d, n) => {
+          d.classList.toggle("active", n === i);
+        });
+        if (oldActive !== i) {
+          car.dispatchEvent(new CustomEvent("nyx:slide", { bubbles: true, detail: { index: i, from: oldActive } }));
+        }
+      }
+      function initCarousel(root) {
+        $$(".nyx-carousel", root).filter((c) => !c._nyxCar).forEach((car) => {
+          car._nyxCar = true;
+          const slides = $$(".nyx-slide", car);
+          if (slides.length && !slides.some((s) => s.classList.contains("active"))) slides[0].classList.add("active");
+          car.setAttribute("role", "region");
+          car.setAttribute("aria-roledescription", "carousel");
+          if (!car.hasAttribute("tabindex")) car.setAttribute("tabindex", "0");
+          car.addEventListener("keydown", (e) => {
+            const rtl = docEl.getAttribute("dir") === "rtl";
+            if (e.key === "ArrowLeft") {
+              carouselStep(car, rtl ? "next" : "prev");
+              e.preventDefault();
+            } else if (e.key === "ArrowRight") {
+              carouselStep(car, rtl ? "prev" : "next");
+              e.preventDefault();
+            }
+          });
+          let x0 = null;
+          car.addEventListener("pointerdown", (e) => {
+            x0 = e.clientX;
+          });
+          car.addEventListener("pointerup", (e) => {
+            if (x0 == null) return;
+            const dx = e.clientX - x0;
+            x0 = null;
+            if (Math.abs(dx) > 40) carouselStep(car, dx < 0 !== (docEl.getAttribute("dir") === "rtl") ? "next" : "prev");
+          });
+          car.addEventListener("pointercancel", () => {
+            x0 = null;
+          });
+          if (car.hasAttribute("data-autoplay")) {
+            const ms = parseInt(car.getAttribute("data-interval"), 10) || 5e3;
+            let timer = null;
+            const stop = () => {
+              if (timer) {
+                clearInterval(timer);
+                timer = null;
+              }
+            };
+            const play = () => {
+              stop();
+              timer = setInterval(() => {
+                carouselStep(car, "next");
+              }, ms);
+            };
+            car._nyxCarStop = stop;
+            if (car.getAttribute("data-pause-hover") !== "false") {
+              car.addEventListener("mouseenter", stop);
+              car.addEventListener("mouseleave", play);
+              car.addEventListener("focusin", stop);
+              car.addEventListener("focusout", play);
+            }
+            play();
+          }
+        });
+      }
+      function stepperUnit(inp) {
+        const s = parseFloat(inp.getAttribute("step"));
+        return isNaN(s) || s <= 0 ? 1 : s;
+      }
+      function stepperSet(inp, v, delta) {
+        const min = inp.hasAttribute("min") ? parseFloat(inp.getAttribute("min")) : -Infinity;
+        const max = inp.hasAttribute("max") ? parseFloat(inp.getAttribute("max")) : Infinity;
+        v = Math.max(min, Math.min(max, v));
+        if (String(v) === inp.value && !delta) return;
+        inp.value = v;
+        inp.setAttribute("aria-valuenow", String(v));
+        inp.dispatchEvent(new CustomEvent("nyx:stepper-change", { bubbles: true, detail: { value: v, delta: delta || 0 } }));
+      }
+      function stepperBy(inp, dir) {
+        let v = parseFloat(inp.value);
+        if (isNaN(v)) v = 0;
+        const u = stepperUnit(inp);
+        stepperSet(inp, v + dir * u, dir * u);
+      }
+      function stepperAdjust(btn) {
+        const wrap = btn.closest(".nyx-stepper"), inp = wrap && wrap.querySelector("input");
+        if (!inp) return;
+        stepperBy(inp, btn.getAttribute("data-nyx-step") === "dec" ? -1 : 1);
+      }
+      function initStepper(root) {
+        $$(".nyx-stepper", root).filter((s) => !s._nyxStep).forEach((wrap) => {
+          wrap._nyxStep = true;
+          const inp = wrap.querySelector("input");
+          if (!inp) return;
+          inp.setAttribute("role", "spinbutton");
+          if (inp.hasAttribute("min")) inp.setAttribute("aria-valuemin", inp.getAttribute("min"));
+          if (inp.hasAttribute("max")) inp.setAttribute("aria-valuemax", inp.getAttribute("max"));
+          const v0 = parseFloat(inp.value);
+          if (!isNaN(v0)) inp.setAttribute("aria-valuenow", String(v0));
+          inp.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowUp") {
+              e.preventDefault();
+              stepperBy(inp, 1);
+            } else if (e.key === "ArrowDown") {
+              e.preventDefault();
+              stepperBy(inp, -1);
+            }
+          });
+          inp.addEventListener("change", () => {
+            const n = parseFloat(inp.value);
+            if (!isNaN(n)) stepperSet(inp, n, 0);
+          });
+          $$("button", wrap).forEach((b) => {
+            if (!b.hasAttribute("aria-label")) b.setAttribute("aria-label", b.getAttribute("data-nyx-step") === "dec" ? "Decrease" : "Increase");
+          });
+        });
+      }
+      function initWatermark(root) {
+        $$(".nyx-watermark[data-text]", root).filter((w) => !w._nyxWm).forEach((w) => {
+          w._nyxWm = true;
+          const text = w.getAttribute("data-text") || "";
+          const angle = w.getAttribute("data-angle") || "-28";
+          let layer = w.querySelector(":scope > .nyx-watermark-layer");
+          if (!layer) {
+            layer = doc.createElement("div");
+            layer.className = "nyx-watermark-layer";
+            w.insertBefore(layer, w.firstChild);
+          }
+          let color = "currentColor";
+          try {
+            color = getComputedStyle(w).color || color;
+          } catch (e) {
+          }
+          const esc = (s) => s.replace(/[<>&"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" })[c]);
+          const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="240" height="150"><text x="0" y="90" transform="rotate(' + esc(angle) + ' 120 75)" fill="' + esc(color) + '" font-family="sans-serif" font-size="22" font-weight="600">' + esc(text) + "</text></svg>";
+          layer.style.backgroundImage = 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")';
+        });
+      }
+      function normHex(v) {
+        if (v == null) return null;
+        let s = String(v).trim().replace(/^#/, "");
+        if (/^[0-9a-fA-F]{3}$/.test(s)) s = s.replace(/./g, (c) => c + c);
+        return /^[0-9a-fA-F]{6}$/.test(s) ? "#" + s.toLowerCase() : null;
+      }
+      function colorSet(wrap, hex, from) {
+        const sw = wrap.querySelector(".nyx-color-swatch"), tx = wrap.querySelector(".nyx-color-hex");
+        if (sw && from !== "swatch") sw.value = hex;
+        if (tx && from !== "hex") tx.value = hex.toUpperCase();
+        if (tx) tx.classList.remove("is-invalid");
+        $$(".nyx-color-dot", wrap).forEach((d) => d.classList.toggle("selected", (d.getAttribute("data-color") || "").toLowerCase() === hex));
+        wrap._nyxColor = hex;
+        wrap.dispatchEvent(new CustomEvent("nyx:color-change", { bubbles: true, detail: { value: hex } }));
+      }
+      function initColorPicker(root) {
+        $$(".nyx-colorpicker", root).filter((w) => !w._nyxCp).forEach((wrap) => {
+          wrap._nyxCp = true;
+          const sw = wrap.querySelector(".nyx-color-swatch"), tx = wrap.querySelector(".nyx-color-hex");
+          const presets = wrap.getAttribute("data-swatches");
+          if (presets && !wrap.querySelector(".nyx-color-swatches")) {
+            const box = doc.createElement("div");
+            box.className = "nyx-color-swatches";
+            presets.split(",").map(normHex).filter(Boolean).forEach((hex) => {
+              const b = doc.createElement("button");
+              b.type = "button";
+              b.className = "nyx-color-dot";
+              b.setAttribute("data-color", hex);
+              b.style.setProperty("--nyx-dot", hex);
+              b.setAttribute("aria-label", hex);
+              box.appendChild(b);
+            });
+            wrap.appendChild(box);
+          }
+          colorSet(wrap, normHex(sw && sw.value) || normHex(tx && tx.value) || "#6c63ff");
+          if (sw) sw.addEventListener("input", () => {
+            const h = normHex(sw.value);
+            if (h) colorSet(wrap, h, "swatch");
+          });
+          if (tx) tx.addEventListener("input", () => {
+            const h = normHex(tx.value);
+            if (h) colorSet(wrap, h, "hex");
+            else tx.classList.add("is-invalid");
+          });
+          wrap.addEventListener("click", (e) => {
+            const d = e.target.closest(".nyx-color-dot");
+            if (d) {
+              const h = normHex(d.getAttribute("data-color"));
+              if (h) colorSet(wrap, h);
+            }
+          });
+        });
+      }
+      function splitApply(split, pane, px) {
+        const vert = split.classList.contains("nyx-split-v");
+        const rect = split.getBoundingClientRect();
+        const total = vert ? rect.height : rect.width;
+        const min = parseFloat(getComputedStyle(split).getPropertyValue("--nyx-split-min")) || 80;
+        px = Math.max(min, Math.min(total - min, px));
+        pane.style.flex = "0 0 " + px + "px";
+        return total > 0 ? Math.round(px / total * 100) : 50;
+      }
+      function initSplit(root) {
+        $$(".nyx-split", root).filter((s) => !s._nyxSplit).forEach((split) => {
+          split._nyxSplit = true;
+          const vert = split.classList.contains("nyx-split-v");
+          $$(":scope > .nyx-split-bar", split).forEach((bar) => {
+            const prev = bar.previousElementSibling;
+            if (!prev || !prev.classList.contains("nyx-split-pane")) return;
+            bar.setAttribute("role", "separator");
+            bar.setAttribute("tabindex", "0");
+            bar.setAttribute("aria-orientation", vert ? "horizontal" : "vertical");
+            bar.setAttribute("aria-valuemin", "0");
+            bar.setAttribute("aria-valuemax", "100");
+            if (!bar.getAttribute("aria-label")) bar.setAttribute("aria-label", "Resize panels");
+            const emit = (pct) => {
+              bar.setAttribute("aria-valuenow", String(pct));
+              split.dispatchEvent(new CustomEvent("nyx:split-resize", { bubbles: true, detail: { pane: prev, percent: pct } }));
+            };
+            const size = () => vert ? prev.getBoundingClientRect().height : prev.getBoundingClientRect().width;
+            let start = 0, base = 0;
+            const onMove = (e) => {
+              let delta = (vert ? e.clientY : e.clientX) - start;
+              if (!vert && docEl.getAttribute("dir") === "rtl") delta = -delta;
+              emit(splitApply(split, prev, base + delta));
+            };
+            const onUp = () => {
+              split.classList.remove("nyx-dragging");
+              doc.removeEventListener("pointermove", onMove);
+              doc.removeEventListener("pointerup", onUp);
+            };
+            bar.addEventListener("pointerdown", (e) => {
+              e.preventDefault();
+              start = vert ? e.clientY : e.clientX;
+              base = size();
+              split.classList.add("nyx-dragging");
+              doc.addEventListener("pointermove", onMove);
+              doc.addEventListener("pointerup", onUp);
+            });
+            bar.addEventListener("keydown", (e) => {
+              const rtl = !vert && docEl.getAttribute("dir") === "rtl";
+              const dec = vert ? "ArrowUp" : rtl ? "ArrowRight" : "ArrowLeft";
+              const inc = vert ? "ArrowDown" : rtl ? "ArrowLeft" : "ArrowRight";
+              if (e.key !== dec && e.key !== inc) return;
+              e.preventDefault();
+              emit(splitApply(split, prev, size() + (e.key === inc ? 1 : -1) * (e.shiftKey ? 48 : 16)));
+            });
+            const t = vert ? split.getBoundingClientRect().height : split.getBoundingClientRect().width;
+            bar.setAttribute("aria-valuenow", String(t > 0 ? Math.round(size() / t * 100) : 50));
+          });
+        });
+      }
+      function initAffix(root) {
+        $$(".nyx-affix, [data-nyx-affix]", root).filter((a) => !a._nyxAffix).forEach((node) => {
+          node._nyxAffix = true;
+          node.classList.add("nyx-affix");
+          const topAttr = node.getAttribute("data-affix-top");
+          if (topAttr != null && topAttr !== "") node.style.setProperty("--nyx-affix-top", parseFloat(topAttr) + "px");
+          if (!("IntersectionObserver" in window) || !node.parentNode) return;
+          const sentinel = doc.createElement("div");
+          sentinel.setAttribute("aria-hidden", "true");
+          sentinel.style.cssText = "height:0;margin:0;padding:0;border:0;visibility:hidden;pointer-events:none";
+          node.parentNode.insertBefore(sentinel, node);
+          new IntersectionObserver((entries) => {
+            const en = entries[0];
+            node.classList.toggle("is-pinned", en.intersectionRatio < 1 && en.boundingClientRect.top < 0);
+          }, { threshold: [1] }).observe(sentinel);
+        });
+      }
+      let _tour = null;
+      function tourEnd(reason) {
+        const t = _tour;
+        if (!t) return;
+        _tour = null;
+        window.removeEventListener("resize", t.reflow);
+        window.removeEventListener("scroll", t.reflow, true);
+        doc.removeEventListener("keydown", t.onKey, true);
+        if (t.overlay) t.overlay.remove();
+        docEl.dispatchEvent(new CustomEvent("nyx:tour-end", { bubbles: true, detail: { reason: reason || "done", index: t.i } }));
+      }
+      function tourRender(scroll) {
+        const t = _tour;
+        if (!t) return;
+        const step = t.steps[t.i], target = el(step.target), spot = t.spot, pop = t.pop;
+        if (target && target.getBoundingClientRect) {
+          if (scroll) target.scrollIntoView({ block: "center", inline: "center", behavior: prefersReducedMotion() ? "auto" : "smooth" });
+          const r = target.getBoundingClientRect(), pad2 = 6;
+          spot.style.display = "block";
+          spot.style.top = r.top - pad2 + "px";
+          spot.style.left = r.left - pad2 + "px";
+          spot.style.width = r.width + pad2 * 2 + "px";
+          spot.style.height = r.height + pad2 * 2 + "px";
+          pop.style.transform = "";
+          position(target, pop, { placement: step.placement || "bottom", offset: 14, padding: 12 });
+        } else {
+          spot.style.display = "none";
+          pop.style.position = "fixed";
+          pop.style.top = "50%";
+          pop.style.left = "50%";
+          pop.style.transform = "translate(-50%,-50%)";
+        }
+        pop.querySelector(".nyx-tour-pop-title").textContent = step.title || "";
+        pop.querySelector(".nyx-tour-pop-text").textContent = step.text || "";
+        pop.querySelector(".nyx-tour-step").textContent = t.i + 1 + " / " + t.steps.length;
+        pop.querySelector("[data-nyx-tour-back]").style.visibility = t.i > 0 ? "visible" : "hidden";
+        pop.querySelector("[data-nyx-tour-next]").textContent = t.i === t.steps.length - 1 ? t.opts.doneText : t.opts.nextText;
+        docEl.dispatchEvent(new CustomEvent("nyx:tour-step", { bubbles: true, detail: { index: t.i, step } }));
+      }
+      function tourGo(n) {
+        const t = _tour;
+        if (!t) return;
+        if (n < 0) return;
+        if (n >= t.steps.length) {
+          tourEnd("done");
+          return;
+        }
+        t.i = n;
+        tourRender(true);
+      }
+      function tourStart(steps, opts) {
+        steps = (steps || []).filter(Boolean);
+        if (!steps.length) return null;
+        if (_tour) tourEnd("interrupted");
+        opts = opts || {};
+        opts.nextText = opts.nextText || "Next";
+        opts.doneText = opts.doneText || "Done";
+        opts.backText = opts.backText || "Back";
+        const overlay = doc.createElement("div");
+        overlay.className = "nyx-tour-overlay";
+        const spot = doc.createElement("div");
+        spot.className = "nyx-tour-spot";
+        const pop = doc.createElement("div");
+        pop.className = "nyx-tour-pop";
+        pop.setAttribute("role", "dialog");
+        pop.setAttribute("aria-live", "polite");
+        pop.setAttribute("aria-label", opts.label || "Product tour");
+        pop.innerHTML = '<button type="button" class="nyx-btn nyx-btn-icon nyx-btn-ghost nyx-btn-sm" data-nyx-tour-skip aria-label="' + (opts.skipText || "End tour") + '" style="position:absolute;top:6px;inset-inline-end:6px">\u2715</button><div class="nyx-tour-pop-title"></div><div class="nyx-tour-pop-text"></div><div class="nyx-tour-pop-foot"><span class="nyx-tour-step"></span><div class="nyx-tour-actions"><button type="button" class="nyx-btn nyx-btn-ghost nyx-btn-sm" data-nyx-tour-back>' + opts.backText + '</button><button type="button" class="nyx-btn nyx-btn-primary nyx-btn-sm" data-nyx-tour-next></button></div></div>';
+        overlay.appendChild(spot);
+        overlay.appendChild(pop);
+        doc.body.appendChild(overlay);
+        const onKey = (e) => {
+          if (e.key === "Escape") {
+            e.preventDefault();
+            tourEnd("skipped");
+          } else if (e.key === "ArrowRight") {
+            e.preventDefault();
+            tourGo(_tour.i + 1);
+          } else if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            tourGo(_tour.i - 1);
+          }
+        };
+        const reflow = () => tourRender(false);
+        _tour = { steps, opts, i: 0, overlay, spot, pop, onKey, reflow };
+        pop.addEventListener("click", (e) => {
+          if (e.target.closest("[data-nyx-tour-next]")) tourGo(_tour.i + 1);
+          else if (e.target.closest("[data-nyx-tour-back]")) tourGo(_tour.i - 1);
+          else if (e.target.closest("[data-nyx-tour-skip]")) tourEnd("skipped");
+        });
+        window.addEventListener("resize", reflow);
+        window.addEventListener("scroll", reflow, true);
+        doc.addEventListener("keydown", onKey, true);
+        docEl.dispatchEvent(new CustomEvent("nyx:tour-start", { bubbles: true, detail: { steps: steps.length } }));
+        tourRender(true);
+        return { next: () => tourGo(_tour ? _tour.i + 1 : 0), prev: () => tourGo(_tour ? _tour.i - 1 : 0), stop: () => tourEnd("stopped") };
+      }
+      function collectTourSteps(scope) {
+        return $$("[data-nyx-tour-step]", scope || doc).map((node, idx) => ({ node, idx, order: parseFloat(node.getAttribute("data-nyx-tour-step")) })).sort((a, b) => isNaN(a.order) || isNaN(b.order) ? a.idx - b.idx : a.order - b.order).map((x) => ({ target: x.node, title: x.node.getAttribute("data-title") || "", text: x.node.getAttribute("data-text") || "", placement: x.node.getAttribute("data-placement") || "bottom" }));
+      }
+      function initSpy(nav) {
+        if (nav._nyxSpy) return;
+        nav._nyxSpy = true;
+        const links = $$('a[href^="#"]', nav), map = {}, targets = [];
+        links.forEach((a) => {
+          const id = a.getAttribute("href").slice(1), sec = id && doc.getElementById(id);
+          if (sec) {
+            map[id] = a;
+            targets.push(sec);
+          }
+        });
+        if (!("IntersectionObserver" in window) || !targets.length) return;
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach((en) => {
+            if (en.isIntersecting) {
+              links.forEach((l) => {
+                l.classList.remove("active");
+              });
+              if (map[en.target.id]) map[en.target.id].classList.add("active");
+            }
+          });
+        }, { rootMargin: "-40% 0px -55% 0px", threshold: 0 });
+        targets.forEach((s) => {
+          obs.observe(s);
+        });
+      }
+      function initSortable(table) {
+        if (table._nyxSort) return;
+        table._nyxSort = true;
+        const tbody = table.tBodies[0];
+        if (!tbody) return;
+        const ths = $$("thead th", table);
+        ths.forEach((th, col) => {
+          let asc = true;
+          th.setAttribute("tabindex", "0");
+          th.setAttribute("role", "columnheader");
+          th.setAttribute("aria-sort", "none");
+          function doSort() {
+            const rows = Array.prototype.slice.call(tbody.rows);
+            rows.sort((a, b) => {
+              const x = (a.cells[col] ? a.cells[col].innerText : "").replace(/[$,%]/g, "").trim();
+              const y = (b.cells[col] ? b.cells[col].innerText : "").replace(/[$,%]/g, "").trim();
+              const nx = parseFloat(x), ny = parseFloat(y);
+              const cmp = !isNaN(nx) && !isNaN(ny) ? nx - ny : x.localeCompare(y);
+              return asc ? cmp : -cmp;
+            });
+            rows.forEach((r) => {
+              tbody.appendChild(r);
+            });
+            ths.forEach((o) => {
+              if (o !== th) o.setAttribute("aria-sort", "none");
+            });
+            th.setAttribute("aria-sort", asc ? "ascending" : "descending");
+            asc = !asc;
+          }
+          th.addEventListener("click", doSort);
+          th.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              doSort();
+            }
+          });
+        });
+      }
+      function fallbackCopy(text) {
+        const ta = doc.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        ta.style.pointerEvents = "none";
+        doc.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try {
+          doc.execCommand("copy");
+        } catch (e) {
+        }
+        doc.body.removeChild(ta);
+      }
+      function copyCode(btn) {
+        const sel = btn.getAttribute("data-nyx-copy");
+        const src = sel ? el(sel) : btn.closest(".nyx-code-block");
+        if (!src) return;
+        const codeEl = src.matches && src.matches("code") ? src : src.querySelector("code") || src;
+        const text = (codeEl.innerText || codeEl.textContent || "").replace(/\n+$/, "");
+        function done() {
+          btn.classList.add("copied");
+          const isRtl = doc.documentElement.getAttribute("dir") === "rtl";
+          toast(isRtl ? "\u062A\u0645 \u0627\u0644\u0646\u0633\u062E \u2713" : "Copied \u2713", "success");
+          const origHtml = btn.innerHTML;
+          const cleanText = btn.textContent.trim();
+          if (cleanText && cleanText !== "\u29C9" && cleanText !== "\u2713") {
+            btn.innerHTML = isRtl ? "\u2713 \u062A\u0645 \u0627\u0644\u0646\u0633\u062E" : "\u2713 Copied";
+          } else {
+            btn.innerHTML = "\u2713";
+          }
+          setTimeout(() => {
+            btn.classList.remove("copied");
+            btn.innerHTML = origHtml;
+          }, 1500);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, () => {
+            fallbackCopy(text);
+            done();
+          });
+        } else {
+          fallbackCopy(text);
+          done();
+        }
+      }
+      doc.addEventListener("click", (e) => {
+        if (e.target && e.target.ownerDocument && !e.target.ownerDocument.contains(e.target)) {
+          return;
+        }
+        const copyBtn = e.target.closest("[data-nyx-copy]");
+        if (copyBtn) {
+          e.preventDefault();
+          copyCode(copyBtn);
+          return;
+        }
+        const toggle = e.target.closest("[data-nyx-toggle]");
+        if (toggle) {
+          const kind = toggle.getAttribute("data-nyx-toggle");
+          const target = toggle.getAttribute("data-nyx-target");
+          if (kind === "modal") {
+            e.preventDefault();
+            openModal(target);
+            return;
+          }
+          if (kind === "drawer") {
+            e.preventDefault();
+            openDrawer(target);
+            return;
+          }
+          if (kind === "sheet") {
+            e.preventDefault();
+            openModal(target);
+            return;
+          }
+          if (kind === "popover") {
+            e.preventDefault();
+            togglePopover(toggle);
+            return;
+          }
+          if (kind === "command") {
+            e.preventDefault();
+            openCommandPalette();
+            return;
+          }
+          if (kind === "collapse") {
+            e.preventDefault();
+            toggleCollapse(toggle);
+            return;
+          }
+          if (kind === "dropdown") {
+            e.preventDefault();
+            toggleDropdown(toggle);
+            return;
+          }
+        }
+        if (e.target.closest("[data-nyx-dismiss]")) {
+          e.preventDefault();
+          closeAll();
+          return;
+        }
+        const step = e.target.closest("[data-nyx-step]");
+        if (step) {
+          stepperAdjust(step);
+          return;
+        }
+        const tourBtn = e.target.closest("[data-nyx-tour]");
+        if (tourBtn) {
+          e.preventDefault();
+          const sel = tourBtn.getAttribute("data-nyx-tour");
+          const scope = sel ? el(sel) || doc : doc;
+          const steps = collectTourSteps(scope);
+          if (steps.length) tourStart(steps, {});
+          return;
+        }
+        const tagX = e.target.closest(".nyx-tag-input .nyx-chip-x");
+        if (tagX) {
+          const ch = tagX.closest(".nyx-chip"), ti = tagX.closest(".nyx-tag-input");
+          if (ch) ch.remove();
+          if (ti) ti.dispatchEvent(new Event("change", { bubbles: true }));
+          return;
+        }
+        const tab = e.target.closest("[data-nyx-tab]");
+        if (tab) {
+          e.preventDefault();
+          activateTab(tab);
+          return;
+        }
+        const slide = e.target.closest("[data-nyx-slide]");
+        if (slide) {
+          const car = slide.closest(".nyx-carousel");
+          if (car) carouselStep(car, slide.getAttribute("data-nyx-slide"));
+          return;
+        }
+        const dot = e.target.closest("[data-nyx-slide-to]");
+        if (dot) {
+          const c2 = dot.closest(".nyx-carousel");
+          if (c2) carouselSet(c2, +dot.getAttribute("data-nyx-slide-to"));
+          return;
+        }
+        const cpItem = e.target.closest(".nyx-command-palette [data-nyx-target]");
+        if (cpItem) {
+          closeAll();
+          const sec = el(cpItem.getAttribute("data-nyx-target"));
+          if (sec) sec.scrollIntoView();
+          return;
+        }
+        const hnode = e.target.closest(".nyx-hierarchy-node.has-kids");
+        if (hnode) {
+          const hli = hnode.closest("li");
+          if (hli) hli.classList.toggle("nyx-collapsed");
+          return;
+        }
+        const hitem = e.target.closest(".nyx-hierarchy-cols .nyx-hitem");
+        if (hitem) {
+          hcolSelect(hitem);
+          return;
+        }
+        const fab = e.target.closest(".nyx-fab-btn");
+        if (fab) {
+          const f = fab.closest(".nyx-fab");
+          if (f) {
+            fab.setAttribute("aria-expanded", f.classList.toggle("open") ? "true" : "false");
+          }
+          return;
+        }
+        if (e.target.closest(".nyx-to-top")) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+        if (e.target.closest(".nyx-dropdown-item")) {
+          closeDropdowns();
+          return;
+        }
+        if (!e.target.closest(".nyx-popover")) $$(".nyx-popover.open").forEach((o) => {
+          togglePopover(o, false);
+        });
+        if (!e.target.closest(".nyx-dropdown")) closeDropdowns();
+        if (!e.target.closest(".nyx-combobox")) $$(".nyx-combobox.open").forEach((o) => {
+          o.classList.remove("open");
+        });
+        if (!e.target.closest(".nyx-multiselect")) $$(".nyx-multiselect.open").forEach((o) => {
+          o.classList.remove("open");
+        });
+        if (!e.target.closest(".nyx-datepicker")) $$(".nyx-datepicker.open").forEach((o) => {
+          o.classList.remove("open");
+        });
+        if (!e.target.closest(".nyx-fab")) $$(".nyx-fab.open").forEach((o) => {
+          o.classList.remove("open");
+        });
+        if (!e.target.closest(".nyx-context-menu")) $$(".nyx-context-menu.open").forEach((o) => {
+          o.classList.remove("open");
+        });
+      });
+      doc.addEventListener("keydown", (e) => {
+        if ((e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === "K")) {
+          if (paletteEl()) {
+            e.preventDefault();
+            openCommandPalette();
+          }
+        }
+        if (e.key === "Tab") {
+          const ov = currentOverlay();
+          if (ov) {
+            const f = focusables(ov);
+            if (!f.length) return;
+            const first = f[0], last = f[f.length - 1];
+            if (e.shiftKey && doc.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            } else if (!e.shiftKey && doc.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        }
+        const tabEl = e.target.closest("[data-nyx-tab]");
+        if (tabEl && (e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === "Home" || e.key === "End")) {
+          const grp = tabEl.closest("[data-nyx-tabs]");
+          if (grp) {
+            e.preventDefault();
+            const tabs = $$("[data-nyx-tab]", grp), i = tabs.indexOf(tabEl), n = tabs.length;
+            const to = e.key === "Home" ? 0 : e.key === "End" ? n - 1 : e.key === "ArrowRight" ? (i + 1) % n : (i - 1 + n) % n;
+            tabs[to].focus();
+            activateTab(tabs[to]);
+          }
+        }
+        const menu = $(".nyx-dropdown.open") || $(".nyx-context-menu.open");
+        if (menu && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
+          const items = $$(".nyx-dropdown-item", menu);
+          if (items.length) {
+            e.preventDefault();
+            const ci = items.indexOf(doc.activeElement);
+            const ni = e.key === "ArrowDown" ? (ci + 1) % items.length : (ci - 1 + items.length) % items.length;
+            items[ni < 0 ? 0 : ni].focus();
+          }
+        }
+        if (e.key === "Escape") {
+          closeAll();
+          closeDropdowns();
+          $$(".nyx-popover.open").forEach((o) => {
+            togglePopover(o, false);
+          });
+          $$(".nyx-combobox.open, .nyx-multiselect.open, .nyx-datepicker.open, .nyx-fab.open, .nyx-context-menu.open").forEach((o) => {
+            o.classList.remove("open");
+          });
+        }
+      });
+      doc.addEventListener("input", (e) => {
+        const otp = e.target.closest(".nyx-otp");
+        if (otp && e.target.tagName === "INPUT") {
+          e.target.value = e.target.value.replace(/\D/g, "").slice(0, 1);
+          if (e.target.value) {
+            const ins = $$("input", otp), i = ins.indexOf(e.target);
+            if (ins[i + 1]) ins[i + 1].focus();
+          }
+        }
+      });
+      doc.addEventListener("keydown", (e) => {
+        const otp = e.target.closest(".nyx-otp");
+        if (otp && e.key === "Backspace" && !e.target.value) {
+          const ins = $$("input", otp), i = ins.indexOf(e.target);
+          if (ins[i - 1]) ins[i - 1].focus();
+        }
+        const ti = e.target.closest(".nyx-tag-input");
+        if (ti && e.target.tagName === "INPUT" && e.key === "Enter") {
+          e.preventDefault();
+          const val = e.target.value.trim();
+          if (!val) return;
+          const chip = doc.createElement("span");
+          chip.className = "nyx-chip";
+          chip.appendChild(doc.createTextNode(val + " "));
+          const x = doc.createElement("span");
+          x.className = "nyx-chip-x";
+          x.setAttribute("role", "button");
+          x.setAttribute("aria-label", "remove");
+          x.textContent = "\xD7";
+          chip.appendChild(x);
+          ti.insertBefore(chip, e.target);
+          e.target.value = "";
+          ti.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+      });
+      function initReveal(root) {
+        const els = $$("[data-nyx-reveal]", root).filter((e) => !e._nyxReveal);
+        els.forEach((e) => {
+          e._nyxReveal = true;
+          e.classList.add("nyx-reveal");
+        });
+        if (!("IntersectionObserver" in window)) {
+          els.forEach((e) => {
+            e.classList.add("nyx-in");
+          });
+          return;
+        }
+        const ro = new IntersectionObserver((ents) => {
+          ents.forEach((x) => {
+            if (x.isIntersecting) {
+              x.target.classList.add("nyx-in");
+              ro.unobserve(x.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -10% 0px" });
+        els.forEach((e) => {
+          ro.observe(e);
+        });
+      }
+      function initSquares(root) {
+        if (prefersReducedMotion()) return;
+        $$(".nyx-bg-squares, .nyx-spotlight-card", root).filter((e) => !e._nyxSq).forEach((e) => {
+          e._nyxSq = true;
+          e.addEventListener("pointermove", (ev) => {
+            const r = e.getBoundingClientRect();
+            e.style.setProperty("--nyx-mx", ev.clientX - r.left + "px");
+            e.style.setProperty("--nyx-my", ev.clientY - r.top + "px");
+          }, { passive: true });
+          e.addEventListener("pointerleave", () => {
+            e.style.setProperty("--nyx-mx", "-999px");
+            e.style.setProperty("--nyx-my", "-999px");
+          });
+        });
+      }
+      function sliderFill(s) {
+        const min = parseFloat(s.min) || 0;
+        let max = parseFloat(s.max);
+        if (isNaN(max)) max = 100;
+        let v = parseFloat(s.value);
+        if (isNaN(v)) v = min;
+        s.style.setProperty("--nyx-slider", max > min ? (v - min) / (max - min) * 100 : 0);
+        const sel = s.getAttribute("data-output");
+        if (sel) {
+          const o = el(sel);
+          if (o) o.textContent = (s.getAttribute("data-prefix") || "") + v + (s.getAttribute("data-suffix") || "");
+        }
+      }
+      function initSlider(root) {
+        $$(".nyx-slider", root).forEach(sliderFill);
+      }
+      doc.addEventListener("input", (e) => {
+        const s = e.target.closest && e.target.closest(".nyx-slider");
+        if (s) sliderFill(s);
+      });
+      const AR_DIGITS = "\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669";
+      function toArabicNumerals(value) {
+        return String(value).replace(/[0-9]/g, (d) => AR_DIGITS[+d]);
+      }
+      function wantsArab(node) {
+        for (let n = node; n && n.getAttribute; n = n.parentElement) {
+          let v = n.getAttribute("data-nyx-numerals");
+          if (v == null) v = n.getAttribute("data-numerals");
+          if (v != null) return v === "arab";
+        }
+        return false;
+      }
+      function initNumerals(root) {
+        $$('[data-nyx-numerals="arab"]', root).filter((e) => !e._nyxNum).forEach((e) => {
+          e._nyxNum = true;
+          const w = doc.createTreeWalker(e, NodeFilter.SHOW_TEXT, null, false);
+          const nodes = [];
+          let t;
+          while (t = w.nextNode()) nodes.push(t);
+          nodes.forEach((n) => {
+            if (/[0-9]/.test(n.nodeValue)) n.nodeValue = toArabicNumerals(n.nodeValue);
+          });
+        });
+      }
+      function pad(n) {
+        return n < 10 ? "0" + n : "" + n;
+      }
+      function initCombobox(root) {
+        $$(".nyx-combobox", root).filter((c) => !c._nyxCb).forEach((c) => {
+          c._nyxCb = true;
+          const input = c.querySelector("input"), opts = $$(".nyx-combobox-opt", c), menu = c.querySelector(".nyx-combobox-menu");
+          input.setAttribute("role", "combobox");
+          input.setAttribute("aria-autocomplete", "list");
+          input.setAttribute("aria-expanded", "false");
+          if (menu) {
+            if (!menu.id) menu.id = "nyx-cb-" + ++_uid;
+            menu.setAttribute("role", "listbox");
+            input.setAttribute("aria-controls", menu.id);
+          }
+          opts.forEach((o) => {
+            o.setAttribute("role", "option");
+            o.setAttribute("tabindex", "-1");
+            if (!o.id) o.id = "nyx-cbo-" + ++_uid;
+          });
+          function setOpen(on) {
+            c.classList.toggle("open", on);
+            input.setAttribute("aria-expanded", on ? "true" : "false");
+            if (!on) input.removeAttribute("aria-activedescendant");
+          }
+          function filter() {
+            const q = (input.value || "").trim().toLowerCase();
+            let shown = 0;
+            opts.forEach((o) => {
+              const hit = o.textContent.toLowerCase().includes(q);
+              o.hidden = !hit;
+              if (hit) shown++;
+            });
+            c.classList.toggle("empty", shown === 0);
+          }
+          function vis() {
+            return opts.filter((o) => !o.hidden);
+          }
+          function setActive(list, i) {
+            opts.forEach((o) => {
+              o.classList.remove("active");
+              o.setAttribute("aria-selected", "false");
+            });
+            if (list[i]) {
+              list[i].classList.add("active");
+              list[i].setAttribute("aria-selected", "true");
+              input.setAttribute("aria-activedescendant", list[i].id);
+              list[i].scrollIntoView({ block: "nearest" });
+            } else input.removeAttribute("aria-activedescendant");
+          }
+          function choose(o) {
+            input.value = o.getAttribute("data-value") || o.textContent.trim();
+            setOpen(false);
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+          input.addEventListener("focus", () => {
+            setOpen(true);
+            filter();
+          });
+          input.addEventListener("input", () => {
+            setOpen(true);
+            filter();
+          });
+          input.addEventListener("keydown", (e) => {
+            const list = vis(), cur = list.indexOf(c.querySelector(".nyx-combobox-opt.active"));
+            if (e.key === "ArrowDown") {
+              e.preventDefault();
+              setOpen(true);
+              setActive(list, cur < 0 ? 0 : (cur + 1) % list.length);
+            } else if (e.key === "ArrowUp") {
+              e.preventDefault();
+              setActive(list, cur <= 0 ? list.length - 1 : cur - 1);
+            } else if (e.key === "Enter") {
+              const a = c.querySelector(".nyx-combobox-opt.active") || list[0];
+              if (a) {
+                e.preventDefault();
+                choose(a);
+              }
+            } else if (e.key === "Escape") {
+              setOpen(false);
+            }
+          });
+          c.addEventListener("mousedown", (e) => {
+            const o = e.target.closest(".nyx-combobox-opt");
+            if (!o) return;
+            e.preventDefault();
+            choose(o);
+          });
+        });
+      }
+      function initCharts(root) {
+        $$(".nyx-chart-bars", root).filter((c) => !c._nyxCh).forEach((c) => {
+          c._nyxCh = true;
+          const bars = $$(".nyx-bar", c);
+          bars.forEach((b) => {
+            if (!b.hasAttribute("tabindex")) b.setAttribute("tabindex", "0");
+          });
+          if (!c.getAttribute("role")) c.setAttribute("role", "img");
+          if (!c.getAttribute("aria-label")) {
+            let summary = c.getAttribute("data-nyx-label");
+            if (!summary) {
+              const pts = bars.map((b) => ((b.getAttribute("data-label") || "") + " " + (b.getAttribute("data-val") || "")).trim()).filter(Boolean);
+              summary = "Bar chart" + (pts.length ? ": " + pts.join(", ") : "");
+            }
+            c.setAttribute("aria-label", summary);
+          }
+        });
+        $$(".nyx-chart-line, .nyx-chart-donut, .nyx-chart-pie, .nyx-donut", root).filter((c) => !c._nyxCh).forEach((c) => {
+          c._nyxCh = true;
+          if (!c.getAttribute("role")) c.setAttribute("role", "img");
+          if (!c.getAttribute("aria-label")) c.setAttribute("aria-label", c.getAttribute("data-nyx-label") || (c.classList.contains("nyx-chart-line") ? "Line chart" : "Donut chart"));
+        });
+      }
+      function initMultiselect(root) {
+        $$(".nyx-multiselect", root).filter((m) => !m._nyxMs).forEach((m) => {
+          m._nyxMs = true;
+          const control = m.querySelector(".nyx-multiselect-control"), input = control.querySelector("input");
+          const menu = m.querySelector(".nyx-multiselect-menu");
+          const opts = $$(".nyx-multiselect-opt", m);
+          if (menu) menu.setAttribute("role", "listbox");
+          if (menu) menu.setAttribute("aria-multiselectable", "true");
+          opts.forEach((o) => {
+            o.setAttribute("role", "option");
+            o.setAttribute("aria-selected", "false");
+          });
+          function valOf(o) {
+            return o.getAttribute("data-value") || o.textContent.trim();
+          }
+          function chipFor(val) {
+            const chips = $$(".nyx-chip", control);
+            let i;
+            for (i = 0; i < chips.length; i++) if (chips[i].getAttribute("data-val") === val) return chips[i];
+            return null;
+          }
+          function addChip(val, label) {
+            if (chipFor(val)) return;
+            const chip = doc.createElement("span");
+            chip.className = "nyx-chip nyx-chip-accent";
+            chip.setAttribute("data-val", val);
+            chip.appendChild(doc.createTextNode(label + " "));
+            const x = doc.createElement("span");
+            x.className = "nyx-chip-x";
+            x.setAttribute("role", "button");
+            x.setAttribute("aria-label", "remove");
+            x.textContent = "\xD7";
+            chip.appendChild(x);
+            control.insertBefore(chip, input);
+          }
+          function removeVal(v) {
+            opts.forEach((o) => {
+              if (valOf(o) === v) {
+                o.classList.remove("selected");
+                o.setAttribute("aria-selected", "false");
+              }
+            });
+            const ch = chipFor(v);
+            if (ch) ch.remove();
+          }
+          function toggle(o) {
+            const on = o.classList.toggle("selected");
+            o.setAttribute("aria-selected", on ? "true" : "false");
+            if (on) addChip(valOf(o), o.textContent.trim());
+            else removeVal(valOf(o));
+            m.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+          control.addEventListener("click", (e) => {
+            const x = e.target.closest(".nyx-chip-x");
+            if (x) {
+              removeVal(x.closest(".nyx-chip").getAttribute("data-val"));
+              m.dispatchEvent(new Event("change", { bubbles: true }));
+              return;
+            }
+            m.classList.add("open");
+            if (input) input.focus();
+          });
+          if (menu) menu.addEventListener("mousedown", (e) => {
+            const o = e.target.closest(".nyx-multiselect-opt");
+            if (!o) return;
+            e.preventDefault();
+            toggle(o);
+          });
+          if (input) input.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace" && !input.value) {
+              const chips = $$(".nyx-chip", control);
+              if (chips.length) {
+                removeVal(chips[chips.length - 1].getAttribute("data-val"));
+                m.dispatchEvent(new Event("change", { bubbles: true }));
+              }
+            } else if (e.key === "Escape") {
+              m.classList.remove("open");
+            } else if (e.key === "ArrowDown") {
+              e.preventDefault();
+              m.classList.add("open");
+              const f = menu && menu.querySelector(".nyx-multiselect-opt");
+              if (f) f.scrollIntoView({ block: "nearest" });
+            }
+          });
+        });
+      }
+      const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const DOW = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+      function parseDay(s) {
+        if (!s) return null;
+        const p = String(s).split("-");
+        if (p.length < 3) return null;
+        return { y: +p[0], m: +p[1] - 1, d: +p[2] };
+      }
+      function dayCmp(a, b) {
+        return a.y - b.y || a.m - b.m || a.d - b.d;
+      }
+      function calCfg(elx, footer) {
+        const ws = elx.getAttribute("data-week-start");
+        return {
+          minY: elx.getAttribute("data-min-year") ? +elx.getAttribute("data-min-year") : null,
+          maxY: elx.getAttribute("data-max-year") ? +elx.getAttribute("data-max-year") : null,
+          minD: parseDay(elx.getAttribute("data-min")),
+          // earliest selectable day
+          maxD: parseDay(elx.getAttribute("data-max")),
+          // latest selectable day
+          weekStart: ws === "mon" || ws === "1" ? 1 : 0,
+          // 0 = Sunday (default), 1 = Monday
+          footer: !!footer
+          // show Today / Clear
+        };
+      }
+      function fmtDate(d, fmt) {
+        return (fmt || "YYYY-MM-DD").replace(/YYYY/g, d.y).replace(/MM/g, pad(d.m + 1)).replace(/DD/g, pad(d.d));
+      }
+      function calMonthHtml(y, m, sel, today, cfg) {
+        cfg = cfg || {};
+        const ws = cfg.weekStart === 1 ? 1 : 0;
+        let first = new Date(y, m, 1).getDay();
+        if (ws) first = (first + 6) % 7;
+        const days = new Date(y, m + 1, 0).getDate();
+        const baseY = today && today.y || y;
+        let lo = cfg.minY != null ? cfg.minY : cfg.minD ? cfg.minD.y : baseY - 100;
+        let hi = cfg.maxY != null ? cfg.maxY : cfg.maxD ? cfg.maxD.y : baseY + 10;
+        lo = Math.min(lo, y);
+        hi = Math.max(hi, y);
+        let mOpts = "";
+        MONTHS.forEach((name, i) => {
+          mOpts += '<option value="' + i + '"' + (i === m ? " selected" : "") + ">" + name + "</option>";
+        });
+        let yOpts = "";
+        for (let yy = hi; yy >= lo; yy--) yOpts += '<option value="' + yy + '"' + (yy === y ? " selected" : "") + ">" + yy + "</option>";
+        const dow = ws ? DOW.slice(1).concat(DOW.slice(0, 1)) : DOW;
+        let h = '<div class="nyx-calendar-head"><button type="button" data-cal="prev" aria-label="Previous month">\u2039</button><span class="nyx-calendar-sel"><select data-cal-set="month" aria-label="Month">' + mOpts + '</select><select data-cal-set="year" aria-label="Year">' + yOpts + '</select></span><button type="button" data-cal="next" aria-label="Next month">\u203A</button></div><div class="nyx-calendar-grid">';
+        dow.forEach((d) => {
+          h += '<span class="dow">' + d + "</span>";
+        });
+        for (let i = 0; i < first; i++) h += "<span></span>";
+        for (let d = 1; d <= days; d++) {
+          const cur = { y, m, d };
+          const dis = cfg.minD && dayCmp(cur, cfg.minD) < 0 || cfg.maxD && dayCmp(cur, cfg.maxD) > 0;
+          let s = sel && sel.y === y && sel.m === m && sel.d === d ? " selected" : "";
+          if (today && today.y === y && today.m === m && today.d === d) s += " today";
+          if (dis) s += " disabled";
+          h += '<span class="day' + s + '"' + (dis ? "" : ' data-day="' + d + '"') + ">" + d + "</span>";
+        }
+        h += "</div>";
+        if (cfg.footer) h += '<div class="nyx-calendar-foot"><button type="button" data-cal-go="today">Today</button><button type="button" data-cal-go="clear">Clear</button></div>';
+        return h;
+      }
+      function initDatepicker(root) {
+        $$("[data-nyx-datepicker]", root).filter((d) => !d._nyxDp).forEach((dp) => {
+          dp._nyxDp = true;
+          const input = dp.querySelector("input");
+          let pop = dp.querySelector(".nyx-datepicker-pop");
+          if (!pop) {
+            pop = doc.createElement("div");
+            pop.className = "nyx-datepicker-pop";
+            dp.appendChild(pop);
+          }
+          const cal = doc.createElement("div");
+          cal.className = "nyx-calendar";
+          pop.appendChild(cal);
+          const now = /* @__PURE__ */ new Date(), st = { y: now.getFullYear(), m: now.getMonth(), sel: null, today: { y: now.getFullYear(), m: now.getMonth(), d: now.getDate() } };
+          const fmt = dp.getAttribute("data-format") || "YYYY-MM-DD";
+          const cfg = calCfg(dp, true);
+          function render() {
+            cal.innerHTML = calMonthHtml(st.y, st.m, st.sel, st.today, cfg);
+          }
+          render();
+          input.addEventListener("focus", () => {
+            dp.classList.add("open");
+          });
+          cal.addEventListener("change", (e) => {
+            const s = e.target.closest("[data-cal-set]");
+            if (!s) return;
+            e.stopPropagation();
+            if (s.getAttribute("data-cal-set") === "year") st.y = +s.value;
+            else st.m = +s.value;
+            render();
+          });
+          cal.addEventListener("click", (e) => {
+            const nav = e.target.closest("[data-cal]");
+            if (nav) {
+              e.stopPropagation();
+              st.m += nav.getAttribute("data-cal") === "next" ? 1 : -1;
+              if (st.m > 11) {
+                st.m = 0;
+                st.y++;
+              }
+              if (st.m < 0) {
+                st.m = 11;
+                st.y--;
+              }
+              render();
+              return;
+            }
+            const go = e.target.closest("[data-cal-go]");
+            if (go) {
+              e.stopPropagation();
+              if (go.getAttribute("data-cal-go") === "today") {
+                st.y = st.today.y;
+                st.m = st.today.m;
+                st.sel = { y: st.today.y, m: st.today.m, d: st.today.d };
+                input.value = fmtDate(st.sel, fmt);
+                dp.classList.remove("open");
+              } else {
+                st.sel = null;
+                input.value = "";
+              }
+              render();
+              input.dispatchEvent(new Event("change", { bubbles: true }));
+              return;
+            }
+            const day = e.target.closest(".day[data-day]");
+            if (day) {
+              st.sel = { y: st.y, m: st.m, d: +day.getAttribute("data-day") };
+              input.value = fmtDate(st.sel, fmt);
+              dp.classList.remove("open");
+              render();
+              input.dispatchEvent(new Event("change", { bubbles: true }));
+            }
+          });
+        });
+      }
+      function initCalendar(root) {
+        $$(".nyx-calendar[data-nyx-calendar]", root).filter((c) => !c._nyxCal).forEach((cal) => {
+          cal._nyxCal = true;
+          if (cal.getAttribute("data-nyx-calendar") === "hijri") {
+            initHijriCalendar(cal);
+            return;
+          }
+          const now = /* @__PURE__ */ new Date();
+          const st = { y: now.getFullYear(), m: now.getMonth(), sel: null, today: { y: now.getFullYear(), m: now.getMonth(), d: now.getDate() } };
+          const cfg = calCfg(cal, cal.hasAttribute("data-footer"));
+          function render() {
+            cal.innerHTML = calMonthHtml(st.y, st.m, st.sel, st.today, cfg);
+          }
+          render();
+          cal.addEventListener("change", (e) => {
+            const s = e.target.closest("[data-cal-set]");
+            if (!s) return;
+            if (s.getAttribute("data-cal-set") === "year") st.y = +s.value;
+            else st.m = +s.value;
+            render();
+          });
+          cal.addEventListener("click", (e) => {
+            const nav = e.target.closest("[data-cal]");
+            if (nav) {
+              st.m += nav.getAttribute("data-cal") === "next" ? 1 : -1;
+              if (st.m > 11) {
+                st.m = 0;
+                st.y++;
+              }
+              if (st.m < 0) {
+                st.m = 11;
+                st.y--;
+              }
+              render();
+              return;
+            }
+            const go = e.target.closest("[data-cal-go]");
+            if (go) {
+              if (go.getAttribute("data-cal-go") === "today") {
+                st.y = st.today.y;
+                st.m = st.today.m;
+                st.sel = { y: st.today.y, m: st.today.m, d: st.today.d };
+              } else {
+                st.sel = null;
+              }
+              render();
+              cal.dispatchEvent(new CustomEvent("nyx:date", { bubbles: true, detail: st.sel }));
+              return;
+            }
+            const day = e.target.closest(".day[data-day]");
+            if (day) {
+              st.sel = { y: st.y, m: st.m, d: +day.getAttribute("data-day") };
+              render();
+              cal.dispatchEvent(new CustomEvent("nyx:date", { bubbles: true, detail: st.sel }));
+            }
+          });
+        });
+      }
+      function hijriParts(d, loc) {
+        const f = new Intl.DateTimeFormat(loc + "-u-ca-islamic-umalqura", { day: "numeric", month: "numeric", year: "numeric" });
+        const o = {};
+        f.formatToParts(d).forEach((p) => {
+          if (p.type !== "literal") o[p.type] = parseInt(p.value, 10);
+        });
+        return o;
+      }
+      function hijriMonth(anchor, loc) {
+        const hp = hijriParts(anchor, loc);
+        const day1 = new Date(anchor);
+        day1.setDate(day1.getDate() - (hp.day - 1));
+        const days = [];
+        const cur = new Date(day1);
+        let guard = 0;
+        while (guard++ < 32) {
+          const p = hijriParts(cur, loc);
+          if (p.month !== hp.month || p.year !== hp.year) break;
+          days.push({ hd: p.day, greg: new Date(cur) });
+          cur.setDate(cur.getDate() + 1);
+        }
+        return { day1, days };
+      }
+      function initHijriCalendar(cal) {
+        const ar = docEl.getAttribute("dir") === "rtl" || (docEl.getAttribute("lang") || "").indexOf("ar") === 0;
+        const loc = ar ? "ar" : "en";
+        let anchor = /* @__PURE__ */ new Date();
+        const today = /* @__PURE__ */ new Date();
+        function eq(g, t) {
+          return g.getFullYear() === t.getFullYear() && g.getMonth() === t.getMonth() && g.getDate() === t.getDate();
+        }
+        function render() {
+          let m, head;
+          try {
+            m = hijriMonth(anchor, loc);
+            head = new Intl.DateTimeFormat(loc + "-u-ca-islamic-umalqura", { month: "long", year: "numeric" }).format(m.day1);
+          } catch (e) {
+            cal.innerHTML = '<div class="nyx-caption nyx-muted" style="padding:12px">Hijri calendar not supported in this browser.</div>';
+            return;
+          }
+          const dows = ar ? ["\u062D", "\u0646", "\u062B", "\u0631", "\u062E", "\u062C", "\u0633"] : DOW;
+          let h = '<div class="nyx-calendar-head"><button data-cal="prev" aria-label="previous month">\u2039</button><span>' + head + '</span><button data-cal="next" aria-label="next month">\u203A</button></div><div class="nyx-calendar-grid">';
+          dows.forEach((d) => {
+            h += '<span class="dow">' + d + "</span>";
+          });
+          for (let i = 0; i < m.day1.getDay(); i++) h += "<span></span>";
+          m.days.forEach((day) => {
+            const t = eq(day.greg, today) ? " today" : "";
+            const label = ar ? toArabicNumerals(day.hd) : day.hd;
+            const iso = day.greg.getFullYear() + "-" + _pad(day.greg.getMonth() + 1) + "-" + _pad(day.greg.getDate());
+            h += '<span class="day' + t + '" data-day="' + day.hd + '" data-greg="' + iso + '" title="' + day.greg.toLocaleDateString() + '">' + label + "</span>";
+          });
+          cal.innerHTML = h + "</div>";
+        }
+        render();
+        cal.addEventListener("click", (e) => {
+          const nav = e.target.closest("[data-cal]");
+          if (nav) {
+            const m = hijriMonth(anchor, loc);
+            if (nav.getAttribute("data-cal") === "next") {
+              anchor = new Date(m.days[m.days.length - 1].greg);
+              anchor.setDate(anchor.getDate() + 1);
+            } else {
+              anchor = new Date(m.day1);
+              anchor.setDate(anchor.getDate() - 1);
+            }
+            render();
+            return;
+          }
+          const day = e.target.closest(".day[data-day]");
+          if (day) {
+            $$(".day.selected", cal).forEach((x) => {
+              x.classList.remove("selected");
+            });
+            day.classList.add("selected");
+            cal.dispatchEvent(new CustomEvent("nyx:date", { bubbles: true, detail: day.getAttribute("data-greg") }));
+          }
+        });
+      }
+      function rangeFill(wrap) {
+        const ins = $$('input[type="range"]', wrap);
+        if (ins.length < 2) return;
+        const min = parseFloat(ins[0].min) || 0;
+        let max = parseFloat(ins[0].max);
+        if (isNaN(max)) max = 100;
+        let a = parseFloat(ins[0].value), b = parseFloat(ins[1].value);
+        if (isNaN(a)) a = min;
+        if (isNaN(b)) b = max;
+        const lo = Math.min(a, b), hi = Math.max(a, b);
+        function pct(v) {
+          return max > min ? (v - min) / (max - min) * 100 : 0;
+        }
+        wrap.style.setProperty("--nyx-lo", pct(lo));
+        wrap.style.setProperty("--nyx-hi", pct(hi));
+        wrap.setAttribute("data-lo", lo);
+        wrap.setAttribute("data-hi", hi);
+        const out = wrap.parentNode && wrap.parentNode.querySelector(".nyx-range-out");
+        if (out) out.textContent = lo + " \u2013 " + hi;
+      }
+      function initRange(root) {
+        $$(".nyx-range", root).filter((r) => $$('input[type="range"]', r).length >= 2 && !r._nyxRg).forEach((r) => {
+          r._nyxRg = true;
+          rangeFill(r);
+        });
+      }
+      doc.addEventListener("input", (e) => {
+        const r = e.target.closest && e.target.closest(".nyx-range");
+        if (r && e.target.type === "range") rangeFill(r);
+      });
+      function initKanban(root) {
+        $$(".nyx-kanban", root).filter((k) => !k._nyxKb).forEach((board) => {
+          board._nyxKb = true;
+          let dragging = null;
+          function mark() {
+            $$(".nyx-kanban-card", board).forEach((c) => {
+              c.setAttribute("draggable", "true");
+            });
+          }
+          mark();
+          board.addEventListener("mouseover", (e) => {
+            const card = e.target.closest && e.target.closest(".nyx-kanban-card");
+            if (card && card.getAttribute("draggable") !== "true") {
+              card.setAttribute("draggable", "true");
+            }
+          });
+          function cardAfter(col, y) {
+            const cards = $$(".nyx-kanban-card:not(.nyx-dragging)", col);
+            let best = null;
+            let bestOff = -Infinity;
+            cards.forEach((c) => {
+              const box = c.getBoundingClientRect(), off = y - box.top - box.height / 2;
+              if (off < 0 && off > bestOff) {
+                bestOff = off;
+                best = c;
+              }
+            });
+            return best;
+          }
+          board.addEventListener("dragstart", (e) => {
+            const card = e.target.closest(".nyx-kanban-card");
+            if (!card) return;
+            dragging = card;
+            card.classList.add("nyx-dragging");
+            e.dataTransfer.effectAllowed = "move";
+            try {
+              e.dataTransfer.setData("text/plain", card.textContent);
+            } catch (x) {
+            }
+          });
+          board.addEventListener("dragend", () => {
+            if (dragging) dragging.classList.remove("nyx-dragging");
+            $$(".nyx-kanban-col", board).forEach((col) => {
+              col.classList.remove("nyx-drop-over");
+            });
+            if (dragging) dragging.dispatchEvent(new CustomEvent("nyx:kanban-move", { bubbles: true }));
+            dragging = null;
+          });
+          board.addEventListener("dragover", (e) => {
+            if (!dragging) return;
+            const col = e.target.closest(".nyx-kanban-col");
+            if (!col) return;
+            e.preventDefault();
+            e.dataTransfer.dropEffect = "move";
+            $$(".nyx-kanban-col", board).forEach((c) => {
+              c.classList.toggle("nyx-drop-over", c === col);
+            });
+            const after = cardAfter(col, e.clientY);
+            if (after == null) col.appendChild(dragging);
+            else col.insertBefore(dragging, after);
+          });
+          board.addEventListener("drop", (e) => {
+            if (dragging) e.preventDefault();
+          });
+        });
+      }
+      function initCompare(root) {
+        $$(".nyx-compare", root).filter((c) => !c._nyxCmp).forEach((c) => {
+          c._nyxCmp = true;
+          let dragging = false;
+          function setPos(x) {
+            const r = c.getBoundingClientRect();
+            c.style.setProperty("--nyx-pos", Math.max(0, Math.min(100, (x - r.left) / r.width * 100)));
+          }
+          c.addEventListener("pointerdown", (e) => {
+            dragging = true;
+            setPos(e.clientX);
+            e.preventDefault();
+          });
+          window.addEventListener("pointermove", (e) => {
+            if (dragging) setPos(e.clientX);
+          }, { passive: true });
+          window.addEventListener("pointerup", () => {
+            dragging = false;
+          });
+        });
+      }
+      let _lightbox = null;
+      function lightboxEl() {
+        if (_lightbox) return _lightbox;
+        _lightbox = doc.createElement("div");
+        _lightbox.className = "nyx-lightbox";
+        _lightbox.innerHTML = '<button class="nyx-lightbox-close" aria-label="close">\u2715</button><button class="nyx-lightbox-prev" aria-label="previous">\u2039</button><img alt=""><button class="nyx-lightbox-next" aria-label="next">\u203A</button>';
+        doc.body.appendChild(_lightbox);
+        _lightbox._imgs = [];
+        _lightbox._i = 0;
+        const img = _lightbox.querySelector("img");
+        function show(i) {
+          const a = _lightbox._imgs;
+          if (!a.length) return;
+          _lightbox._i = (i + a.length) % a.length;
+          img.src = a[_lightbox._i];
+        }
+        function hide() {
+          _lightbox.classList.remove("open");
+          lockScroll(false);
+        }
+        _lightbox._show = show;
+        _lightbox.querySelector(".nyx-lightbox-close").addEventListener("click", hide);
+        _lightbox.querySelector(".nyx-lightbox-prev").addEventListener("click", (e) => {
+          e.stopPropagation();
+          show(_lightbox._i - 1);
+        });
+        _lightbox.querySelector(".nyx-lightbox-next").addEventListener("click", (e) => {
+          e.stopPropagation();
+          show(_lightbox._i + 1);
+        });
+        _lightbox.addEventListener("click", (e) => {
+          if (e.target === _lightbox) hide();
+        });
+        doc.addEventListener("keydown", (e) => {
+          if (!_lightbox.classList.contains("open")) return;
+          if (e.key === "Escape") hide();
+          else if (e.key === "ArrowRight") show(_lightbox._i + 1);
+          else if (e.key === "ArrowLeft") show(_lightbox._i - 1);
+        });
+        return _lightbox;
+      }
+      function initLightbox(root) {
+        $$(".nyx-gallery", root).filter((g) => !g._nyxLb).forEach((g) => {
+          g._nyxLb = true;
+          g.addEventListener("click", (e) => {
+            const img = e.target.closest("img");
+            if (!img) return;
+            const imgs = $$("img", g);
+            const lb = lightboxEl();
+            lb._imgs = imgs.map((im) => im.getAttribute("data-full") || im.src);
+            lb._show(imgs.indexOf(img));
+            lb.classList.add("open");
+            lockScroll(true);
+          });
+        });
+      }
+      function initVideoFacade(root) {
+        $$(".nyx-video[data-embed]", root).filter((v) => !v._nyxVid).forEach((v) => {
+          v._nyxVid = true;
+          v.addEventListener("click", () => {
+            if (v.classList.contains("playing")) return;
+            const url = v.getAttribute("data-embed"), sep = url.includes("?") ? "&" : "?";
+            const h = v.offsetHeight, ifr = doc.createElement("iframe");
+            ifr.src = url + sep + "autoplay=1";
+            ifr.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
+            ifr.setAttribute("allowfullscreen", "");
+            ifr.style.cssText = "position:absolute;inset:0;width:100%;height:100%";
+            v.style.height = h + "px";
+            const poster = v.querySelector("img");
+            if (poster) poster.style.display = "none";
+            v.classList.add("playing");
+            v.appendChild(ifr);
+          });
+        });
+      }
+      function syncBackTop() {
+        const sy = window.scrollY || doc.documentElement.scrollTop;
+        $$(".nyx-to-top").forEach((b) => {
+          b.classList.toggle("show", sy > 320);
+        });
+        const sh = docEl.scrollHeight - docEl.clientHeight;
+        const pct = sh > 0 ? sy / sh * 100 : 0;
+        $$(".nyx-scroll-progress").forEach((p) => {
+          p.style.width = pct + "%";
+        });
+        $$(".nyx-navbar-sticky").forEach((n) => {
+          n.classList.toggle("scrolled", sy > 40);
+        });
+      }
+      let _tb = null, _tbTimer = null;
+      function topSpan() {
+        if (!_tb) {
+          _tb = doc.createElement("div");
+          _tb.className = "nyx-topbar";
+          _tb.innerHTML = "<span></span>";
+          doc.body.appendChild(_tb);
+        }
+        return _tb.firstChild;
+      }
+      const progress = {
+        start: function() {
+          const s = topSpan();
+          s.style.opacity = "1";
+          let w = 8;
+          s.style.width = "8%";
+          clearInterval(_tbTimer);
+          _tbTimer = setInterval(() => {
+            w += (92 - w) * 0.12;
+            s.style.width = w.toFixed(1) + "%";
+          }, 400);
+          return progress;
+        },
+        set: function(p) {
+          topSpan().style.width = Math.max(0, Math.min(100, p)) + "%";
+          return progress;
+        },
+        done: function() {
+          clearInterval(_tbTimer);
+          const s = topSpan();
+          s.style.width = "100%";
+          setTimeout(() => {
+            s.style.opacity = "0";
+            setTimeout(() => {
+              s.style.width = "0";
+            }, 350);
+          }, 220);
+          return progress;
+        }
+      };
+      function tickCountdown(c) {
+        const diff = Math.max(0, Math.floor((c._nyxTarget - /* @__PURE__ */ new Date()) / 1e3));
+        const u = $$(".unit b", c), m = Math.floor(diff % 3600 / 60), s = diff % 60;
+        function set(node, n) {
+          if (node) node.textContent = c._nyxArab ? toArabicNumerals(pad(n)) : pad(n);
+        }
+        if (u.length >= 4) {
+          set(u[0], Math.floor(diff / 86400));
+          set(u[1], Math.floor(diff % 86400 / 3600));
+          set(u[2], m);
+          set(u[3], s);
+        } else {
+          set(u[0], Math.floor(diff / 3600));
+          set(u[1], m);
+          set(u[2], s);
+        }
+      }
+      function initCountdown(root) {
+        $$(".nyx-countdown[data-nyx-countdown], .nyx-countdown[data-date]", root).filter((c) => !c._nyxCd).forEach((c) => {
+          c._nyxCd = true;
+          c._nyxArab = wantsArab(c);
+          const dateAttr = c.getAttribute("data-date");
+          let target;
+          if (dateAttr) {
+            target = new Date(dateAttr);
+          } else {
+            const p = c.getAttribute("data-nyx-countdown").split(":"), now = /* @__PURE__ */ new Date();
+            target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), +p[0], +p[1] || 0, 0);
+            if (target < now) target = new Date(target.getTime() + 864e5);
+          }
+          c._nyxTarget = target;
+          tickCountdown(c);
+          const iv = setInterval(() => {
+            tickCountdown(c);
+            if (!c._nyxDone && c._nyxTarget - /* @__PURE__ */ new Date() <= 0) {
+              c._nyxDone = true;
+              clearInterval(iv);
+              c.classList.add("nyx-countdown-done");
+              c.dispatchEvent(new CustomEvent("nyx:countdown-done", { bubbles: true }));
+            }
+          }, 1e3);
+        });
+      }
+      function initZakat(root) {
+        $$(".nyx-zakat", root).filter((z) => !z._nyxZ).forEach((z) => {
+          z._nyxZ = true;
+          const amt = z.querySelector(".nyx-zakat-amount"), out = z.querySelector(".nyx-zakat-result");
+          const rate = (parseFloat(z.getAttribute("data-rate")) || 2.5) / 100;
+          const nisab = parseFloat(z.getAttribute("data-nisab")) || 0;
+          const grp = amt && amt.closest(".nyx-input-group");
+          if (out) out.setAttribute("aria-live", "polite");
+          function calc() {
+            if (!amt) return;
+            const clean = amt.value.replace(/[^\d.]/g, "").replace(/(\..*)\./g, "$1");
+            if (clean !== amt.value) amt.value = clean;
+            const invalid = amt.value !== "" && isNaN(parseFloat(amt.value));
+            if (grp) grp.classList.toggle("nyx-invalid", invalid);
+            const v = parseFloat(amt.value) || 0;
+            const below = nisab > 0 && v < nisab;
+            z.classList.toggle("nyx-below-nisab", below);
+            const due = below ? 0 : v * rate;
+            if (out) out.textContent = due.toLocaleString(void 0, { maximumFractionDigits: 2 });
+          }
+          if (amt) {
+            amt.addEventListener("input", calc);
+            calc();
+          }
+        });
+      }
+      function zatcaQR(o) {
+        o = o || {};
+        const fields = [o.seller || "", o.vatNumber || "", o.timestamp || "", String(o.total != null ? o.total : ""), String(o.vatTotal != null ? o.vatTotal : "")];
+        function utf8(str) {
+          if (typeof TextEncoder !== "undefined") return Array.prototype.slice.call(new TextEncoder().encode(str));
+          const out = [], s = unescape(encodeURIComponent(str));
+          for (let i = 0; i < s.length; i++) out.push(s.charCodeAt(i));
+          return out;
+        }
+        const bytes = [];
+        fields.forEach((v, i) => {
+          const vb = utf8(v);
+          bytes.push(i + 1, vb.length);
+          for (let j = 0; j < vb.length; j++) bytes.push(vb[j]);
+        });
+        let bin = "";
+        for (let k = 0; k < bytes.length; k++) bin += String.fromCharCode(bytes[k]);
+        return typeof btoa !== "undefined" ? btoa(bin) : bin;
+      }
+      function qiblaBearing(lat, lng) {
+        const KLA = 21.4225 * Math.PI / 180, KLO = 39.8262 * Math.PI / 180, la = lat * Math.PI / 180, dLo = KLO - lng * Math.PI / 180;
+        const y = Math.sin(dLo) * Math.cos(KLA), x = Math.cos(la) * Math.sin(KLA) - Math.sin(la) * Math.cos(KLA) * Math.cos(dLo);
+        return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+      }
+      function initQibla(root) {
+        $$(".nyx-qibla[data-nyx-qibla], .nyx-qibla[data-coords]", root).filter((q) => !q._nyxQ).forEach((q) => {
+          q._nyxQ = true;
+          let deg;
+          const coords = q.getAttribute("data-coords");
+          if (coords) {
+            const p = coords.split(",").map(parseFloat);
+            if (p.length === 2 && !isNaN(p[0]) && !isNaN(p[1])) deg = qiblaBearing(p[0], p[1]);
+          }
+          if (deg == null) deg = parseFloat(q.getAttribute("data-nyx-qibla")) || 0;
+          deg = Math.round(deg * 10) / 10;
+          const n = q.querySelector(".needle");
+          if (n) n.style.transform = "rotate(" + deg + "deg)";
+          if (!q.getAttribute("aria-label")) q.setAttribute("aria-label", "Qibla direction " + Math.round(deg) + "\xB0 from north");
+        });
+      }
+      function luhnValid(s) {
+        let sum = 0, alt = false;
+        for (let i = s.length - 1; i >= 0; i--) {
+          let d = +s[i];
+          if (alt) {
+            d *= 2;
+            if (d > 9) d -= 9;
+          }
+          sum += d;
+          alt = !alt;
+        }
+        return sum % 10 === 0;
+      }
+      function initIdInput(root) {
+        $$(".nyx-id-input", root).filter((w) => !w._nyxId).forEach((w) => {
+          w._nyxId = true;
+          const inp = w.querySelector("input");
+          if (!inp) return;
+          inp.setAttribute("dir", "ltr");
+          inp.setAttribute("inputmode", "numeric");
+          const tag = w.querySelector(".nyx-id-type");
+          function check(commit) {
+            const d = inp.value.replace(/\D/g, "").slice(0, 10);
+            if (d !== inp.value) inp.value = d;
+            const kind = d.charAt(0) === "1" ? "citizen" : d.charAt(0) === "2" ? "resident" : "";
+            if (tag) {
+              tag.textContent = kind === "citizen" ? "\u0645\u0648\u0627\u0637\u0646" : kind === "resident" ? "\u0645\u0642\u064A\u0645" : "";
+              tag.setAttribute("data-kind", kind);
+            }
+            const ok = /^[12]\d{9}$/.test(d) && luhnValid(d);
+            const bad = !ok && d.length > 0 && (commit || d.length >= 10);
+            w.classList.toggle("is-valid", ok);
+            w.classList.toggle("is-invalid", bad);
+            inp.setAttribute("aria-invalid", bad ? "true" : "false");
+          }
+          inp.addEventListener("input", () => {
+            check(false);
+          });
+          inp.addEventListener("blur", () => {
+            check(true);
+          });
+          check(false);
+        });
+      }
+      const HIJRI_MONTHS = ["\u0645\u062D\u0631\u0651\u0645", "\u0635\u0641\u0631", "\u0631\u0628\u064A\u0639 \u0627\u0644\u0623\u0648\u0644", "\u0631\u0628\u064A\u0639 \u0627\u0644\u0622\u062E\u0631", "\u062C\u0645\u0627\u062F\u0649 \u0627\u0644\u0623\u0648\u0644\u0649", "\u062C\u0645\u0627\u062F\u0649 \u0627\u0644\u0622\u062E\u0631\u0629", "\u0631\u062C\u0628", "\u0634\u0639\u0628\u0627\u0646", "\u0631\u0645\u0636\u0627\u0646", "\u0634\u0648\u0651\u0627\u0644", "\u0630\u0648 \u0627\u0644\u0642\u0639\u062F\u0629", "\u0630\u0648 \u0627\u0644\u062D\u062C\u0651\u0629"];
+      const _HEPOCH = 19484395e-1;
+      function _gToJD(y, m, d) {
+        const a = Math.floor((14 - m) / 12), yy = y + 4800 - a, mm = m + 12 * a - 3;
+        return d + Math.floor((153 * mm + 2) / 5) + 365 * yy + Math.floor(yy / 4) - Math.floor(yy / 100) + Math.floor(yy / 400) - 32045;
+      }
+      function _jdToG(jd) {
+        const a = jd + 32044, b = Math.floor((4 * a + 3) / 146097), c = a - Math.floor(146097 * b / 4), e2 = Math.floor((4 * c + 3) / 1461), e = c - Math.floor(1461 * e2 / 4), m = Math.floor((5 * e + 2) / 153);
+        return { y: 100 * b + e2 - 4800 + Math.floor(m / 10), m: m + 3 - 12 * Math.floor(m / 10), d: e - Math.floor((153 * m + 2) / 5) + 1 };
+      }
+      function _isToJD(y, m, d) {
+        return d + Math.ceil(29.5 * (m - 1)) + (y - 1) * 354 + Math.floor((3 + 11 * y) / 30) + _HEPOCH - 1;
+      }
+      function _jdToIs(jd) {
+        jd = Math.floor(jd) + 0.5;
+        const y = Math.floor((30 * (jd - _HEPOCH) + 10646) / 10631);
+        const m = Math.min(12, Math.ceil((jd - (29 + _isToJD(y, 1, 1))) / 29.5) + 1);
+        return { y, m, d: jd - _isToJD(y, m, 1) + 1 };
+      }
+      function _intlHijri(date) {
+        try {
+          const p = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn", { day: "numeric", month: "numeric", year: "numeric", timeZone: "UTC" }).formatToParts(date);
+          const o = {};
+          for (let i = 0; i < p.length; i++) if (p[i].type !== "literal") o[p[i].type] = +p[i].value;
+          return o.year && o.month && o.day ? { y: o.year, m: o.month, d: o.day } : null;
+        } catch (e) {
+          return null;
+        }
+      }
+      function toHijri(y, m, d) {
+        const date = y instanceof Date ? new Date(Date.UTC(y.getFullYear(), y.getMonth(), y.getDate())) : new Date(Date.UTC(y, m - 1, d));
+        const h = _intlHijri(date) || _jdToIs(_gToJD(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate()) + 0.5);
+        h.month = HIJRI_MONTHS[h.m - 1];
+        return h;
+      }
+      function fromHijri(hy, hm, hd) {
+        const s = _jdToG(Math.floor(_isToJD(hy, hm, hd))), dt = new Date(Date.UTC(s.y, s.m - 1, s.d));
+        if (_intlHijri(dt)) {
+          for (let i = 0; i < 4; i++) {
+            const h = _intlHijri(dt);
+            if (h.y === hy && h.m === hm && h.d === hd) break;
+            dt.setUTCDate(dt.getUTCDate() - Math.round((h.y - hy) * 354 + (h.m - hm) * 29.53 + (h.d - hd)));
+          }
+        }
+        return dt;
+      }
+      function formatHijri(input, opts) {
+        const h = input instanceof Date ? toHijri(input) : input;
+        const s = h.d + " " + (h.month || HIJRI_MONTHS[h.m - 1]) + " " + h.y + " \u0647\u0640";
+        return opts && opts.numerals === "arab" ? toArabicNumerals(s) : s;
+      }
+      function _pad(n) {
+        return (n < 10 ? "0" : "") + n;
+      }
+      function initHijri(root) {
+        $$("[data-nyx-hijri-today]", root).filter((e) => !e._nyxHT).forEach((e) => {
+          e._nyxHT = true;
+          e.textContent = formatHijri(/* @__PURE__ */ new Date(), { numerals: wantsArab(e) ? "arab" : null });
+        });
+        $$("[data-nyx-hijri]", root).filter((w) => !w._nyxHC).forEach((w) => {
+          w._nyxHC = true;
+          const greg = w.querySelector(".nyx-hc-greg"), hd = w.querySelector(".nyx-hc-hd"), hm = w.querySelector(".nyx-hc-hm"), hy = w.querySelector(".nyx-hc-hy"), out = w.querySelector("[data-hijri-text]");
+          if (hm && !hm.options.length) HIJRI_MONTHS.forEach((n, i) => {
+            const o = doc.createElement("option");
+            o.value = i + 1;
+            o.textContent = i + 1 + " \xB7 " + n;
+            hm.appendChild(o);
+          });
+          function showOut(h) {
+            if (out) out.textContent = formatHijri(h, { numerals: "arab" });
+          }
+          function fromGreg() {
+            if (!greg || !greg.value) return;
+            const p = greg.value.split("-"), h = toHijri(+p[0], +p[1], +p[2]);
+            if (hd) hd.value = h.d;
+            if (hm) hm.value = h.m;
+            if (hy) hy.value = h.y;
+            showOut(h);
+          }
+          function fromHij() {
+            if (!hy || !hd || !hm) return;
+            const y = +hy.value, m = +hm.value, d = +hd.value;
+            if (!y || !m || !d) return;
+            const dt = fromHijri(y, m, d);
+            if (greg) greg.value = dt.getUTCFullYear() + "-" + _pad(dt.getUTCMonth() + 1) + "-" + _pad(dt.getUTCDate());
+            showOut({ y, m, d });
+          }
+          if (greg) greg.addEventListener("change", fromGreg);
+          [hd, hm, hy].forEach((f) => {
+            if (f) f.addEventListener("change", fromHij);
+          });
+          if (greg && !greg.value) {
+            const t = /* @__PURE__ */ new Date();
+            greg.value = t.getFullYear() + "-" + _pad(t.getMonth() + 1) + "-" + _pad(t.getDate());
+          }
+          fromGreg();
+        });
+      }
+      function initTabs(root) {
+        $$("[data-nyx-tabs]", root).filter((g) => !g._nyxTabs).forEach((g) => {
+          g._nyxTabs = true;
+          g.setAttribute("role", "tablist");
+          const tabs = $$("[data-nyx-tab]", g), scope = g.parentElement || doc;
+          tabs.forEach((t) => {
+            t.setAttribute("role", "tab");
+            const on = t.classList.contains("active");
+            t.setAttribute("aria-selected", on ? "true" : "false");
+            t.setAttribute("tabindex", on ? "0" : "-1");
+            const key = t.getAttribute("data-nyx-tab"), panel = $('[data-nyx-panel="' + key + '"]', scope);
+            if (panel) {
+              panel.setAttribute("role", "tabpanel");
+              panel.setAttribute("tabindex", "0");
+            }
+          });
+          g.addEventListener("keydown", (e) => {
+            const cur = e.target.closest("[data-nyx-tab]"), i = tabs.indexOf(cur);
+            if (i < 0) return;
+            let n = -1;
+            if (e.key === "ArrowRight" || e.key === "ArrowDown") n = (i + 1) % tabs.length;
+            else if (e.key === "ArrowLeft" || e.key === "ArrowUp") n = (i - 1 + tabs.length) % tabs.length;
+            else if (e.key === "Home") n = 0;
+            else if (e.key === "End") n = tabs.length - 1;
+            if (n < 0) return;
+            e.preventDefault();
+            activateTab(tabs[n]);
+            tabs[n].focus();
+          });
+          if (g.hasAttribute("data-hash") && location.hash) {
+            const hit = tabs.find((t) => "#" + t.getAttribute("data-nyx-tab") === location.hash);
+            if (hit) activateTab(hit);
+          }
+        });
+      }
+      function initHierarchy(root) {
+        $$(".nyx-hierarchy li", root).forEach((li) => {
+          const node = li.querySelector(":scope > .nyx-hierarchy-node");
+          const kids = li.querySelector(":scope > ul");
+          if (node && kids && !node._nyxH) {
+            node._nyxH = true;
+            node.classList.add("has-kids");
+            const car = doc.createElement("span");
+            car.className = "caret";
+            car.textContent = "\u25B8";
+            node.insertBefore(car, node.firstChild);
+          }
+        });
+      }
+      function hcolSelect(item) {
+        const col = item.closest(".nyx-hcol"), wrap = item.closest(".nyx-hierarchy-cols");
+        if (!col || !wrap) return;
+        $$(".nyx-hitem", col).forEach((x) => {
+          x.classList.toggle("active", x === item);
+        });
+        const cols = $$(".nyx-hcol", wrap), idx = cols.indexOf(col);
+        cols.forEach((c, n) => {
+          if (n > idx) c.hidden = true;
+        });
+        const tgt = item.getAttribute("data-nyx-hcol");
+        if (tgt) {
+          const t = $(tgt, wrap);
+          if (t) t.hidden = false;
+        }
+      }
+      function initPrayerTimes(root) {
+        $$(".nyx-prayer-times[data-nyx-prayers]", root).forEach((wrap) => {
+          if (wrap._nyxP) return;
+          wrap._nyxP = true;
+          const items = $$(".nyx-prayer", wrap);
+          function update() {
+            const now = /* @__PURE__ */ new Date();
+            const cur = now.getHours() * 60 + now.getMinutes();
+            let pick = null;
+            items.forEach((p) => {
+              const t = p.getAttribute("data-time");
+              if (!t) return;
+              const pm = +t.split(":")[0] * 60 + +t.split(":")[1];
+              if (pm >= cur && !pick) pick = p;
+            });
+            if (!pick && items.length) pick = items[0];
+            items.forEach((p) => {
+              const on = p === pick;
+              p.classList.toggle("next", on);
+              if (on) p.setAttribute("aria-current", "true");
+              else p.removeAttribute("aria-current");
+            });
+          }
+          update();
+          setInterval(update, 3e4);
+        });
+      }
+      function initImage(root) {
+        $$('.nyx-image[data-loaded="false"] img', root).forEach((img) => {
+          const wrap = img.closest(".nyx-image");
+          if (!wrap) return;
+          function onL() {
+            wrap.setAttribute("data-loaded", "true");
+          }
+          if (img.complete) {
+            onL();
+            return;
+          }
+          if ("loading" in HTMLImageElement.prototype) {
+            img.addEventListener("load", onL);
+          } else {
+            if (window.IntersectionObserver) {
+              const io = new IntersectionObserver((es, ob) => {
+                es.forEach((e) => {
+                  if (e.isIntersecting) {
+                    img.src = img.src;
+                    ob.disconnect();
+                  }
+                });
+              });
+              io.observe(img);
+            }
+            img.addEventListener("load", onL);
+          }
+        });
+      }
+      function initNav(root) {
+        $$(".nyx-nav .nav-toggle", root).forEach((btn) => {
+          if (btn._nyxNavInit) return;
+          btn._nyxNavInit = true;
+          const nav = btn.closest(".nyx-nav");
+          if (!nav) return;
+          const menu = nav.querySelector(".nav-links");
+          btn.addEventListener("click", () => {
+            const open = nav.getAttribute("data-open") === "true";
+            nav.setAttribute("data-open", !open ? "true" : "false");
+            btn.setAttribute("aria-expanded", !open ? "true" : "false");
+            if (!open && menu) {
+              const a = menu.querySelector("a");
+              if (a) a.focus();
+            }
+          });
+          nav.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+              nav.setAttribute("data-open", "false");
+              btn.setAttribute("aria-expanded", "false");
+              btn.focus();
+            }
+          });
+        });
+      }
+      function initSliderNav(root) {
+        $$("[data-nyx-slider-nav]", root).filter((nav) => !nav._nyxSlNav).forEach((nav) => {
+          nav._nyxSlNav = true;
+          const ind = doc.createElement("span");
+          ind.className = "nyx-nav-indicator";
+          nav.appendChild(ind);
+          function update(target) {
+            if (!target) {
+              ind.style.opacity = "0";
+              return;
+            }
+            ind.style.left = target.offsetLeft + "px";
+            ind.style.width = target.offsetWidth + "px";
+            ind.style.top = target.offsetTop + "px";
+            ind.style.height = target.offsetHeight + "px";
+            ind.style.opacity = "1";
+          }
+          let active = nav.querySelector(".active");
+          if (active) update(active);
+          const selector = nav.getAttribute("data-nyx-slider-nav") || ".nyx-tab, .nyx-btn, .nyx-nav-link, a";
+          const items = $$(selector, nav);
+          items.forEach((it) => {
+            it.addEventListener("mouseenter", () => {
+              update(it);
+            });
+            it.addEventListener("click", () => {
+              setTimeout(() => {
+                active = nav.querySelector(".active") || it;
+                update(active);
+              }, 0);
+            });
+          });
+          nav.addEventListener("mouseleave", () => {
+            active = nav.querySelector(".active");
+            update(active);
+          });
+          nav.addEventListener("change", (e) => {
+            if (e.target && e.target.matches('input[type="radio"]')) {
+              const label = e.target.closest("label") || e.target.parentElement;
+              if (label) {
+                $$(selector, nav).forEach((lbl) => {
+                  lbl.classList.remove("active");
+                });
+                label.classList.add("active");
+                update(label);
+              }
+            }
+          });
+        });
+      }
+      function initPasswordStrength(root) {
+        $$(".nyx-password-wrapper", root).filter((w) => !w._nyxPass).forEach((w) => {
+          w._nyxPass = true;
+          const inp = w.querySelector('input[type="password"]');
+          const fill = w.querySelector(".nyx-strength-fill");
+          const txt = w.querySelector(".nyx-strength-text");
+          if (!inp || !fill) return;
+          if (txt) txt.setAttribute("aria-live", "polite");
+          const isRtl = doc.documentElement.getAttribute("dir") === "rtl";
+          const labels = isRtl ? ["\u0636\u0639\u064A\u0641 \u062C\u062F\u0627\u064B", "\u0636\u0639\u064A\u0641", "\u0645\u062A\u0648\u0633\u0637", "\u0642\u0648\u064A", "\u0642\u0648\u064A \u062C\u062F\u0627\u064B"] : ["Very Weak", "Weak", "Medium", "Strong", "Very Strong"];
+          inp.addEventListener("input", () => {
+            const val = inp.value;
+            let score = 0;
+            if (val.length >= 8) score++;
+            if (/[A-Z]/.test(val)) score++;
+            if (/[0-9]/.test(val)) score++;
+            if (/[^A-Za-z0-9]/.test(val)) score++;
+            fill.className = "nyx-strength-fill";
+            if (val.length === 0) {
+              fill.style.width = "0%";
+              if (txt) txt.textContent = "";
+              return;
+            }
+            fill.classList.add("strength-" + score);
+            if (txt) txt.textContent = labels[score];
+          });
+        });
+      }
+      function initMagnetic(root) {
+        if (prefersReducedMotion()) return;
+        $$(".nyx-magnetic", root).filter((m) => !m._nyxMag).forEach((m) => {
+          m._nyxMag = true;
+          m.addEventListener("mousemove", (e) => {
+            const rect = m.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dx = e.clientX - cx;
+            const dy = e.clientY - cy;
+            m.style.transform = "translate(" + (dx * 0.3).toFixed(1) + "px, " + (dy * 0.3).toFixed(1) + "px)";
+          });
+          m.addEventListener("mouseleave", () => {
+            m.style.transform = "translate(0, 0)";
+          });
+        });
+      }
+      function initCursorFollower(root) {
+        const fol = doc.querySelector(".nyx-cursor-follower");
+        if (!fol || fol._nyxFol || prefersReducedMotion()) return;
+        fol._nyxFol = true;
+        doc.addEventListener("mousemove", (e) => {
+          fol.style.left = e.clientX + "px";
+          fol.style.top = e.clientY + "px";
+          fol.style.opacity = "1";
+        });
+        doc.addEventListener("mouseleave", () => {
+          fol.style.opacity = "0";
+        });
+      }
+      function initTilt(root) {
+        if (prefersReducedMotion()) return;
+        $$(".nyx-tilt", root).filter((el2) => !el2._nyxTilt).forEach((el2) => {
+          el2._nyxTilt = true;
+          const strength = parseFloat(el2.dataset.nyxTiltStrength) || 15;
+          el2.addEventListener("mousemove", (e) => {
+            const rect = el2.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            el2.style.transform = "perspective(800px) rotateX(" + (-y * strength).toFixed(2) + "deg) rotateY(" + (x * strength).toFixed(2) + "deg)";
+          });
+          el2.addEventListener("mouseleave", () => {
+            el2.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
+          });
+        });
+      }
+      function initCounter(root) {
+        const els = $$("[data-nyx-count]", root).filter((el2) => !el2._nyxCount);
+        if (!els.length) return;
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const el2 = entry.target;
+            io.unobserve(el2);
+            el2.setAttribute("data-nyx-count-done", "");
+            const target = parseFloat(el2.dataset.nyxCount) || 0;
+            const suffix = el2.dataset.nyxSuffix || "";
+            const prefix = el2.dataset.nyxPrefix || "";
+            const decimals = parseInt(el2.dataset.nyxDecimals, 10) || 0;
+            const duration = parseInt(el2.dataset.nyxDuration, 10) || 1800;
+            if (prefersReducedMotion()) {
+              el2.textContent = prefix + target.toFixed(decimals) + suffix;
+              return;
+            }
+            const start = 0;
+            let startTime = null;
+            function easeOut(t) {
+              return 1 - Math.pow(1 - t, 3);
+            }
+            function step(ts) {
+              if (!startTime) startTime = ts;
+              const progress2 = Math.min((ts - startTime) / duration, 1);
+              const value = start + easeOut(progress2) * (target - start);
+              el2.textContent = prefix + value.toFixed(decimals) + suffix;
+              if (progress2 < 1) requestAnimationFrame(step);
+              else el2.textContent = prefix + target.toFixed(decimals) + suffix;
+            }
+            requestAnimationFrame(step);
+          });
+        }, { threshold: 0.3 });
+        els.forEach((el2) => {
+          el2._nyxCount = true;
+          el2.setAttribute("aria-live", "polite");
+          el2.textContent = (el2.dataset.nyxPrefix || "") + "0" + (el2.dataset.nyxSuffix || "");
+          io.observe(el2);
+        });
+      }
+      function initTypewriter(root) {
+        $$(".nyx-typewriter", root).filter((el2) => !el2._nyxTW).forEach((el2) => {
+          el2._nyxTW = true;
+          const text = el2.dataset.nyxText || el2.textContent.trim();
+          const speed = parseInt(el2.dataset.nyxSpeed, 10) || 60;
+          const loop = el2.hasAttribute("data-nyx-loop");
+          if (prefersReducedMotion()) {
+            el2.textContent = text;
+            el2.classList.add("nyx-typing-done");
+            return;
+          }
+          el2.textContent = "";
+          let i = 0;
+          function type() {
+            if (i < text.length) {
+              el2.textContent += text[i++];
+              setTimeout(type, speed);
+            } else {
+              el2.classList.add("nyx-typing-done");
+              if (loop) setTimeout(() => {
+                el2.textContent = "";
+                el2.classList.remove("nyx-typing-done");
+                i = 0;
+                setTimeout(type, 600);
+              }, 2200);
+            }
+          }
+          const io = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+              io.disconnect();
+              type();
+            }
+          }, { threshold: 0.5 });
+          io.observe(el2);
+        });
+      }
+      function init(root) {
+        root = root || doc;
+        $$("[data-nyx-spy]", root).forEach(initSpy);
+        $$(".nyx-table-sortable", root).forEach(initSortable);
+        initReveal(root);
+        initSquares(root);
+        initCarousel(root);
+        initAccordion(root);
+        initDisclosure(root);
+        initTriggers(root);
+        initPalette(root);
+        initSlider(root);
+        initRange(root);
+        initKanban(root);
+        initCalendar(root);
+        initCompare(root);
+        initLightbox(root);
+        initVideoFacade(root);
+        initNumerals(root);
+        initHierarchy(root);
+        initPrayerTimes(root);
+        initCombobox(root);
+        initCharts(root);
+        initMultiselect(root);
+        initDatepicker(root);
+        initCountdown(root);
+        initZakat(root);
+        initQibla(root);
+        initIdInput(root);
+        initHijri(root);
+        initImage(root);
+        initNav(root);
+        initTabs(root);
+        initSliderNav(root);
+        initPasswordStrength(root);
+        initMagnetic(root);
+        initCursorFollower(root);
+        initTilt(root);
+        initCounter(root);
+        initTypewriter(root);
+        initStepper(root);
+        initWatermark(root);
+        initColorPicker(root);
+        initSplit(root);
+        initAffix(root);
+        syncBackTop();
+      }
+      window.addEventListener("scroll", syncBackTop, { passive: true });
+      doc.addEventListener("mousemove", (e) => {
+        const shiny = e.target.closest(".nyx-shiny-btn, .nyx-shiny-card");
+        if (shiny) {
+          const rect = shiny.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          shiny.style.setProperty("--nyx-shiny-x", x + "px");
+          shiny.style.setProperty("--nyx-shiny-y", y + "px");
+        }
+      });
+      doc.addEventListener("contextmenu", (e) => {
+        const host = e.target.closest("[data-nyx-contextmenu]");
+        if (!host) return;
+        const menu = el(host.getAttribute("data-nyx-contextmenu"));
+        if (!menu) return;
+        e.preventDefault();
+        $$(".nyx-context-menu.open").forEach((m) => {
+          m.classList.remove("open");
+        });
+        const vw = doc.documentElement.clientWidth, vh = doc.documentElement.clientHeight;
+        menu.style.left = Math.min(e.clientX, vw - menu.offsetWidth - 8) + "px";
+        menu.style.top = Math.min(e.clientY, vh - menu.offsetHeight - 8) + "px";
+        menu.classList.add("open");
+        const fi = menu.querySelector(".nyx-dropdown-item");
+        if (fi) setTimeout(() => {
+          fi.focus();
+        }, 20);
+      });
+      if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", () => {
+        init();
+      });
+      else init();
+      return {
+        version: "1.1.0",
+        init,
+        toast,
+        openModal,
+        openDrawer,
+        close,
+        closeAll,
+        togglePopover,
+        openCommandPalette,
+        closeCommandPalette,
+        showTab: (t) => {
+          const b = el(t);
+          if (b) activateTab(b);
+        },
+        toggleCollapse: (t) => {
+          const x = el(t);
+          if (x) toggleCollapse(x);
+        },
+        toggleDropdown: (t) => {
+          const x = el(t);
+          if (x) toggleDropdown(x);
+        },
+        getInstance,
+        getOrCreateInstance,
+        carousel,
+        position,
+        tour: tourStart,
+        setTheme,
+        toggleTheme,
+        setDir,
+        toggleDir,
+        setAccent,
+        toArabicNumerals,
+        progress,
+        toHijri,
+        fromHijri,
+        formatHijri,
+        qiblaBearing,
+        zatcaQR,
+        snackbar,
+        confirm: confirmDialog
+      };
+    });
+  }
+});
+export default require_nyx();

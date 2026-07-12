@@ -31,6 +31,8 @@ html,body{overflow-x:clip;max-width:100%}
 .docs-group a.active{color:var(--nyx-text);background:rgba(108,99,255,.12);border-inline-start-color:var(--nyx-accent);font-weight:500}
 .docs-badge-js {font-size: 8px; padding: 1px 4px; background: color-mix(in srgb, var(--nyx-accent) 15%, transparent); color: var(--nyx-accent); border: 1px solid color-mix(in srgb, var(--nyx-accent) 30%, transparent); border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; line-height: 1;}
 .docs-badge-css {font-size: 8px; padding: 1px 4px; background: rgba(255, 255, 255, 0.05); color: var(--nyx-text-muted); border: 1px solid var(--nyx-border); border-radius: 4px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; line-height: 1;}
+.docs-badges {display: inline-flex; align-items: center; gap: 5px; margin-inline-start: auto; flex-shrink: 0;}
+.docs-badge-new {font-size: 8px; padding: 1px 4px; background: color-mix(in srgb, var(--nyx-accent-2) 18%, transparent); color: var(--nyx-accent-2); border: 1px solid color-mix(in srgb, var(--nyx-accent-2) 40%, transparent); border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; line-height: 1;}
 .docs-empty{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);padding:0 10px}
 
 /* center content */

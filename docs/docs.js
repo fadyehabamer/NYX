@@ -102,12 +102,12 @@
         {
           title: 'Files', nocode: true, demo:
             '<div class="nyx-list-group">' +
-            '<div class="nyx-list-item"><span><strong>nyx.css</strong> <span class="nyx-caption">· full bundle</span></span><a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="../nyx.css" download>↓ Bundle</a></div>' +
-            '<div class="nyx-list-item"><span><strong>nyx.min.css</strong> <span class="nyx-badge nyx-badge-success">~24kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../nyx.min.css" download>↓ Min CSS</a></div>' +
-            '<div class="nyx-list-item"><span><strong>nyx.js</strong> · <strong>nyx.min.js</strong> <span class="nyx-badge nyx-badge-success">~22kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../nyx.min.js" download>↓ Min JS</a></div>' +
-            '<div class="nyx-list-item"><span><strong>tokens.css</strong> <span class="nyx-badge nyx-badge-warning">required</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../components/tokens.css" download>↓ CSS</a></div>' +
+            '<div class="nyx-list-item"><span><strong>nyx.css</strong> <span class="nyx-caption">· full bundle</span></span><a class="nyx-btn nyx-btn-primary nyx-btn-sm" href="../src/nyx.css" download>↓ Bundle</a></div>' +
+            '<div class="nyx-list-item"><span><strong>nyx.min.css</strong> <span class="nyx-badge nyx-badge-success">~24kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../dist/nyx.min.css" download>↓ Min CSS</a></div>' +
+            '<div class="nyx-list-item"><span><strong>nyx.js</strong> · <strong>nyx.min.js</strong> <span class="nyx-badge nyx-badge-success">~22kb gzip</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../dist/nyx.min.js" download>↓ Min JS</a></div>' +
+            '<div class="nyx-list-item"><span><strong>tokens.css</strong> <span class="nyx-badge nyx-badge-warning">required</span></span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../dist/components/tokens.css" download>↓ CSS</a></div>' +
             ['base', 'layout', 'typography', 'buttons', 'cards', 'forms', 'navigation', 'feedback', 'data', 'overlays', 'signature', 'extras', 'motion', 'utilities', 'rtl'].map(function (n) {
-              return '<div class="nyx-list-item"><span>' + n + '.css</span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../components/' + n + '.css" download>↓ CSS</a></div>';
+              return '<div class="nyx-list-item"><span>' + n + '.css</span><a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../dist/components/' + n + '.css" download>↓ CSS</a></div>';
             }).join('') +
             '</div>'
         }
@@ -1692,6 +1692,53 @@
         { title: 'Usage', text: 'Place `.nyx-scroll-progress` directly under `<body>` to display an automatic scroll tracking indicator.', lang: 'html', code: '<div class="nyx-scroll-progress"></div>' }
       ],
       classes: [['nyx-scroll-progress', 'Fixed top page scroll progress indicator bar.']]
+    },
+
+    /* ===== NEW IN v1.2 ===== */
+    {
+      id: 'color-picker', group: 'Forms', title: 'Color picker', added: 'v1.2', needsJs: true,
+      summary: 'A native color swatch paired with a synced hex field and optional preset dots. Type a hex, drag the picker, or click a preset — all three stay in sync and emit nyx:color-change.',
+      sections: [
+        { title: 'Swatch + hex + presets', text: 'Add data-swatches="#a,#b,#c" to render clickable preset dots. The hex field accepts 3- or 6-digit hex; invalid input flags .is-invalid.', demo: '<div class="nyx-colorpicker" data-swatches="#6c63ff,#00d4aa,#ff4d6a,#ffb020,#56b6ff"><input type="color" class="nyx-color-swatch" value="#6c63ff" aria-label="Pick color"><input type="text" class="nyx-input nyx-color-hex" value="#6C63FF" aria-label="Hex value" spellcheck="false"></div>', code: '<div class="nyx-colorpicker" data-swatches="#6c63ff,#00d4aa,#ff4d6a">\n  <input type="color" class="nyx-color-swatch" value="#6c63ff" aria-label="Pick color">\n  <input type="text" class="nyx-input nyx-color-hex" value="#6C63FF" aria-label="Hex value">\n</div>' }
+      ],
+      classes: [['nyx-colorpicker', 'Row wrapper. data-swatches="#a,#b" mints preset dots.'], ['nyx-color-swatch', 'Native <input type=color>, restyled into a rounded chip.'], ['nyx-color-hex', 'Hex text field, kept in sync (add .nyx-input for the base style).'], ['nyx-color-dot', 'A generated clickable preset swatch.']],
+      js: [['nyx:color-change', 'Fires on the wrapper; detail.value = "#rrggbb".']]
+    },
+    {
+      id: 'radar-chart', group: 'Components', title: 'Radar chart', added: 'v1.2',
+      summary: 'A spider/radar chart — style an author-supplied <svg>, exactly like the line and area charts. Accent-driven, theme- and RTL-safe, zero dependencies. Add .alt to a second series for the accent-2 tone.',
+      sections: [
+        { title: 'Five-axis radar', demo: '<svg class="nyx-chart-radar" viewBox="0 0 200 200" style="max-width:280px;margin-inline:auto" role="img" aria-label="Radar chart, model A"><polygon class="nyx-radar-grid" points="100,20 176.08,75.28 147.02,164.72 52.98,164.72 23.92,75.28"/><polygon class="nyx-radar-grid" points="100,47 150.41,83.62 131.15,142.88 68.85,142.88 49.59,83.62"/><polygon class="nyx-radar-grid" points="100,73.5 125.2,91.81 115.58,121.44 84.42,121.44 74.8,91.81"/><line class="nyx-radar-axis" x1="100" y1="100" x2="100" y2="20"/><line class="nyx-radar-axis" x1="100" y1="100" x2="176.08" y2="75.28"/><line class="nyx-radar-axis" x1="100" y1="100" x2="147.02" y2="164.72"/><line class="nyx-radar-axis" x1="100" y1="100" x2="52.98" y2="164.72"/><line class="nyx-radar-axis" x1="100" y1="100" x2="23.92" y2="75.28"/><polygon class="nyx-radar-area" points="100,28 145.65,85.17 137.62,151.78 76.49,132.36 46.74,82.7"/><circle class="nyx-radar-dot" cx="100" cy="28" r="3"/><circle class="nyx-radar-dot" cx="145.65" cy="85.17" r="3"/><circle class="nyx-radar-dot" cx="137.62" cy="151.78" r="3"/><circle class="nyx-radar-dot" cx="76.49" cy="132.36" r="3"/><circle class="nyx-radar-dot" cx="46.74" cy="82.7" r="3"/></svg>', code: '<svg class="nyx-chart-radar" viewBox="0 0 200 200">\n  <!-- concentric rings (100/66/33%) -->\n  <polygon class="nyx-radar-grid" points="100,20 176,75 147,165 53,165 24,75"/>\n  <!-- spokes -->\n  <line class="nyx-radar-axis" x1="100" y1="100" x2="100" y2="20"/>\n  <!-- the data polygon + vertices -->\n  <polygon class="nyx-radar-area" points="100,28 146,85 138,152 76,132 47,83"/>\n  <circle class="nyx-radar-dot" cx="100" cy="28" r="3"/>\n</svg>' }
+      ],
+      classes: [['nyx-chart-radar', 'The <svg> wrapper.'], ['nyx-radar-grid', 'Concentric ring polygons.'], ['nyx-radar-axis', 'Spoke lines from the center.'], ['nyx-radar-area (+.alt)', 'Filled data polygon; .alt = accent-2 series.'], ['nyx-radar-dot (+.alt)', 'Vertex markers.'], ['nyx-radar-label', 'Optional <text> axis labels.']]
+    },
+    {
+      id: 'tour', group: 'Components', title: 'Product tour', added: 'v1.2', needsJs: true,
+      summary: 'A spotlight onboarding walkthrough. Mark the elements to highlight with data-nyx-tour-step and Nyx dims the page, lights each target in turn, and shows a coachmark with Back / Next and a step counter. Fire it declaratively or via Nyx.tour().',
+      sections: [
+        { title: 'Take the tour', text: 'The trigger reads every [data-nyx-tour-step] inside its scope (data-nyx-tour="#scope"), ordered by the step number. Each step carries its own data-title and data-text.', demo: '<div id="tourDemo" class="nyx-flex nyx-gap-3 nyx-items-center nyx-wrap"><button class="nyx-btn nyx-btn-primary" data-nyx-tour="#tourDemo">✦ Take a tour</button><span class="nyx-badge nyx-badge-info" data-nyx-tour-step="1" data-title="Live status" data-text="Realtime status shows up right here.">Live</span><button class="nyx-btn nyx-btn-glass" data-nyx-tour-step="2" data-title="Compose" data-text="Start something new from this button.">New</button><div class="nyx-search" style="max-width:190px" data-nyx-tour-step="3" data-title="Search" data-text="Jump anywhere with the command palette."><span class="nyx-search-icon">⌕</span><input placeholder="Search…" aria-label="Search" tabindex="-1" readonly></div></div>', code: '<button data-nyx-tour="#app">Take a tour</button>\n\n<div id="app">\n  <span data-nyx-tour-step="1" data-title="Live status"\n        data-text="Realtime status shows here.">Live</span>\n  <button data-nyx-tour-step="2" data-title="Compose"\n          data-text="Start something new.">New</button>\n</div>' },
+        { title: 'Imperative', text: 'Or drive it from code with an array of steps — each targets a selector or element. The returned handle exposes next / prev / stop.', lang: 'js', code: "var t = Nyx.tour([\n  { target: '#status', title: 'Live status', text: 'Realtime status shows here.' },\n  { target: '#search', title: 'Search',      text: 'Jump anywhere with \\u2318K.', placement: 'bottom' }\n], { doneText: 'Got it' });\n\n// t.next(); t.prev(); t.stop();" }
+      ],
+      classes: [['data-nyx-tour[="#scope"]', 'Trigger; collects steps within the optional scope selector.'], ['data-nyx-tour-step', 'Marks a target; numeric value sets the order.'], ['data-title / data-text / data-placement', 'Coachmark content + preferred side.'], ['nyx-tour-spot', 'The lit cutout around the current target.'], ['nyx-tour-pop', 'The coachmark bubble.']],
+      js: [['Nyx.tour(steps, opts)', 'Start a tour; returns { next, prev, stop } or null.'], ['nyx:tour-start / -step / -end', 'Lifecycle events dispatched on <html>.']]
+    },
+    {
+      id: 'split', group: 'Layout', title: 'Split panes', added: 'v1.2', needsJs: true,
+      summary: 'Two (or more) panes divided by a draggable bar — for editors, dashboards and diff views. Drag with a pointer or focus the divider and use the arrow keys. Add .nyx-split-v to stack vertically.',
+      sections: [
+        { title: 'Horizontal', text: 'Drag the divider, or Tab to it and press ← / → (hold Shift for a bigger step). --nyx-split sets the initial size; --nyx-split-min clamps the smallest pane.', demo: '<div class="nyx-split" style="height:170px;--nyx-split:40%"><div class="nyx-split-pane" style="padding:14px"><strong>Files</strong><p class="nyx-caption nyx-muted" style="margin-top:6px">Drag the divider →</p></div><div class="nyx-split-bar"></div><div class="nyx-split-pane" style="padding:14px"><strong>Preview</strong><p class="nyx-caption nyx-muted" style="margin-top:6px">This pane fills the rest.</p></div></div>', code: '<div class="nyx-split" style="--nyx-split:40%">\n  <div class="nyx-split-pane"> … </div>\n  <div class="nyx-split-bar"></div>\n  <div class="nyx-split-pane"> … </div>\n</div>' },
+        { title: 'Vertical', demo: '<div class="nyx-split nyx-split-v" style="height:220px;--nyx-split:45%"><div class="nyx-split-pane" style="padding:14px"><strong>Editor</strong></div><div class="nyx-split-bar"></div><div class="nyx-split-pane" style="padding:14px"><strong>Console</strong></div></div>', code: '<div class="nyx-split nyx-split-v">\n  <div class="nyx-split-pane"> … </div>\n  <div class="nyx-split-bar"></div>\n  <div class="nyx-split-pane"> … </div>\n</div>' }
+      ],
+      classes: [['nyx-split (+.nyx-split-v)', 'Flex container; .nyx-split-v stacks vertically.'], ['nyx-split-pane', 'A resizable region.'], ['nyx-split-bar', 'The draggable/focusable divider (role=separator).'], ['--nyx-split / --nyx-split-min', 'Initial first-pane size; minimum pane size.']],
+      js: [['nyx:split-resize', 'Fires while dragging; detail.percent = first-pane % of the container.']]
+    },
+    {
+      id: 'affix', group: 'Layout', title: 'Affix', added: 'v1.2',
+      summary: 'A sticky element that pins in place as you scroll — sidebars, toolbars, section headers. Pure CSS position:sticky, plus an optional .is-pinned hook the runtime toggles once it sticks, so you can add a shadow or border.',
+      sections: [
+        { title: 'Sticky on scroll', text: 'Scroll the box — the pill sticks to the top. Set the offset with data-affix-top="80" or --nyx-affix-top. When pinned, .is-pinned is added for a drop shadow.', demo: '<div style="height:150px;overflow:auto;border:1px solid var(--nyx-border);border-radius:12px;padding:12px"><div class="nyx-affix" data-affix-top="8" style="background:var(--nyx-surface-2);padding:8px 12px;border-radius:8px;font-weight:600">📌 I stay pinned</div><p class="nyx-muted" style="margin-top:12px">Scroll this box…</p><div style="height:260px"></div><p class="nyx-muted">…and the pill stays at the top.</p></div>', code: '<div class="nyx-affix" data-affix-top="80">\n  <!-- toolbar / sidebar / section header -->\n</div>' }
+      ],
+      classes: [['nyx-affix', 'position:sticky with a pinned-state hook.'], ['nyx-affix.is-pinned', 'Added by the runtime once the element sticks.'], ['--nyx-affix-top / data-affix-top', 'Sticky offset from the top (px).']]
     }
   ];
 
@@ -1701,6 +1748,14 @@
   /* group display order (mirrors Bootstrap's docs taxonomy) */
   var GROUP_ORDER = ['Getting Started', 'Examples', 'Customize', 'Layout', 'Content', 'Forms', 'Components', 'Helpers', 'Utilities', 'Signature', 'Motion', 'Regional', 'Commerce'];
   function groupRank(g) { var i = GROUP_ORDER.indexOf(g); return i < 0 ? 99 : i; }
+  // "New" tag = any component added after the shipped 1.0.x line (i.e. not in v1.0.3):
+  // every v1.1 / v1.2 page qualifies, v1.0 pages do not.
+  function isNewSince(added) {
+    var m = /^v?(\d+)\.(\d+)/.exec(added || '');
+    if (!m) return false;
+    var maj = +m[1], min = +m[2];
+    return maj > 1 || (maj === 1 && min >= 1);
+  }
 
   /* ---------- i18n (optional; Arabic etc. provided via window.NYX_I18N) ---------- */
   var I18N = (typeof window !== 'undefined' && window.NYX_I18N) || null;
@@ -1718,13 +1773,15 @@
     groups.forEach(function (g) {
       html += '<div class="docs-group"><div class="label">' + G(g) + '</div>';
       seen[g].forEach(function (p) {
-        var badge = '';
+        var badges = '';
+        if (isNewSince(p.added)) badges += '<span class="docs-badge-new">' + C('new', 'New') + '</span>';
         if (isComponent(p)) {
-          badge = p.needsJs
+          badges += p.needsJs
             ? '<span class="docs-badge-js">' + C('JS', 'JS') + '</span>'
             : '<span class="docs-badge-css">' + C('CSS', 'CSS') + '</span>';
         }
-        html += '<a href="#/' + p.id + '" data-id="' + p.id + '">' + L(p, 'title') + badge + '</a>';
+        html += '<a href="#/' + p.id + '" data-id="' + p.id + '">' + L(p, 'title') +
+          (badges ? '<span class="docs-badges">' + badges + '</span>' : '') + '</a>';
       });
       html += '</div>';
     });
@@ -1764,7 +1821,7 @@
       '<div class="doc-meta">' + 
       (p.added ? '<span class="nyx-badge nyx-badge-success">' + C('added', 'Added in') + ' ' + p.added + '</span>' : '') +
       (isComponent(p) ? '<span class="nyx-badge ' + (p.needsJs ? 'nyx-badge-glow' : 'nyx-badge-glass') + '">' + C(p.needsJs ? 'markupJs' : 'markupOnly', p.needsJs ? 'Markup + JS' : 'Markup Only') + '</span>' : '') +
-      '<a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.css" target="_blank" rel="noopener">' + C('viewSource', 'View source') + '</a></div></div>';
+      '<a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="../src/nyx.css" target="_blank" rel="noopener">' + C('viewSource', 'View source') + '</a></div></div>';
 
     (p.sections || []).forEach(function (s) {
       var sid = slug(s.title); toc.push({ id: sid, title: S(s.title) });

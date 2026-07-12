@@ -6,6 +6,7 @@ window.NYX_I18N = {
   _ui: {
     filter: 'تصفية…',
     added: 'أُضيف في',
+    new: 'جديد',
     viewSource: 'المصدر',
     classRef: 'مرجع الأصناف',
     jsApi: 'واجهة جافاسكربت',

@@ -1,0 +1,21 @@
+/*! Nyx · overlays-pro.css · v1.1.0 · MIT
+ * The overlays-pro module. Requires tokens.css.
+ * Bundle: src/nyx.css   Docs: docs/docs.html
+ */
+/* ============================================================
+   34. OVERLAYS++ (v1.2) — product tour / coachmarks
+   ============================================================ */
+/* tour — an onboarding walkthrough painted by Nyx.tour() / data-nyx-tour.
+   .nyx-tour-spot is a transparent hole punched with a huge box-shadow so the
+   current target stays lit while the rest dims; .nyx-tour-pop is the coachmark
+   bubble (positioned by the floating engine). Reduced-motion aware. */
+.nyx-tour-overlay{position:fixed;inset:0;z-index:1200}
+.nyx-tour-spot{position:absolute;display:none;border-radius:var(--nyx-radius);box-shadow:0 0 0 9999px var(--nyx-overlay-bg);outline:2px solid color-mix(in srgb,var(--nyx-accent) 70%,transparent);outline-offset:3px;transition:top .3s var(--nyx-ease),left .3s var(--nyx-ease),width .3s var(--nyx-ease),height .3s var(--nyx-ease);pointer-events:none}
+.nyx-tour-pop{position:fixed;z-index:1201;max-width:300px;width:max-content;background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);box-shadow:var(--nyx-shadow-lg);padding:var(--nyx-s4);animation:nyx-tour-in .2s var(--nyx-ease) both}
+.nyx-tour-pop-title{font-family:var(--nyx-font-display);font-weight:700;font-size:var(--nyx-fs-lg);margin-bottom:var(--nyx-s2);padding-inline-end:var(--nyx-s5)}
+.nyx-tour-pop-text{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);line-height:1.55;margin-bottom:var(--nyx-s4)}
+.nyx-tour-pop-foot{display:flex;align-items:center;justify-content:space-between;gap:var(--nyx-s3)}
+.nyx-tour-step{font-family:var(--nyx-font-mono);font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
+.nyx-tour-actions{display:flex;gap:var(--nyx-s2)}
+@keyframes nyx-tour-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.nyx-tour-spot{transition:none}.nyx-tour-pop{animation:none}}

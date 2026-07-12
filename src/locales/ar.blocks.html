@@ -1,0 +1,33 @@
+<!--
+  Arabic-only fragments for index.ar.html, injected by build.js at the matching
+  <!--nyx:ar KEY--> anchors in index.html. Each block is literal RTL markup with no
+  English counterpart on the landing page (see locales/ar.json for translated copy).
+  Format: one "@key" line, then the block HTML until the next "@key" or EOF.
+-->
+
+@nav-article
+          <a class="nyx-dropdown-item" href="examples/article.ar.html"><svg class="ico ico-sm"><use href="#i-form"/></svg> مقال <span class="nyx-badge nyx-badge-info">ثمانية</span></a>
+
+@cz-font
+    <div class="cz-row">
+      <span class="cz-lbl">الخطّ العربي</span>
+      <div class="cz-seg" role="group" aria-label="الخطّ العربي">
+        <button type="button" data-font-set="thmanyah">ثمانية</button>
+        <button type="button" data-font-set="">IBM&nbsp;Plex</button>
+      </div>
+    </div>
+    <script>
+    (function () {
+      var el = document.documentElement, btns = document.querySelectorAll('[data-font-set]');
+      try { var sf = localStorage.getItem('nyx-font'); if (sf !== null) { if (sf) el.setAttribute('data-font', sf); else el.removeAttribute('data-font'); } } catch (e) {}
+      function sync() { var cur = el.getAttribute('data-font') || ''; btns.forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-font-set') === cur); }); }
+      btns.forEach(function (b) { b.addEventListener('click', function () { var f = b.getAttribute('data-font-set'); if (f) el.setAttribute('data-font', f); else el.removeAttribute('data-font'); try { localStorage.setItem('nyx-font', f); } catch (e) {} sync(); }); });
+      sync();
+    })();
+    </script>
+
+@foot-credit
+ · الخطّ العربي © <a href="https://font.thmanyah.com/" target="_blank" rel="noopener" style="color:var(--nyx-text);text-decoration:underline;text-underline-offset:2px">ثمانية</a>
+
+@install
+        <p class="nyx-muted">ملفّان فقط وبلا خطوة بناء. اربط ملف الأنماط، وأضِف الصنف <span class="nyx-code">nyx</span> إلى عنصر <span class="nyx-code">&lt;body&gt;</span>، ثم أضِف المُشغّل للتبويبات والنوافذ والإشعارات.</p>

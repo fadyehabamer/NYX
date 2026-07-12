@@ -22,7 +22,7 @@ const { JSDOM } = require('jsdom');
 
 const ROOT = path.join(__dirname, '..');
 const SRC = Object.fromEntries(
-  ['nyx.js', 'nyx.min.js'].map((f) => [f, readFileSync(path.join(ROOT, f), 'utf8')]),
+  ['nyx.js', 'nyx.min.js'].map((f) => [f, readFileSync(path.join(ROOT, f === 'nyx.js' ? 'src' : 'dist', f), 'utf8')]),
 );
 
 /*
