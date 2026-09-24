@@ -267,6 +267,17 @@
       classes: [['nyx-container', 'max-width 1280px, auto margins, 24px inline padding.']]
     },
     {
+      id: 'splitter', group: 'Layout', title: 'Splitter', added: 'v1.1', needsJs: true,
+      summary: 'Two resizable panes with a draggable divider — editors and previews, lists and details, code and output. The runtime turns the divider into a WAI-ARIA window splitter: focus it and use the arrow keys, Home / End for the limits, or Enter to collapse and restore the first pane. Arrows follow the reading direction in RTL.',
+      sections: [
+        { title: 'Side by side', demo: '<div class="nyx-splitter" data-nyx-splitter data-value="40"><div class="nyx-split-pane"><strong>Files</strong><p class="nyx-caption">Drag the divider or focus it and press ← →.</p></div><div class="nyx-split-handle" aria-label="Resize file list"></div><div class="nyx-split-pane"><strong>Preview</strong><p class="nyx-caption">This pane takes the remaining space.</p></div></div>' },
+        { title: 'Stacked', text: 'Add .nyx-splitter-vertical to stack the panes; ↑ ↓ move the divider.', demo: '<div class="nyx-splitter nyx-splitter-vertical" data-nyx-splitter data-value="55" data-min="20" data-max="80" style="block-size:280px"><div class="nyx-split-pane"><strong>Query</strong><p class="nyx-caption">SELECT * FROM orders;</p></div><div class="nyx-split-handle" aria-label="Resize query editor"></div><div class="nyx-split-pane"><strong>Results</strong><p class="nyx-caption">128 rows</p></div></div>' },
+        { title: 'JavaScript Events', text: 'nyx:split fires while dragging and on every key press — persist the size or re-layout a chart.', lang: 'js', code: 'document.querySelector(\'[data-nyx-splitter]\').addEventListener(\'nyx:split\', (e) => {\n  localStorage.setItem(\'pane\', e.detail.value);   // 10 … 90 (percent of the first pane)\n});' }
+      ],
+      classes: [['nyx-splitter', 'Flex container: pane · handle · pane.'], ['data-nyx-splitter', 'Wires the handle (role, aria-value*, keyboard, drag).'], ['nyx-split-pane', 'A pane; the first one is sized by --nyx-split.'], ['nyx-split-handle', 'The divider — give it an aria-label naming what it resizes.'], ['nyx-splitter-vertical', 'Stack the panes (horizontal divider).'], ['data-value / data-min / data-max / data-step', 'Start size and limits in percent (defaults 50 · 10 · 90 · 5).']],
+      js: [['nyx:split', 'Event on the splitter; event.detail.value is the first pane\'s size in percent.'], ['← → / ↑ ↓', 'Move the divider by data-step (mirrored in RTL).'], ['Home / End', 'Jump to data-min / data-max.'], ['Enter', 'Collapse the first pane to data-min, press again to restore.']]
+    },
+    {
       id: 'stack', group: 'Helpers', title: 'Stack',
       summary: 'A vertical flex column with a consistent gap between children — the simplest way to space stacked content.',
       sections: [
@@ -374,6 +385,16 @@
       classes: [['data-nyx-datepicker', 'Wrapper; runtime renders the calendar + handles selection.'], ['data-format', 'Output pattern for the filled value — tokens YYYY · MM · DD (default YYYY-MM-DD).'], ['data-min / data-max', 'Earliest / latest selectable day (YYYY-MM-DD); out-of-range days are disabled.'], ['data-week-start', '"mon" starts the week on Monday (default Sunday).'],['data-min-year / data-max-year', 'Bound the header year dropdown (default: today -100 … +10).'], ['placeholder (on input)', 'Native input placeholder — set any prompt text.'], ['nyx-datepicker-pop', 'Popover holding the calendar (auto-created if absent).']]
     },
     {
+      id: 'date-input', group: 'Forms', title: 'Native date & time', added: 'v1.1',
+      summary: 'Style the browser\'s own date, time, month and week inputs with plain .nyx-input — no runtime. The OS picker follows the light/dark theme through color-scheme, the field segments and picker icon pick up Nyx tokens, and you keep native keyboard entry, mobile wheels, validation and min / max. Reach for the Date picker when you need a custom calendar popover.',
+      sections: [
+        { title: 'Types', demo: '<div class="nyx-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--nyx-s4)"><div><label class="nyx-label" for="di-date">Date</label><input class="nyx-input" id="di-date" type="date" value="2026-09-24"></div><div><label class="nyx-label" for="di-time">Time</label><input class="nyx-input" id="di-time" type="time" value="18:30"></div><div><label class="nyx-label" for="di-dt">Date &amp; time</label><input class="nyx-input" id="di-dt" type="datetime-local" value="2026-09-24T18:30"></div><div><label class="nyx-label" for="di-month">Month</label><input class="nyx-input" id="di-month" type="month" value="2026-09"></div></div>' },
+        { title: 'Range', text: 'Wrap a start and end field in .nyx-date-range; the arrow mirrors in RTL. Use min / max so the browser blocks impossible ranges.', demo: '<div class="nyx-date-range" role="group" aria-label="Stay dates"><input class="nyx-input" type="date" aria-label="Check-in" value="2026-10-01" min="2026-09-24"><span class="nyx-date-sep" aria-hidden="true">→</span><input class="nyx-input" type="date" aria-label="Check-out" value="2026-10-05" min="2026-10-02"></div>' },
+        { title: 'Required & disabled', text: 'An empty required field reads like a placeholder until a value is chosen.', demo: '<div class="nyx-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--nyx-s4)"><div><label class="nyx-label" for="di-req">Delivery date</label><input class="nyx-input" id="di-req" type="date" required></div><div><label class="nyx-label" for="di-dis">Locked</label><input class="nyx-input" id="di-dis" type="time" value="09:00" disabled></div></div>' }
+      ],
+      classes: [['nyx-input[type=date|time|datetime-local|month|week]', 'Native field with themed picker (color-scheme follows data-theme).'], ['nyx-date-range', 'Start → end pair; the separator mirrors in RTL.'], ['nyx-date-sep', 'The arrow between the two fields (aria-hidden).'], ['min / max / step / required', 'Native constraints — the browser validates them.']]
+    },
+    {
       id: 'phone', group: 'Forms', title: 'Phone input', added: 'v1.0',
       summary: 'A dial-code select fused with a number field — preloaded here with flags + Gulf / MENA codes, and a single focus ring around the whole control.',
       sections: [
@@ -442,6 +463,16 @@
         { title: 'JavaScript Events', text: 'Listen for selection updates on the tag-input container.', lang: 'js', code: 'const el = document.querySelector(\'.nyx-tag-input\');\nel.addEventListener(\'change\', () => {\n  const tags = Array.from(el.querySelectorAll(\'.nyx-chip\')).map(c => c.textContent.replace(/\\s*×\\s*/, \'\').trim());\n  console.log(\'Tags updated:\', tags);\n});' }
       ],
       classes: [['nyx-tag-input', 'Wrapper of .nyx-chip tags + a text input.'], ['Enter / ×', 'Add / remove a tag (runtime).']]
+    },
+    {
+      id: 'swatches', group: 'Forms', title: 'Swatch picker', added: 'v1.1',
+      summary: 'Pick a colour or variant from a row of swatches — product colours, label colours, theme presets. Built on a native radio group, so arrow keys, form submission and screen readers work with no JavaScript. The selected swatch gets a ring and a tick, never colour alone.',
+      sections: [
+        { title: 'Colours', text: 'Give every radio an aria-label — the swatch itself has no text. Set the colour with the --nyx-swatch custom property.', demo: '<fieldset class="nyx-swatches"><legend>Colour</legend><label class="nyx-swatch" title="Midnight"><input type="radio" name="sw-color" value="midnight" aria-label="Midnight" checked><span class="nyx-swatch-color" style="--nyx-swatch:#1b1f3b"></span></label><label class="nyx-swatch" title="Violet"><input type="radio" name="sw-color" value="violet" aria-label="Violet"><span class="nyx-swatch-color" style="--nyx-swatch:#6c63ff"></span></label><label class="nyx-swatch" title="Mint"><input type="radio" name="sw-color" value="mint" aria-label="Mint"><span class="nyx-swatch-color" style="--nyx-swatch:#00d4aa"></span></label><label class="nyx-swatch" title="Sand"><input type="radio" name="sw-color" value="sand" aria-label="Sand"><span class="nyx-swatch-color" style="--nyx-swatch:#e8d8b0"></span></label><label class="nyx-swatch" title="Pearl — sold out"><input type="radio" name="sw-color" value="pearl" aria-label="Pearl (sold out)" disabled><span class="nyx-swatch-color" style="--nyx-swatch:#f5f6fb"></span></label></fieldset>' },
+        { title: 'Square & sizes', demo: '<div class="nyx-stack"><fieldset class="nyx-swatches nyx-swatches-square nyx-swatches-sm"><legend>Label</legend><label class="nyx-swatch"><input type="radio" name="sw-sq" aria-label="Red" checked><span class="nyx-swatch-color" style="--nyx-swatch:#ff4d6a"></span></label><label class="nyx-swatch"><input type="radio" name="sw-sq" aria-label="Amber"><span class="nyx-swatch-color" style="--nyx-swatch:#ffb020"></span></label><label class="nyx-swatch"><input type="radio" name="sw-sq" aria-label="Green"><span class="nyx-swatch-color" style="--nyx-swatch:#10b981"></span></label><label class="nyx-swatch"><input type="radio" name="sw-sq" aria-label="Blue"><span class="nyx-swatch-color" style="--nyx-swatch:#0ea5e9"></span></label></fieldset><fieldset class="nyx-swatches nyx-swatches-lg"><legend>Finish</legend><label class="nyx-swatch"><input type="radio" name="sw-lg" aria-label="Graphite" checked><span class="nyx-swatch-color" style="--nyx-swatch:linear-gradient(135deg,#4b5563,#111827)"></span></label><label class="nyx-swatch"><input type="radio" name="sw-lg" aria-label="Aurora"><span class="nyx-swatch-color" style="--nyx-swatch:linear-gradient(135deg,#6c63ff,#00d4aa)"></span></label><label class="nyx-swatch"><input type="radio" name="sw-lg" aria-label="Sunset"><span class="nyx-swatch-color" style="--nyx-swatch:linear-gradient(135deg,#f43f6b,#fb923c)"></span></label></fieldset></div>' },
+        { title: 'Text variants', text: 'Swap the colour dot for .nyx-swatch-text to pick sizes or capacities. Disabled options are struck through.', demo: '<fieldset class="nyx-swatches"><legend>Size</legend><label class="nyx-swatch"><input type="radio" name="sw-size" value="s"><span class="nyx-swatch-text">S</span></label><label class="nyx-swatch"><input type="radio" name="sw-size" value="m" checked><span class="nyx-swatch-text">M</span></label><label class="nyx-swatch"><input type="radio" name="sw-size" value="l"><span class="nyx-swatch-text">L</span></label><label class="nyx-swatch"><input type="radio" name="sw-size" value="xl" disabled><span class="nyx-swatch-text">XL</span></label></fieldset>' }
+      ],
+      classes: [['nyx-swatches', 'Group wrapper — use a <fieldset> with a <legend>.'], ['nyx-swatch', 'One option: a <label> around a native radio.'], ['nyx-swatch-color', 'The colour dot; set --nyx-swatch (any colour or gradient).'], ['nyx-swatch-text', 'Text chip instead of a dot (sizes, capacities).'], ['nyx-swatches-square / -sm / -lg', 'Square corners and size modifiers.'], ['aria-label on the input', 'Required for colour dots — the name screen readers announce.']]
     },
 
     /* ===== COMPONENTS ===== */
@@ -652,6 +683,18 @@
       summary: 'Group related buttons into a single segmented control with shared, seamless edges.',
       sections: [{ title: 'Grouped', demo: '<div class="nyx-btn-group"><button class="nyx-btn nyx-btn-glass">Left</button><button class="nyx-btn nyx-btn-glass">Center</button><button class="nyx-btn nyx-btn-glass">Right</button></div>' }],
       classes: [['nyx-btn-group', 'Flex wrapper that fuses child .nyx-btn edges.']]
+    },
+    {
+      id: 'toggle-group', group: 'Components', title: 'Toggle group', added: 'v1.1', needsJs: true,
+      summary: 'A row of buttons that stay pressed — text formatting, filters, view switchers. Each button is a real <button> with aria-pressed, so screen readers announce "pressed / not pressed". Multiple buttons can be on by default; data-nyx-toggle-group="single" keeps at most one. Arrow keys move between buttons and follow the reading direction in RTL.',
+      sections: [
+        { title: 'Formatting (multiple)', demo: '<div class="nyx-toggle-group" data-nyx-toggle-group aria-label="Text formatting"><button aria-label="Bold" data-value="bold" aria-pressed="true"><b>B</b></button><button aria-label="Italic" data-value="italic"><i>I</i></button><button aria-label="Underline" data-value="underline"><u>U</u></button><button aria-label="Strikethrough" data-value="strike" disabled><s>S</s></button></div>' },
+        { title: 'View switcher (single)', text: 'Add data-required so one option always stays pressed.', demo: '<div class="nyx-toggle-group" data-nyx-toggle-group="single" data-required aria-label="Layout"><button data-value="grid" aria-pressed="true"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Grid</button><button data-value="list"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="2" width="14" height="2.5" rx="1"/><rect x="1" y="6.75" width="14" height="2.5" rx="1"/><rect x="1" y="11.5" width="14" height="2.5" rx="1"/></svg>List</button><button data-value="board">Board</button></div>' },
+        { title: 'Small & vertical', demo: '<div class="nyx-flex nyx-gap-4 nyx-items-start nyx-wrap"><div class="nyx-toggle-group nyx-toggle-group-sm" data-nyx-toggle-group aria-label="Status filter"><button aria-pressed="true">Open</button><button>Draft</button><button>Closed</button></div><div class="nyx-toggle-group nyx-toggle-group-vertical" data-nyx-toggle-group="single" aria-label="Alignment"><button aria-pressed="true">Start</button><button>Center</button><button>End</button></div></div>' },
+        { title: 'JavaScript Events', text: 'nyx:toggle fires on the group after every change with the pressed values (data-value, else the text).', lang: 'js', code: 'document.querySelector(\'[data-nyx-toggle-group]\').addEventListener(\'nyx:toggle\', (e) => {\n  console.log(e.detail.value);    // ["bold", "italic"]\n  console.log(e.detail.pressed);  // the clicked button\'s new state\n});' }
+      ],
+      classes: [['nyx-toggle-group', 'Pill container for <button> children.'], ['data-nyx-toggle-group', 'Wires aria-pressed, role=group and arrow keys; "single" = at most one pressed.'], ['data-required', 'The last pressed button cannot be released.'], ['aria-pressed="true"', 'Initial pressed state (the runtime fills in "false").'], ['data-value', 'Value reported in nyx:toggle (defaults to the button text).'], ['nyx-toggle-group-sm / -vertical', 'Compact size / stacked (↑ ↓ keys).'], ['aria-label', 'Name the group; icon-only buttons need their own aria-label.']],
+      js: [['nyx:toggle', 'Event on the group — detail.value (pressed values), detail.button, detail.pressed.'], ['← → / ↑ ↓ · Home / End', 'Move focus between enabled buttons (mirrored in RTL).'], ['Space / Enter', 'Toggle the focused button (native button behaviour).']]
     },
     {
       id: 'dropdown', group: 'Components', title: 'Dropdown', added: 'v1.0', needsJs: true,
@@ -1749,7 +1792,7 @@
       (isComponent(p) ? '<span class="nyx-badge ' + (p.needsJs ? 'nyx-badge-glow' : 'nyx-badge-glass') + '">' + C(p.needsJs ? 'markupJs' : 'markupOnly', p.needsJs ? 'Markup + JS' : 'Markup Only') + '</span>' : '') +
       '<a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.css" target="_blank" rel="noopener">' + C('viewSource', 'View source') + '</a></div></div>';
 
-    (p.sections || []).forEach(function (s) {
+    (L(p, 'sections') || []).forEach(function (s) {
       var sid = slug(s.title); toc.push({ id: sid, title: S(s.title) });
       html += '<section class="doc-section" id="' + sid + '"><h2>' + S(s.title) +
         ' <a class="anchor" href="#/' + p.id + '" aria-hidden="true">#</a></h2>';
@@ -1760,18 +1803,19 @@
       html += '</section>';
     });
 
-    if (p.classes) {
+    var classes = L(p, 'classes'), jsApi = L(p, 'js');
+    if (classes) {
       toc.push({ id: 'class-reference', title: C('classRef', 'Class reference') });
       html += '<section class="doc-section" id="class-reference"><h2>' + C('classRef', 'Class reference') + ' <a class="anchor" href="#/' + p.id + '">#</a></h2>' +
         '<table class="docs-table"><thead><tr><th>' + C('thClass', 'Class / token') + '</th><th>' + C('thDesc', 'Description') + '</th></tr></thead><tbody>' +
-        p.classes.map(function (r) { return '<tr><td><span class="nyx-code">' + escHtml(r[0]) + '</span></td><td>' + r[1] + '</td></tr>'; }).join('') +
+        classes.map(function (r) { return '<tr><td><span class="nyx-code">' + escHtml(r[0]) + '</span></td><td>' + r[1] + '</td></tr>'; }).join('') +
         '</tbody></table></section>';
     }
-    if (p.js) {
+    if (jsApi) {
       toc.push({ id: 'js-api', title: C('jsApi', 'JavaScript API') });
       html += '<section class="doc-section" id="js-api"><h2>' + C('jsApi', 'JavaScript API') + ' <a class="anchor" href="#/' + p.id + '">#</a></h2>' +
         '<table class="docs-table"><thead><tr><th>' + C('thMethod', 'Method') + '</th><th>' + C('thDesc', 'Description') + '</th></tr></thead><tbody>' +
-        p.js.map(function (r) { return '<tr><td><span class="nyx-code">' + escHtml(r[0]) + '</span></td><td>' + r[1] + '</td></tr>'; }).join('') +
+        jsApi.map(function (r) { return '<tr><td><span class="nyx-code">' + escHtml(r[0]) + '</span></td><td>' + r[1] + '</td></tr>'; }).join('') +
         '</tbody></table></section>';
     }
 

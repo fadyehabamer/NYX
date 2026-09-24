@@ -1,0 +1,68 @@
+/*! Nyx · forms-pro.css · v1.1.0 · MIT
+ * The forms-pro module. Requires tokens.css.
+ * Bundle: nyx.css   Docs: docs/docs.html
+ */
+/* ============================================================
+   29. FORMS++ (v1.1) — swatch picker · native date & time inputs
+   ============================================================ */
+/* Native controls, Nyx skin: no JS required, keyboard + screen-reader
+   behaviour comes from the browser. Logical properties only (RTL-safe). */
+
+/* — swatch picker — colour / variant radio group (product colour, theme, label colour).
+   <fieldset class="nyx-swatches"> + <label class="nyx-swatch"><input type="radio" aria-label="…">
+   <span class="nyx-swatch-color" style="--nyx-swatch:#hex"></span></label>. Arrow keys come free. */
+.nyx-swatches{display:flex;flex-wrap:wrap;align-items:center;gap:var(--nyx-s2);border:0;margin:0;padding:0;min-inline-size:0}
+.nyx-swatches > legend{float:inline-start;inline-size:100%;margin-block-end:var(--nyx-s2);padding:0;font-size:var(--nyx-fs-sm);font-weight:500;color:var(--nyx-text)}
+.nyx-swatches > legend .nyx-swatch-value{color:var(--nyx-text-muted);font-weight:400}
+.nyx-swatch{position:relative;display:inline-grid;place-items:center;cursor:pointer}
+.nyx-swatch input{position:absolute;opacity:0;inline-size:1px;block-size:1px;margin:0;pointer-events:none}
+.nyx-swatch-color{inline-size:32px;block-size:32px;border-radius:50%;background:var(--nyx-swatch,var(--nyx-surface-2));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--nyx-text) 18%,transparent);display:grid;place-items:center;forced-color-adjust:none;transition:box-shadow .2s var(--nyx-ease),transform .2s var(--nyx-ease)}
+.nyx-swatch:hover .nyx-swatch-color{transform:scale(1.06)}
+/* selected = ring + check mark (never colour alone); the tick is a glyph, so it is not mirrored in RTL */
+.nyx-swatch-color::after{content:"";inline-size:10px;block-size:5px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) scale(0);margin-block-start:-2px;filter:drop-shadow(0 0 1px rgba(0,0,0,.8));transition:transform .15s var(--nyx-ease)}
+.nyx-swatch input:checked + .nyx-swatch-color{box-shadow:0 0 0 2px var(--nyx-bg),0 0 0 4px var(--nyx-accent),var(--nyx-glow)}
+.nyx-swatch input:checked + .nyx-swatch-color::after{transform:rotate(-45deg) scale(1)}
+.nyx-swatch input:focus-visible + .nyx-swatch-color,.nyx-swatch input:focus-visible + .nyx-swatch-text{outline:2px solid var(--nyx-accent);outline-offset:5px}
+.nyx-swatch input:disabled + .nyx-swatch-color{opacity:.35;background-image:linear-gradient(to top right,transparent calc(50% - 1px),var(--nyx-text) 50%,transparent calc(50% + 1px))}
+.nyx-swatch:has(input:disabled){cursor:not-allowed}
+.nyx-swatch:has(input:disabled):hover .nyx-swatch-color{transform:none}
+.nyx-swatches-square .nyx-swatch-color{border-radius:var(--nyx-radius-sm)}
+.nyx-swatches-sm .nyx-swatch-color{inline-size:24px;block-size:24px}
+.nyx-swatches-lg .nyx-swatch-color{inline-size:40px;block-size:40px}
+/* text variant — sizes, storage, weights */
+.nyx-swatch-text{min-inline-size:44px;padding:7px 12px;border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);background:var(--nyx-surface);font-size:var(--nyx-fs-sm);font-weight:600;text-align:center;color:var(--nyx-text);transition:border-color .2s var(--nyx-ease),background-color .2s var(--nyx-ease),box-shadow .2s var(--nyx-ease)}
+.nyx-swatch:hover .nyx-swatch-text{border-color:color-mix(in srgb,var(--nyx-accent) 50%,var(--nyx-border))}
+.nyx-swatch input:checked + .nyx-swatch-text{border-color:var(--nyx-accent);background:color-mix(in srgb,var(--nyx-accent) 14%,var(--nyx-surface));box-shadow:0 0 0 1px var(--nyx-accent),var(--nyx-glow)}
+.nyx-swatch input:disabled + .nyx-swatch-text{color:var(--nyx-text-muted);text-decoration:line-through;opacity:.6}
+@media (prefers-reduced-motion:reduce){
+  .nyx-swatch-color,.nyx-swatch-color::after,.nyx-swatch-text{transition:none}
+  .nyx-swatch:hover .nyx-swatch-color{transform:none}
+}
+@media (forced-colors:active){
+  .nyx-swatch input:checked + .nyx-swatch-color,.nyx-swatch input:checked + .nyx-swatch-text{outline:3px solid Highlight;outline-offset:2px}
+}
+
+/* — native date & time inputs — <input class="nyx-input" type="date|time|datetime-local|month|week">.
+   The OS picker follows the theme via color-scheme; the WebKit/Blink field parts get Nyx tokens.
+   Firefox has no field pseudo-elements, so it keeps its native (themed) look. */
+.nyx-input:is([type="date"],[type="time"],[type="datetime-local"],[type="month"],[type="week"]){color-scheme:dark;min-block-size:42px;font-variant-numeric:tabular-nums;text-align:start;cursor:text}
+:root[data-theme="light"] .nyx-input:is([type="date"],[type="time"],[type="datetime-local"],[type="month"],[type="week"]){color-scheme:light}
+.nyx-input::-webkit-datetime-edit{padding:0}
+.nyx-input::-webkit-datetime-edit-fields-wrapper{padding:0}
+.nyx-input::-webkit-datetime-edit-text{color:var(--nyx-text-muted);padding-inline:2px}
+.nyx-input::-webkit-datetime-edit-year-field:focus,.nyx-input::-webkit-datetime-edit-month-field:focus,.nyx-input::-webkit-datetime-edit-day-field:focus,
+.nyx-input::-webkit-datetime-edit-hour-field:focus,.nyx-input::-webkit-datetime-edit-minute-field:focus,.nyx-input::-webkit-datetime-edit-second-field:focus,
+.nyx-input::-webkit-datetime-edit-ampm-field:focus,.nyx-input::-webkit-datetime-edit-week-field:focus{background:color-mix(in srgb,var(--nyx-accent) 28%,transparent);color:var(--nyx-text);border-radius:4px;outline:none}
+/* empty required field reads like a placeholder until a value is chosen */
+.nyx-input:is([type="date"],[type="time"],[type="datetime-local"],[type="month"],[type="week"]):required:invalid::-webkit-datetime-edit{color:var(--nyx-text-muted)}
+.nyx-input::-webkit-calendar-picker-indicator{cursor:pointer;margin-inline-start:var(--nyx-s2);padding:4px;border-radius:var(--nyx-radius-sm);opacity:.65;transition:opacity .2s var(--nyx-ease),background-color .2s var(--nyx-ease)}
+.nyx-input::-webkit-calendar-picker-indicator:hover,.nyx-input:focus::-webkit-calendar-picker-indicator{opacity:1;background-color:color-mix(in srgb,var(--nyx-accent) 16%,transparent)}
+.nyx-input:is([type="date"],[type="time"],[type="datetime-local"],[type="month"],[type="week"]):disabled{opacity:.55;cursor:not-allowed}
+/* start → end range: two native fields joined by an arrow that mirrors in RTL */
+.nyx-date-range{display:flex;align-items:center;gap:var(--nyx-s2);flex-wrap:wrap}
+.nyx-date-range > .nyx-input{flex:1 1 150px;inline-size:auto;min-inline-size:0}
+.nyx-date-range > .nyx-date-sep{color:var(--nyx-text-muted);flex:none}
+[dir="rtl"] .nyx-date-range > .nyx-date-sep{transform:scaleX(-1)}
+@media (prefers-reduced-motion:reduce){
+  .nyx-input::-webkit-calendar-picker-indicator{transition:none}
+}

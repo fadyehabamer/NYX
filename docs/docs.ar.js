@@ -1,6 +1,8 @@
 /* ==========================================================
    Nyx docs — Arabic (العربية) locale pack.
    Load BEFORE docs.js. Untranslated fields fall back to English.
+   A page entry may also override sections / classes / js to localise demos —
+   keep section titles in English (they key the anchors); translate them in _terms.
    ========================================================== */
 window.NYX_I18N = {
   _ui: {
@@ -69,7 +71,11 @@ window.NYX_I18N = {
     'Keyboard Rippling Focus': 'تركيز لوحة المفاتيح المتموج',
     'Password Strength Meter': 'مقياس قوة كلمة المرور',
     'Sliding Capsule': 'كبسولة منزلقة',
-    'Three up': 'ثلاثة خيارات'
+    'Three up': 'ثلاثة خيارات',
+    'Colours': 'الألوان', 'Square & sizes': 'مربّعة وبأحجام', 'Text variants': 'خيارات نصّية',
+    'Types': 'الأنواع', 'Range': 'نطاق', 'Required & disabled': 'إلزامي ومعطّل',
+    'Side by side': 'جنباً إلى جنب',
+    'Formatting (multiple)': 'التنسيق (متعدّد)', 'View switcher (single)': 'مبدّل العرض (مفرد)', 'Small & vertical': 'صغير وعمودي'
   },
   pages: {
     /* Getting Started */
@@ -85,6 +91,17 @@ window.NYX_I18N = {
     /* Layout */
     grid: { title: 'الشبكة', summary: 'شبكة CSS من 12 عموداً. استخدم nyx-grid على الحاوية وأصناف nyx-col من 1 إلى 12 على الأبناء.' },
     container: { title: 'الحاوية', summary: 'تتوسّط المحتوى بعرض أقصى 1280 بكسل مع حشو جانبي متجاوب.' },
+    splitter: {
+      title: 'المُقسِّم',
+      summary: 'لوحان قابلان لتغيير الحجم مع فاصل يُسحب — محرّر ومعاينة، قائمة وتفاصيل، كود ومخرجات. يحوّل المُشغّل الفاصل إلى «مقسّم نوافذ» وفق WAI-ARIA: ركّز عليه واستخدم الأسهم، وHome / End للحدّين، وEnter لطيّ اللوح الأول واستعادته. تتبع الأسهم اتجاه القراءة في RTL.',
+      sections: [
+        { title: 'Side by side', demo: '<div class="nyx-splitter" data-nyx-splitter data-value="40"><div class="nyx-split-pane"><strong>الملفات</strong><p class="nyx-caption">اسحب الفاصل أو ركّز عليه واضغط ← →.</p></div><div class="nyx-split-handle" aria-label="تغيير حجم قائمة الملفات"></div><div class="nyx-split-pane"><strong>المعاينة</strong><p class="nyx-caption">يأخذ هذا اللوح المساحة المتبقية.</p></div></div>' },
+        { title: 'Stacked', text: 'أضف nyx-splitter-vertical لتكديس اللوحين؛ ويحرّك ↑ ↓ الفاصل.', demo: '<div class="nyx-splitter nyx-splitter-vertical" data-nyx-splitter data-value="55" data-min="20" data-max="80" style="block-size:280px"><div class="nyx-split-pane"><strong>الاستعلام</strong><p class="nyx-caption">SELECT * FROM orders;</p></div><div class="nyx-split-handle" aria-label="تغيير حجم محرّر الاستعلام"></div><div class="nyx-split-pane"><strong>النتائج</strong><p class="nyx-caption">١٢٨ صفّاً</p></div></div>' },
+        { title: 'JavaScript Events', text: 'يُطلق nyx:split أثناء السحب ومع كل ضغطة مفتاح — احفظ الحجم أو أعد رسم مخطّط.', lang: 'js', code: 'document.querySelector(\'[data-nyx-splitter]\').addEventListener(\'nyx:split\', (e) => {\n  localStorage.setItem(\'pane\', e.detail.value);   // 10 … 90 (نسبة اللوح الأول)\n});' }
+      ],
+      classes: [['nyx-splitter', 'حاوية مرنة: لوح · فاصل · لوح.'], ['data-nyx-splitter', 'يربط الفاصل (الدور وaria-value* ولوحة المفاتيح والسحب).'], ['nyx-split-pane', 'لوح؛ يُحدَّد حجم الأول بـ ‎--nyx-split.'], ['nyx-split-handle', 'الفاصل — أعطه aria-label يسمّي ما يغيّر حجمه.'], ['nyx-splitter-vertical', 'تكديس اللوحين (فاصل أفقي).'], ['data-value / data-min / data-max / data-step', 'الحجم الابتدائي والحدود بالنسبة المئوية (الافتراضي 50 · 10 · 90 · 5).']],
+      js: [['nyx:split', 'حدث على المقسّم؛ event.detail.value هو حجم اللوح الأول بالنسبة المئوية.'], ['← → / ↑ ↓', 'تحريك الفاصل بمقدار data-step (معكوسة في RTL).'], ['Home / End', 'القفز إلى data-min / data-max.'], ['Enter', 'طيّ اللوح الأول إلى data-min، واضغط مجدداً للاستعادة.']]
+    },
     /* Content */
     typography: { title: 'الطباعة', summary: 'خط Plus Jakarta Sans للعناوين وInter للنصّ، ويتحوّل تلقائياً إلى خطّ ثمانية (Thmanyah) — Sans للنصّ وSerif Display للعناوين — في وضع RTL.' },
     /* Forms */
@@ -93,9 +110,30 @@ window.NYX_I18N = {
     select: { title: 'القوائم' }, switches: { title: 'المفاتيح والاختيارات' }, search: { title: 'البحث' },
     'input-group': { title: 'مجموعة إدخال' }, range: { title: 'المنزلق' }, floating: { title: 'تسمية عائمة' },
     stepper: { title: 'العدّاد' }, otp: { title: 'رمز التحقّق' }, 'tag-input': { title: 'إدخال الوسوم' },
+    swatches: {
+      title: 'منتقي الألوان',
+      summary: 'اختر لوناً أو خياراً من صفّ عيّنات — ألوان المنتج أو الوسوم أو السمات. مبنيّ على مجموعة أزرار راديو أصلية، فتعمل الأسهم وإرسال النموذج وقارئات الشاشة بلا جافاسكربت. العيّنة المختارة تأخذ حلقة وعلامة صحّ، لا اللون وحده.',
+      sections: [
+        { title: 'Colours', text: 'أعطِ كل زر راديو aria-label — فالعيّنة نفسها بلا نصّ. حدّد اللون بالمتغيّر ‎--nyx-swatch.', demo: '<fieldset class="nyx-swatches"><legend>اللون</legend><label class="nyx-swatch" title="كحلي"><input type="radio" name="sw-color" value="midnight" aria-label="كحلي" checked><span class="nyx-swatch-color" style="--nyx-swatch:#1b1f3b"></span></label><label class="nyx-swatch" title="بنفسجي"><input type="radio" name="sw-color" value="violet" aria-label="بنفسجي"><span class="nyx-swatch-color" style="--nyx-swatch:#6c63ff"></span></label><label class="nyx-swatch" title="نعناعي"><input type="radio" name="sw-color" value="mint" aria-label="نعناعي"><span class="nyx-swatch-color" style="--nyx-swatch:#00d4aa"></span></label><label class="nyx-swatch" title="رملي"><input type="radio" name="sw-color" value="sand" aria-label="رملي"><span class="nyx-swatch-color" style="--nyx-swatch:#e8d8b0"></span></label><label class="nyx-swatch" title="لؤلؤي — نفد"><input type="radio" name="sw-color" value="pearl" aria-label="لؤلؤي (نفد)" disabled><span class="nyx-swatch-color" style="--nyx-swatch:#f5f6fb"></span></label></fieldset>' },
+        { title: 'Text variants', text: 'استبدل النقطة الملوّنة بـ nyx-swatch-text لاختيار المقاسات أو السعات. الخيارات المعطّلة تظهر مشطوبة.', demo: '<fieldset class="nyx-swatches"><legend>المقاس</legend><label class="nyx-swatch"><input type="radio" name="sw-size" value="s"><span class="nyx-swatch-text">صغير</span></label><label class="nyx-swatch"><input type="radio" name="sw-size" value="m" checked><span class="nyx-swatch-text">وسط</span></label><label class="nyx-swatch"><input type="radio" name="sw-size" value="l"><span class="nyx-swatch-text">كبير</span></label><label class="nyx-swatch"><input type="radio" name="sw-size" value="xl" disabled><span class="nyx-swatch-text">كبير جداً</span></label></fieldset>' }
+      ],
+      classes: [['nyx-swatches', 'غلاف المجموعة — استخدم <fieldset> مع <legend>.'], ['nyx-swatch', 'خيار واحد: <label> حول زر راديو أصلي.'], ['nyx-swatch-color', 'نقطة اللون؛ اضبط ‎--nyx-swatch (أي لون أو تدرّج).'], ['nyx-swatch-text', 'رقاقة نصّية بدل النقطة (مقاسات، سعات).'], ['nyx-swatches-square / -sm / -lg', 'زوايا مربّعة ومعدّلات الحجم.'], ['aria-label على الحقل', 'إلزامي لنقاط الألوان — هو الاسم الذي تنطقه قارئات الشاشة.']]
+    },
     /* Components */
     buttons: { title: 'الأزرار', summary: 'ستة أنماط، وثلاثة أحجام، إضافةً إلى حالات التحميل والتعطيل — وكلها مُضاءة من الداخل عند التحويم.' },
     'button-group': { title: 'مجموعة أزرار' }, 'close-button': { title: 'زر الإغلاق' },
+    'toggle-group': {
+      title: 'مجموعة تبديل',
+      summary: 'صفّ أزرار تبقى مضغوطة — تنسيق النصّ والمرشّحات ومبدّلات العرض. كل زر هو <button> حقيقي مع aria-pressed، فتعلن قارئات الشاشة «مضغوط / غير مضغوط». يمكن تفعيل عدّة أزرار افتراضياً، وdata-nyx-toggle-group="single" يُبقي زراً واحداً على الأكثر. تتنقّل الأسهم بين الأزرار وتتبع اتجاه القراءة في RTL.',
+      sections: [
+        { title: 'Formatting (multiple)', demo: '<div class="nyx-toggle-group" data-nyx-toggle-group aria-label="تنسيق النصّ"><button aria-label="عريض" data-value="bold" aria-pressed="true"><b>ع</b></button><button aria-label="مائل" data-value="italic"><i>م</i></button><button aria-label="تسطير" data-value="underline"><u>س</u></button><button aria-label="يتوسّطه خطّ" data-value="strike" disabled><s>خ</s></button></div>' },
+        { title: 'View switcher (single)', text: 'أضف data-required ليبقى خيار واحد مضغوطاً دائماً.', demo: '<div class="nyx-toggle-group" data-nyx-toggle-group="single" data-required aria-label="طريقة العرض"><button data-value="grid" aria-pressed="true"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>شبكة</button><button data-value="list"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="2" width="14" height="2.5" rx="1"/><rect x="1" y="6.75" width="14" height="2.5" rx="1"/><rect x="1" y="11.5" width="14" height="2.5" rx="1"/></svg>قائمة</button><button data-value="board">لوحة</button></div>' },
+        { title: 'Small & vertical', demo: '<div class="nyx-flex nyx-gap-4 nyx-items-start nyx-wrap"><div class="nyx-toggle-group nyx-toggle-group-sm" data-nyx-toggle-group aria-label="تصفية الحالة"><button aria-pressed="true">مفتوح</button><button>مسودّة</button><button>مغلق</button></div><div class="nyx-toggle-group nyx-toggle-group-vertical" data-nyx-toggle-group="single" aria-label="المحاذاة"><button aria-pressed="true">البداية</button><button>الوسط</button><button>النهاية</button></div></div>' },
+        { title: 'JavaScript Events', text: 'يُطلق nyx:toggle على المجموعة بعد كل تغيير مع القيم المضغوطة (data-value، وإلا نصّ الزر).', lang: 'js', code: 'document.querySelector(\'[data-nyx-toggle-group]\').addEventListener(\'nyx:toggle\', (e) => {\n  console.log(e.detail.value);    // ["bold", "italic"]\n  console.log(e.detail.pressed);  // الحالة الجديدة للزر المنقور\n});' }
+      ],
+      classes: [['nyx-toggle-group', 'حاوية على شكل كبسولة لأبناء <button>.'], ['data-nyx-toggle-group', 'يربط aria-pressed وrole=group والأسهم؛ "single" = زر واحد على الأكثر.'], ['data-required', 'لا يمكن تحرير آخر زر مضغوط.'], ['aria-pressed="true"', 'الحالة المضغوطة الابتدائية (يملأ المُشغّل "false").'], ['data-value', 'القيمة المُبلّغ عنها في nyx:toggle (افتراضياً نصّ الزر).'], ['nyx-toggle-group-sm / -vertical', 'حجم مضغوط / مكدّس (مفاتيح ↑ ↓).'], ['aria-label', 'سمِّ المجموعة؛ والأزرار ذات الأيقونة فقط تحتاج aria-label خاصاً بها.']],
+      js: [['nyx:toggle', 'حدث على المجموعة — detail.value (القيم المضغوطة) وdetail.button وdetail.pressed.'], ['← → / ↑ ↓ · Home / End', 'نقل التركيز بين الأزرار المفعّلة (معكوسة في RTL).'], ['Space / Enter', 'تبديل الزر المُركّز (سلوك الزر الأصلي).']]
+    },
     cards: { title: 'البطاقات', summary: 'أسطح ذات عمق — زجاجية، وبحدود متدرّجة، وتفاعلية، إضافةً إلى تخطيطات الإحصاءات والمزايا.' },
     badges: { title: 'الشارات' }, alerts: { title: 'التنبيهات', summary: 'رسائل بنطاقات ملوّنة على الحافة البادئة مع خانة أيقونة.' },
     toasts: { title: 'الإشعارات', summary: 'إشعارات تظهر في الزاوية وتختفي تلقائياً. تُستدعى عبر Nyx.toast.' },
@@ -142,6 +180,16 @@ window.NYX_I18N = {
     /* Forms+ */
     combobox: { title: 'مربّع اختيار بحثي', summary: 'حقل إكمال تلقائي يصفّي القائمة أثناء الكتابة — اكتب للتضييق، وانقر للاختيار، ويُغلق بالنقر خارجه.' },
     'multi-select': { title: 'اختيار متعدّد', summary: 'اختر عدّة قيم كرقائق قابلة للإزالة. انقر للفتح، وأشّر الخيارات، أو أزِل رقاقة بزر × الخاص بها.' },
+    'date-input': {
+      title: 'التاريخ والوقت الأصليان',
+      summary: 'نسّق حقول التاريخ والوقت والشهر والأسبوع الأصلية في المتصفّح بـ nyx-input فقط — بلا مُشغّل. يتبع منتقي النظام السمة الفاتحة أو الداكنة عبر color-scheme، وتأخذ أجزاء الحقل وأيقونة المنتقي ألوان نيكس، وتبقى لك الكتابة بلوحة المفاتيح وعجلات الجوّال والتحقّق وmin / max. استخدم «منتقي التاريخ» عندما تحتاج تقويماً منبثقاً مخصّصاً.',
+      sections: [
+        { title: 'Types', demo: '<div class="nyx-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--nyx-s4)"><div><label class="nyx-label" for="di-date">التاريخ</label><input class="nyx-input" id="di-date" type="date" value="2026-09-24"></div><div><label class="nyx-label" for="di-time">الوقت</label><input class="nyx-input" id="di-time" type="time" value="18:30"></div><div><label class="nyx-label" for="di-dt">التاريخ والوقت</label><input class="nyx-input" id="di-dt" type="datetime-local" value="2026-09-24T18:30"></div><div><label class="nyx-label" for="di-month">الشهر</label><input class="nyx-input" id="di-month" type="month" value="2026-09"></div></div>' },
+        { title: 'Range', text: 'ضع حقلَي البداية والنهاية داخل nyx-date-range؛ ينعكس السهم في RTL. استخدم min / max ليمنع المتصفّح النطاقات المستحيلة.', demo: '<div class="nyx-date-range" role="group" aria-label="تاريخ الإقامة"><input class="nyx-input" type="date" aria-label="الوصول" value="2026-10-01" min="2026-09-24"><span class="nyx-date-sep" aria-hidden="true">→</span><input class="nyx-input" type="date" aria-label="المغادرة" value="2026-10-05" min="2026-10-02"></div>' },
+        { title: 'Required & disabled', text: 'الحقل الإلزامي الفارغ يبدو كنصّ إرشادي حتى تُختار قيمة.', demo: '<div class="nyx-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--nyx-s4)"><div><label class="nyx-label" for="di-req">تاريخ التوصيل</label><input class="nyx-input" id="di-req" type="date" required></div><div><label class="nyx-label" for="di-dis">مقفل</label><input class="nyx-input" id="di-dis" type="time" value="09:00" disabled></div></div>' }
+      ],
+      classes: [['nyx-input[type=date|time|datetime-local|month|week]', 'حقل أصلي بمنتقٍ يتبع السمة (color-scheme يتبع data-theme).'], ['nyx-date-range', 'زوج بداية ← نهاية؛ الفاصل ينعكس في RTL.'], ['nyx-date-sep', 'السهم بين الحقلين (aria-hidden).'], ['min / max / step / required', 'قيود أصلية — يتحقّق منها المتصفّح.']]
+    },
     'date-picker': { title: 'منتقي التاريخ', summary: 'حقل مع تقويم منبثق — تنقّل بين الأشهر بـ ‹ ›، وانقر يوماً لتعبئة الحقل. يبني المُشغّل التقويم ويربطه تلقائياً.' },
     phone: { title: 'حقل الهاتف', summary: 'قائمة رمز الاتصال مدموجة بحقل الرقم — محمّلة مسبقاً برموز الخليج والمنطقة.' },
     /* Overlays+ */

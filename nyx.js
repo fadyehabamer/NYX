@@ -1,5 +1,5 @@
 /*!
- * Nyx — runtime · v1.0.3 · MIT License
+ * Nyx — runtime · v1.1.0 · MIT License
  * Zero dependencies. UMD: window.Nyx (or CommonJS export).
  *
  * Declarative API (no JS to write):
@@ -12,6 +12,8 @@
  *   data-nyx-datepicker · data-nyx-contextmenu="#id" · data-nyx-countdown="HH:MM"
  *   data-nyx-prayers · data-nyx-qibla="deg" · class="nyx-combobox|nyx-multiselect|nyx-hierarchy"
  *   class="nyx-table-sortable"                        click headers to sort
+ *   data-nyx-splitter                                 resizable panes (arrows · Home · End · Enter)
+ *   data-nyx-toggle-group="single|multiple"           aria-pressed button group (+ arrow keys)
  *
  * Imperative API:
  *   Nyx.toast · openModal · openDrawer · close · closeAll · togglePopover
@@ -1143,6 +1145,98 @@
     });
   }
 
+  /* ---------- splitter: resizable panes (WAI-ARIA window splitter) ---------- */
+  function numAttr(v, fb) { var n = parseFloat(v); return isNaN(n) ? fb : n; }
+  function isRtl(node) { var d = node.closest('[dir]'); return !!d && d.getAttribute('dir') === 'rtl'; }
+  function initSplitter(root) {
+    $$('[data-nyx-splitter]', root).filter(function (s) { return !s._nyxSplit; }).forEach(function (s) {
+      var handle = s.querySelector(':scope > .nyx-split-handle'), pane = s.querySelector(':scope > .nyx-split-pane');
+      if (!handle || !pane) return;
+      s._nyxSplit = true;
+      var vertical = s.classList.contains('nyx-splitter-vertical');
+      var min = numAttr(s.getAttribute('data-min'), 10), max = numAttr(s.getAttribute('data-max'), 90), step = numAttr(s.getAttribute('data-step'), 5);
+      var initial = numAttr(s.getAttribute('data-value'), 50), value = initial, restore = null;
+      if (!pane.id) pane.id = 'nyx-pane-' + (++_uid);
+      handle.setAttribute('role', 'separator');
+      handle.setAttribute('tabindex', '0');
+      handle.setAttribute('aria-orientation', vertical ? 'horizontal' : 'vertical');   // the line itself, not the layout
+      handle.setAttribute('aria-controls', pane.id);
+      handle.setAttribute('aria-valuemin', min); handle.setAttribute('aria-valuemax', max);
+      if (!handle.hasAttribute('aria-label') && !handle.hasAttribute('aria-labelledby')) handle.setAttribute('aria-label', 'Resize panes');
+      function set(v, emit) {
+        value = Math.round(Math.max(min, Math.min(max, v)) * 10) / 10;
+        s.style.setProperty('--nyx-split', value);
+        handle.setAttribute('aria-valuenow', Math.round(value));
+        if (emit) s.dispatchEvent(new CustomEvent('nyx:split', { bubbles: true, detail: { value: value } }));
+      }
+      set(initial);
+      handle.addEventListener('keydown', function (e) {
+        // arrows move the line the way they point, so in RTL ArrowLeft grows the (right-hand) first pane
+        var grow = vertical ? 'ArrowDown' : (isRtl(s) ? 'ArrowLeft' : 'ArrowRight');
+        var shrink = vertical ? 'ArrowUp' : (isRtl(s) ? 'ArrowRight' : 'ArrowLeft');
+        var v = null;
+        if (e.key === grow) v = value + step;
+        else if (e.key === shrink) v = value - step;
+        else if (e.key === 'Home') v = min;
+        else if (e.key === 'End') v = max;
+        else if (e.key === 'Enter') { if (value > min) { restore = value; v = min; } else v = restore != null ? restore : initial; }   // collapse ⇄ restore
+        if (v == null) return;
+        e.preventDefault(); set(v, true);
+      });
+      handle.addEventListener('pointerdown', function (e) {
+        if (e.button !== 0) return;
+        e.preventDefault(); handle.focus();
+        s.classList.add('nyx-resizing');
+        try { handle.setPointerCapture(e.pointerId); } catch (x) {}
+      });
+      handle.addEventListener('pointermove', function (e) {
+        if (!s.classList.contains('nyx-resizing')) return;
+        var r = s.getBoundingClientRect();
+        var pct = vertical ? (e.clientY - r.top) / r.height : (isRtl(s) ? r.right - e.clientX : e.clientX - r.left) / r.width;
+        if (isFinite(pct)) set(pct * 100, true);
+      });
+      function stop() { s.classList.remove('nyx-resizing'); }
+      handle.addEventListener('pointerup', stop);
+      handle.addEventListener('pointercancel', stop);
+      handle.addEventListener('lostpointercapture', stop);
+    });
+  }
+
+  /* ---------- toggle group: aria-pressed buttons (single | multiple) ---------- */
+  function initToggleGroup(root) {
+    $$('[data-nyx-toggle-group]', root).filter(function (g) { return !g._nyxTg; }).forEach(function (g) {
+      g._nyxTg = true;
+      var single = g.getAttribute('data-nyx-toggle-group') === 'single', required = g.hasAttribute('data-required');
+      var vertical = g.classList.contains('nyx-toggle-group-vertical');
+      if (!g.getAttribute('role')) g.setAttribute('role', 'group');
+      function btns() { return $$(':scope > button', g); }
+      function isOn(b) { return b.getAttribute('aria-pressed') === 'true'; }
+      function valOf(b) { return b.getAttribute('data-value') || b.textContent.trim(); }
+      btns().forEach(function (b) {
+        if (!b.getAttribute('type')) b.setAttribute('type', 'button');         // never submit a surrounding form
+        if (!isOn(b)) b.setAttribute('aria-pressed', 'false');
+      });
+      g.addEventListener('click', function (e) {
+        var b = e.target.closest('button');
+        if (!b || b.parentElement !== g || b.disabled) return;
+        var on = !isOn(b);
+        if (!on && required && btns().filter(isOn).length <= 1) return;     // data-required keeps one pressed
+        if (on && single) btns().forEach(function (o) { if (o !== b) o.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        g.dispatchEvent(new CustomEvent('nyx:toggle', { bubbles: true, detail: { value: btns().filter(isOn).map(valOf), button: b, pressed: on } }));
+      });
+      g.addEventListener('keydown', function (e) {
+        var list = btns().filter(function (o) { return !o.disabled; }), i = list.indexOf(doc.activeElement), n = list.length;
+        if (i < 0 || !n) return;
+        var next = vertical ? 'ArrowDown' : (isRtl(g) ? 'ArrowLeft' : 'ArrowRight');
+        var prev = vertical ? 'ArrowUp' : (isRtl(g) ? 'ArrowRight' : 'ArrowLeft');
+        var to = e.key === next ? (i + 1) % n : e.key === prev ? (i - 1 + n) % n : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : -1;
+        if (to < 0) return;
+        e.preventDefault(); list[to].focus();
+      });
+    });
+  }
+
   /* ---------- image gallery + lightbox ---------- */
   var _lightbox = null;
   function lightboxEl() {
@@ -1760,6 +1854,8 @@
     initKanban(root);
     initCalendar(root);
     initCompare(root);
+    initSplitter(root);
+    initToggleGroup(root);
     initLightbox(root);
     initVideoFacade(root);
     initNumerals(root);
@@ -1813,7 +1909,7 @@
   else init();
 
   return {
-    version: '1.0.3',
+    version: '1.1.0',
     init: init, toast: toast,
     openModal: openModal, openDrawer: openDrawer, close: close, closeAll: closeAll,
     togglePopover: togglePopover, openCommandPalette: openCommandPalette, closeCommandPalette: closeCommandPalette,

@@ -116,6 +116,8 @@ Nyx.toggleDir();     // RTL ⇄ LTR
 <button data-nyx-toggle="command">Search (⌘K)</button>
 <nav class="nyx-sidebar" data-nyx-spy>…</nav>           <!-- scrollspy -->
 <table class="nyx-table nyx-table-sortable">…</table>   <!-- click to sort -->
+<div class="nyx-splitter" data-nyx-splitter>…</div>   <!-- resizable panes -->
+<div class="nyx-toggle-group" data-nyx-toggle-group="single">…</div>
 ```
 
 **Imperative:**
@@ -137,11 +139,11 @@ Nyx.openModal('#invite');
 
 ## 🧩 Components
 
-> **Layout** `nyx-grid` `nyx-col-*` `nyx-flex` `nyx-stack` `nyx-container` `nyx-divider`
+> **Layout** `nyx-grid` `nyx-col-*` `nyx-flex` `nyx-stack` `nyx-container` `nyx-divider` `nyx-splitter` (resizable panes)
 > **Typography** `nyx-display` `nyx-h1`–`nyx-h6` `nyx-lead` `nyx-gradient-text` `nyx-code`
-> **Buttons** `nyx-btn` + `-primary` `-secondary` `-ghost` `-danger` `-glass` `-glow` `-icon` `-outline-*` · sizes `-sm` `-lg` · `-loading` · `nyx-btn-group`
+> **Buttons** `nyx-btn` + `-primary` `-secondary` `-ghost` `-danger` `-glass` `-glow` `-icon` `-outline-*` · sizes `-sm` `-lg` · `-loading` · `nyx-btn-group` · `nyx-toggle-group` (`aria-pressed`)
 > **Cards** `nyx-card` + `-glass` `-gradient` `-interactive` `-stat` `-feature`
-> **Forms** `nyx-input` `nyx-textarea` `nyx-select` `nyx-input-group` `nyx-search` `nyx-toggle` `nyx-checkbox` `nyx-radio` `nyx-range` `nyx-float`
+> **Forms** `nyx-input` `nyx-textarea` `nyx-select` `nyx-input-group` `nyx-search` `nyx-toggle` `nyx-checkbox` `nyx-radio` `nyx-range` `nyx-float` `nyx-swatches` · native date/time inputs + `nyx-date-range`
 > **Navigation** `nyx-navbar` `nyx-sidebar` `nyx-breadcrumb` `nyx-tabs` `nyx-nav-pills` `nyx-pagination` `nyx-dropdown` `nyx-command-palette`
 > **Feedback** `nyx-badge` `nyx-alert` `nyx-toast` `nyx-progress` `nyx-skeleton` `nyx-spinner` `nyx-status-bar`
 > **Data** `nyx-table` `nyx-table-sortable` `nyx-data-grid` `nyx-kpi-row` `nyx-list-group`

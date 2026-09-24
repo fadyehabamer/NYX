@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Nyx social card (og:image), source of assets/og-image.png. Colours are the nyx.css
+       dark tokens: bg #0a0b0f, surface #12141a / #1c1f2a, border #2a2d3a, accent #6c63ff,
+       accent-2 #00d4aa, text #e8eaf0, muted #6b7280. Type: Thmanyah Sans (fonts/thmanyah)
+       and JetBrains Mono. The mark is assets/favicon.svg. Rendered to PNG with resvg
+       (@resvg/resvg-js) from this folder, with the Thmanyah woff2 faces converted to TTF. -->
+  <defs>
+    <radialGradient id="glowA" cx="0.86" cy="0.02" r="0.62">
+      <stop offset="0" stop-color="#6c63ff" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#6c63ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0.02" cy="0.98" r="0.55">
+      <stop offset="0" stop-color="#00d4aa" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#00d4aa" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lumi" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8f88ff"/>
+      <stop offset="1" stop-color="#00d4aa"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6c63ff" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#00d4aa" stop-opacity="0.5"/>
+    </linearGradient>
+    <linearGradient id="gridFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+    <mask id="gridMask"><rect width="1200" height="630" fill="url(#gridFade)"/></mask>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <!-- canvas -->
+  <rect width="1200" height="630" fill="#0a0b0f"/>
+  <rect width="1200" height="630" fill="url(#grid)" mask="url(#gridMask)"/>
+  <rect width="1200" height="630" fill="url(#glowA)"/>
+  <rect width="1200" height="630" fill="url(#glowB)"/>
+
+  <!-- brand: mark tile + wordmark -->
+  <rect x="80" y="72" width="76" height="76" rx="18" fill="#6c63ff" opacity="0.55" filter="url(#glow)"/>
+  <rect x="80" y="72" width="76" height="76" rx="18" fill="#ffffff"/>
+  <g transform="translate(98.3 88.7) scale(0.2067)" fill="#0b0b0f">
+    <path d="M0 0 H44 V206 H0 Z"/>
+    <path d="M147 0 H191 V206 H147 Z"/>
+    <path d="M0 0 L52 0 L191 206 L139 206 Z"/>
+  </g>
+  <image x="178" y="86" width="164" height="48" href="logo-white.png" preserveAspectRatio="xMinYMid meet"/>
+
+  <!-- headline -->
+  <text x="80" y="262" font-family="thmanyah sans, 'Plus Jakarta Sans', system-ui, sans-serif" font-weight="700" font-size="58" fill="#e8eaf0" letter-spacing="-1">The dark-native</text>
+  <text x="80" y="330" font-family="thmanyah sans, 'Plus Jakarta Sans', system-ui, sans-serif" font-weight="700" font-size="58" fill="#e8eaf0" letter-spacing="-1">design system with</text>
+  <text x="80" y="398" font-family="thmanyah sans, 'Plus Jakarta Sans', system-ui, sans-serif" font-weight="700" font-size="58" fill="url(#lumi)" letter-spacing="-1">Luminous Depth</text>
+
+  <!-- Arabic tagline (all-Arabic run, so it shapes and orders correctly in any renderer) -->
+  <text x="80" y="458" font-family="thmanyah sans, 'IBM Plex Sans Arabic', system-ui, sans-serif" font-weight="500" font-size="30" fill="#9aa0ae">أوّل مكتبة مكوّنات للمطوّرين العرب</text>
+
+  <!-- feature pills -->
+  <g font-family="'JetBrains Mono', ui-monospace, monospace" font-size="17" fill="#c9ccd6">
+    <rect x="80" y="506" width="182" height="40" rx="20" fill="#12141a" stroke="#2a2d3a"/>
+    <circle cx="102" cy="526" r="5" fill="#00d4aa"/>
+    <text x="116" y="532">zero deps</text>
+    <rect x="274" y="506" width="170" height="40" rx="20" fill="#12141a" stroke="#2a2d3a"/>
+    <circle cx="296" cy="526" r="5" fill="#6c63ff"/>
+    <text x="310" y="532">RTL-first</text>
+    <rect x="456" y="506" width="196" height="40" rx="20" fill="#12141a" stroke="#2a2d3a"/>
+    <circle cx="478" cy="526" r="5" fill="#ffb020"/>
+    <text x="492" y="532">light + dark</text>
+  </g>
+  <text x="80" y="592" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="17" fill="#6b7280">npm i nyx-css  ·  fadyehabamer.github.io/NYX</text>
+
+  <!-- component showcase card -->
+  <g transform="translate(732 118)">
+    <rect x="-2" y="-2" width="392" height="400" rx="26" fill="url(#edge)" opacity="0.35" filter="url(#soft)"/>
+    <rect width="388" height="396" rx="24" fill="#12141a" fill-opacity="0.92" stroke="url(#edge)" stroke-width="1.5"/>
+    <!-- window dots -->
+    <circle cx="30" cy="30" r="6" fill="#ff4d6a"/>
+    <circle cx="50" cy="30" r="6" fill="#ffb020"/>
+    <circle cx="70" cy="30" r="6" fill="#00d4aa"/>
+    <!-- segmented control -->
+    <rect x="28" y="60" width="222" height="40" rx="10" fill="#1c1f2a" stroke="#2a2d3a"/>
+    <rect x="102" y="64" width="74" height="32" rx="7" fill="#6c63ff"/>
+    <g font-family="thmanyah sans, system-ui, sans-serif" font-size="15" font-weight="500" text-anchor="middle">
+      <text x="65" y="85" fill="#6b7280">Day</text>
+      <text x="139" y="85" fill="#ffffff">Week</text>
+      <text x="213" y="85" fill="#6b7280">Month</text>
+    </g>
+    <!-- toggle -->
+    <rect x="300" y="68" width="60" height="32" rx="16" fill="#6c63ff"/>
+    <circle cx="344" cy="84" r="12" fill="#ffffff"/>
+    <!-- stat -->
+    <text x="28" y="146" font-family="thmanyah sans, system-ui, sans-serif" font-size="15" fill="#6b7280">Monthly revenue</text>
+    <text x="28" y="186" font-family="thmanyah sans, system-ui, sans-serif" font-size="36" font-weight="700" fill="#e8eaf0">$48.2k</text>
+    <rect x="160" y="160" width="74" height="28" rx="14" fill="#00d4aa" fill-opacity="0.16"/>
+    <text x="197" y="179" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#00d4aa">▲ 18%</text>
+    <!-- bars -->
+    <g fill="#6c63ff">
+      <rect x="28"  y="262" width="30" height="56" rx="6" fill-opacity="0.55"/>
+      <rect x="72"  y="238" width="30" height="80" rx="6" fill-opacity="0.7"/>
+      <rect x="116" y="250" width="30" height="68" rx="6" fill="#00d4aa" fill-opacity="0.8"/>
+      <rect x="160" y="222" width="30" height="96" rx="6" fill-opacity="0.85"/>
+      <rect x="204" y="206" width="30" height="112" rx="6"/>
+      <rect x="248" y="244" width="30" height="74" rx="6" fill="#2a2d3a"/>
+      <rect x="292" y="232" width="30" height="86" rx="6" fill="#2a2d3a"/>
+    </g>
+    <!-- glowing primary button -->
+    <rect x="28" y="336" width="160" height="40" rx="10" fill="#6c63ff" opacity="0.6" filter="url(#soft)"/>
+    <rect x="28" y="336" width="160" height="40" rx="10" fill="#6c63ff"/>
+    <text x="108" y="362" text-anchor="middle" font-family="thmanyah sans, system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff">Get started</text>
+    <rect x="200" y="336" width="160" height="40" rx="10" fill="#1c1f2a" stroke="#2a2d3a"/>
+    <text x="280" y="362" text-anchor="middle" font-family="thmanyah sans, system-ui, sans-serif" font-size="16" font-weight="500" fill="#e8eaf0">ابدأ الآن</text>
+  </g>
+</svg>
