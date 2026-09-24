@@ -405,10 +405,11 @@
                 <p class="nyx-caption">Workspace performance · last 7 days</p>
               </div>
               <div class="nyx-flex nyx-items-center nyx-gap-3">
-                <span class="nyx-segment" role="group">
-                  <label><input type="radio" name="rng" tabindex="-1"><span>Day</span></label>
-                  <label><input type="radio" name="rng" checked tabindex="-1"><span>Week</span></label>
-                  <label><input type="radio" name="rng" tabindex="-1"><span>Month</span></label>
+                <!-- decorative preview: inert keeps the radios out of the tab order, pointer and AT -->
+                <span class="nyx-segment" inert>
+                  <label><input type="radio" name="rng"><span>Day</span></label>
+                  <label><input type="radio" name="rng" checked><span>Week</span></label>
+                  <label><input type="radio" name="rng"><span>Month</span></label>
                 </span>
                 <span class="nyx-btn nyx-btn-primary nyx-btn-sm">Export</span>
               </div>
@@ -580,7 +581,7 @@
     <div class="lp-comp">
       <a href="docs/docs.html#/buttons"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-pill"/></svg></span><h3 class="nyx-h4">Buttons</h3><p class="nyx-caption">Six variants, glow, loading &amp; icon styles.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-btn nyx-btn-primary nyx-btn-sm">Primary</span><span class="nyx-btn nyx-btn-glow nyx-btn-sm">Glow</span></div></div></a>
       <a href="docs/docs.html#/cards"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-card"/></svg></span><h3 class="nyx-h4">Cards</h3><p class="nyx-caption">Glass, gradient, stat &amp; feature layouts.</p><div class="nyx-card-gradient" style="margin-top:var(--nyx-s3);padding:var(--nyx-s3)"><span class="nyx-caption">Gradient card</span></div></div></a>
-      <a href="docs/docs.html#/inputs"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-form"/></svg></span><h3 class="nyx-h4">Forms</h3><p class="nyx-caption">Inputs, selects, switches &amp; search.</p><div style="margin-top:var(--nyx-s3)"><label class="nyx-toggle"><input type="checkbox" checked tabindex="-1" aria-label="preview"><span class="nyx-track"></span></label></div></div></a>
+      <a href="docs/docs.html#/inputs"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-form"/></svg></span><h3 class="nyx-h4">Forms</h3><p class="nyx-caption">Inputs, selects, switches &amp; search.</p><div style="margin-top:var(--nyx-s3)"><label class="nyx-toggle" inert><input type="checkbox" checked><span class="nyx-track"></span></label></div></div></a>
       <a href="docs/docs.html#/tables"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-table"/></svg></span><h3 class="nyx-h4">Tables &amp; Data</h3><p class="nyx-caption">Sortable tables, data grids, KPI rows.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-badge nyx-badge-success">▲ 12%</span><span class="nyx-badge">MRR</span></div></div></a>
       <a href="docs/docs.html#/modal"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-overlay"/></svg></span><h3 class="nyx-h4">Overlays</h3><p class="nyx-caption">Modal, drawer, tooltip, popover.</p><div class="nyx-flex nyx-gap-2 nyx-wrap" style="margin-top:var(--nyx-s3)"><span class="nyx-command">⌘ K</span><span class="nyx-badge nyx-badge-info">esc</span></div></div></a>
       <a href="docs/docs.html#/spotlight"><div class="nyx-card nyx-card-interactive nyx-spotlight-card"><span class="comp-ico"><svg class="ico"><use href="#i-sparkles"/></svg></span><h3 class="nyx-h4">Signature</h3><p class="nyx-caption">Spotlight, orbit, meter, timeline &amp; more.</p><div class="nyx-flex nyx-gap-2 nyx-items-center" style="margin-top:var(--nyx-s3)"><span class="nyx-avatar" style="width:28px;height:28px;font-size:11px">N</span><span class="nyx-badge-dot">live</span></div></div></a>
