@@ -433,7 +433,13 @@
     var min = inp.hasAttribute('min') ? parseFloat(inp.getAttribute('min')) : -Infinity;
     var max = inp.hasAttribute('max') ? parseFloat(inp.getAttribute('max')) : Infinity;
     v += btn.getAttribute('data-nyx-step') === 'dec' ? -1 : 1;
-    inp.value = Math.max(min, Math.min(max, v));
+    var next = String(Math.max(min, Math.min(max, v)));
+    if (next === inp.value) return;
+    inp.value = next;
+    // Programmatic value changes fire no events — notify listeners (forms,
+    // frameworks, validation) exactly as if the user had typed the value.
+    inp.dispatchEvent(new Event('input', { bubbles: true }));
+    inp.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   /* ---------- scrollspy ---------- */
