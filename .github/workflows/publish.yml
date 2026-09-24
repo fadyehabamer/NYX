@@ -1,0 +1,79 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Pack and run every check without publishing
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Check that the tag matches package.json
+        env:
+          TAG: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref_name }}
+          REF_TYPE: ${{ github.event_name == 'release' && 'tag' || github.ref_type }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          echo "package.json version: $version, ref: $TAG ($REF_TYPE)"
+          if [ "$TAG" = "v$version" ]; then
+            exit 0
+          fi
+          if [ "$DRY_RUN" = "true" ] && [ "$REF_TYPE" != "tag" ]; then
+            echo "::warning::Dry run from $TAG, not from a release tag; skipping the tag check."
+            exit 0
+          fi
+          echo "::error::Tag $TAG does not match package.json version $version (expected v$version)."
+          exit 1
+
+      - name: Build
+        run: node build.js
+      - name: Check that the committed build is up to date
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::Build output differs from the committed files. Run 'node build.js' and commit the result."
+            git status --porcelain
+            git --no-pager diff --stat
+            exit 1
+          fi
+      - name: List the packed files
+        run: npm pack --dry-run
+
+      - name: Publish
+        env:
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          args=(--provenance --access public)
+          case "$version" in
+            *-*) args+=(--tag next) ;;
+          esac
+          if [ "$DRY_RUN" = "true" ]; then
+            args+=(--dry-run)
+          fi
+          npm publish "${args[@]}"

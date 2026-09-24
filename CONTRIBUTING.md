@@ -173,6 +173,27 @@ Open the PR against `main` and fill in the template. A good PR:
 Version bumps and releases are done by the maintainer, so please don't change
 the version in `package.json`.
 
+## Releasing
+
+Releases are published to npm by GitHub Actions, not from a local machine.
+
+1. Bump `version` in `package.json`, run `node build.js` so the new version
+   is stamped into every artifact, move the `## [Unreleased]` entries in
+   `CHANGELOG.md` under the new version, and merge that to `main`.
+2. Create a GitHub release from `main` whose tag is `v` followed by the
+   version, for example `v1.2.0` for `1.2.0`:
+   `gh release create v1.2.0 --target main --title v1.2.0 --notes-file notes.md`.
+3. Publishing the release starts the [Publish
+   workflow](.github/workflows/publish.yml). It first checks that the tag
+   equals `v` + the `package.json` version and stops without publishing if
+   they differ. Then it rebuilds, fails if the committed build output is out
+   of date, and lists the packed files, and finally runs `npm publish
+   --provenance`. Versions with a pre-release suffix (`1.2.0-beta.1`) go to
+   the `next` dist-tag.
+
+To try the workflow without publishing, open **Actions → Publish → Run
+workflow** and leave **dry run** ticked.
+
 ## Reporting bugs and asking for features
 
 Use the issue forms: pick **Bug report** or **Feature request** and fill in the
