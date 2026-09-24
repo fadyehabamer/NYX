@@ -71,7 +71,8 @@ window.NYX_I18N = {
     'Keyboard Rippling Focus': 'تركيز لوحة المفاتيح المتموج',
     'Password Strength Meter': 'مقياس قوة كلمة المرور',
     'Sliding Capsule': 'كبسولة منزلقة',
-    'Three up': 'ثلاثة خيارات'
+    'Three up': 'ثلاثة خيارات',
+    'Colours': 'الألوان', 'Square & sizes': 'مربّعة وبأحجام', 'Text variants': 'خيارات نصّية'
   },
   pages: {
     /* Getting Started */
@@ -95,6 +96,15 @@ window.NYX_I18N = {
     select: { title: 'القوائم' }, switches: { title: 'المفاتيح والاختيارات' }, search: { title: 'البحث' },
     'input-group': { title: 'مجموعة إدخال' }, range: { title: 'المنزلق' }, floating: { title: 'تسمية عائمة' },
     stepper: { title: 'العدّاد' }, otp: { title: 'رمز التحقّق' }, 'tag-input': { title: 'إدخال الوسوم' },
+    swatches: {
+      title: 'منتقي الألوان',
+      summary: 'اختر لوناً أو خياراً من صفّ عيّنات — ألوان المنتج أو الوسوم أو السمات. مبنيّ على مجموعة أزرار راديو أصلية، فتعمل الأسهم وإرسال النموذج وقارئات الشاشة بلا جافاسكربت. العيّنة المختارة تأخذ حلقة وعلامة صحّ، لا اللون وحده.',
+      sections: [
+        { title: 'Colours', text: 'أعطِ كل زر راديو aria-label — فالعيّنة نفسها بلا نصّ. حدّد اللون بالمتغيّر ‎--nyx-swatch.', demo: '<fieldset class="nyx-swatches"><legend>اللون</legend><label class="nyx-swatch" title="كحلي"><input type="radio" name="sw-color" value="midnight" aria-label="كحلي" checked><span class="nyx-swatch-color" style="--nyx-swatch:#1b1f3b"></span></label><label class="nyx-swatch" title="بنفسجي"><input type="radio" name="sw-color" value="violet" aria-label="بنفسجي"><span class="nyx-swatch-color" style="--nyx-swatch:#6c63ff"></span></label><label class="nyx-swatch" title="نعناعي"><input type="radio" name="sw-color" value="mint" aria-label="نعناعي"><span class="nyx-swatch-color" style="--nyx-swatch:#00d4aa"></span></label><label class="nyx-swatch" title="رملي"><input type="radio" name="sw-color" value="sand" aria-label="رملي"><span class="nyx-swatch-color" style="--nyx-swatch:#e8d8b0"></span></label><label class="nyx-swatch" title="لؤلؤي — نفد"><input type="radio" name="sw-color" value="pearl" aria-label="لؤلؤي (نفد)" disabled><span class="nyx-swatch-color" style="--nyx-swatch:#f5f6fb"></span></label></fieldset>' },
+        { title: 'Text variants', text: 'استبدل النقطة الملوّنة بـ nyx-swatch-text لاختيار المقاسات أو السعات. الخيارات المعطّلة تظهر مشطوبة.', demo: '<fieldset class="nyx-swatches"><legend>المقاس</legend><label class="nyx-swatch"><input type="radio" name="sw-size" value="s"><span class="nyx-swatch-text">صغير</span></label><label class="nyx-swatch"><input type="radio" name="sw-size" value="m" checked><span class="nyx-swatch-text">وسط</span></label><label class="nyx-swatch"><input type="radio" name="sw-size" value="l"><span class="nyx-swatch-text">كبير</span></label><label class="nyx-swatch"><input type="radio" name="sw-size" value="xl" disabled><span class="nyx-swatch-text">كبير جداً</span></label></fieldset>' }
+      ],
+      classes: [['nyx-swatches', 'غلاف المجموعة — استخدم <fieldset> مع <legend>.'], ['nyx-swatch', 'خيار واحد: <label> حول زر راديو أصلي.'], ['nyx-swatch-color', 'نقطة اللون؛ اضبط ‎--nyx-swatch (أي لون أو تدرّج).'], ['nyx-swatch-text', 'رقاقة نصّية بدل النقطة (مقاسات، سعات).'], ['nyx-swatches-square / -sm / -lg', 'زوايا مربّعة ومعدّلات الحجم.'], ['aria-label على الحقل', 'إلزامي لنقاط الألوان — هو الاسم الذي تنطقه قارئات الشاشة.']]
+    },
     /* Components */
     buttons: { title: 'الأزرار', summary: 'ستة أنماط، وثلاثة أحجام، إضافةً إلى حالات التحميل والتعطيل — وكلها مُضاءة من الداخل عند التحويم.' },
     'button-group': { title: 'مجموعة أزرار' }, 'close-button': { title: 'زر الإغلاق' },
