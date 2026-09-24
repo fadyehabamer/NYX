@@ -1987,3 +1987,28 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 @media (forced-colors:active){
   .nyx-swatch input:checked + .nyx-swatch-color,.nyx-swatch input:checked + .nyx-swatch-text{outline:3px solid Highlight;outline-offset:2px}
 }
+
+/* — native date & time inputs — <input class="nyx-input" type="date|time|datetime-local|month|week">.
+   The OS picker follows the theme via color-scheme; the WebKit/Blink field parts get Nyx tokens.
+   Firefox has no field pseudo-elements, so it keeps its native (themed) look. */
+.nyx-input:is([type="date"],[type="time"],[type="datetime-local"],[type="month"],[type="week"]){color-scheme:dark;min-block-size:42px;font-variant-numeric:tabular-nums;text-align:start;cursor:text}
+:root[data-theme="light"] .nyx-input:is([type="date"],[type="time"],[type="datetime-local"],[type="month"],[type="week"]){color-scheme:light}
+.nyx-input::-webkit-datetime-edit{padding:0}
+.nyx-input::-webkit-datetime-edit-fields-wrapper{padding:0}
+.nyx-input::-webkit-datetime-edit-text{color:var(--nyx-text-muted);padding-inline:2px}
+.nyx-input::-webkit-datetime-edit-year-field:focus,.nyx-input::-webkit-datetime-edit-month-field:focus,.nyx-input::-webkit-datetime-edit-day-field:focus,
+.nyx-input::-webkit-datetime-edit-hour-field:focus,.nyx-input::-webkit-datetime-edit-minute-field:focus,.nyx-input::-webkit-datetime-edit-second-field:focus,
+.nyx-input::-webkit-datetime-edit-ampm-field:focus,.nyx-input::-webkit-datetime-edit-week-field:focus{background:color-mix(in srgb,var(--nyx-accent) 28%,transparent);color:var(--nyx-text);border-radius:4px;outline:none}
+/* empty required field reads like a placeholder until a value is chosen */
+.nyx-input:is([type="date"],[type="time"],[type="datetime-local"],[type="month"],[type="week"]):required:invalid::-webkit-datetime-edit{color:var(--nyx-text-muted)}
+.nyx-input::-webkit-calendar-picker-indicator{cursor:pointer;margin-inline-start:var(--nyx-s2);padding:4px;border-radius:var(--nyx-radius-sm);opacity:.65;transition:opacity .2s var(--nyx-ease),background-color .2s var(--nyx-ease)}
+.nyx-input::-webkit-calendar-picker-indicator:hover,.nyx-input:focus::-webkit-calendar-picker-indicator{opacity:1;background-color:color-mix(in srgb,var(--nyx-accent) 16%,transparent)}
+.nyx-input:is([type="date"],[type="time"],[type="datetime-local"],[type="month"],[type="week"]):disabled{opacity:.55;cursor:not-allowed}
+/* start → end range: two native fields joined by an arrow that mirrors in RTL */
+.nyx-date-range{display:flex;align-items:center;gap:var(--nyx-s2);flex-wrap:wrap}
+.nyx-date-range > .nyx-input{flex:1 1 150px;inline-size:auto;min-inline-size:0}
+.nyx-date-range > .nyx-date-sep{color:var(--nyx-text-muted);flex:none}
+[dir="rtl"] .nyx-date-range > .nyx-date-sep{transform:scaleX(-1)}
+@media (prefers-reduced-motion:reduce){
+  .nyx-input::-webkit-calendar-picker-indicator{transition:none}
+}

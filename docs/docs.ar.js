@@ -72,7 +72,8 @@ window.NYX_I18N = {
     'Password Strength Meter': 'مقياس قوة كلمة المرور',
     'Sliding Capsule': 'كبسولة منزلقة',
     'Three up': 'ثلاثة خيارات',
-    'Colours': 'الألوان', 'Square & sizes': 'مربّعة وبأحجام', 'Text variants': 'خيارات نصّية'
+    'Colours': 'الألوان', 'Square & sizes': 'مربّعة وبأحجام', 'Text variants': 'خيارات نصّية',
+    'Types': 'الأنواع', 'Range': 'نطاق', 'Required & disabled': 'إلزامي ومعطّل'
   },
   pages: {
     /* Getting Started */
@@ -154,6 +155,16 @@ window.NYX_I18N = {
     /* Forms+ */
     combobox: { title: 'مربّع اختيار بحثي', summary: 'حقل إكمال تلقائي يصفّي القائمة أثناء الكتابة — اكتب للتضييق، وانقر للاختيار، ويُغلق بالنقر خارجه.' },
     'multi-select': { title: 'اختيار متعدّد', summary: 'اختر عدّة قيم كرقائق قابلة للإزالة. انقر للفتح، وأشّر الخيارات، أو أزِل رقاقة بزر × الخاص بها.' },
+    'date-input': {
+      title: 'التاريخ والوقت الأصليان',
+      summary: 'نسّق حقول التاريخ والوقت والشهر والأسبوع الأصلية في المتصفّح بـ nyx-input فقط — بلا مُشغّل. يتبع منتقي النظام السمة الفاتحة أو الداكنة عبر color-scheme، وتأخذ أجزاء الحقل وأيقونة المنتقي ألوان نيكس، وتبقى لك الكتابة بلوحة المفاتيح وعجلات الجوّال والتحقّق وmin / max. استخدم «منتقي التاريخ» عندما تحتاج تقويماً منبثقاً مخصّصاً.',
+      sections: [
+        { title: 'Types', demo: '<div class="nyx-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--nyx-s4)"><div><label class="nyx-label" for="di-date">التاريخ</label><input class="nyx-input" id="di-date" type="date" value="2026-09-24"></div><div><label class="nyx-label" for="di-time">الوقت</label><input class="nyx-input" id="di-time" type="time" value="18:30"></div><div><label class="nyx-label" for="di-dt">التاريخ والوقت</label><input class="nyx-input" id="di-dt" type="datetime-local" value="2026-09-24T18:30"></div><div><label class="nyx-label" for="di-month">الشهر</label><input class="nyx-input" id="di-month" type="month" value="2026-09"></div></div>' },
+        { title: 'Range', text: 'ضع حقلَي البداية والنهاية داخل nyx-date-range؛ ينعكس السهم في RTL. استخدم min / max ليمنع المتصفّح النطاقات المستحيلة.', demo: '<div class="nyx-date-range" role="group" aria-label="تاريخ الإقامة"><input class="nyx-input" type="date" aria-label="الوصول" value="2026-10-01" min="2026-09-24"><span class="nyx-date-sep" aria-hidden="true">→</span><input class="nyx-input" type="date" aria-label="المغادرة" value="2026-10-05" min="2026-10-02"></div>' },
+        { title: 'Required & disabled', text: 'الحقل الإلزامي الفارغ يبدو كنصّ إرشادي حتى تُختار قيمة.', demo: '<div class="nyx-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--nyx-s4)"><div><label class="nyx-label" for="di-req">تاريخ التوصيل</label><input class="nyx-input" id="di-req" type="date" required></div><div><label class="nyx-label" for="di-dis">مقفل</label><input class="nyx-input" id="di-dis" type="time" value="09:00" disabled></div></div>' }
+      ],
+      classes: [['nyx-input[type=date|time|datetime-local|month|week]', 'حقل أصلي بمنتقٍ يتبع السمة (color-scheme يتبع data-theme).'], ['nyx-date-range', 'زوج بداية ← نهاية؛ الفاصل ينعكس في RTL.'], ['nyx-date-sep', 'السهم بين الحقلين (aria-hidden).'], ['min / max / step / required', 'قيود أصلية — يتحقّق منها المتصفّح.']]
+    },
     'date-picker': { title: 'منتقي التاريخ', summary: 'حقل مع تقويم منبثق — تنقّل بين الأشهر بـ ‹ ›، وانقر يوماً لتعبئة الحقل. يبني المُشغّل التقويم ويربطه تلقائياً.' },
     phone: { title: 'حقل الهاتف', summary: 'قائمة رمز الاتصال مدموجة بحقل الرقم — محمّلة مسبقاً برموز الخليج والمنطقة.' },
     /* Overlays+ */
