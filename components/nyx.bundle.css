@@ -2014,9 +2014,10 @@ a.nyx-list-item:hover{background:var(--nyx-glass)}
 }
 
 /* ============================================================
-   30. CONTROLS (v1.1) — splitter (resizable panes)
+   30. CONTROLS (v1.1) — splitter (resizable panes) · toggle group
    ============================================================ */
-/* Runtime-wired: [data-nyx-splitter] (WAI-ARIA window splitter). Mirrors in RTL. */
+/* Runtime-wired: [data-nyx-splitter] (WAI-ARIA window splitter) and
+   [data-nyx-toggle-group] (aria-pressed buttons). Both mirror in RTL. */
 
 /* — splitter — two panes and a draggable, keyboard-operable separator.
    The first pane's share lives in --nyx-split (percent); add .nyx-splitter-vertical to stack. */
@@ -2039,10 +2040,23 @@ body.nyx .nyx-split-handle:focus-visible{outline:2px solid var(--nyx-accent);out
 .nyx-splitter-vertical.nyx-resizing{cursor:row-resize}
 .nyx-splitter.nyx-resizing .nyx-split-pane{pointer-events:none}
 
+/* — toggle group — buttons that stay pressed (formatting, filters, view switchers).
+   data-nyx-toggle-group="single" keeps at most one pressed; default allows many. */
+.nyx-toggle-group{display:inline-flex;align-items:center;flex-wrap:wrap;gap:2px;padding:3px;background:var(--nyx-surface-2);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius)}
+.nyx-toggle-group-vertical{flex-direction:column;align-items:stretch}
+.nyx-toggle-group > button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-inline-size:34px;min-block-size:32px;padding:4px 12px;border:0;border-radius:calc(var(--nyx-radius) - 3px);background:transparent;color:var(--nyx-text-muted);font:inherit;font-size:var(--nyx-fs-sm);font-weight:600;line-height:1;cursor:pointer;transition:background-color .2s var(--nyx-ease),color .2s var(--nyx-ease),box-shadow .2s var(--nyx-ease)}
+.nyx-toggle-group > button:hover{color:var(--nyx-text);background:var(--nyx-elev-hover)}
+.nyx-toggle-group > button[aria-pressed="true"]{color:var(--nyx-text);background:color-mix(in srgb,var(--nyx-accent) 22%,var(--nyx-surface));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--nyx-accent) 60%,transparent),var(--nyx-glow)}
+.nyx-toggle-group > button:disabled{opacity:.45;cursor:not-allowed}
+.nyx-toggle-group > button:disabled:hover{background:transparent;color:var(--nyx-text-muted)}
+.nyx-toggle-group > button svg{inline-size:16px;block-size:16px;flex:none}
+.nyx-toggle-group-sm > button{min-block-size:26px;min-inline-size:28px;padding:2px 8px;font-size:var(--nyx-fs-xs)}
+
 @media (prefers-reduced-motion:reduce){
-  .nyx-split-handle::before,.nyx-split-handle::after{transition:none}
+  .nyx-split-handle::before,.nyx-split-handle::after,.nyx-toggle-group > button{transition:none}
 }
 @media (forced-colors:active){
   .nyx-split-handle::before{background:CanvasText}
   .nyx-split-handle:focus-visible::before,.nyx-split-handle:hover::before{background:Highlight}
+  .nyx-toggle-group > button[aria-pressed="true"]{outline:2px solid Highlight;outline-offset:-2px}
 }

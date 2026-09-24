@@ -74,7 +74,8 @@ window.NYX_I18N = {
     'Three up': 'ثلاثة خيارات',
     'Colours': 'الألوان', 'Square & sizes': 'مربّعة وبأحجام', 'Text variants': 'خيارات نصّية',
     'Types': 'الأنواع', 'Range': 'نطاق', 'Required & disabled': 'إلزامي ومعطّل',
-    'Side by side': 'جنباً إلى جنب'
+    'Side by side': 'جنباً إلى جنب',
+    'Formatting (multiple)': 'التنسيق (متعدّد)', 'View switcher (single)': 'مبدّل العرض (مفرد)', 'Small & vertical': 'صغير وعمودي'
   },
   pages: {
     /* Getting Started */
@@ -121,6 +122,18 @@ window.NYX_I18N = {
     /* Components */
     buttons: { title: 'الأزرار', summary: 'ستة أنماط، وثلاثة أحجام، إضافةً إلى حالات التحميل والتعطيل — وكلها مُضاءة من الداخل عند التحويم.' },
     'button-group': { title: 'مجموعة أزرار' }, 'close-button': { title: 'زر الإغلاق' },
+    'toggle-group': {
+      title: 'مجموعة تبديل',
+      summary: 'صفّ أزرار تبقى مضغوطة — تنسيق النصّ والمرشّحات ومبدّلات العرض. كل زر هو <button> حقيقي مع aria-pressed، فتعلن قارئات الشاشة «مضغوط / غير مضغوط». يمكن تفعيل عدّة أزرار افتراضياً، وdata-nyx-toggle-group="single" يُبقي زراً واحداً على الأكثر. تتنقّل الأسهم بين الأزرار وتتبع اتجاه القراءة في RTL.',
+      sections: [
+        { title: 'Formatting (multiple)', demo: '<div class="nyx-toggle-group" data-nyx-toggle-group aria-label="تنسيق النصّ"><button aria-label="عريض" data-value="bold" aria-pressed="true"><b>ع</b></button><button aria-label="مائل" data-value="italic"><i>م</i></button><button aria-label="تسطير" data-value="underline"><u>س</u></button><button aria-label="يتوسّطه خطّ" data-value="strike" disabled><s>خ</s></button></div>' },
+        { title: 'View switcher (single)', text: 'أضف data-required ليبقى خيار واحد مضغوطاً دائماً.', demo: '<div class="nyx-toggle-group" data-nyx-toggle-group="single" data-required aria-label="طريقة العرض"><button data-value="grid" aria-pressed="true"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>شبكة</button><button data-value="list"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="2" width="14" height="2.5" rx="1"/><rect x="1" y="6.75" width="14" height="2.5" rx="1"/><rect x="1" y="11.5" width="14" height="2.5" rx="1"/></svg>قائمة</button><button data-value="board">لوحة</button></div>' },
+        { title: 'Small & vertical', demo: '<div class="nyx-flex nyx-gap-4 nyx-items-start nyx-wrap"><div class="nyx-toggle-group nyx-toggle-group-sm" data-nyx-toggle-group aria-label="تصفية الحالة"><button aria-pressed="true">مفتوح</button><button>مسودّة</button><button>مغلق</button></div><div class="nyx-toggle-group nyx-toggle-group-vertical" data-nyx-toggle-group="single" aria-label="المحاذاة"><button aria-pressed="true">البداية</button><button>الوسط</button><button>النهاية</button></div></div>' },
+        { title: 'JavaScript Events', text: 'يُطلق nyx:toggle على المجموعة بعد كل تغيير مع القيم المضغوطة (data-value، وإلا نصّ الزر).', lang: 'js', code: 'document.querySelector(\'[data-nyx-toggle-group]\').addEventListener(\'nyx:toggle\', (e) => {\n  console.log(e.detail.value);    // ["bold", "italic"]\n  console.log(e.detail.pressed);  // الحالة الجديدة للزر المنقور\n});' }
+      ],
+      classes: [['nyx-toggle-group', 'حاوية على شكل كبسولة لأبناء <button>.'], ['data-nyx-toggle-group', 'يربط aria-pressed وrole=group والأسهم؛ "single" = زر واحد على الأكثر.'], ['data-required', 'لا يمكن تحرير آخر زر مضغوط.'], ['aria-pressed="true"', 'الحالة المضغوطة الابتدائية (يملأ المُشغّل "false").'], ['data-value', 'القيمة المُبلّغ عنها في nyx:toggle (افتراضياً نصّ الزر).'], ['nyx-toggle-group-sm / -vertical', 'حجم مضغوط / مكدّس (مفاتيح ↑ ↓).'], ['aria-label', 'سمِّ المجموعة؛ والأزرار ذات الأيقونة فقط تحتاج aria-label خاصاً بها.']],
+      js: [['nyx:toggle', 'حدث على المجموعة — detail.value (القيم المضغوطة) وdetail.button وdetail.pressed.'], ['← → / ↑ ↓ · Home / End', 'نقل التركيز بين الأزرار المفعّلة (معكوسة في RTL).'], ['Space / Enter', 'تبديل الزر المُركّز (سلوك الزر الأصلي).']]
+    },
     cards: { title: 'البطاقات', summary: 'أسطح ذات عمق — زجاجية، وبحدود متدرّجة، وتفاعلية، إضافةً إلى تخطيطات الإحصاءات والمزايا.' },
     badges: { title: 'الشارات' }, alerts: { title: 'التنبيهات', summary: 'رسائل بنطاقات ملوّنة على الحافة البادئة مع خانة أيقونة.' },
     toasts: { title: 'الإشعارات', summary: 'إشعارات تظهر في الزاوية وتختفي تلقائياً. تُستدعى عبر Nyx.toast.' },
