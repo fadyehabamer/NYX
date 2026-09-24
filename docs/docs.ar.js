@@ -1,6 +1,8 @@
 /* ==========================================================
    Nyx docs — Arabic (العربية) locale pack.
    Load BEFORE docs.js. Untranslated fields fall back to English.
+   A page entry may also override sections / classes / js to localise demos —
+   keep section titles in English (they key the anchors); translate them in _terms.
    ========================================================== */
 window.NYX_I18N = {
   _ui: {

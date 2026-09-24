@@ -1749,7 +1749,7 @@
       (isComponent(p) ? '<span class="nyx-badge ' + (p.needsJs ? 'nyx-badge-glow' : 'nyx-badge-glass') + '">' + C(p.needsJs ? 'markupJs' : 'markupOnly', p.needsJs ? 'Markup + JS' : 'Markup Only') + '</span>' : '') +
       '<a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.css" target="_blank" rel="noopener">' + C('viewSource', 'View source') + '</a></div></div>';
 
-    (p.sections || []).forEach(function (s) {
+    (L(p, 'sections') || []).forEach(function (s) {
       var sid = slug(s.title); toc.push({ id: sid, title: S(s.title) });
       html += '<section class="doc-section" id="' + sid + '"><h2>' + S(s.title) +
         ' <a class="anchor" href="#/' + p.id + '" aria-hidden="true">#</a></h2>';
@@ -1760,18 +1760,19 @@
       html += '</section>';
     });
 
-    if (p.classes) {
+    var classes = L(p, 'classes'), jsApi = L(p, 'js');
+    if (classes) {
       toc.push({ id: 'class-reference', title: C('classRef', 'Class reference') });
       html += '<section class="doc-section" id="class-reference"><h2>' + C('classRef', 'Class reference') + ' <a class="anchor" href="#/' + p.id + '">#</a></h2>' +
         '<table class="docs-table"><thead><tr><th>' + C('thClass', 'Class / token') + '</th><th>' + C('thDesc', 'Description') + '</th></tr></thead><tbody>' +
-        p.classes.map(function (r) { return '<tr><td><span class="nyx-code">' + escHtml(r[0]) + '</span></td><td>' + r[1] + '</td></tr>'; }).join('') +
+        classes.map(function (r) { return '<tr><td><span class="nyx-code">' + escHtml(r[0]) + '</span></td><td>' + r[1] + '</td></tr>'; }).join('') +
         '</tbody></table></section>';
     }
-    if (p.js) {
+    if (jsApi) {
       toc.push({ id: 'js-api', title: C('jsApi', 'JavaScript API') });
       html += '<section class="doc-section" id="js-api"><h2>' + C('jsApi', 'JavaScript API') + ' <a class="anchor" href="#/' + p.id + '">#</a></h2>' +
         '<table class="docs-table"><thead><tr><th>' + C('thMethod', 'Method') + '</th><th>' + C('thDesc', 'Description') + '</th></tr></thead><tbody>' +
-        p.js.map(function (r) { return '<tr><td><span class="nyx-code">' + escHtml(r[0]) + '</span></td><td>' + r[1] + '</td></tr>'; }).join('') +
+        jsApi.map(function (r) { return '<tr><td><span class="nyx-code">' + escHtml(r[0]) + '</span></td><td>' + r[1] + '</td></tr>'; }).join('') +
         '</tbody></table></section>';
     }
 
