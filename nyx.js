@@ -275,9 +275,11 @@
     opts = opts || {};
     return new Promise(function (resolve) {
       var modal = doc.createElement('div'); modal.className = 'nyx-modal open';
-      modal.innerHTML = '<div class="nyx-modal-box nyx-confirm-box">' +
-        (opts.title ? '<h3 class="nyx-h3" style="margin-bottom:8px">' + htmlEsc(opts.title) + '</h3>' : '') +
-        '<p class="nyx-body nyx-muted">' + htmlEsc(message) + '</p>' +
+      var uid = ++_uid, titleId = 'nyx-confirm-title-' + uid, msgId = 'nyx-confirm-msg-' + uid;
+      var prevFocus = doc.activeElement;                          // restored when the dialog closes
+      modal.innerHTML = '<div class="nyx-modal-box nyx-confirm-box" role="alertdialog" aria-modal="true" aria-labelledby="' + (opts.title ? titleId : msgId) + '"' + (opts.title ? ' aria-describedby="' + msgId + '"' : '') + '>' +
+        (opts.title ? '<h3 class="nyx-h3" id="' + titleId + '" style="margin-bottom:8px">' + htmlEsc(opts.title) + '</h3>' : '') +
+        '<p class="nyx-body nyx-muted" id="' + msgId + '">' + htmlEsc(message) + '</p>' +
         '<div class="nyx-confirm-actions">' +
         '<button class="nyx-btn nyx-btn-glass" data-act="cancel">' + htmlEsc(opts.cancelText || 'Cancel') + '</button>' +
         '<button class="nyx-btn nyx-btn-primary" data-act="ok"' + (opts.danger ? ' style="background:linear-gradient(120deg,var(--nyx-danger),color-mix(in srgb,var(--nyx-danger) 65%,#000))"' : '') + '>' + htmlEsc(opts.confirmText || 'Confirm') + '</button>' +
@@ -289,6 +291,7 @@
         if (!$('.nyx-modal.open')) bd.classList.remove('open');
         lockScroll(false); doc.removeEventListener('keydown', onKey);
         setTimeout(function () { modal.remove(); }, 250);
+        if (prevFocus && prevFocus.focus && doc.contains(prevFocus)) { try { prevFocus.focus(); } catch (e) {} }
         resolve(val);
       }
       function onKey(e) { if (e.key === 'Escape') done(false); }
