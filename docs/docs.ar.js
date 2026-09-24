@@ -73,7 +73,8 @@ window.NYX_I18N = {
     'Sliding Capsule': 'كبسولة منزلقة',
     'Three up': 'ثلاثة خيارات',
     'Colours': 'الألوان', 'Square & sizes': 'مربّعة وبأحجام', 'Text variants': 'خيارات نصّية',
-    'Types': 'الأنواع', 'Range': 'نطاق', 'Required & disabled': 'إلزامي ومعطّل'
+    'Types': 'الأنواع', 'Range': 'نطاق', 'Required & disabled': 'إلزامي ومعطّل',
+    'Side by side': 'جنباً إلى جنب'
   },
   pages: {
     /* Getting Started */
@@ -89,6 +90,17 @@ window.NYX_I18N = {
     /* Layout */
     grid: { title: 'الشبكة', summary: 'شبكة CSS من 12 عموداً. استخدم nyx-grid على الحاوية وأصناف nyx-col من 1 إلى 12 على الأبناء.' },
     container: { title: 'الحاوية', summary: 'تتوسّط المحتوى بعرض أقصى 1280 بكسل مع حشو جانبي متجاوب.' },
+    splitter: {
+      title: 'المُقسِّم',
+      summary: 'لوحان قابلان لتغيير الحجم مع فاصل يُسحب — محرّر ومعاينة، قائمة وتفاصيل، كود ومخرجات. يحوّل المُشغّل الفاصل إلى «مقسّم نوافذ» وفق WAI-ARIA: ركّز عليه واستخدم الأسهم، وHome / End للحدّين، وEnter لطيّ اللوح الأول واستعادته. تتبع الأسهم اتجاه القراءة في RTL.',
+      sections: [
+        { title: 'Side by side', demo: '<div class="nyx-splitter" data-nyx-splitter data-value="40"><div class="nyx-split-pane"><strong>الملفات</strong><p class="nyx-caption">اسحب الفاصل أو ركّز عليه واضغط ← →.</p></div><div class="nyx-split-handle" aria-label="تغيير حجم قائمة الملفات"></div><div class="nyx-split-pane"><strong>المعاينة</strong><p class="nyx-caption">يأخذ هذا اللوح المساحة المتبقية.</p></div></div>' },
+        { title: 'Stacked', text: 'أضف nyx-splitter-vertical لتكديس اللوحين؛ ويحرّك ↑ ↓ الفاصل.', demo: '<div class="nyx-splitter nyx-splitter-vertical" data-nyx-splitter data-value="55" data-min="20" data-max="80" style="block-size:280px"><div class="nyx-split-pane"><strong>الاستعلام</strong><p class="nyx-caption">SELECT * FROM orders;</p></div><div class="nyx-split-handle" aria-label="تغيير حجم محرّر الاستعلام"></div><div class="nyx-split-pane"><strong>النتائج</strong><p class="nyx-caption">١٢٨ صفّاً</p></div></div>' },
+        { title: 'JavaScript Events', text: 'يُطلق nyx:split أثناء السحب ومع كل ضغطة مفتاح — احفظ الحجم أو أعد رسم مخطّط.', lang: 'js', code: 'document.querySelector(\'[data-nyx-splitter]\').addEventListener(\'nyx:split\', (e) => {\n  localStorage.setItem(\'pane\', e.detail.value);   // 10 … 90 (نسبة اللوح الأول)\n});' }
+      ],
+      classes: [['nyx-splitter', 'حاوية مرنة: لوح · فاصل · لوح.'], ['data-nyx-splitter', 'يربط الفاصل (الدور وaria-value* ولوحة المفاتيح والسحب).'], ['nyx-split-pane', 'لوح؛ يُحدَّد حجم الأول بـ ‎--nyx-split.'], ['nyx-split-handle', 'الفاصل — أعطه aria-label يسمّي ما يغيّر حجمه.'], ['nyx-splitter-vertical', 'تكديس اللوحين (فاصل أفقي).'], ['data-value / data-min / data-max / data-step', 'الحجم الابتدائي والحدود بالنسبة المئوية (الافتراضي 50 · 10 · 90 · 5).']],
+      js: [['nyx:split', 'حدث على المقسّم؛ event.detail.value هو حجم اللوح الأول بالنسبة المئوية.'], ['← → / ↑ ↓', 'تحريك الفاصل بمقدار data-step (معكوسة في RTL).'], ['Home / End', 'القفز إلى data-min / data-max.'], ['Enter', 'طيّ اللوح الأول إلى data-min، واضغط مجدداً للاستعادة.']]
+    },
     /* Content */
     typography: { title: 'الطباعة', summary: 'خط Plus Jakarta Sans للعناوين وInter للنصّ، ويتحوّل تلقائياً إلى خطّ ثمانية (Thmanyah) — Sans للنصّ وSerif Display للعناوين — في وضع RTL.' },
     /* Forms */

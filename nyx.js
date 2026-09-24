@@ -12,6 +12,7 @@
  *   data-nyx-datepicker · data-nyx-contextmenu="#id" · data-nyx-countdown="HH:MM"
  *   data-nyx-prayers · data-nyx-qibla="deg" · class="nyx-combobox|nyx-multiselect|nyx-hierarchy"
  *   class="nyx-table-sortable"                        click headers to sort
+ *   data-nyx-splitter                                 resizable panes (arrows · Home · End · Enter)
  *
  * Imperative API:
  *   Nyx.toast · openModal · openDrawer · close · closeAll · togglePopover
@@ -1143,6 +1144,63 @@
     });
   }
 
+  /* ---------- splitter: resizable panes (WAI-ARIA window splitter) ---------- */
+  function numAttr(v, fb) { var n = parseFloat(v); return isNaN(n) ? fb : n; }
+  function isRtl(node) { var d = node.closest('[dir]'); return !!d && d.getAttribute('dir') === 'rtl'; }
+  function initSplitter(root) {
+    $$('[data-nyx-splitter]', root).filter(function (s) { return !s._nyxSplit; }).forEach(function (s) {
+      var handle = s.querySelector(':scope > .nyx-split-handle'), pane = s.querySelector(':scope > .nyx-split-pane');
+      if (!handle || !pane) return;
+      s._nyxSplit = true;
+      var vertical = s.classList.contains('nyx-splitter-vertical');
+      var min = numAttr(s.getAttribute('data-min'), 10), max = numAttr(s.getAttribute('data-max'), 90), step = numAttr(s.getAttribute('data-step'), 5);
+      var initial = numAttr(s.getAttribute('data-value'), 50), value = initial, restore = null;
+      if (!pane.id) pane.id = 'nyx-pane-' + (++_uid);
+      handle.setAttribute('role', 'separator');
+      handle.setAttribute('tabindex', '0');
+      handle.setAttribute('aria-orientation', vertical ? 'horizontal' : 'vertical');   // the line itself, not the layout
+      handle.setAttribute('aria-controls', pane.id);
+      handle.setAttribute('aria-valuemin', min); handle.setAttribute('aria-valuemax', max);
+      if (!handle.hasAttribute('aria-label') && !handle.hasAttribute('aria-labelledby')) handle.setAttribute('aria-label', 'Resize panes');
+      function set(v, emit) {
+        value = Math.round(Math.max(min, Math.min(max, v)) * 10) / 10;
+        s.style.setProperty('--nyx-split', value);
+        handle.setAttribute('aria-valuenow', Math.round(value));
+        if (emit) s.dispatchEvent(new CustomEvent('nyx:split', { bubbles: true, detail: { value: value } }));
+      }
+      set(initial);
+      handle.addEventListener('keydown', function (e) {
+        // arrows move the line the way they point, so in RTL ArrowLeft grows the (right-hand) first pane
+        var grow = vertical ? 'ArrowDown' : (isRtl(s) ? 'ArrowLeft' : 'ArrowRight');
+        var shrink = vertical ? 'ArrowUp' : (isRtl(s) ? 'ArrowRight' : 'ArrowLeft');
+        var v = null;
+        if (e.key === grow) v = value + step;
+        else if (e.key === shrink) v = value - step;
+        else if (e.key === 'Home') v = min;
+        else if (e.key === 'End') v = max;
+        else if (e.key === 'Enter') { if (value > min) { restore = value; v = min; } else v = restore != null ? restore : initial; }   // collapse ⇄ restore
+        if (v == null) return;
+        e.preventDefault(); set(v, true);
+      });
+      handle.addEventListener('pointerdown', function (e) {
+        if (e.button !== 0) return;
+        e.preventDefault(); handle.focus();
+        s.classList.add('nyx-resizing');
+        try { handle.setPointerCapture(e.pointerId); } catch (x) {}
+      });
+      handle.addEventListener('pointermove', function (e) {
+        if (!s.classList.contains('nyx-resizing')) return;
+        var r = s.getBoundingClientRect();
+        var pct = vertical ? (e.clientY - r.top) / r.height : (isRtl(s) ? r.right - e.clientX : e.clientX - r.left) / r.width;
+        if (isFinite(pct)) set(pct * 100, true);
+      });
+      function stop() { s.classList.remove('nyx-resizing'); }
+      handle.addEventListener('pointerup', stop);
+      handle.addEventListener('pointercancel', stop);
+      handle.addEventListener('lostpointercapture', stop);
+    });
+  }
+
   /* ---------- image gallery + lightbox ---------- */
   var _lightbox = null;
   function lightboxEl() {
@@ -1760,6 +1818,7 @@
     initKanban(root);
     initCalendar(root);
     initCompare(root);
+    initSplitter(root);
     initLightbox(root);
     initVideoFacade(root);
     initNumerals(root);

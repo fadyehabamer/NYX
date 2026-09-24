@@ -267,6 +267,17 @@
       classes: [['nyx-container', 'max-width 1280px, auto margins, 24px inline padding.']]
     },
     {
+      id: 'splitter', group: 'Layout', title: 'Splitter', added: 'v1.1', needsJs: true,
+      summary: 'Two resizable panes with a draggable divider — editors and previews, lists and details, code and output. The runtime turns the divider into a WAI-ARIA window splitter: focus it and use the arrow keys, Home / End for the limits, or Enter to collapse and restore the first pane. Arrows follow the reading direction in RTL.',
+      sections: [
+        { title: 'Side by side', demo: '<div class="nyx-splitter" data-nyx-splitter data-value="40"><div class="nyx-split-pane"><strong>Files</strong><p class="nyx-caption">Drag the divider or focus it and press ← →.</p></div><div class="nyx-split-handle" aria-label="Resize file list"></div><div class="nyx-split-pane"><strong>Preview</strong><p class="nyx-caption">This pane takes the remaining space.</p></div></div>' },
+        { title: 'Stacked', text: 'Add .nyx-splitter-vertical to stack the panes; ↑ ↓ move the divider.', demo: '<div class="nyx-splitter nyx-splitter-vertical" data-nyx-splitter data-value="55" data-min="20" data-max="80" style="block-size:280px"><div class="nyx-split-pane"><strong>Query</strong><p class="nyx-caption">SELECT * FROM orders;</p></div><div class="nyx-split-handle" aria-label="Resize query editor"></div><div class="nyx-split-pane"><strong>Results</strong><p class="nyx-caption">128 rows</p></div></div>' },
+        { title: 'JavaScript Events', text: 'nyx:split fires while dragging and on every key press — persist the size or re-layout a chart.', lang: 'js', code: 'document.querySelector(\'[data-nyx-splitter]\').addEventListener(\'nyx:split\', (e) => {\n  localStorage.setItem(\'pane\', e.detail.value);   // 10 … 90 (percent of the first pane)\n});' }
+      ],
+      classes: [['nyx-splitter', 'Flex container: pane · handle · pane.'], ['data-nyx-splitter', 'Wires the handle (role, aria-value*, keyboard, drag).'], ['nyx-split-pane', 'A pane; the first one is sized by --nyx-split.'], ['nyx-split-handle', 'The divider — give it an aria-label naming what it resizes.'], ['nyx-splitter-vertical', 'Stack the panes (horizontal divider).'], ['data-value / data-min / data-max / data-step', 'Start size and limits in percent (defaults 50 · 10 · 90 · 5).']],
+      js: [['nyx:split', 'Event on the splitter; event.detail.value is the first pane\'s size in percent.'], ['← → / ↑ ↓', 'Move the divider by data-step (mirrored in RTL).'], ['Home / End', 'Jump to data-min / data-max.'], ['Enter', 'Collapse the first pane to data-min, press again to restore.']]
+    },
+    {
       id: 'stack', group: 'Helpers', title: 'Stack',
       summary: 'A vertical flex column with a consistent gap between children — the simplest way to space stacked content.',
       sections: [
