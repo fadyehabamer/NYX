@@ -4,7 +4,17 @@ labels: [bug]
 body:
   - type: markdown
     attributes:
-      value: Thanks for filing a bug! A minimal reproduction is the single most helpful thing you can include.
+      value: |
+        Thanks for filing a bug! A minimal reproduction is the single most helpful thing you can include.
+        Security problems should be reported privately instead; see [SECURITY.md](https://github.com/fadyehabamer/NYX/blob/main/SECURITY.md).
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      description: The class, `data-nyx-*` attribute or `Nyx.*` function involved.
+      placeholder: e.g. .nyx-splitter, data-nyx-tabs, Nyx.confirm()
+    validations:
+      required: true
   - type: textarea
     id: what-happened
     attributes:
@@ -24,7 +34,18 @@ body:
     id: version
     attributes:
       label: Nyx version
-      placeholder: e.g. 1.0.3 (or "main")
+      placeholder: e.g. 1.1.0 (or "main")
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: How do you load Nyx?
+      options:
+        - npm + bundler (Vite, webpack, ...)
+        - CDN (jsDelivr / unpkg)
+        - Copied nyx.css / nyx.js
+        - À-la-carte components/*.css
     validations:
       required: true
   - type: dropdown
@@ -51,4 +72,11 @@ body:
     id: env
     attributes:
       label: Browser / OS
-      placeholder: e.g. Chrome 126 on macOS 14
+      placeholder: e.g. Chrome 126 on macOS 14, Safari on iOS 18
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Screenshots, console errors, whether it happens with reduced motion or forced colours, etc.
