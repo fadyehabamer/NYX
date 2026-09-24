@@ -275,9 +275,11 @@
     opts = opts || {};
     return new Promise(function (resolve) {
       var modal = doc.createElement('div'); modal.className = 'nyx-modal open';
-      modal.innerHTML = '<div class="nyx-modal-box nyx-confirm-box">' +
-        (opts.title ? '<h3 class="nyx-h3" style="margin-bottom:8px">' + htmlEsc(opts.title) + '</h3>' : '') +
-        '<p class="nyx-body nyx-muted">' + htmlEsc(message) + '</p>' +
+      var uid = ++_uid, titleId = 'nyx-confirm-title-' + uid, msgId = 'nyx-confirm-msg-' + uid;
+      var prevFocus = doc.activeElement;                          // restored when the dialog closes
+      modal.innerHTML = '<div class="nyx-modal-box nyx-confirm-box" role="alertdialog" aria-modal="true" aria-labelledby="' + (opts.title ? titleId : msgId) + '"' + (opts.title ? ' aria-describedby="' + msgId + '"' : '') + '>' +
+        (opts.title ? '<h3 class="nyx-h3" id="' + titleId + '" style="margin-bottom:8px">' + htmlEsc(opts.title) + '</h3>' : '') +
+        '<p class="nyx-body nyx-muted" id="' + msgId + '">' + htmlEsc(message) + '</p>' +
         '<div class="nyx-confirm-actions">' +
         '<button class="nyx-btn nyx-btn-glass" data-act="cancel">' + htmlEsc(opts.cancelText || 'Cancel') + '</button>' +
         '<button class="nyx-btn nyx-btn-primary" data-act="ok"' + (opts.danger ? ' style="background:linear-gradient(120deg,var(--nyx-danger),color-mix(in srgb,var(--nyx-danger) 65%,#000))"' : '') + '>' + htmlEsc(opts.confirmText || 'Confirm') + '</button>' +
@@ -289,6 +291,7 @@
         if (!$('.nyx-modal.open')) bd.classList.remove('open');
         lockScroll(false); doc.removeEventListener('keydown', onKey);
         setTimeout(function () { modal.remove(); }, 250);
+        if (prevFocus && prevFocus.focus && doc.contains(prevFocus)) { try { prevFocus.focus(); } catch (e) {} }
         resolve(val);
       }
       function onKey(e) { if (e.key === 'Escape') done(false); }
@@ -433,7 +436,13 @@
     var min = inp.hasAttribute('min') ? parseFloat(inp.getAttribute('min')) : -Infinity;
     var max = inp.hasAttribute('max') ? parseFloat(inp.getAttribute('max')) : Infinity;
     v += btn.getAttribute('data-nyx-step') === 'dec' ? -1 : 1;
-    inp.value = Math.max(min, Math.min(max, v));
+    var next = String(Math.max(min, Math.min(max, v)));
+    if (next === inp.value) return;
+    inp.value = next;
+    // Programmatic value changes fire no events — notify listeners (forms,
+    // frameworks, validation) exactly as if the user had typed the value.
+    inp.dispatchEvent(new Event('input', { bubbles: true }));
+    inp.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   /* ---------- scrollspy ---------- */
@@ -502,16 +511,21 @@
       btn.classList.add('copied');
       var isRtl = doc.documentElement.getAttribute('dir') === 'rtl';
       toast(isRtl ? 'تم النسخ ✓' : 'Copied ✓', 'success');
-      var origHtml = btn.innerHTML;
+      // Remember the ORIGINAL label once — a second click inside the 1.5s window
+      // would otherwise capture "✓ Copied" and restore that forever.
+      if (btn._nyxCopyHtml == null) btn._nyxCopyHtml = btn.innerHTML;
+      var origHtml = btn._nyxCopyHtml;
       var cleanText = btn.textContent.trim();
       if (cleanText && cleanText !== '⧉' && cleanText !== '✓') {
         btn.innerHTML = isRtl ? '✓ تم النسخ' : '✓ Copied';
       } else {
         btn.innerHTML = '✓';
       }
-      setTimeout(function () {
+      clearTimeout(btn._nyxCopyTimer);
+      btn._nyxCopyTimer = setTimeout(function () {
         btn.classList.remove('copied');
         btn.innerHTML = origHtml;
+        btn._nyxCopyHtml = null;
       }, 1500);
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -613,7 +627,9 @@
       var grp = tabEl.closest('[data-nyx-tabs]'); if (grp) {
         e.preventDefault();
         var tabs = $$('[data-nyx-tab]', grp), i = tabs.indexOf(tabEl), n = tabs.length;
-        var to = e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : e.key === 'ArrowRight' ? (i + 1) % n : (i - 1 + n) % n;
+        var dirEl = grp.closest('[dir]');                             // arrows follow reading direction
+        var fwd = dirEl && dirEl.getAttribute('dir') === 'rtl' ? 'ArrowLeft' : 'ArrowRight';
+        var to = e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : e.key === fwd ? (i + 1) % n : (i - 1 + n) % n;
         tabs[to].focus(); activateTab(tabs[to]);
       }
     }

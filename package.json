@@ -39,7 +39,12 @@
     "./css/min": "./nyx.min.css",
     "./js": "./nyx.js",
     "./js/min": "./nyx.min.js",
+    "./nyx.css": "./nyx.css",
+    "./nyx.min.css": "./nyx.min.css",
+    "./nyx.js": "./nyx.js",
+    "./nyx.min.js": "./nyx.min.js",
     "./components/*": "./components/*",
+    "./fonts/*": "./fonts/*",
     "./package.json": "./package.json"
   },
   "files": [

@@ -5,6 +5,24 @@ All notable changes to **Nyx** are documented here. The format follows
 [Semantic Versioning](https://semver.org/). `package.json` is the single source
 of truth for the version; `node build.js` stamps it into every artifact.
 
+## [Unreleased]
+
+### Fixed
+- **`import 'nyx-css/nyx.css'` / `'nyx-css/nyx.js'` failed** with
+  `ERR_PACKAGE_PATH_NOT_EXPORTED`. The exports map now includes `nyx.css`,
+  `nyx.min.css`, `nyx.js`, `nyx.min.js` and `fonts/*`, alongside the existing
+  `./css` / `./js` aliases.
+- **`components/enhancements.css` was missing the tilt, counter, typewriter and
+  glitch rules.** `build.js` dropped descriptive sub-banners; they are now kept
+  with their parent section.
+- **Copy buttons could stay stuck on "✓ Copied"** after a quick double click.
+- **Stepper +/− buttons fired no `input`/`change` events.**
+- **Tab arrow-key navigation was not mirrored in RTL.**
+- **`Nyx.confirm()` had no dialog semantics** and did not restore focus. It is
+  now an `alertdialog` labelled by its title/message.
+- English example pages gained a meta description and favicon. The landing and
+  docs pages gained canonical, hreflang and Open Graph tags.
+
 ## [1.0.3] — 2026-06-28
 
 ### Fixed

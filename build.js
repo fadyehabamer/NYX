@@ -78,7 +78,10 @@ var written = [];
 written.push(write('tokens', 'Design tokens — dark + light themes. Required by every other file.', preamble.slice(tokStart, baseStart)));
 written.push(write('base', 'Reset + body.nyx canvas/typography. Requires tokens.css.', preamble.slice(baseStart)));
 
-/* each banner section -> its own file */
+/* each banner section -> its own file. Descriptive sub-banners inside a
+   numbered section (e.g. "3D Tilt Card" inside 26. ENHANCEMENTS) belong to
+   that section — append them to it instead of dropping their rules. */
+var sections = [];
 banners.forEach(function (b, i) {
   var body = css.slice(b.index, i + 1 < banners.length ? banners[i + 1].index : css.length);
   /* numbered section titles look like "27. REGIONAL++ …" — require the dot so
@@ -86,11 +89,18 @@ banners.forEach(function (b, i) {
   var nm = /^(\d+)\./.exec(b.title);
   var num = nm ? +nm[1] : NaN;
   var name = !isNaN(num) ? NAMES[num] : (/^RTL/i.test(b.title) ? 'rtl' : null);
-  if (!name) { console.warn('Skipped unmapped section: ' + b.title); return; }
-  var note = name === 'rtl'
+  if (!name) {
+    if (!isNaN(num) || !sections.length) { console.warn('Skipped unmapped section: ' + b.title); return; }
+    sections[sections.length - 1].body += body;
+    return;
+  }
+  sections.push({ name: name, body: body });
+});
+sections.forEach(function (sec) {
+  var note = sec.name === 'rtl'
     ? 'RTL mirroring layer + reduced-motion. Requires tokens.css.'
-    : 'The ' + name + ' module. Requires tokens.css.';
-  written.push(write(name, note, body));
+    : 'The ' + sec.name + ' module. Requires tokens.css.';
+  written.push(write(sec.name, note, sec.body));
 });
 
 /* write the bundle copy into components too, for one-click "everything" */
