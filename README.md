@@ -10,6 +10,7 @@
 *Every interactive element feels lit from within.*
 A zero‑dependency CSS **+** JS component framework — fully themeable, light **&** dark, with first‑class **RTL** and Arabic typography.
 
+[![CI](https://img.shields.io/github/actions/workflow/status/fadyehabamer/NYX/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/fadyehabamer/NYX/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/nyx-css?style=flat-square&color=6c63ff&label=npm)](https://www.npmjs.com/package/nyx-css)
 [![license](https://img.shields.io/npm/l/nyx-css?style=flat-square&color=00d4aa)](LICENSE)
 ![zero deps](https://img.shields.io/badge/dependencies-0-6c63ff?style=flat-square)
