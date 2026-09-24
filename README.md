@@ -13,6 +13,7 @@ A zero‑dependency CSS **+** JS component framework — fully themeable, light 
 [![CI](https://img.shields.io/github/actions/workflow/status/fadyehabamer/NYX/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/fadyehabamer/NYX/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/nyx-css?style=flat-square&color=6c63ff&label=npm)](https://www.npmjs.com/package/nyx-css)
 [![license](https://img.shields.io/npm/l/nyx-css?style=flat-square&color=00d4aa)](LICENSE)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/fadyehabamer/NYX/badge)](https://scorecard.dev/viewer/?uri=github.com/fadyehabamer/NYX)
 ![zero deps](https://img.shields.io/badge/dependencies-0-6c63ff?style=flat-square)
 ![css gzip](https://img.shields.io/badge/CSS-24kb%20gzip-00d4aa?style=flat-square)
 ![js gzip](https://img.shields.io/badge/JS-22kb%20gzip-00d4aa?style=flat-square)
