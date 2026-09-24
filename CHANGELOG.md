@@ -7,7 +7,42 @@ of truth for the version; `node build.js` stamps it into every artifact.
 
 ## [Unreleased]
 
+## [1.1.0] — 2026-09-24
+
+### Added
+- **Swatch picker** (`.nyx-swatches`, `.nyx-swatch`) — colour / variant
+  choice on a native radio group: arrow keys, forms and screen readers work
+  without JS. Selection is a ring plus a tick (never colour alone); disabled
+  options are struck through; `.nyx-swatch-text` covers sizes.
+- **Native date & time inputs** — `.nyx-input` now themes
+  `type="date|time|datetime-local|month|week"`: the OS picker follows
+  `data-theme` via `color-scheme`, the field segments and picker icon use the
+  tokens, and `.nyx-date-range` pairs a start/end field with an arrow that
+  mirrors in RTL.
+- **Splitter** (`.nyx-splitter` + `data-nyx-splitter`) — resizable panes wired
+  as a WAI-ARIA window splitter: `role="separator"` with `aria-valuenow`, arrow
+  keys (mirrored in RTL), Home / End, Enter to collapse / restore, pointer
+  dragging, and a `nyx:split` event. Stacked via `.nyx-splitter-vertical`.
+- **Toggle group** (`.nyx-toggle-group` + `data-nyx-toggle-group`) — buttons
+  with `aria-pressed` in single or multiple mode, `data-required`, arrow-key
+  focus (mirrored in RTL) and a `nyx:toggle` event.
+- New à-la-carte modules `components/forms-pro.css` and
+  `components/controls.css`. Every new piece uses logical properties and honours
+  `prefers-reduced-motion` and `forced-colors`.
+- Each new component has an English and an Arabic docs page with examples; the
+  docs engine now lets a locale pack override a page's `sections`, `classes`
+  and `js`, so Arabic pages can show Arabic demos.
+- **Social card.** `assets/og-image.png` (1200×630, rendered from
+  `assets/og-image.svg` with the Nyx tokens, mark and Thmanyah type) is declared
+  as `og:image` / `twitter:image` on the landing and docs pages, with a
+  `summary_large_image` card.
+
 ### Fixed
+- **The landing page's decorative dashboard preview** used `tabindex="-1"` on
+  its segment-control radios, which still let a pointer change them inside an
+  `aria-hidden` subtree. The control — and the Forms card's preview switch,
+  which sat inside a link — is now `inert`.
+- Version badges on the landing and docs pages were stale (v1.0.2 / v1.0.0).
 - **`import 'nyx-css/nyx.css'` / `'nyx-css/nyx.js'` failed** with
   `ERR_PACKAGE_PATH_NOT_EXPORTED`. The exports map now includes `nyx.css`,
   `nyx.min.css`, `nyx.js`, `nyx.min.js` and `fonts/*`, alongside the existing
@@ -68,5 +103,6 @@ of truth for the version; `node build.js` stamps it into every artifact.
 - Initial release: tokens, layout, typography, buttons, cards, forms,
   navigation, feedback, data display, overlays, signature elements.
 
+[1.1.0]: #110--2026-09-24
 [1.0.3]: #103--2026-06-28
 [1.0.2]: #102--2026-06-23
