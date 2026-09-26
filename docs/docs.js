@@ -1790,7 +1790,7 @@
       '<div class="doc-meta">' + 
       (p.added ? '<span class="nyx-badge nyx-badge-success">' + C('added', 'Added in') + ' ' + p.added + '</span>' : '') +
       (isComponent(p) ? '<span class="nyx-badge ' + (p.needsJs ? 'nyx-badge-glow' : 'nyx-badge-glass') + '">' + C(p.needsJs ? 'markupJs' : 'markupOnly', p.needsJs ? 'Markup + JS' : 'Markup Only') + '</span>' : '') +
-      '<a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="nyx.css" target="_blank" rel="noopener">' + C('viewSource', 'View source') + '</a></div></div>';
+      '<a class="nyx-btn nyx-btn-glass nyx-btn-sm" href="/NYX/nyx.css" target="_blank" rel="noopener">' + C('viewSource', 'View source') + '</a></div></div>';
 
     (L(p, 'sections') || []).forEach(function (s) {
       var sid = slug(s.title); toc.push({ id: sid, title: S(s.title) });
