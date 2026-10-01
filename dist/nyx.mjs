@@ -16,7 +16,62 @@ var require_nyx = __commonJS({
       else root.Nyx = factory();
     })(typeof self !== "undefined" ? self : exports, () => {
       "use strict";
-      const doc = document, docEl = doc.documentElement;
+      const hasDOM = typeof document !== "undefined";
+      const noop = function() {
+      };
+      function stubNode() {
+        return {
+          style: { setProperty: noop, removeProperty: noop },
+          dataset: {},
+          classList: { add: noop, remove: noop, toggle: noop, contains: function() {
+            return false;
+          } },
+          setAttribute: noop,
+          getAttribute: function() {
+            return null;
+          },
+          removeAttribute: noop,
+          hasAttribute: function() {
+            return false;
+          },
+          toggleAttribute: noop,
+          appendChild: noop,
+          removeChild: noop,
+          insertBefore: noop,
+          remove: noop,
+          focus: noop,
+          addEventListener: noop,
+          removeEventListener: noop,
+          dispatchEvent: function() {
+            return true;
+          },
+          querySelector: function() {
+            return null;
+          },
+          querySelectorAll: function() {
+            return [];
+          },
+          closest: function() {
+            return null;
+          }
+        };
+      }
+      const doc = hasDOM ? document : {
+        addEventListener: noop,
+        removeEventListener: noop,
+        querySelector: function() {
+          return null;
+        },
+        querySelectorAll: function() {
+          return [];
+        },
+        documentElement: stubNode(),
+        body: stubNode(),
+        createElement: stubNode,
+        createTextNode: stubNode,
+        readyState: "complete"
+      };
+      const docEl = doc.documentElement;
       function $(sel, ctx) {
         return (ctx || doc).querySelector(sel);
       }
@@ -45,6 +100,38 @@ var require_nyx = __commonJS({
         } catch (e) {
           return false;
         }
+      }
+      const TEARDOWN = "_nyxTeardown";
+      function onTeardown(node, fn) {
+        (node[TEARDOWN] || (node[TEARDOWN] = [])).push(fn);
+      }
+      function destroy(root) {
+        if (!hasDOM) return;
+        const scope = root ? el(root) : doc;
+        if (!scope) return;
+        const nodes = $$("*", scope);
+        if (scope.nodeType === 1) nodes.push(scope);
+        nodes.forEach((n) => {
+          const fns = n[TEARDOWN];
+          if (fns) {
+            for (let i = 0; i < fns.length; i++) {
+              try {
+                fns[i]();
+              } catch (e) {
+              }
+            }
+          }
+          Object.keys(n).forEach((k) => {
+            if (k.indexOf("_nyx") === 0) {
+              try {
+                delete n[k];
+              } catch (e) {
+                n[k] = void 0;
+              }
+            }
+          });
+          _instances.delete(n);
+        });
       }
       let _mqlDark = null, _mqlHandler = null;
       function resolveTheme(t) {
@@ -137,9 +224,12 @@ var require_nyx = __commonJS({
         }, 0);
       }
       let _uid = 0;
-      function applyInert() {
+      function applyInert(keep) {
+        const live = $$(".nyx-modal.open, .nyx-drawer.open, .nyx-sheet.open, .nyx-command-palette.open");
+        if (keep && live.indexOf(keep) < 0) live.push(keep);
         $$("body > *").forEach((n) => {
-          if (n === _backdrop || n.classList.contains("nyx-modal") || n.classList.contains("nyx-drawer") || n.classList.contains("nyx-sheet") || n.classList.contains("nyx-command-palette")) return;
+          if (n === _backdrop) return;
+          if (live.some((o) => n === o || n.contains(o))) return;
           if (!n.hasAttribute("inert")) {
             n.setAttribute("inert", "");
             n.setAttribute("data-nyx-inert", "");
@@ -196,7 +286,7 @@ var require_nyx = __commonJS({
         backdrop().classList.add("open");
         m.classList.add("open");
         dialogSemantics(m);
-        applyInert();
+        applyInert(m);
         lockScroll(true);
         const f = focusables(m);
         if (f.length) setTimeout(() => {
@@ -247,12 +337,7 @@ var require_nyx = __commonJS({
           if (p.classList.contains("open")) return;
           if (!emitBefore(p, "nyx:popover-before-show")) return;
           $$(".nyx-popover.open").forEach((o) => {
-            if (o !== p) {
-              o.classList.remove("open");
-              const ofl = floatFor(o);
-              if (ofl) floatClose(ofl.floating);
-              o.dispatchEvent(new CustomEvent("nyx:popover-hide", { bubbles: true }));
-            }
+            if (o !== p) togglePopover(o, false);
           });
           p.classList.add("open");
           const fl = floatFor(p);
@@ -288,7 +373,11 @@ var require_nyx = __commonJS({
             setOpen(!isOpen());
             return api;
           },
+          // Close first: disposing an open overlay used to drop the only handle to it while
+          // leaving the backdrop up, the page scroll-locked and the background inert.
           dispose() {
+            if (isOpen()) setOpen(false);
+            destroy(node);
             _instances.delete(node);
           }
         };
@@ -476,13 +565,7 @@ var require_nyx = __commonJS({
       }
       function closeDropdowns(except) {
         $$(".nyx-dropdown.open").forEach((d) => {
-          if (d !== except) {
-            d.classList.remove("open");
-            const tg = d.querySelector('[data-nyx-toggle="dropdown"]');
-            if (tg) tg.setAttribute("aria-expanded", "false");
-            const fl = floatFor(d);
-            if (fl) floatClose(fl.floating);
-          }
+          if (d !== except) toggleDropdown(d, false);
         });
       }
       function toggleDropdown(node, force) {
@@ -518,7 +601,7 @@ var require_nyx = __commonJS({
         if (!cp) return;
         if (!_lastFocus) _lastFocus = doc.activeElement;
         cp.classList.add("open");
-        applyInert();
+        applyInert(cp);
         lockScroll(true);
         const inp = cp.querySelector("input");
         if (inp) {
@@ -924,7 +1007,7 @@ var require_nyx = __commonJS({
           });
           if (car.hasAttribute("data-autoplay")) {
             const ms = parseInt(car.getAttribute("data-interval"), 10) || 5e3;
-            let timer = null;
+            let timer = null, dead = false;
             const stop = () => {
               if (timer) {
                 clearInterval(timer);
@@ -932,12 +1015,17 @@ var require_nyx = __commonJS({
               }
             };
             const play = () => {
+              if (dead) return;
               stop();
               timer = setInterval(() => {
                 carouselStep(car, "next");
               }, ms);
             };
-            car._nyxCarStop = stop;
+            car._nyxCarStop = () => {
+              dead = true;
+              stop();
+            };
+            onTeardown(car, car._nyxCarStop);
             if (car.getAttribute("data-pause-hover") !== "false") {
               car.addEventListener("mouseenter", stop);
               car.addEventListener("mouseleave", play);
@@ -1144,10 +1232,15 @@ var require_nyx = __commonJS({
           sentinel.setAttribute("aria-hidden", "true");
           sentinel.style.cssText = "height:0;margin:0;padding:0;border:0;visibility:hidden;pointer-events:none";
           node.parentNode.insertBefore(sentinel, node);
-          new IntersectionObserver((entries) => {
+          const io = new IntersectionObserver((entries) => {
             const en = entries[0];
             node.classList.toggle("is-pinned", en.intersectionRatio < 1 && en.boundingClientRect.top < 0);
-          }, { threshold: [1] }).observe(sentinel);
+          }, { threshold: [1] });
+          io.observe(sentinel);
+          onTeardown(node, () => {
+            io.disconnect();
+            if (sentinel.parentNode) sentinel.parentNode.removeChild(sentinel);
+          });
         });
       }
       let _tour = null;
@@ -1275,6 +1368,7 @@ var require_nyx = __commonJS({
         targets.forEach((s) => {
           obs.observe(s);
         });
+        onTeardown(nav, () => obs.disconnect());
       }
       function initSortable(table) {
         if (table._nyxSort) return;
@@ -1411,9 +1505,12 @@ var require_nyx = __commonJS({
             return;
           }
         }
-        if (e.target.closest("[data-nyx-dismiss]")) {
+        const dis = e.target.closest("[data-nyx-dismiss]");
+        if (dis) {
           e.preventDefault();
-          closeAll();
+          const own = dis.closest(".nyx-modal, .nyx-drawer, .nyx-sheet");
+          if (own) close(own);
+          else closeAll();
           return;
         }
         const step = e.target.closest("[data-nyx-step]");
@@ -1604,7 +1701,8 @@ var require_nyx = __commonJS({
           e._nyxReveal = true;
           e.classList.add("nyx-reveal");
         });
-        if (!("IntersectionObserver" in window)) {
+        if (!els.length) return;
+        if (!("IntersectionObserver" in window) || prefersReducedMotion()) {
           els.forEach((e) => {
             e.classList.add("nyx-in");
           });
@@ -1620,6 +1718,7 @@ var require_nyx = __commonJS({
         }, { rootMargin: "0px 0px -10% 0px" });
         els.forEach((e) => {
           ro.observe(e);
+          onTeardown(e, () => ro.unobserve(e));
         });
       }
       function initSquares(root) {
@@ -1687,7 +1786,9 @@ var require_nyx = __commonJS({
       function initCombobox(root) {
         $$(".nyx-combobox", root).filter((c) => !c._nyxCb).forEach((c) => {
           c._nyxCb = true;
-          const input = c.querySelector("input"), opts = $$(".nyx-combobox-opt", c), menu = c.querySelector(".nyx-combobox-menu");
+          const input = c.querySelector("input");
+          if (!input) return;
+          const opts = $$(".nyx-combobox-opt", c), menu = c.querySelector(".nyx-combobox-menu");
           input.setAttribute("role", "combobox");
           input.setAttribute("aria-autocomplete", "list");
           input.setAttribute("aria-expanded", "false");
@@ -1797,7 +1898,10 @@ var require_nyx = __commonJS({
       function initMultiselect(root) {
         $$(".nyx-multiselect", root).filter((m) => !m._nyxMs).forEach((m) => {
           m._nyxMs = true;
-          const control = m.querySelector(".nyx-multiselect-control"), input = control.querySelector("input");
+          const control = m.querySelector(".nyx-multiselect-control");
+          if (!control) return;
+          const input = control.querySelector("input");
+          if (!input) return;
           const menu = m.querySelector(".nyx-multiselect-menu");
           const opts = $$(".nyx-multiselect-opt", m);
           if (menu) menu.setAttribute("role", "listbox");
@@ -1948,6 +2052,7 @@ var require_nyx = __commonJS({
         $$("[data-nyx-datepicker]", root).filter((d) => !d._nyxDp).forEach((dp) => {
           dp._nyxDp = true;
           const input = dp.querySelector("input");
+          if (!input) return;
           let pop = dp.querySelector(".nyx-datepicker-pop");
           if (!pop) {
             pop = doc.createElement("div");
@@ -2260,16 +2365,22 @@ var require_nyx = __commonJS({
             const r = c.getBoundingClientRect();
             c.style.setProperty("--nyx-pos", Math.max(0, Math.min(100, (x - r.left) / r.width * 100)));
           }
+          const onMove = (e) => {
+            if (dragging) setPos(e.clientX);
+          };
+          const onUp = () => {
+            dragging = false;
+          };
           c.addEventListener("pointerdown", (e) => {
             dragging = true;
             setPos(e.clientX);
             e.preventDefault();
           });
-          window.addEventListener("pointermove", (e) => {
-            if (dragging) setPos(e.clientX);
-          }, { passive: true });
-          window.addEventListener("pointerup", () => {
-            dragging = false;
+          window.addEventListener("pointermove", onMove, { passive: true });
+          window.addEventListener("pointerup", onUp);
+          onTeardown(c, () => {
+            window.removeEventListener("pointermove", onMove);
+            window.removeEventListener("pointerup", onUp);
           });
         });
       }
@@ -2334,9 +2445,17 @@ var require_nyx = __commonJS({
           v._nyxVid = true;
           v.addEventListener("click", () => {
             if (v.classList.contains("playing")) return;
-            const url = v.getAttribute("data-embed"), sep = url.includes("?") ? "&" : "?";
+            let u;
+            try {
+              u = new URL(v.getAttribute("data-embed") || "", location.href);
+            } catch (e) {
+              return;
+            }
+            if (u.protocol !== "https:" && u.protocol !== "http:") return;
+            u.searchParams.set("autoplay", "1");
             const h = v.offsetHeight, ifr = doc.createElement("iframe");
-            ifr.src = url + sep + "autoplay=1";
+            ifr.src = u.href;
+            ifr.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
             ifr.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
             ifr.setAttribute("allowfullscreen", "");
             ifr.style.cssText = "position:absolute;inset:0;width:100%;height:100%";
@@ -2364,6 +2483,7 @@ var require_nyx = __commonJS({
       }
       let _tb = null, _tbTimer = null;
       function topSpan() {
+        if (!hasDOM) return stubNode();
         if (!_tb) {
           _tb = doc.createElement("div");
           _tb.className = "nyx-topbar";
@@ -2443,6 +2563,7 @@ var require_nyx = __commonJS({
               c.dispatchEvent(new CustomEvent("nyx:countdown-done", { bubbles: true }));
             }
           }, 1e3);
+          onTeardown(c, () => clearInterval(iv));
         });
       }
       function initZakat(root) {
@@ -2480,9 +2601,12 @@ var require_nyx = __commonJS({
           for (let i = 0; i < s.length; i++) out.push(s.charCodeAt(i));
           return out;
         }
-        const bytes = [];
+        const bytes = [], TAGS = ["seller", "vatNumber", "timestamp", "total", "vatTotal"];
         fields.forEach((v, i) => {
           const vb = utf8(v);
+          if (vb.length > 255) {
+            throw new RangeError("zatcaQR: " + TAGS[i] + " is " + vb.length + " UTF-8 bytes; the ZATCA TLV length field is a single byte (max 255).");
+          }
           bytes.push(i + 1, vb.length);
           for (let j = 0; j < vb.length; j++) bytes.push(vb[j]);
         });
@@ -2593,10 +2717,12 @@ var require_nyx = __commonJS({
       function fromHijri(hy, hm, hd) {
         const s = _jdToG(Math.floor(_isToJD(hy, hm, hd))), dt = new Date(Date.UTC(s.y, s.m - 1, s.d));
         if (_intlHijri(dt)) {
-          for (let i = 0; i < 4; i++) {
+          for (let i = 0; i < 8; i++) {
             const h = _intlHijri(dt);
             if (h.y === hy && h.m === hm && h.d === hd) break;
-            dt.setUTCDate(dt.getUTCDate() - Math.round((h.y - hy) * 354 + (h.m - hm) * 29.53 + (h.d - hd)));
+            let step = Math.round((h.y - hy) * 354.367 + (h.m - hm) * 29.53 + (h.d - hd));
+            if (step === 0) step = h.y > hy || h.y === hy && (h.m > hm || h.m === hm && h.d > hd) ? 1 : -1;
+            dt.setUTCDate(dt.getUTCDate() - step);
           }
         }
         return dt;
@@ -2742,7 +2868,8 @@ var require_nyx = __commonJS({
             });
           }
           update();
-          setInterval(update, 3e4);
+          const iv = setInterval(update, 3e4);
+          onTeardown(wrap, () => clearInterval(iv));
         });
       }
       function initImage(root) {
@@ -2962,6 +3089,7 @@ var require_nyx = __commonJS({
           el2.setAttribute("aria-live", "polite");
           el2.textContent = (el2.dataset.nyxPrefix || "") + "0" + (el2.dataset.nyxSuffix || "");
           io.observe(el2);
+          onTeardown(el2, () => io.unobserve(el2));
         });
       }
       function initTypewriter(root) {
@@ -2976,18 +3104,23 @@ var require_nyx = __commonJS({
             return;
           }
           el2.textContent = "";
-          let i = 0;
+          const chars = Array.from(text);
+          let i = 0, timer = null, stopped = false;
+          const wait = (fn, ms) => {
+            timer = setTimeout(fn, ms);
+          };
           function type() {
-            if (i < text.length) {
-              el2.textContent += text[i++];
-              setTimeout(type, speed);
+            if (stopped) return;
+            if (i < chars.length) {
+              el2.textContent += chars[i++];
+              wait(type, speed);
             } else {
               el2.classList.add("nyx-typing-done");
-              if (loop) setTimeout(() => {
+              if (loop) wait(() => {
                 el2.textContent = "";
                 el2.classList.remove("nyx-typing-done");
                 i = 0;
-                setTimeout(type, 600);
+                wait(type, 600);
               }, 2200);
             }
           }
@@ -2998,56 +3131,78 @@ var require_nyx = __commonJS({
             }
           }, { threshold: 0.5 });
           io.observe(el2);
+          onTeardown(el2, () => {
+            stopped = true;
+            if (timer) clearTimeout(timer);
+            io.disconnect();
+          });
         });
       }
+      const INIT_STEPS = [
+        function spy(root) {
+          $$("[data-nyx-spy]", root).forEach(initSpy);
+        },
+        function sortable(root) {
+          $$(".nyx-table-sortable", root).forEach(initSortable);
+        },
+        initReveal,
+        initSquares,
+        initCarousel,
+        initAccordion,
+        initDisclosure,
+        initTriggers,
+        initPalette,
+        initSlider,
+        initRange,
+        initKanban,
+        initCalendar,
+        initCompare,
+        initLightbox,
+        initVideoFacade,
+        initNumerals,
+        initHierarchy,
+        initPrayerTimes,
+        initCombobox,
+        initCharts,
+        initMultiselect,
+        initDatepicker,
+        initCountdown,
+        initZakat,
+        initQibla,
+        initIdInput,
+        initHijri,
+        initImage,
+        initNav,
+        initTabs,
+        initSliderNav,
+        initPasswordStrength,
+        initMagnetic,
+        initCursorFollower,
+        initTilt,
+        initCounter,
+        initTypewriter,
+        initStepper,
+        initWatermark,
+        initColorPicker,
+        initSplit,
+        initAffix
+      ];
       function init(root) {
+        if (!hasDOM) return;
         root = root || doc;
-        $$("[data-nyx-spy]", root).forEach(initSpy);
-        $$(".nyx-table-sortable", root).forEach(initSortable);
-        initReveal(root);
-        initSquares(root);
-        initCarousel(root);
-        initAccordion(root);
-        initDisclosure(root);
-        initTriggers(root);
-        initPalette(root);
-        initSlider(root);
-        initRange(root);
-        initKanban(root);
-        initCalendar(root);
-        initCompare(root);
-        initLightbox(root);
-        initVideoFacade(root);
-        initNumerals(root);
-        initHierarchy(root);
-        initPrayerTimes(root);
-        initCombobox(root);
-        initCharts(root);
-        initMultiselect(root);
-        initDatepicker(root);
-        initCountdown(root);
-        initZakat(root);
-        initQibla(root);
-        initIdInput(root);
-        initHijri(root);
-        initImage(root);
-        initNav(root);
-        initTabs(root);
-        initSliderNav(root);
-        initPasswordStrength(root);
-        initMagnetic(root);
-        initCursorFollower(root);
-        initTilt(root);
-        initCounter(root);
-        initTypewriter(root);
-        initStepper(root);
-        initWatermark(root);
-        initColorPicker(root);
-        initSplit(root);
-        initAffix(root);
+        for (let i = 0; i < INIT_STEPS.length; i++) {
+          try {
+            INIT_STEPS[i](root);
+          } catch (e) {
+            try {
+              console.error("[nyx] behaviour failed: " + (INIT_STEPS[i].name || i), e);
+            } catch (_) {
+            }
+          }
+        }
         syncBackTop();
       }
-      window.addEventListener("scroll", syncBackTop, { passive: true });
+      if (hasDOM) window.addEventListener("scroll", syncBackTop, { passive: true });
       doc.addEventListener("mousemove", (e) => {
         const shiny = e.target.closest(".nyx-shiny-btn, .nyx-shiny-card");
         if (shiny) {
@@ -3076,13 +3231,16 @@ var require_nyx = __commonJS({
           fi.focus();
         }, 20);
       });
-      if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", () => {
-        init();
-      });
-      else init();
+      if (hasDOM) {
+        if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", () => {
+          init();
+        });
+        else init();
+      }
       return {
         version: "1.1.0",
         init,
+        destroy,
         toast,
         openModal,
         openDrawer,

@@ -16,6 +16,8 @@ runtime auto-initializes on load and exposes `window.Nyx`.
 - [Documentation](https://fadyehabamer.github.io/NYX/docs/docs.html)
 - [Arabic documentation](https://fadyehabamer.github.io/NYX/docs/docs.ar.html)
 - [Full LLM reference](https://fadyehabamer.github.io/NYX/llms-full.txt) — every class, attribute, token, and method.
+- [Searchable reference](https://fadyehabamer.github.io/NYX/reference.html) — the same surface as a filterable page.
+- [manifest.json](https://fadyehabamer.github.io/NYX/dist/manifest.json) — machine-readable: every class (section, module, source line, tokens it reads) and every behaviour (selectors, attributes, events).
 
 ## Component sections (39 sections, 1240 classes)
 - 1. LAYOUT (154)
@@ -59,4 +61,4 @@ runtime auto-initializes on load and exposes `window.Nyx`.
 - 35. LAYOUT++ (v1.2) — resizable split panes + affix (6)
 
 ## JS API (window.Nyx)
-Nyx.init, Nyx.toast, Nyx.openModal, Nyx.openDrawer, Nyx.close, Nyx.closeAll, Nyx.togglePopover, Nyx.openCommandPalette, Nyx.closeCommandPalette, Nyx.showTab, Nyx.toggleCollapse, Nyx.toggleDropdown, Nyx.getInstance, Nyx.getOrCreateInstance, Nyx.carousel, Nyx.position, Nyx.tour, Nyx.setTheme, Nyx.toggleTheme, Nyx.setDir, Nyx.toggleDir, Nyx.setAccent, Nyx.toArabicNumerals, Nyx.progress, Nyx.toHijri, Nyx.fromHijri, Nyx.formatHijri, Nyx.qiblaBearing, Nyx.zatcaQR, Nyx.snackbar, Nyx.confirm
+Nyx.init, Nyx.destroy, Nyx.toast, Nyx.openModal, Nyx.openDrawer, Nyx.close, Nyx.closeAll, Nyx.togglePopover, Nyx.openCommandPalette, Nyx.closeCommandPalette, Nyx.showTab, Nyx.toggleCollapse, Nyx.toggleDropdown, Nyx.getInstance, Nyx.getOrCreateInstance, Nyx.carousel, Nyx.position, Nyx.tour, Nyx.setTheme, Nyx.toggleTheme, Nyx.setDir, Nyx.toggleDir, Nyx.setAccent, Nyx.toArabicNumerals, Nyx.progress, Nyx.toHijri, Nyx.fromHijri, Nyx.formatHijri, Nyx.qiblaBearing, Nyx.zatcaQR, Nyx.snackbar, Nyx.confirm

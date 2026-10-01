@@ -55,6 +55,8 @@
     "./components/*": "./dist/components/*",
     "./tokens.json": "./dist/tokens.json",
     "./tokens": "./dist/tokens.json",
+    "./manifest.json": "./dist/manifest.json",
+    "./manifest": "./dist/manifest.json",
     "./package.json": "./package.json"
   },
   "files": [
@@ -68,12 +70,13 @@
     "build.js",
     "llms.txt",
     "llms-full.txt",
+    "reference.html",
     "README.md",
     "CHANGELOG.md"
   ],
   "scripts": {
     "build": "node build.js",
-    "build:check": "node build.js && git diff --exit-code",
+    "build:check": "node build.js && git add -A -N && git diff --exit-code",
     "migrate": "node tools/migrate.js",
     "test": "node --test"
   },

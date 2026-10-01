@@ -182,6 +182,15 @@ declare namespace Nyx {
 
     /** (Re)initialize NYX behaviors within `root` (default `document`). Idempotent — safe to call after injecting HTML. */
     init(root?: Document | Element): void;
+    /**
+     * Tear down everything NYX wired up inside `root` (default `document`): intervals,
+     * observers and window/document listeners the behaviours own, then the internal init
+     * guards, so a later `init()` re-initializes the same markup cleanly.
+     *
+     * Removing an element from the DOM does **not** stop its interval or disconnect its
+     * observer — call this on unmount (React `useEffect` cleanup, Vue `onUnmounted`).
+     */
+    destroy(root?: Document | Element | string): void;
 
     // ----- overlays -----
     /** Show a modal by selector/element. */

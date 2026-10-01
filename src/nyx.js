@@ -19,6 +19,9 @@
  *   Nyx.toast · openModal · openDrawer · close · closeAll · togglePopover
  *   Nyx.openCommandPalette · setTheme · toggleTheme · setDir · toggleDir · setAccent
  *   Nyx.toArabicNumerals · Nyx.progress.{start,set,done} · init
+ *   Nyx.destroy(root) — unwind a subtree: clears intervals, observers and window listeners
+ *     the behaviours own, then the init guards, so a later init() can re-wire it. Call it
+ *     on unmount in React/Vue; removing the DOM alone does not stop any of them.
  *   Nyx.showTab · Nyx.toggleCollapse · Nyx.toggleDropdown
  *   Nyx.getInstance · Nyx.getOrCreateInstance → { el, show, hide, toggle, dispose }
  *     (overlays · popover · collapse · dropdown; tab instances support show() only)
@@ -43,13 +46,61 @@
 })(typeof self !== 'undefined' ? self : this, () => {
   'use strict';
 
-  const doc = document, docEl = doc.documentElement;
+  // The factory runs eagerly under UMD, so module scope must not touch a DOM that may not
+  // exist: `require('nyx-css')` in Node, or any SSR render (Next/Remix/Astro/SvelteKit),
+  // evaluates this file with no `document`. Standing in for the two globals the module body
+  // reads at load keeps the import side-effect-free instead of throwing, so the DOM-free
+  // helpers (toHijri · fromHijri · formatHijri · qiblaBearing · zatcaQR · toArabicNumerals)
+  // are usable server-side. Every DOM-driven method no-ops until this runs in a browser.
+  const hasDOM = typeof document !== 'undefined';
+  const noop = function () {};
+  function stubNode() {                                         // a detached node that swallows every mutation
+    return {
+      style: { setProperty: noop, removeProperty: noop }, dataset: {},
+      classList: { add: noop, remove: noop, toggle: noop, contains: function () { return false; } },
+      setAttribute: noop, getAttribute: function () { return null; }, removeAttribute: noop,
+      hasAttribute: function () { return false; }, toggleAttribute: noop,
+      appendChild: noop, removeChild: noop, insertBefore: noop, remove: noop, focus: noop,
+      addEventListener: noop, removeEventListener: noop, dispatchEvent: function () { return true; },
+      querySelector: function () { return null; }, querySelectorAll: function () { return []; },
+      closest: function () { return null; },
+    };
+  }
+  const doc = hasDOM ? document : {
+    addEventListener: noop, removeEventListener: noop,
+    querySelector: function () { return null; }, querySelectorAll: function () { return []; },
+    documentElement: stubNode(), body: stubNode(), createElement: stubNode,
+    createTextNode: stubNode, readyState: 'complete',
+  };
+  const docEl = doc.documentElement;
   function $(sel, ctx) { return (ctx || doc).querySelector(sel); }
   function $$(sel, ctx) { return Array.prototype.slice.call((ctx || doc).querySelectorAll(sel)); }
   function el(node) { return typeof node === 'string' ? $(node) : node; }
   function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function read(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function prefersReducedMotion() { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } }
+
+  /* ---------- teardown registry ---------- */
+  // Removing an element does not stop an interval, disconnect an observer, or unbind a
+  // listener that was attached to window/document — so every behaviour that owns one
+  // registers its undo here. Nyx.destroy(root) runs them and clears the _nyx* init guards,
+  // leaving the subtree exactly as init() found it: the contract a component wrapper needs
+  // on unmount, and the reason repeated mount/unmount cycles no longer accumulate timers.
+  const TEARDOWN = '_nyxTeardown';
+  function onTeardown(node, fn) { (node[TEARDOWN] || (node[TEARDOWN] = [])).push(fn); }
+  function destroy(root) {
+    if (!hasDOM) return;
+    const scope = root ? el(root) : doc;
+    if (!scope) return;
+    const nodes = $$('*', scope);
+    if (scope.nodeType === 1) nodes.push(scope);                 // the root itself, when it is an element
+    nodes.forEach(n => {
+      const fns = n[TEARDOWN];
+      if (fns) { for (let i = 0; i < fns.length; i++) { try { fns[i](); } catch (e) {} } }
+      Object.keys(n).forEach(k => { if (k.indexOf('_nyx') === 0) { try { delete n[k]; } catch (e) { n[k] = undefined; } } });
+      _instances.delete(n);
+    });
+  }
 
   /* ---------- theme + direction ---------- */
   let _mqlDark = null, _mqlHandler = null;
@@ -110,9 +161,18 @@
 
   /* ---------- overlays: modal + drawer + sheet ---------- */
   let _uid = 0;                                                 // unique-id seed for aria wiring
-  function applyInert() {                                       // hide background from AT + tab order while a dialog is open
+  // Hide the background from AT + the tab order while a dialog is open. The test has to be
+  // "does this body child CONTAIN a live overlay", not "is this body child an overlay":
+  // `inert` inherits, so a modal authored inside a wrapper — <main>, or the root <div> every
+  // SPA renders into — got its own ancestor inerted and became unfocusable while openModal
+  // had already moved focus into it and locked scroll. That is a keyboard trap, and the
+  // wrapper case is the normal one.
+  function applyInert(keep) {
+    const live = $$('.nyx-modal.open, .nyx-drawer.open, .nyx-sheet.open, .nyx-command-palette.open');
+    if (keep && live.indexOf(keep) < 0) live.push(keep);         // the caller's overlay may not be .open yet
     $$('body > *').forEach(n => {
-      if (n === _backdrop || n.classList.contains('nyx-modal') || n.classList.contains('nyx-drawer') || n.classList.contains('nyx-sheet') || n.classList.contains('nyx-command-palette')) return;
+      if (n === _backdrop) return;
+      if (live.some(o => n === o || n.contains(o))) return;      // an overlay, or an ancestor of one
       if (!n.hasAttribute('inert')) { n.setAttribute('inert', ''); n.setAttribute('data-nyx-inert', ''); }
     });
   }
@@ -149,7 +209,7 @@
     if (!_lastFocus) _lastFocus = doc.activeElement;
     backdrop().classList.add('open');
     m.classList.add('open');
-    dialogSemantics(m); applyInert();
+    dialogSemantics(m); applyInert(m);
     lockScroll(true);
     const f = focusables(m); if (f.length) setTimeout(() => { f[0].focus(); }, 60);
     m.dispatchEvent(new CustomEvent('nyx:' + type + '-show', { bubbles: true }));
@@ -187,13 +247,11 @@
     if (willOpen) {
       if (p.classList.contains('open')) return;                   // already open — nothing to do
       if (!emitBefore(p, 'nyx:popover-before-show')) return;      // cancelable
-      $$('.nyx-popover.open').forEach(o => {
-        if (o !== p) {
-          o.classList.remove('open');
-          const ofl = floatFor(o); if (ofl) floatClose(ofl.floating);
-          o.dispatchEvent(new CustomEvent('nyx:popover-hide', { bubbles: true }));
-        }
-      });
+      // Recurse through togglePopover so a sibling closing gets the same treatment as any
+      // other close: the cancelable -before-hide, the -hidden pair, and its trigger's
+      // aria-expanded reset. Stripping the class here left the trigger reading "expanded"
+      // forever and gave consumers no way to veto.
+      $$('.nyx-popover.open').forEach(o => { if (o !== p) togglePopover(o, false); });
       p.classList.add('open');
       const fl = floatFor(p); if (fl) floatOpen(fl.anchor, fl.floating, fl.placement);
       p.dispatchEvent(new CustomEvent('nyx:popover-show', { bubbles: true }));
@@ -219,7 +277,9 @@
       show() { setOpen(true); return api; },
       hide() { setOpen(false); return api; },
       toggle() { setOpen(!isOpen()); return api; },
-      dispose() { _instances.delete(node); }
+      // Close first: disposing an open overlay used to drop the only handle to it while
+      // leaving the backdrop up, the page scroll-locked and the background inert.
+      dispose() { if (isOpen()) setOpen(false); destroy(node); _instances.delete(node); }
     };
     return api;
   }
@@ -349,14 +409,14 @@
   }
 
   /* ---------- dropdown ---------- */
+  // Every close route — outside click, item click, Esc, and the sibling auto-close when
+  // another dropdown opens — funnels through toggleDropdown, so the documented lifecycle
+  // (cancelable nyx:dropdown-before-hide, then -hide / -hidden) fires on all of them and
+  // aria-expanded stays in sync. Closing here used to strip the class directly, which made
+  // the entire dropdown event contract unreachable in normal use.
+  // No recursion: the willOpen === false branch of toggleDropdown never calls back in.
   function closeDropdowns(except) {
-    $$('.nyx-dropdown.open').forEach(d => {
-      if (d !== except) {
-        d.classList.remove('open');
-        const tg = d.querySelector('[data-nyx-toggle="dropdown"]'); if (tg) tg.setAttribute('aria-expanded', 'false');
-        const fl = floatFor(d); if (fl) floatClose(fl.floating);
-      }
-    });
+    $$('.nyx-dropdown.open').forEach(d => { if (d !== except) toggleDropdown(d, false); });
   }
   function toggleDropdown(node, force) {
     const dd = node && (node.classList.contains('nyx-dropdown') ? node : (node.closest ? node.closest('.nyx-dropdown') : null)); if (!dd) return;
@@ -378,7 +438,7 @@
   function openCommandPalette() {
     const cp = paletteEl(); if (!cp) return;
     if (!_lastFocus) _lastFocus = doc.activeElement;
-    cp.classList.add('open'); applyInert(); lockScroll(true);
+    cp.classList.add('open'); applyInert(cp); lockScroll(true);
     const inp = cp.querySelector('input');
     if (inp) { inp.value = ''; inp.dispatchEvent(new Event('input', { bubbles: true })); setTimeout(() => { inp.focus(); }, 60); }
     cp.dispatchEvent(new CustomEvent('nyx:palette-show', { bubbles: true }));
@@ -648,10 +708,13 @@
       if (car.hasAttribute('data-autoplay')) {
         // autoplay (opt-in)
         const ms = parseInt(car.getAttribute('data-interval'), 10) || 5000;
-        let timer = null;
+        let timer = null, dead = false;
         const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
-        const play = () => { stop(); timer = setInterval(() => { carouselStep(car, 'next'); }, ms); };
-        car._nyxCarStop = stop;
+        // `dead` makes the stop stick: the hover/focus handlers below call play() on
+        // mouseleave, which used to resurrect autoplay after dispose().
+        const play = () => { if (dead) return; stop(); timer = setInterval(() => { carouselStep(car, 'next'); }, ms); };
+        car._nyxCarStop = () => { dead = true; stop(); };
+        onTeardown(car, car._nyxCarStop);
         if (car.getAttribute('data-pause-hover') !== 'false') {
           car.addEventListener('mouseenter', stop); car.addEventListener('mouseleave', play);
           car.addEventListener('focusin', stop); car.addEventListener('focusout', play);
@@ -811,10 +874,14 @@
       sentinel.setAttribute('aria-hidden', 'true');
       sentinel.style.cssText = 'height:0;margin:0;padding:0;border:0;visibility:hidden;pointer-events:none';
       node.parentNode.insertBefore(sentinel, node);
-      new IntersectionObserver(entries => {
+      const io = new IntersectionObserver(entries => {
         const en = entries[0];
         node.classList.toggle('is-pinned', en.intersectionRatio < 1 && en.boundingClientRect.top < 0);
-      }, { threshold: [1] }).observe(sentinel);
+      }, { threshold: [1] });
+      io.observe(sentinel);
+      // The sentinel is injected as a sibling, so removing the affix element alone would
+      // orphan it in the DOM with a live observer still pointed at it.
+      onTeardown(node, () => { io.disconnect(); if (sentinel.parentNode) sentinel.parentNode.removeChild(sentinel); });
     });
   }
 
@@ -920,6 +987,7 @@
       });
     }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
     targets.forEach(s => { obs.observe(s); });
+    onTeardown(nav, () => obs.disconnect());                     // targets live outside the nav
   }
 
   /* ---------- sortable tables ---------- */
@@ -1005,7 +1073,15 @@
       if (kind === 'collapse') { e.preventDefault(); toggleCollapse(toggle); return; }
       if (kind === 'dropdown') { e.preventDefault(); toggleDropdown(toggle); return; }
     }
-    if (e.target.closest('[data-nyx-dismiss]')) { e.preventDefault(); closeAll(); return; }
+    // "closes its overlay" — a dismiss button inside a stacked drawer or modal must not tear
+    // down the ones underneath it. Falls back to closeAll() only when it sits outside one.
+    const dis = e.target.closest('[data-nyx-dismiss]');
+    if (dis) {
+      e.preventDefault();
+      const own = dis.closest('.nyx-modal, .nyx-drawer, .nyx-sheet');
+      if (own) close(own); else closeAll();
+      return;
+    }
 
     const step = e.target.closest('[data-nyx-step]');
     if (step) { stepperAdjust(step); return; }
@@ -1125,11 +1201,15 @@
   function initReveal(root) {
     const els = $$('[data-nyx-reveal]', root).filter(e => !e._nyxReveal);
     els.forEach(e => { e._nyxReveal = true; e.classList.add('nyx-reveal'); });
-    if (!('IntersectionObserver' in window)) { els.forEach(e => { e.classList.add('nyx-in'); }); return; }
+    if (!els.length) return;                                     // don't mint an observer per init() with nothing to watch
+    if (!('IntersectionObserver' in window) || prefersReducedMotion()) {
+      els.forEach(e => { e.classList.add('nyx-in'); });           // reduce-motion: reveal immediately, never leave content at opacity:0
+      return;
+    }
     const ro = new IntersectionObserver(ents => {
       ents.forEach(x => { if (x.isIntersecting) { x.target.classList.add('nyx-in'); ro.unobserve(x.target); } });
     }, { rootMargin: '0px 0px -10% 0px' });
-    els.forEach(e => { ro.observe(e); });
+    els.forEach(e => { ro.observe(e); onTeardown(e, () => ro.unobserve(e)); });
   }
 
   /* ---------- interactive hover-lit squares (.nyx-bg-squares) & spotlight cards ---------- */
@@ -1195,7 +1275,8 @@
   function initCombobox(root) {
     $$('.nyx-combobox', root).filter(c => !c._nyxCb).forEach(c => {
       c._nyxCb = true;
-      const input = c.querySelector('input'), opts = $$('.nyx-combobox-opt', c), menu = c.querySelector('.nyx-combobox-menu');
+      const input = c.querySelector('input'); if (!input) return;   // markup without the control — skip, don't throw
+      const opts = $$('.nyx-combobox-opt', c), menu = c.querySelector('.nyx-combobox-menu');
       input.setAttribute('role', 'combobox'); input.setAttribute('aria-autocomplete', 'list'); input.setAttribute('aria-expanded', 'false');
       if (menu) { if (!menu.id) menu.id = 'nyx-cb-' + (++_uid); menu.setAttribute('role', 'listbox'); input.setAttribute('aria-controls', menu.id); }
       opts.forEach(o => { o.setAttribute('role', 'option'); o.setAttribute('tabindex', '-1'); if (!o.id) o.id = 'nyx-cbo-' + (++_uid); });
@@ -1255,7 +1336,8 @@
   function initMultiselect(root) {
     $$('.nyx-multiselect', root).filter(m => !m._nyxMs).forEach(m => {
       m._nyxMs = true;
-      const control = m.querySelector('.nyx-multiselect-control'), input = control.querySelector('input');
+      const control = m.querySelector('.nyx-multiselect-control'); if (!control) return;
+      const input = control.querySelector('input'); if (!input) return;
       const menu = m.querySelector('.nyx-multiselect-menu');
       const opts = $$('.nyx-multiselect-opt', m);
       if (menu) menu.setAttribute('role', 'listbox'); if (menu) menu.setAttribute('aria-multiselectable', 'true');
@@ -1374,7 +1456,7 @@
   function initDatepicker(root) {
     $$('[data-nyx-datepicker]', root).filter(d => !d._nyxDp).forEach(dp => {
       dp._nyxDp = true;
-      const input = dp.querySelector('input');
+      const input = dp.querySelector('input'); if (!input) return;
       let pop = dp.querySelector('.nyx-datepicker-pop');
       if (!pop) { pop = doc.createElement('div'); pop.className = 'nyx-datepicker-pop'; dp.appendChild(pop); }
       const cal = doc.createElement('div');cal.className = 'nyx-calendar';pop.appendChild(cal);
@@ -1601,9 +1683,17 @@
       c._nyxCmp = true;
       let dragging = false;
       function setPos(x) { const r = c.getBoundingClientRect(); c.style.setProperty('--nyx-pos', Math.max(0, Math.min(100, ((x - r.left) / r.width) * 100))); }
+      // These two live on window, not on the element, so removing the widget left both
+      // bound — each closure pinning the detached node for the life of the page.
+      const onMove = e => { if (dragging) setPos(e.clientX); };
+      const onUp = () => { dragging = false; };
       c.addEventListener('pointerdown', e => { dragging = true; setPos(e.clientX); e.preventDefault(); });
-      window.addEventListener('pointermove', e => { if (dragging) setPos(e.clientX); }, { passive: true });
-      window.addEventListener('pointerup', () => { dragging = false; });
+      window.addEventListener('pointermove', onMove, { passive: true });
+      window.addEventListener('pointerup', onUp);
+      onTeardown(c, () => {
+        window.removeEventListener('pointermove', onMove);
+        window.removeEventListener('pointerup', onUp);
+      });
     });
   }
 
@@ -1652,9 +1742,17 @@
       v._nyxVid = true;
       v.addEventListener('click', () => {
         if (v.classList.contains('playing')) return;
-        const url = v.getAttribute('data-embed'), sep = url.includes('?') ? '&' : '?';
+        // data-embed is page data — on any CMS-backed site it is user-supplied. An <iframe>
+        // navigated to a javascript: URL executes in THIS origin, and appending a query
+        // string does not neuter it (a trailing // comments the suffix out). Parse and
+        // allowlist the scheme instead of concatenating, which also drops the ?/& juggling.
+        let u;
+        try { u = new URL(v.getAttribute('data-embed') || '', location.href); } catch (e) { return; }
+        if (u.protocol !== 'https:' && u.protocol !== 'http:') return;   // no javascript:, data:, blob:, vbscript:
+        u.searchParams.set('autoplay', '1');
         const h = v.offsetHeight, ifr = doc.createElement('iframe');
-        ifr.src = url + sep + 'autoplay=1';
+        ifr.src = u.href;
+        ifr.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
         ifr.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
         ifr.setAttribute('allowfullscreen', '');
         ifr.style.cssText = 'position:absolute;inset:0;width:100%;height:100%';
@@ -1675,7 +1773,7 @@
     $$('.nyx-navbar-sticky').forEach(n => { n.classList.toggle('scrolled', sy > 40); });
   }
   let _tb = null, _tbTimer = null;
-  function topSpan() { if (!_tb) { _tb = doc.createElement('div'); _tb.className = 'nyx-topbar'; _tb.innerHTML = '<span></span>'; doc.body.appendChild(_tb); } return _tb.firstChild; }
+  function topSpan() { if (!hasDOM) return stubNode(); if (!_tb) { _tb = doc.createElement('div'); _tb.className = 'nyx-topbar'; _tb.innerHTML = '<span></span>'; doc.body.appendChild(_tb); } return _tb.firstChild; }
   const progress = {
     start: function () { const s = topSpan(); s.style.opacity = '1'; let w = 8; s.style.width = '8%'; clearInterval(_tbTimer); _tbTimer = setInterval(() => { w += (92 - w) * 0.12; s.style.width = w.toFixed(1) + '%'; }, 400); return progress; },
     set: function (p) { topSpan().style.width = Math.max(0, Math.min(100, p)) + '%'; return progress; },
@@ -1713,6 +1811,7 @@
           c.dispatchEvent(new CustomEvent('nyx:countdown-done', { bubbles: true }));
         }
       }, 1000);
+      onTeardown(c, () => clearInterval(iv));                    // a far-future target ticks forever otherwise
     });
   }
 
@@ -1751,9 +1850,18 @@
       if (typeof TextEncoder !== 'undefined') return Array.prototype.slice.call(new TextEncoder().encode(str));
       const out = [], s = unescape(encodeURIComponent(str)); for (let i = 0; i < s.length; i++) out.push(s.charCodeAt(i)); return out;
     }
-    const bytes = [];
+    const bytes = [], TAGS = ['seller', 'vatNumber', 'timestamp', 'total', 'vatTotal'];
     fields.forEach((v, i) => {
-      const vb = utf8(v); bytes.push(i + 1, vb.length);           // tag (1-5), length, value
+      const vb = utf8(v);
+      // TLV length is a single byte. Arabic is 2 bytes/char, so a ~128-character legal
+      // entity name overflows it — which used to push >255 into the array and surface as an
+      // opaque "Invalid character" DOMException from btoa. Name the field instead. Never
+      // truncate: silently shortening a seller name on a tax document is worse than failing.
+      if (vb.length > 255) {
+        throw new RangeError('zatcaQR: ' + TAGS[i] + ' is ' + vb.length +
+          ' UTF-8 bytes; the ZATCA TLV length field is a single byte (max 255).');
+      }
+      bytes.push(i + 1, vb.length);                               // tag (1-5), length, value
       for (let j = 0; j < vb.length; j++) bytes.push(vb[j]);
     });
     let bin = ''; for (let k = 0; k < bytes.length; k++) bin += String.fromCharCode(bytes[k]);
@@ -1833,10 +1941,17 @@
   function fromHijri(hy, hm, hd) {
     const s = _jdToG(Math.floor(_isToJD(hy, hm, hd))), dt = new Date(Date.UTC(s.y, s.m - 1, s.d));
     if (_intlHijri(dt)) {
-      for (let i = 0; i < 4; i++) {
+      // Converge the tabular seed onto the Umm al-Qura calendar. Two things matter here:
+      // the mean Hijri year is 354.367 days (354 drifts), and across a year rollover the
+      // correction can round to exactly 0 — e.g. 30/12/1443 → 1/1/1444 gives -0.17. A zero
+      // step stalls the loop, which used to return the seed date silently and put every
+      // 1 Muharram one day early.
+      for (let i = 0; i < 8; i++) {
         const h = _intlHijri(dt);
         if (h.y === hy && h.m === hm && h.d === hd) break;
-        dt.setUTCDate(dt.getUTCDate() - Math.round((h.y - hy) * 354 + (h.m - hm) * 29.53 + (h.d - hd)));
+        let step = Math.round((h.y - hy) * 354.367 + (h.m - hm) * 29.53 + (h.d - hd));
+        if (step === 0) step = (h.y > hy || (h.y === hy && (h.m > hm || (h.m === hm && h.d > hd)))) ? 1 : -1;
+        dt.setUTCDate(dt.getUTCDate() - step);
       }
     }
     return dt;
@@ -1956,7 +2071,8 @@
         });
       }
       update();
-      setInterval(update, 30000);
+      const iv = setInterval(update, 30000);
+      onTeardown(wrap, () => clearInterval(iv));                 // a 30s timer pinning a detached node otherwise
     });
   }
 
@@ -2178,6 +2294,7 @@
       el.setAttribute('aria-live', 'polite');
       el.textContent = (el.dataset.nyxPrefix || '') + '0' + (el.dataset.nyxSuffix || '');
       io.observe(el);
+      onTeardown(el, () => io.unobserve(el));
     });
   }
 
@@ -2190,18 +2307,23 @@
       const loop  = el.hasAttribute('data-nyx-loop');
       if (prefersReducedMotion()) { el.textContent = text; el.classList.add('nyx-typing-done'); return; }
       el.textContent = '';
-      let i = 0;
+      // Type by code point: indexing a string by UTF-16 unit splits astral characters, so
+      // an emoji rendered as a lone surrogate (a � box) for one frame before repairing.
+      const chars = Array.from(text);
+      let i = 0, timer = null, stopped = false;
+      const wait = (fn, ms) => { timer = setTimeout(fn, ms); };
       function type() {
-        if (i < text.length) {
-          el.textContent += text[i++];
-          setTimeout(type, speed);
+        if (stopped) return;
+        if (i < chars.length) {
+          el.textContent += chars[i++];
+          wait(type, speed);
         } else {
           el.classList.add('nyx-typing-done');
-          if (loop) setTimeout(() => {
+          if (loop) wait(() => {
             el.textContent = '';
             el.classList.remove('nyx-typing-done');
             i = 0;
-            setTimeout(type, 600);
+            wait(type, 600);
           }, 2200);
         }
       }
@@ -2210,58 +2332,37 @@
         if (entries[0].isIntersecting) { io.disconnect(); type(); }
       }, { threshold: 0.5 });
       io.observe(el);
+      // A looping typewriter never stops on its own: the chain kept appending to a detached
+      // node forever once the element was removed.
+      onTeardown(el, () => { stopped = true; if (timer) clearTimeout(timer); io.disconnect(); });
     });
   }
 
   /* ---------- init (idempotent) ---------- */
+  // Every behaviour runs in isolation: markup missing a control it expects must not be able
+  // to abort the ~40 behaviours registered after it. Each step is retried on the next init().
+  const INIT_STEPS = [
+    function spy(root) { $$('[data-nyx-spy]', root).forEach(initSpy); },
+    function sortable(root) { $$('.nyx-table-sortable', root).forEach(initSortable); },
+    initReveal, initSquares, initCarousel, initAccordion, initDisclosure, initTriggers,
+    initPalette, initSlider, initRange, initKanban, initCalendar, initCompare, initLightbox,
+    initVideoFacade, initNumerals, initHierarchy, initPrayerTimes, initCombobox, initCharts,
+    initMultiselect, initDatepicker, initCountdown, initZakat, initQibla, initIdInput,
+    initHijri, initImage, initNav, initTabs, initSliderNav, initPasswordStrength,
+    initMagnetic, initCursorFollower, initTilt, initCounter, initTypewriter, initStepper,
+    initWatermark, initColorPicker, initSplit, initAffix,
+  ];
+
   function init(root) {
+    if (!hasDOM) return;                                        // SSR / Node: nothing to wire up
     root = root || doc;
-    $$('[data-nyx-spy]', root).forEach(initSpy);
-    $$('.nyx-table-sortable', root).forEach(initSortable);
-    initReveal(root);
-    initSquares(root);
-    initCarousel(root);
-    initAccordion(root);
-    initDisclosure(root);
-    initTriggers(root);
-    initPalette(root);
-    initSlider(root);
-    initRange(root);
-    initKanban(root);
-    initCalendar(root);
-    initCompare(root);
-    initLightbox(root);
-    initVideoFacade(root);
-    initNumerals(root);
-    initHierarchy(root);
-    initPrayerTimes(root);
-    initCombobox(root);
-    initCharts(root);
-    initMultiselect(root);
-    initDatepicker(root);
-    initCountdown(root);
-    initZakat(root);
-    initQibla(root);
-    initIdInput(root);
-    initHijri(root);
-    initImage(root);
-    initNav(root);
-    initTabs(root);
-    initSliderNav(root);
-    initPasswordStrength(root);
-    initMagnetic(root);
-    initCursorFollower(root);
-    initTilt(root);
-    initCounter(root);
-    initTypewriter(root);
-    initStepper(root);
-    initWatermark(root);
-    initColorPicker(root);
-    initSplit(root);
-    initAffix(root);
+    for (let i = 0; i < INIT_STEPS.length; i++) {
+      try { INIT_STEPS[i](root); }
+      catch (e) { try { console.error('[nyx] behaviour failed: ' + (INIT_STEPS[i].name || i), e); } catch (_) {} }
+    }
     syncBackTop();
   }
-  window.addEventListener('scroll', syncBackTop, { passive: true });
+  if (hasDOM) window.addEventListener('scroll', syncBackTop, { passive: true });
   doc.addEventListener('mousemove', e => {
     const shiny = e.target.closest('.nyx-shiny-btn, .nyx-shiny-card');
     if (shiny) {
@@ -2284,12 +2385,14 @@
     menu.classList.add('open');
     const fi = menu.querySelector('.nyx-dropdown-item'); if (fi) setTimeout(() => { fi.focus(); }, 20);
   });
-  if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', () => { init(); });
-  else init();
+  if (hasDOM) {
+    if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', () => { init(); });
+    else init();
+  }
 
   return {
     version: '1.1.0',
-    init, toast,
+    init, destroy, toast,
     openModal, openDrawer, close, closeAll,
     togglePopover, openCommandPalette, closeCommandPalette,
     showTab: (t) => { const b = el(t); if (b) activateTab(b); },
