@@ -3,6 +3,12 @@
    Depends on nyx.css tokens (--nyx-*).
    ========================================================== */
 html{scroll-behavior:smooth}
+
+/* Site accent: the docs use a solid teal instead of the framework's default violet.
+   Only the default accent is overridden, so the theming demos' accent presets still work.
+   Component demos keep their framework styling (glows, gradients) because that is what they document. */
+:root:not([data-accent]){--nyx-accent:#0e8f7e;--nyx-accent-2:#14b8a6}
+:root[data-theme="light"]:not([data-accent]){--nyx-accent:#0f766e;--nyx-accent-2:#14b8a6}
 /* Off-canvas overlays (right drawer/sheet) sit translated past the viewport edge when
    closed, which would extend the document and create a phantom horizontal scroll on every
    page. Clip the page on the x-axis — `clip` (not `hidden`) leaves overflow-y visible so the
@@ -28,7 +34,7 @@ html,body{overflow-x:clip;max-width:100%}
 .docs-group > .label{display:flex;align-items:center;gap:8px;font-family:var(--nyx-font-display);font-weight:700;font-size:var(--nyx-fs-sm);color:var(--nyx-text);margin:0 0 var(--nyx-s2) 10px}
 .docs-group a{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-radius:var(--nyx-radius-sm);color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);transition:all .15s var(--nyx-ease);border-inline-start:2px solid transparent;line-height:1.4}
 .docs-group a:hover{color:var(--nyx-text);background:var(--nyx-glass)}
-.docs-group a.active{color:var(--nyx-text);background:rgba(108,99,255,.12);border-inline-start-color:var(--nyx-accent);font-weight:500}
+.docs-group a.active{color:var(--nyx-text);background:color-mix(in srgb,var(--nyx-accent) 12%,transparent);border-inline-start-color:var(--nyx-accent);font-weight:500}
 .docs-badge-js {font-size: 8px; padding: 1px 4px; background: color-mix(in srgb, var(--nyx-accent) 15%, transparent); color: var(--nyx-accent); border: 1px solid color-mix(in srgb, var(--nyx-accent) 30%, transparent); border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; line-height: 1;}
 .docs-badge-css {font-size: 8px; padding: 1px 4px; background: rgba(255, 255, 255, 0.05); color: var(--nyx-text-muted); border: 1px solid var(--nyx-border); border-radius: 4px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; line-height: 1;}
 .docs-badges {display: inline-flex; align-items: center; gap: 5px; margin-inline-start: auto; flex-shrink: 0;}
@@ -49,7 +55,7 @@ html,body{overflow-x:clip;max-width:100%}
 .doc-section > p{color:var(--nyx-text-muted);font-size:var(--nyx-fs-sm);margin-bottom:var(--nyx-s4);max-width:70ch}
 
 /* live example + code pairing */
-.docs-demo{background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg) var(--nyx-radius-lg) 0 0;padding:var(--nyx-s6);background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.025) 1px,transparent 0);background-size:22px 22px}
+.docs-demo{background:var(--nyx-surface);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg) var(--nyx-radius-lg) 0 0;padding:var(--nyx-s6)}
 .docs-code{position:relative;margin:0 0 var(--nyx-s5)}
 .docs-code pre{margin:0;border-radius:0 0 var(--nyx-radius-lg) var(--nyx-radius-lg);border-top:none;background:#070810;border:1px solid var(--nyx-border);padding:var(--nyx-s4);overflow-x:auto}
 .docs-code.no-demo pre{border-radius:var(--nyx-radius-lg)}
@@ -57,7 +63,7 @@ html,body{overflow-x:clip;max-width:100%}
 .docs-code .copy{position:absolute;top:10px;inset-inline-end:10px;z-index:2;opacity:.7;transition:opacity .15s}
 .docs-code:hover .copy{opacity:1}
 .docs-code .copy.copied{color:var(--nyx-accent-2) !important;border-color:color-mix(in srgb,var(--nyx-accent-2) 40%,transparent) !important;background:color-mix(in srgb,var(--nyx-accent-2) 12%,transparent) !important;opacity:1 !important}
-.t-tag{color:#6c63ff}.t-attr{color:#00d4aa}.t-str{color:#ffb020}.t-cmt{color:#4b5061}.t-key{color:#ff4d6a}
+.t-tag{color:#2dd4bf}.t-attr{color:#a3b3c9}.t-str{color:#ffb020}.t-cmt{color:#4b5061}.t-key{color:#ff4d6a}
 
 /* class reference table */
 .docs-table{width:100%;border-collapse:collapse;font-size:var(--nyx-fs-sm);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius-lg);overflow:hidden;margin-bottom:var(--nyx-s5)}
@@ -68,8 +74,8 @@ html,body{overflow-x:clip;max-width:100%}
 
 /* prev / next pager */
 .docs-pager{display:flex;gap:var(--nyx-s3);margin-top:var(--nyx-s7);border-top:1px solid var(--nyx-border);padding-top:var(--nyx-s5)}
-.docs-pager a{flex:1;display:flex;flex-direction:column;gap:2px;padding:var(--nyx-s4);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);transition:all .2s var(--nyx-ease)}
-.docs-pager a:hover{border-color:var(--nyx-accent);box-shadow:var(--nyx-glow)}
+.docs-pager a{flex:1;display:flex;flex-direction:column;gap:2px;padding:var(--nyx-s4);border:1px solid var(--nyx-border);border-radius:var(--nyx-radius);transition:border-color .2s var(--nyx-ease)}
+.docs-pager a:hover{border-color:var(--nyx-accent)}
 .docs-pager a.next{text-align:end;margin-inline-start:auto}
 .docs-pager .dir{font-size:var(--nyx-fs-xs);color:var(--nyx-text-muted)}
 .docs-pager .ttl{font-family:var(--nyx-font-display);font-weight:600;color:var(--nyx-text)}
